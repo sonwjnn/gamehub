@@ -6,7 +6,7 @@ import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 import { LoginSchema } from "@/schemas";
 import { AuthError } from "next-auth";
 import * as z from "zod";
-import { getUserByEmail } from "@/actions/user";
+import userApi from "@/services/api/modules/user-api";
 
 export const login = async (
   values: z.infer<typeof LoginSchema>,
@@ -18,12 +18,12 @@ export const login = async (
     return { error: "Invalid fields!" };
   }
 
-  const { email, password } = validatedFields.data;
+  const { username, password } = validatedFields.data;
 
-  const existingUser = await getUserByEmail(email);
+  const existingUser = await userApi.getUserByUsername({ username });
 
-  if (!existingUser || !existingUser.email) {
-    return { error: "Email does not exist!" };
+  if (!existingUser || !existingUser.username) {
+    return { error: "User name does not exist!" };
   }
 
   if (!existingUser.password) {
@@ -39,7 +39,7 @@ export const login = async (
 
   try {
     await signIn("credentials", {
-      email,
+      username,
       password,
       redirectTo: callbackUrl || DEFAULT_LOGIN_REDIRECT,
     });

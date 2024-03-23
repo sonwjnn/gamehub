@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const getRoomById = async (id: string) => {
   // const response = await axios.get(
-  //   `${process.env.NEXT_PUBLIC_APP_URL}/api/room/${id}`
+  //   `${process.env.NEXT_PUBLIC_SERVER_URL}/api/room/${id}`
   // );
 
   const formattedData = {

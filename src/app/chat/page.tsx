@@ -1,7 +1,7 @@
-import { getCurrentMemberOfRoom } from "@/actions/member";
-import { getRoomById } from "@/actions/room";
 import { ChatInput } from "@/components/chat/chat-input";
 import { ChatMessages } from "@/components/chat/chat-messages";
+import memberApi from "@/services/api/modules/member-api";
+import roomApi from "@/services/api/modules/room-api";
 import { useEffect } from "react";
 
 const HomePage = async () => {
@@ -14,9 +14,12 @@ const HomePage = async () => {
   };
 
   const roomId = "2";
-  const room = await getRoomById(roomId);
+  const room = await roomApi.getRoomById({ roomId });
 
-  const member = await getCurrentMemberOfRoom(roomId, currentUser.id);
+  const member = await memberApi.getCurrentMemberOfRoom({
+    roomId,
+    userId: currentUser.id,
+  });
 
   return (
     <div className="w-full h-full">

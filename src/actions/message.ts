@@ -9,7 +9,7 @@ export const getMessagesByRoomIdWithCursor = async (
   roomId: string
 ) => {
   const response = await axios.get(
-    `${process.env.NEXT_PUBLIC_APP_URL}/api/messages/room/${roomId}/${cursor}`
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/api/messages/room/${roomId}/${cursor}`
   );
 
   if (response.status === 404) {
@@ -20,7 +20,7 @@ export const getMessagesByRoomIdWithCursor = async (
 
 export const getMessagesByRoomId = async (roomId: string) => {
   const response = await axios.get(
-    `${process.env.NEXT_PUBLIC_APP_URL}/api/messages/room/${roomId}`
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/api/messages/room/${roomId}`
   );
 
   if (response.status === 404) {
@@ -36,7 +36,7 @@ export const getMessagesByRoomId = async (roomId: string) => {
 export const createMessage = async (data: any) => {
   try {
     const response = await axios.post(
-      `${process.env.NEXT_PUBLIC_APP_URL}/api/messages/room`,
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/api/messages/room`,
       { ...data, member_id: data.memberId }
     );
 
@@ -49,3 +49,5 @@ export const createMessage = async (data: any) => {
     console.log("[CREATE_MESSAGE]", error);
   }
 };
+
+1;

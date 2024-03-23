@@ -1,6 +1,6 @@
 import authConfig from "@/auth.config";
 import NextAuth from "next-auth";
-import { getUserById } from "@/actions/user";
+import userApi from "./services/api/modules/user-api";
 
 export const {
   handlers: { GET, POST },
@@ -33,9 +33,9 @@ export const {
         return false;
       }
 
-      const existingUser = await getUserById(user.id);
+      const existingUser = await userApi.getUserById({ userId: user.id });
 
-      if (!existingUser?.emailVerified) return false;
+      if (!existingUser) return false;
 
       return true;
     },
@@ -45,7 +45,7 @@ export const {
       }
 
       if (session.user) {
-        session.user.name = token.name;
+        session.user.username = token.username as string;
         session.user.image = token.image as string;
         session.user.email = token.email as string;
       }
@@ -55,11 +55,13 @@ export const {
     async jwt({ token }) {
       if (!token.sub) return token;
 
-      const existingUser = await getUserById(token.sub);
+      const existingUser = await userApi.getUserById({
+        userId: token.sub,
+      });
 
       if (!existingUser) return token;
 
-      token.name = existingUser.name;
+      token.username = existingUser.data.username;
       token.image = existingUser.image;
       token.email = existingUser.email;
 

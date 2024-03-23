@@ -1,6 +1,5 @@
 "use client";
 
-import { register } from "@/actions/register";
 import { CardWrapper } from "@/components/auth/card-wrapper";
 import { FormError } from "@/components/form-error";
 import { FormSuccess } from "@/components/form-success";
@@ -16,6 +15,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { RegisterSchema } from "@/schemas";
+import userApi from "@/services/api/modules/user-api";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
@@ -41,7 +41,7 @@ export const RegisterForm = ({}: RegisterFormProps) => {
     setError("");
     setSuccess("");
     startTransition(async () => {
-      await register(values).then((data) => {
+      await userApi.register(values).then((data) => {
         setError(data.error);
         setSuccess(data.success);
       });

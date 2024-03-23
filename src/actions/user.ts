@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const getUserById = async (userId: string) => {
   const response = await axios.get(
-    `${process.env.NEXT_PUBLIC_APP_URL}/api/users/${userId}`
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/api/users/${userId}`
   );
 
   if (response.status === 404) {
@@ -14,7 +14,7 @@ export const getUserById = async (userId: string) => {
 
 export const getUserByEmail = async (email: string) => {
   const response = await axios.get(
-    `${process.env.NEXT_PUBLIC_APP_URL}/api/users/email/${email}`
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/api/users/email/${email}`
   );
 
   if (response.status === 404) {
@@ -26,7 +26,7 @@ export const getUserByEmail = async (email: string) => {
 
 export const createUser = async (data: any) => {
   const response = await axios.post(
-    `${process.env.NEXT_PUBLIC_APP_URL}/api/users`,
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/api/users`,
     data
   );
 

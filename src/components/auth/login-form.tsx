@@ -1,6 +1,5 @@
 "use client";
 
-// import { login } from '@/actions/login'
 import { CardWrapper } from "@/components/auth/card-wrapper";
 import { FormError } from "@/components/form-error";
 import { FormSuccess } from "@/components/form-success";
@@ -22,8 +21,6 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
-import qs from "query-string";
-import axios from "axios";
 import { toast } from "sonner";
 import { login } from "@/actions/login";
 
@@ -45,7 +42,7 @@ export const LoginForm = ({}: LoginFormProps) => {
   const form = useForm<z.infer<typeof LoginSchema>>({
     resolver: zodResolver(LoginSchema),
     defaultValues: {
-      email: "",
+      username: "",
       password: "",
     },
   });
@@ -56,7 +53,7 @@ export const LoginForm = ({}: LoginFormProps) => {
 
     startTransition(async () => {
       login(values, callbackUrl)
-        .then((data) => {
+        .then((data: any) => {
           if (data?.error) {
             form.reset();
             setError(data.error);
@@ -84,13 +81,13 @@ export const LoginForm = ({}: LoginFormProps) => {
           <div className="space-y-4">
             <FormField
               control={form.control}
-              name="email"
+              name="username"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Email</FormLabel>
                   <FormControl>
                     <Input
-                      type="email"
+                      type="text"
                       disabled={isPending}
                       placeholder="sonwin@example.com"
                       {...field}

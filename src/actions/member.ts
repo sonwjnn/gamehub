@@ -5,7 +5,7 @@ export const getCurrentMemberOfRoom = async (
   userId: string
 ) => {
   const response = await axios.get(
-    `${process.env.NEXT_PUBLIC_APP_URL}/api/member/${roomId}/${userId}`
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/api/member/${roomId}/${userId}`
   );
 
   if (response.status === 404) {

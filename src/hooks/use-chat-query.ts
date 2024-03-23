@@ -1,5 +1,5 @@
-import { getMessagesByRoomId } from "@/actions/message";
 import { useSocket } from "@/providers/socket-provider";
+import messsageApi from "@/services/api/modules/message-api";
 import { useInfiniteQuery } from "@tanstack/react-query";
 
 interface ChatQueryProps {
@@ -25,7 +25,7 @@ export const useChatQuery = ({
     let res;
 
     if (type === "room") {
-      res = await getMessagesByRoomId(roomId);
+      res = await messsageApi.getMessagesByRoomId({ roomId });
     }
     // else if (type === "conversation") {
     // res = await getDirectMessageByConversationId({

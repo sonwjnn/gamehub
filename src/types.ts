@@ -3,10 +3,13 @@ import { NextApiResponse } from "next";
 import { Server as SocketIOServer } from "socket.io";
 
 export type User = {
-  id: string;
-  email: string;
-  username: string;
-  password: string;
+  id?: string;
+  username?: string;
+  email?: string;
+  image?: string;
+  token?: string;
+  createdAt?: Date;
+  updatedAt?: Date;
 };
 
 export type Room = {
