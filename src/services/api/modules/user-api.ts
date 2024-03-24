@@ -1,11 +1,12 @@
 import privateClient from "@/services/api/client/private-client";
-import publicClient from "../client/public-client";
+import publicClient from "@/services/api/client/public-client";
 
 const userEndpoints = {
   getUserById: ({ userId }: { userId: string }) => `users/${userId}`,
   getUserByUsername: ({ username }: { username: string }) =>
     `users/username/${username}`,
-  register: `users`,
+  register: `users/register`,
+  login: `users/login`,
 };
 
 const userApi = {
@@ -20,6 +21,15 @@ const userApi = {
           ...response.data,
           success: "Register successfully!",
         };
+      return response;
+    } catch (error) {
+      return { error: "Something went wrong" };
+    }
+  },
+  login: async (data: { username: string; password: string }) => {
+    try {
+      const response = await privateClient.post(userEndpoints.login, data);
+      if (response && response.data) return response.data;
       return response;
     } catch (error) {
       return { error: "Something went wrong" };
