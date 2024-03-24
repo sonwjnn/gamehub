@@ -41,9 +41,9 @@ export const RegisterForm = ({}: RegisterFormProps) => {
     setError("");
     setSuccess("");
     startTransition(async () => {
-      await userApi.register(values).then((data) => {
-        setError(data.error);
-        setSuccess(data.success);
+      await userApi.register(values).then(({ response }) => {
+        setError(response.error);
+        setSuccess(response.success);
       });
     });
   };
@@ -118,7 +118,7 @@ export const RegisterForm = ({}: RegisterFormProps) => {
           <FormError message={error} />
           <FormSuccess message={success} />
           <Button type="submit" disabled={isPending} className="w-full">
-            {isPending ? <Spinner className="mr-2" /> : null}
+            {isPending ? <Spinner className="mr-2 dark:text-black" /> : null}
             Create an account
           </Button>
         </form>

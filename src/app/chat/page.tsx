@@ -1,31 +1,34 @@
 import { ChatInput } from "@/components/chat/chat-input";
 import { ChatMessages } from "@/components/chat/chat-messages";
+import { currentUser } from "@/lib/auth";
 import memberApi from "@/services/api/modules/member-api";
 import roomApi from "@/services/api/modules/room-api";
-import { useEffect } from "react";
+import { redirect } from "next/navigation";
 
 const HomePage = async () => {
-  const currentUser = {
-    id: "1",
-    name: "user1",
-    username: "user1",
-    email: "user1@gmail.com",
-    password: "123456789",
-  };
+  const user = await currentUser();
+
+  if (!user) {
+    redirect("/auth/login");
+  }
 
   const roomId = "2";
-  const room = await roomApi.getRoomById({ roomId });
+  const { response: room } = await roomApi.getRoomById({ roomId });
 
-  const member = await memberApi.getCurrentMemberOfRoom({
+  const { response: member } = await memberApi.getCurrentMemberOfRoom({
     roomId,
-    userId: currentUser.id,
+    userId: user.id,
   });
+
+  if (!room || !member) {
+    return redirect("/");
+  }
 
   return (
     <div className="w-full h-full">
       <ChatMessages
         member={member}
-        name={room.name}
+        name={room?.name}
         // chatId={room.id}
         chatId={roomId}
         type="room"
@@ -38,7 +41,7 @@ const HomePage = async () => {
         roomId={roomId}
       />
       <ChatInput
-        name={room.name}
+        name={room?.name}
         type="room"
         apiUrl="/api/socket/messages"
         query={{

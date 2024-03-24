@@ -23,8 +23,8 @@ const messsageApi = {
       const response = await publicClient.get(
         messsageEndpoints.getMessagesByRoomIdWithCursor(data)
       );
-      if (response && response.data) return response.data;
-      return response;
+      if (response && response.data) return { response: response.data };
+      return { response };
     } catch (error) {
       return { error };
     }
@@ -34,8 +34,8 @@ const messsageApi = {
       const response = await publicClient.get(
         messsageEndpoints.getMessagesByRoomId(data)
       );
-      if (response && response.data) return response.data;
-      return response;
+      if (response && response.data) return { response: response.data };
+      return { response };
     } catch (error) {
       return { error };
     }
@@ -46,8 +46,8 @@ const messsageApi = {
         messsageEndpoints.createMessage,
         { ...data, member_id: data.memberId }
       );
-      if (response && response.data) return response.data;
-      return response;
+      if (response && response.data) return { response: response.data };
+      return { response };
     } catch (error) {
       return { error };
     }

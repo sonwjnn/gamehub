@@ -10,7 +10,7 @@ const HomePage = () => {
     return redirect("/auth/login");
   }
 
-  return redirect("/chat");
+  return <div>{JSON.stringify(user)}</div>;
 };
 
 export default HomePage;

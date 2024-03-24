@@ -16,8 +16,8 @@ const memberApi = {
       const response = await privateClient.get(
         memberEndpoints.getCurrentMemberOfRoom(data)
       );
-      if (response && response.data) return response.data;
-      return response;
+      if (response && response.data) return { response: response.data };
+      return { response };
     } catch (error) {
       return { error };
     }

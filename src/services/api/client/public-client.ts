@@ -1,7 +1,7 @@
 import queryString, { ParsedQuery } from "query-string";
 import axios, { AxiosRequestConfig, AxiosHeaders } from "axios";
 
-const baseURL = process.env.NEXT_PUBLIC_SERVER_URL;
+const baseURL = `${process.env.NEXT_PUBLIC_SERVER_URL}/api`;
 
 const publicClient = axios.create({
   baseURL,

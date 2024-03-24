@@ -28,13 +28,15 @@ export default async function handler(
       return res.status(400).json({ error: "Content missing" });
     }
 
-    const room = await roomApi.getRoomById({ roomId: roomId as string });
+    const { response: room } = await roomApi.getRoomById({
+      roomId: roomId as string,
+    });
 
     if (!room) {
       return res.status(404).json({ message: "room not found" });
     }
 
-    const currentMember = await memberApi.getCurrentMemberOfRoom({
+    const { response: currentMember } = await memberApi.getCurrentMemberOfRoom({
       roomId: roomId as string,
       userId: "2",
     });

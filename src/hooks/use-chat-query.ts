@@ -34,7 +34,7 @@ export const useChatQuery = ({
     // })
     // }
 
-    return JSON.parse(JSON.stringify(res));
+    return res?.response;
   };
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status } =

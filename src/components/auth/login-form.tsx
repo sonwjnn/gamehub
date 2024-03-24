@@ -129,7 +129,9 @@ export const LoginForm = ({}: LoginFormProps) => {
           <FormError message={error || urlError} />
           <FormSuccess message={success} />
           <Button type="submit" disabled={isPending} className="w-full">
-            {isPending ? <Spinner className="mr-2" /> : null}
+            {isPending ? (
+              <Spinner className="mr-2 text-white dark:text-black" />
+            ) : null}
             {"Login"}
           </Button>
         </form>

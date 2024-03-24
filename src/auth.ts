@@ -46,7 +46,8 @@ export const {
 
       if (session.user) {
         session.user.username = token.username as string;
-        session.user.image = token.image as string;
+        session.user.image =
+          (token.image as string) || (token.picture as string);
         session.user.email = token.email as string;
       }
 
@@ -55,13 +56,13 @@ export const {
     async jwt({ token }) {
       if (!token.sub) return token;
 
-      const existingUser = await userApi.getUserById({
+      const { response: existingUser } = await userApi.getUserById({
         userId: token.sub,
       });
 
       if (!existingUser) return token;
 
-      token.username = existingUser.data.username;
+      token.username = existingUser.username;
       token.image = existingUser.image;
       token.email = existingUser.email;
 

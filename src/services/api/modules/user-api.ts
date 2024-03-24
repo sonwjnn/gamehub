@@ -18,19 +18,10 @@ const userApi = {
       });
       if (response && response.data)
         return {
-          ...response.data,
+          response: response.data,
           success: "Register successfully!",
         };
-      return response;
-    } catch (error) {
-      return { error: "Something went wrong" };
-    }
-  },
-  login: async (data: { username: string; password: string }) => {
-    try {
-      const response = await privateClient.post(userEndpoints.login, data);
-      if (response && response.data) return response.data;
-      return response;
+      return { response };
     } catch (error) {
       return { error: "Something went wrong" };
     }
@@ -40,10 +31,8 @@ const userApi = {
       const response = await privateClient.get(
         userEndpoints.getUserById({ userId })
       );
-      if (response && response.data) return response.data;
-      response.data;
-
-      return response;
+      if (response && response.data) return { response: response.data };
+      return { response };
     } catch (error) {
       return { error };
     }
@@ -53,8 +42,8 @@ const userApi = {
       const response = await publicClient.get(
         userEndpoints.getUserByUsername({ username })
       );
-      if (response && response.data) return response.data;
-      return response;
+      if (response && response.data) return { response: response.data };
+      return { response };
     } catch (error) {
       return { error };
     }

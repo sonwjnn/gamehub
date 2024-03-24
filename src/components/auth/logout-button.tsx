@@ -1,6 +1,6 @@
 "use client";
 
-// import { logout } from '@/actions/logout'
+import { logout } from "@/actions/logout";
 import { cn } from "@/lib/utils";
 
 interface LogoutButtonProps {
@@ -10,7 +10,7 @@ interface LogoutButtonProps {
 
 export const LogoutButton = ({ children, className }: LogoutButtonProps) => {
   const onClick = () => {
-    // logout()
+    logout();
   };
 
   return (
