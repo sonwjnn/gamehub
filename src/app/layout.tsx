@@ -8,6 +8,9 @@ import type { Metadata } from "next";
 import { Open_Sans } from "next/font/google";
 
 import "./globals.css";
+import "@/styles/css/layout.css";
+import "@/styles/css/styles.css";
+
 import { SessionProvider } from "next-auth/react";
 import { auth } from "@/auth";
 
@@ -28,7 +31,7 @@ export default async function RootLayout({
   return (
     <SessionProvider session={session}>
       <html lang="en" suppressHydrationWarning>
-        <body className={cn(font.className, "bg-white dark:bg-[#313338]")}>
+        <body className={cn(font.className, "bg-white dark:bg-[#213338] game")}>
           <Toaster />
           <ThemeProvider
             attribute="class"

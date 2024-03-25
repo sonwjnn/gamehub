@@ -1,4 +1,5 @@
 import { UserButton } from "@/components/auth/user-button";
+import { Navbar } from "./_components/navbar";
 
 interface SetupLayoutProps {
   children: React.ReactNode;
@@ -6,10 +7,12 @@ interface SetupLayoutProps {
 
 const SetupLayout = ({ children }: SetupLayoutProps) => {
   return (
-    <>
-      <UserButton />
-      <div className="flex h-full pt-20">{children}</div>
-    </>
+    <div className="inner_page">
+      <main>
+        <Navbar />
+        <div className="game_body">{children}</div>
+      </main>
+    </div>
   );
 };
 

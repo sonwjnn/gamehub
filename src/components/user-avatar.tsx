@@ -7,7 +7,7 @@ import { User } from "lucide-react";
 const avatarSizes = cva("", {
   variants: {
     size: {
-      default: "size-8",
+      default: "w-full h-full",
       md: "size-12",
       lg: "size-14",
     },
@@ -28,24 +28,13 @@ interface UserAvatarProps extends VariantProps<typeof avatarSizes> {
 export const UserAvatar = ({
   name,
   imageUrl,
-  isLive,
-  showBadge,
   size,
   className,
 }: UserAvatarProps) => {
-  const canShowBadge = showBadge && isLive;
-
   const color = stringToColor(name || "");
   return (
-    <div
-      className={cn("relative rounded-full", className, avatarSizes({ size }))}
-    >
-      <Avatar
-        className={cn(
-          isLive && "border border-background ring-2 ring-rose-500",
-          avatarSizes({ size })
-        )}
-      >
+    <div className={cn("rounded-full", className, avatarSizes({ size }))}>
+      <Avatar className={cn(avatarSizes({ size }))}>
         <AvatarImage src={imageUrl} className="object-cover" />
         <AvatarFallback style={{ backgroundColor: color }}>
           <User className="text-white" fontSize={18} />
