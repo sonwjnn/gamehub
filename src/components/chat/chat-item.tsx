@@ -1,44 +1,44 @@
-"use client";
+'use client'
 
-import { Hint } from "@/components/hint";
-import { Spinner } from "@/components/spinner";
-import { Button } from "@/components/ui/button";
-import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Skeleton } from "@/components/ui/skeleton";
+import { Hint } from '@/components/hint'
+import { Spinner } from '@/components/spinner'
+import { Button } from '@/components/ui/button'
+import { Form, FormControl, FormField, FormItem } from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
+import { Skeleton } from '@/components/ui/skeleton'
 
-import { cn } from "@/lib/utils";
+import { cn } from '@/lib/utils'
 // import { useModal } from "@/store/use-modal-store";
-import { User, Role, Member } from "@/types";
-import { zodResolver } from "@hookform/resolvers/zod";
-import axios from "axios";
-import { Edit, FileIcon, ShieldAlert, ShieldCheck, Trash } from "lucide-react";
-import Image from "next/image";
-import { useParams, useRouter } from "next/navigation";
-import qs from "query-string";
-import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import * as z from "zod";
-import { UserAvatar } from "../user-avatar";
-import { ChatItemSchema } from "@/schemas";
+import { User, Role, Member } from '@/types'
+import { zodResolver } from '@hookform/resolvers/zod'
+import axios from 'axios'
+import { Edit, FileIcon, ShieldAlert, ShieldCheck, Trash } from 'lucide-react'
+import Image from 'next/image'
+import { useParams, useRouter } from 'next/navigation'
+import qs from 'query-string'
+import { useEffect, useState } from 'react'
+import { useForm } from 'react-hook-form'
+import * as z from 'zod'
+import { UserAvatar } from '../user-avatar'
+import { ChatItemSchema } from '@/schemas'
 
 interface ChatItemProps {
-  id: string;
-  content: string;
-  member: Member;
-  timestamp: string;
+  id: string
+  content: string
+  member: Member
+  timestamp: string
   // fileUrl: string | null;
-  deleted: boolean;
-  currentMember: Member;
-  socketUrl: string;
-  socketQuery: Record<string, string>;
+  deleted: boolean
+  currentMember: Member
+  socketUrl: string
+  socketQuery: Record<string, string>
 }
 
 const roleIconMap = {
   GUEST: null,
   MODERATOR: <ShieldCheck className="ml-2 h-4 w-4 text-indigo-500" />,
   ADMIN: <ShieldAlert className="ml-2 h-4 w-4 text-rose-500" />,
-};
+}
 
 export const ChatItem = ({
   id,
@@ -52,80 +52,80 @@ export const ChatItem = ({
   socketQuery,
 }: ChatItemProps) => {
   const member = {
-    id: "1",
-    userId: "1",
+    id: '1',
+    userId: '1',
     user: {
-      id: "user1",
-      name: "user1",
-      email: "user1@gmail.com",
-      password: "123",
+      id: 'user1',
+      name: 'user1',
+      email: 'user1@gmail.com',
+      password: '123',
     },
-    roomId: "2",
-  };
+    roomId: '2',
+  }
 
-  const [isEditing, setIsEditing] = useState(false);
+  const [isEditing, setIsEditing] = useState(false)
 
-  const params = useParams();
-  const router = useRouter();
+  const params = useParams()
+  const router = useRouter()
 
   const onMemberClick = () => {
     if (member.id === currentMember.id) {
-      return;
+      return
     }
 
-    router.push(`/servers/${params?.serverId}/conversations/${member.id}`);
-  };
+    router.push(`/servers/${params?.serverId}/conversations/${member.id}`)
+  }
 
   useEffect(() => {
     const handleKeyDown = (event: any) => {
-      if (event.key === "Escape" || event.keyCode === 27) {
-        setIsEditing(false);
+      if (event.key === 'Escape' || event.keyCode === 27) {
+        setIsEditing(false)
       }
-    };
+    }
 
-    window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener('keydown', handleKeyDown)
 
-    return () => window.removeEventListener("keyDown", handleKeyDown);
-  }, []);
+    return () => window.removeEventListener('keyDown', handleKeyDown)
+  }, [])
 
   const form = useForm<z.infer<typeof ChatItemSchema>>({
     resolver: zodResolver(ChatItemSchema),
     defaultValues: {
       content: content,
     },
-  });
+  })
 
-  const isLoading = form.formState.isSubmitting;
+  const isLoading = form.formState.isSubmitting
 
   const onSubmit = async (values: z.infer<typeof ChatItemSchema>) => {
     try {
       const url = qs.stringifyUrl({
         url: `${socketUrl}/${id}`,
         query: socketQuery,
-      });
+      })
 
-      await axios.patch(url, values);
+      await axios.patch(url, values)
 
-      form.reset();
-      setIsEditing(false);
+      form.reset()
+      setIsEditing(false)
     } catch (error) {
-      console.log(error);
+      console.log(error)
     }
-  };
+  }
 
   useEffect(() => {
     form.reset({
       content: content,
-    });
-  }, [form, content]);
+    })
+  }, [form, content])
 
   // const fileType = fileUrl?.split(".").pop();
 
   // const isAdmin = currentUser.role === Role.ADMIN;
-  const isAdmin = false;
-  const isOwner = currentMember.id === member.id;
-  const canDeleteMessage = !deleted && (isAdmin || isOwner);
-  const canEditMessage = !deleted && isOwner;
+  const isAdmin = false
+  const isOwner = currentMember.id === member.id
+  const canDeleteMessage = !deleted && (isAdmin || isOwner)
+  const canEditMessage = !deleted && isOwner
   // const isPDF = fileType === "pdf" && fileUrl;
   // const isImage = !isPDF && fileUrl;
 
@@ -185,9 +185,9 @@ export const ChatItem = ({
           {!isEditing && (
             <p
               className={cn(
-                "text-sm text-zinc-600 dark:text-zinc-300",
+                'text-sm text-zinc-600 dark:text-zinc-300',
                 deleted &&
-                  "mt-1 text-xs italic text-zinc-500 dark:text-zinc-400"
+                  'mt-1 text-xs italic text-zinc-500 dark:text-zinc-400'
               )}
             >
               {content}
@@ -253,8 +253,8 @@ export const ChatItem = ({
         </div>
       )}
     </div>
-  );
-};
+  )
+}
 
 export const ChatItemSkeleton = () => (
   <div className="flex w-full items-center gap-x-2 p-4 transition hover:bg-black/5">
@@ -264,4 +264,4 @@ export const ChatItemSkeleton = () => (
       <Skeleton className="h-20 w-full md:w-80" />
     </div>
   </div>
-);
+)

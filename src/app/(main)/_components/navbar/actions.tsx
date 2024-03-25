@@ -1,4 +1,5 @@
-import Image from "next/image";
+import { UserButton } from '@/components/auth/user-button'
+import Image from 'next/image'
 
 interface ActionsProps {}
 
@@ -13,7 +14,7 @@ export const Actions = ({}: ActionsProps) => {
             width={0}
             height={0}
             sizes="100vw"
-            style={{ width: "100%", height: "auto" }}
+            style={{ width: '100%', height: 'auto' }}
           />
         </div>
         <span>Top</span>
@@ -27,13 +28,13 @@ export const Actions = ({}: ActionsProps) => {
             width={0}
             height={0}
             sizes="100vw"
-            style={{ width: "100%", height: "auto" }}
+            style={{ width: '100%', height: 'auto' }}
           />
         </div>
         <span>Rule</span>
       </div>
       <div className="line"></div>
-      <div className="item flex flex-midle gap-8">
+      <div className="item flex flex-midle gap-8 mr-2">
         <div className="icon flex-shrink">
           <Image
             src="/images/icon_setting.svg"
@@ -41,11 +42,13 @@ export const Actions = ({}: ActionsProps) => {
             width={0}
             height={0}
             sizes="100vw"
-            style={{ width: "100%", height: "auto" }}
+            style={{ width: '100%', height: 'auto' }}
           />
         </div>
         <span>Setting</span>
       </div>
+
+      <UserButton />
     </div>
-  );
-};
+  )
+}

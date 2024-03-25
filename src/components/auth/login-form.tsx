@@ -1,10 +1,10 @@
-"use client";
+'use client'
 
-import { CardWrapper } from "@/components/auth/card-wrapper";
-import { FormError } from "@/components/form-error";
-import { FormSuccess } from "@/components/form-success";
-import { Spinner } from "@/components/spinner";
-import { Button } from "@/components/ui/button";
+import { CardWrapper } from '@/components/auth/card-wrapper'
+import { FormError } from '@/components/form-error'
+import { FormSuccess } from '@/components/form-success'
+import { Spinner } from '@/components/spinner'
+import { Button } from '@/components/ui/button'
 import {
   Form,
   FormControl,
@@ -12,61 +12,61 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { LoginSchema } from "@/schemas";
-import { zodResolver } from "@hookform/resolvers/zod";
-import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
-import { useState, useTransition } from "react";
-import { useForm } from "react-hook-form";
-import * as z from "zod";
-import { toast } from "sonner";
-import { login } from "@/actions/login";
+} from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
+import { LoginSchema } from '@/schemas'
+import { zodResolver } from '@hookform/resolvers/zod'
+import Link from 'next/link'
+import { useRouter, useSearchParams } from 'next/navigation'
+import { useState, useTransition } from 'react'
+import { useForm } from 'react-hook-form'
+import * as z from 'zod'
+import { toast } from 'sonner'
+import { login } from '@/actions/login'
 
 interface LoginFormProps {}
 
 export const LoginForm = ({}: LoginFormProps) => {
-  const [isPending, startTransition] = useTransition();
-  const [error, setError] = useState<string | undefined>("");
-  const [success, setSuccess] = useState<string | undefined>("");
-  const router = useRouter();
+  const [isPending, startTransition] = useTransition()
+  const [error, setError] = useState<string | undefined>('')
+  const [success, setSuccess] = useState<string | undefined>('')
+  const router = useRouter()
 
-  const searchParams = useSearchParams();
-  const callbackUrl = searchParams?.get("callbackUrl");
+  const searchParams = useSearchParams()
+  const callbackUrl = searchParams?.get('callbackUrl')
   const urlError =
-    searchParams?.get("error") === "OAuthAccountNotLinked"
-      ? "Email already in use with different provider!"
-      : "";
+    searchParams?.get('error') === 'OAuthAccountNotLinked'
+      ? 'Email already in use with different provider!'
+      : ''
 
   const form = useForm<z.infer<typeof LoginSchema>>({
     resolver: zodResolver(LoginSchema),
     defaultValues: {
-      username: "",
-      password: "",
+      username: '',
+      password: '',
     },
-  });
+  })
 
   const onSubmit = (values: z.infer<typeof LoginSchema>) => {
-    setError("");
-    setSuccess("");
+    setError('')
+    setSuccess('')
 
     startTransition(async () => {
       login(values, callbackUrl)
         .then((data: any) => {
           if (data?.error) {
-            form.reset();
-            setError(data.error);
+            form.reset()
+            setError(data.error)
           }
 
           if (data?.success) {
-            form.reset();
-            setSuccess(data.success);
+            form.reset()
+            setSuccess(data.success)
           }
         })
-        .catch(() => setError("Something went wrong!"));
-    });
-  };
+        .catch(() => setError('Something went wrong!'))
+    })
+  }
 
   return (
     <CardWrapper
@@ -132,10 +132,10 @@ export const LoginForm = ({}: LoginFormProps) => {
             {isPending ? (
               <Spinner className="mr-2 text-white dark:text-black" />
             ) : null}
-            {"Login"}
+            {'Login'}
           </Button>
         </form>
       </Form>
     </CardWrapper>
-  );
-};
+  )
+}

@@ -1,16 +1,16 @@
 .tabs_nav_item {
   padding: 0 8px;
-  color: #6F6F6F;
+  color: #6f6f6f;
   text-align: center;
   position: relative;
 }
 .tabs_nav_item:before {
   position: absolute;
-  content: "";
+  content: '';
   bottom: 0;
   left: 0;
   right: 0;
-  border-bottom: 2px solid #4113C6;
+  border-bottom: 2px solid #4113c6;
   opacity: 0;
   height: 1px;
   -webkit-transition: all 0.3s;
@@ -22,7 +22,7 @@
   padding: 16px;
 }
 .tabs_nav_item.active {
-  color: #4113C6;
+  color: #4113c6;
   font-weight: 500;
 }
 .tabs_nav_item.active:before {

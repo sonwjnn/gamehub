@@ -1,8 +1,8 @@
-import { UserButton } from "@/components/auth/user-button";
-import { Navbar } from "./_components/navbar";
+import { UserButton } from '@/components/auth/user-button'
+import { Navbar } from './_components/navbar'
 
 interface SetupLayoutProps {
-  children: React.ReactNode;
+  children: React.ReactNode
 }
 
 const SetupLayout = ({ children }: SetupLayoutProps) => {
@@ -13,7 +13,7 @@ const SetupLayout = ({ children }: SetupLayoutProps) => {
         <div className="game_body">{children}</div>
       </main>
     </div>
-  );
-};
+  )
+}
 
-export default SetupLayout;
+export default SetupLayout

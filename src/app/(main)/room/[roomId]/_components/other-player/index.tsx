@@ -1,23 +1,23 @@
-import { cn } from "@/lib/utils";
-import Image from "next/image";
-import { Hand } from "../hand";
-import { UserAvatar } from "@/components/user-avatar";
+import { cn } from '@/lib/utils'
+import Image from 'next/image'
+import { Hand } from './hand'
+import { UserAvatar } from '@/components/user-avatar'
 
 interface OtherPlayerProps {
-  type?: "fold" | "active" | "default";
-  flip?: boolean;
+  type?: 'fold' | 'active' | 'default'
+  showdown?: boolean
 }
 
 export const OtherPlayer = ({
-  type = "default",
-  flip = false,
+  type = 'default',
+  showdown = false,
 }: OtherPlayerProps) => {
   return (
     <div
       className={cn(
-        "group_user",
-        type === "active" && "user_active",
-        type === "fold" && "user_fold"
+        'group_user',
+        type === 'active' && 'user_active',
+        type === 'fold' && 'user_fold'
       )}
     >
       <div className="wrap">
@@ -34,11 +34,11 @@ export const OtherPlayer = ({
             </div>
           </div>
           <div className="right">
-            {type !== "fold" ? (
+            {type !== 'fold' ? (
               <Hand
                 imageUrlFirst="/images/pocker_on.png"
                 imageUrlSecond="/images/pocker_on.png"
-                flip={flip}
+                showdown={showdown}
               />
             ) : (
               <div className="text_fold fw-900">FOLD</div>
@@ -55,5 +55,5 @@ export const OtherPlayer = ({
         </div>
       </div>
     </div>
-  );
-};
+  )
+}

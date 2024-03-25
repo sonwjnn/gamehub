@@ -1,10 +1,10 @@
-"use client";
+'use client'
 
-import { CardWrapper } from "@/components/auth/card-wrapper";
-import { FormError } from "@/components/form-error";
-import { FormSuccess } from "@/components/form-success";
-import { Spinner } from "@/components/spinner";
-import { Button } from "@/components/ui/button";
+import { CardWrapper } from '@/components/auth/card-wrapper'
+import { FormError } from '@/components/form-error'
+import { FormSuccess } from '@/components/form-success'
+import { Spinner } from '@/components/spinner'
+import { Button } from '@/components/ui/button'
 import {
   Form,
   FormControl,
@@ -12,41 +12,41 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { RegisterSchema } from "@/schemas";
-import userApi from "@/services/api/modules/user-api";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useState, useTransition } from "react";
-import { useForm } from "react-hook-form";
-import * as z from "zod";
+} from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
+import { RegisterSchema } from '@/schemas'
+import userApi from '@/services/api/modules/user-api'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useState, useTransition } from 'react'
+import { useForm } from 'react-hook-form'
+import * as z from 'zod'
 
 interface RegisterFormProps {}
 
 export const RegisterForm = ({}: RegisterFormProps) => {
-  const [isPending, startTransition] = useTransition();
-  const [error, setError] = useState<string | undefined>("");
-  const [success, setSuccess] = useState<string | undefined>("");
+  const [isPending, startTransition] = useTransition()
+  const [error, setError] = useState<string | undefined>('')
+  const [success, setSuccess] = useState<string | undefined>('')
 
   const form = useForm<z.infer<typeof RegisterSchema>>({
     resolver: zodResolver(RegisterSchema),
     defaultValues: {
-      username: "",
-      email: "",
-      password: "",
+      username: '',
+      email: '',
+      password: '',
     },
-  });
+  })
 
   const onSubmit = (values: z.infer<typeof RegisterSchema>) => {
-    setError("");
-    setSuccess("");
+    setError('')
+    setSuccess('')
     startTransition(async () => {
       await userApi.register(values).then(({ response }) => {
-        setError(response.error);
-        setSuccess(response.success);
-      });
-    });
-  };
+        setError(response.error)
+        setSuccess(response.success)
+      })
+    })
+  }
 
   return (
     <CardWrapper
@@ -124,5 +124,5 @@ export const RegisterForm = ({}: RegisterFormProps) => {
         </form>
       </Form>
     </CardWrapper>
-  );
-};
+  )
+}

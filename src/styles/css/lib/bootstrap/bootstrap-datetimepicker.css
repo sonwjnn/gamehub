@@ -90,7 +90,7 @@
 .bootstrap-datetimepicker-widget button[data-action] {
   padding: 6px;
 }
-.bootstrap-datetimepicker-widget .btn[data-action="incrementHours"]::after {
+.bootstrap-datetimepicker-widget .btn[data-action='incrementHours']::after {
   position: absolute;
   width: 1px;
   height: 1px;
@@ -99,9 +99,9 @@
   overflow: hidden;
   clip: rect(0, 0, 0, 0);
   border: 0;
-  content: "Increment Hours";
+  content: 'Increment Hours';
 }
-.bootstrap-datetimepicker-widget .btn[data-action="incrementMinutes"]::after {
+.bootstrap-datetimepicker-widget .btn[data-action='incrementMinutes']::after {
   position: absolute;
   width: 1px;
   height: 1px;
@@ -110,9 +110,9 @@
   overflow: hidden;
   clip: rect(0, 0, 0, 0);
   border: 0;
-  content: "Increment Minutes";
+  content: 'Increment Minutes';
 }
-.bootstrap-datetimepicker-widget .btn[data-action="decrementHours"]::after {
+.bootstrap-datetimepicker-widget .btn[data-action='decrementHours']::after {
   position: absolute;
   width: 1px;
   height: 1px;
@@ -121,9 +121,9 @@
   overflow: hidden;
   clip: rect(0, 0, 0, 0);
   border: 0;
-  content: "Decrement Hours";
+  content: 'Decrement Hours';
 }
-.bootstrap-datetimepicker-widget .btn[data-action="decrementMinutes"]::after {
+.bootstrap-datetimepicker-widget .btn[data-action='decrementMinutes']::after {
   position: absolute;
   width: 1px;
   height: 1px;
@@ -132,9 +132,9 @@
   overflow: hidden;
   clip: rect(0, 0, 0, 0);
   border: 0;
-  content: "Decrement Minutes";
+  content: 'Decrement Minutes';
 }
-.bootstrap-datetimepicker-widget .btn[data-action="showHours"]::after {
+.bootstrap-datetimepicker-widget .btn[data-action='showHours']::after {
   position: absolute;
   width: 1px;
   height: 1px;
@@ -143,9 +143,9 @@
   overflow: hidden;
   clip: rect(0, 0, 0, 0);
   border: 0;
-  content: "Show Hours";
+  content: 'Show Hours';
 }
-.bootstrap-datetimepicker-widget .btn[data-action="showMinutes"]::after {
+.bootstrap-datetimepicker-widget .btn[data-action='showMinutes']::after {
   position: absolute;
   width: 1px;
   height: 1px;
@@ -154,9 +154,9 @@
   overflow: hidden;
   clip: rect(0, 0, 0, 0);
   border: 0;
-  content: "Show Minutes";
+  content: 'Show Minutes';
 }
-.bootstrap-datetimepicker-widget .btn[data-action="togglePeriod"]::after {
+.bootstrap-datetimepicker-widget .btn[data-action='togglePeriod']::after {
   position: absolute;
   width: 1px;
   height: 1px;
@@ -165,9 +165,9 @@
   overflow: hidden;
   clip: rect(0, 0, 0, 0);
   border: 0;
-  content: "Toggle AM/PM";
+  content: 'Toggle AM/PM';
 }
-.bootstrap-datetimepicker-widget .btn[data-action="clear"]::after {
+.bootstrap-datetimepicker-widget .btn[data-action='clear']::after {
   position: absolute;
   width: 1px;
   height: 1px;
@@ -176,9 +176,9 @@
   overflow: hidden;
   clip: rect(0, 0, 0, 0);
   border: 0;
-  content: "Clear the picker";
+  content: 'Clear the picker';
 }
-.bootstrap-datetimepicker-widget .btn[data-action="today"]::after {
+.bootstrap-datetimepicker-widget .btn[data-action='today']::after {
   position: absolute;
   width: 1px;
   height: 1px;
@@ -187,7 +187,7 @@
   overflow: hidden;
   clip: rect(0, 0, 0, 0);
   border: 0;
-  content: "Set the date to today";
+  content: 'Set the date to today';
 }
 .bootstrap-datetimepicker-widget .picker-switch {
   text-align: center;
@@ -201,7 +201,7 @@
   overflow: hidden;
   clip: rect(0, 0, 0, 0);
   border: 0;
-  content: "Toggle Date and Time Screens";
+  content: 'Toggle Date and Time Screens';
 }
 .bootstrap-datetimepicker-widget .picker-switch td {
   padding: 0;
@@ -247,7 +247,7 @@
   overflow: hidden;
   clip: rect(0, 0, 0, 0);
   border: 0;
-  content: "Previous Month";
+  content: 'Previous Month';
 }
 .bootstrap-datetimepicker-widget table th.next::after {
   position: absolute;
@@ -258,7 +258,7 @@
   overflow: hidden;
   clip: rect(0, 0, 0, 0);
   border: 0;
-  content: "Next Month";
+  content: 'Next Month';
 }
 .bootstrap-datetimepicker-widget table thead tr:first-child th {
   cursor: pointer;
@@ -272,7 +272,7 @@
   width: 54px;
 }
 .bootstrap-datetimepicker-widget table td.cw {
-  font-size: .8em;
+  font-size: 0.8em;
   height: 20px;
   line-height: 20px;
   color: #777777;

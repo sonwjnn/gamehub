@@ -1,16 +1,16 @@
-import { useIsClient } from "usehooks-ts";
+import { useIsClient } from 'usehooks-ts'
 
 export const useOrigin = () => {
-  const isClient = useIsClient();
+  const isClient = useIsClient()
 
   const origin =
-    typeof window !== "undefined" && window.location.origin
+    typeof window !== 'undefined' && window.location.origin
       ? window.location.origin
-      : "";
+      : ''
 
   if (!isClient) {
-    return "";
+    return ''
   }
 
-  return origin;
-};
+  return origin
+}

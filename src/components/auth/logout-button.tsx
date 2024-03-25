@@ -1,21 +1,21 @@
-"use client";
+'use client'
 
-import { logout } from "@/actions/logout";
-import { cn } from "@/lib/utils";
+import { logout } from '@/actions/logout'
+import { cn } from '@/lib/utils'
 
 interface LogoutButtonProps {
-  children?: React.ReactNode;
-  className?: string;
+  children?: React.ReactNode
+  className?: string
 }
 
 export const LogoutButton = ({ children, className }: LogoutButtonProps) => {
   const onClick = () => {
-    logout();
-  };
+    logout()
+  }
 
   return (
-    <span onClick={onClick} className={cn("cursor-pointer", className)}>
+    <span onClick={onClick} className={cn('cursor-pointer', className)}>
       {children}
     </span>
-  );
-};
+  )
+}

@@ -1,5 +1,5 @@
-import Image from "next/image";
-import Link from "next/link";
+import Image from 'next/image'
+import Link from 'next/link'
 
 interface LogoProps {}
 
@@ -13,9 +13,9 @@ export const Logo = ({}: LogoProps) => {
           width={0}
           height={0}
           sizes="100vw"
-          style={{ width: "100%", height: "auto" }}
+          style={{ width: '100%', height: 'auto' }}
         />
       </div>
     </Link>
-  );
-};
+  )
+}

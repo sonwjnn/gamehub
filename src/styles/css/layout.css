@@ -8789,73 +8789,82 @@ img {
   }
 }
 @font-face {
-  font-family: "Inter";
-  src: url("/fonts/Inter-Thin.woff2") format("woff2"),
-    url("/fonts/Inter-Thin.woff") format("woff");
+  font-family: 'Inter';
+  src:
+    url('/fonts/Inter-Thin.woff2') format('woff2'),
+    url('/fonts/Inter-Thin.woff') format('woff');
   font-weight: 100;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
-  font-family: "Inter";
-  src: url("/fonts/Inter-Black.woff2") format("woff2"),
-    url("/fonts/Inter-Black.woff") format("woff");
+  font-family: 'Inter';
+  src:
+    url('/fonts/Inter-Black.woff2') format('woff2'),
+    url('/fonts/Inter-Black.woff') format('woff');
   font-weight: 900;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
-  font-family: "Inter";
-  src: url("/fonts/Inter-SemiBold.woff2") format("woff2"),
-    url("/fonts/Inter-SemiBold.woff") format("woff");
+  font-family: 'Inter';
+  src:
+    url('/fonts/Inter-SemiBold.woff2') format('woff2'),
+    url('/fonts/Inter-SemiBold.woff') format('woff');
   font-weight: 600;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
-  font-family: "Inter";
-  src: url("/fonts/Inter-Bold.woff2") format("woff2"),
-    url("/fonts/Inter-Bold.woff") format("woff");
+  font-family: 'Inter';
+  src:
+    url('/fonts/Inter-Bold.woff2') format('woff2'),
+    url('/fonts/Inter-Bold.woff') format('woff');
   font-weight: bold;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
-  font-family: "Inter";
-  src: url("/fonts/Inter-ExtraBold.woff2") format("woff2"),
-    url("/fonts/Inter-ExtraBold.woff") format("woff");
+  font-family: 'Inter';
+  src:
+    url('/fonts/Inter-ExtraBold.woff2') format('woff2'),
+    url('/fonts/Inter-ExtraBold.woff') format('woff');
   font-weight: bold;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
-  font-family: "Inter";
-  src: url("/fonts/Inter-Medium.woff2") format("woff2"),
-    url("/fonts/Inter-Medium.woff") format("woff");
+  font-family: 'Inter';
+  src:
+    url('/fonts/Inter-Medium.woff2') format('woff2'),
+    url('/fonts/Inter-Medium.woff') format('woff');
   font-weight: 500;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
-  font-family: "Inter";
-  src: url("/fonts/Inter-Light.woff2") format("woff2"),
-    url("/fonts/Inter-Light.woff") format("woff");
+  font-family: 'Inter';
+  src:
+    url('/fonts/Inter-Light.woff2') format('woff2'),
+    url('/fonts/Inter-Light.woff') format('woff');
   font-weight: 300;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
-  font-family: "Inter";
-  src: url("/fonts/Inter-ExtraLight.woff2") format("woff2"),
-    url("/fonts/Inter-ExtraLight.woff") format("woff");
+  font-family: 'Inter';
+  src:
+    url('/fonts/Inter-ExtraLight.woff2') format('woff2'),
+    url('/fonts/Inter-ExtraLight.woff') format('woff');
   font-weight: 200;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
-  font-family: "Inter";
-  src: url("/fonts/Inter-Regular.woff2") format("woff2"),
-    url("/fonts/Inter-Regular.woff") format("woff");
+  font-family: 'Inter';
+  src:
+    url('/fonts/Inter-Regular.woff2') format('woff2'),
+    url('/fonts/Inter-Regular.woff') format('woff');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -9050,7 +9059,7 @@ img {
 input,
 select,
 textarea {
-  font-family: "Inter";
+  font-family: 'Inter';
 }
 .form-control,
 button,
@@ -9071,12 +9080,12 @@ textarea:focus {
   box-shadow: none !important;
   border-color: #ece855 !important;
 }
-input[type="checkbox"],
-input[type="radio"] {
+input[type='checkbox'],
+input[type='radio'] {
   display: none;
 }
-input[type="checkbox"] + label,
-input[type="radio"] + label {
+input[type='checkbox'] + label,
+input[type='radio'] + label {
   display: block;
   padding-left: 20px;
   width: 100%;
@@ -9084,58 +9093,58 @@ input[type="radio"] + label {
   cursor: pointer;
   color: #161a1d;
 }
-input[type="checkbox"] + label:after,
-input[type="checkbox"] + label:before,
-input[type="radio"] + label:after,
-input[type="radio"] + label:before {
+input[type='checkbox'] + label:after,
+input[type='checkbox'] + label:before,
+input[type='radio'] + label:after,
+input[type='radio'] + label:before {
   position: absolute;
-  content: "";
+  content: '';
   left: 0;
   top: 4px;
   border: 1px solid #ffaa00;
 }
-input[type="checkbox"] + label:after,
-input[type="radio"] + label:after {
+input[type='checkbox'] + label:after,
+input[type='radio'] + label:after {
   opacity: 0;
   background-color: #ffaa00;
 }
-input[type="checkbox"]:checked + label:after,
-input[type="checkbox"]:checked + label:before,
-input[type="radio"]:checked + label:after,
-input[type="radio"]:checked + label:before {
+input[type='checkbox']:checked + label:after,
+input[type='checkbox']:checked + label:before,
+input[type='radio']:checked + label:after,
+input[type='radio']:checked + label:before {
   border: 1px solid #ffaa00;
 }
-input[type="checkbox"]:checked + label:after,
-input[type="radio"]:checked + label:after {
+input[type='checkbox']:checked + label:after,
+input[type='radio']:checked + label:after {
   opacity: 1;
 }
-input[type="radio"] + label:after,
-input[type="radio"] + label:before {
+input[type='radio'] + label:after,
+input[type='radio'] + label:before {
   width: 15px;
   height: 15px;
   border-radius: 50%;
   border-color: #ffaa00;
 }
-input[type="radio"] + label:after {
+input[type='radio'] + label:after {
   -webkit-transform: scale(0.6);
   -ms-transform: scale(0.6);
   transform: scale(0.6);
 }
-input[type="checkbox"] + label:after,
-input[type="checkbox"] + label:before {
+input[type='checkbox'] + label:after,
+input[type='checkbox'] + label:before {
   width: 13px;
   height: 13px;
   border-radius: 2px;
 }
-input[type="checkbox"] + label:after {
-  content: "✓";
+input[type='checkbox'] + label:after {
+  content: '✓';
   color: #fff;
   font-size: 8px;
   text-align: center;
   line-height: 11px;
 }
-input:not([type="checkbox"]),
-input:not([type="radio"]) {
+input:not([type='checkbox']),
+input:not([type='radio']) {
   width: 100%;
 }
 .list {
@@ -9150,7 +9159,7 @@ input:not([type="radio"]) {
 }
 .list_dirc li:before {
   position: absolute;
-  content: "";
+  content: '';
   left: 0;
   border-radius: 50%;
   background: #343436;
@@ -9159,7 +9168,7 @@ input:not([type="radio"]) {
   height: 3px;
 }
 body {
-  font-family: "Inter";
+  font-family: 'Inter';
   font-style: normal;
   font-weight: 300;
   background: #efefef;
@@ -9256,7 +9265,7 @@ body {
   width: 100% !important;
   height: 100% !important;
 }
-a[href="none"] {
+a[href='none'] {
   pointer-events: none;
 }
 .nowrap {

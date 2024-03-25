@@ -1,8 +1,8 @@
-import Image from "next/image";
+import Image from 'next/image'
 
-interface TableCardInfoProps {}
+interface TableCardsProps {}
 
-export const TableCardInfo = ({}: TableCardInfoProps) => {
+export const TableCards = ({}: TableCardsProps) => {
   return (
     <div className="group_midle">
       <div className="group_pocker">
@@ -15,7 +15,7 @@ export const TableCardInfo = ({}: TableCardInfoProps) => {
                 width={0}
                 height={0}
                 sizes="100vw"
-                style={{ width: "100%", height: "100%" }}
+                style={{ width: '100%', height: '100%' }}
               />
             </div>
           </div>
@@ -29,7 +29,7 @@ export const TableCardInfo = ({}: TableCardInfoProps) => {
                 width={0}
                 height={0}
                 sizes="100vw"
-                style={{ width: "100%", height: "100%" }}
+                style={{ width: '100%', height: '100%' }}
               />
             </div>
           </div>
@@ -43,7 +43,7 @@ export const TableCardInfo = ({}: TableCardInfoProps) => {
                 width={0}
                 height={0}
                 sizes="100vw"
-                style={{ width: "100%", height: "100%" }}
+                style={{ width: '100%', height: '100%' }}
               />
             </div>
           </div>
@@ -64,5 +64,5 @@ export const TableCardInfo = ({}: TableCardInfoProps) => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}

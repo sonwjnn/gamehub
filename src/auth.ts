@@ -1,6 +1,6 @@
-import authConfig from "@/auth.config";
-import NextAuth from "next-auth";
-import userApi from "./services/api/modules/user-api";
+import authConfig from '@/auth.config'
+import NextAuth from 'next-auth'
+import userApi from './services/api/modules/user-api'
 
 export const {
   handlers: { GET, POST },
@@ -10,8 +10,8 @@ export const {
   unstable_update,
 } = NextAuth({
   pages: {
-    signIn: "/auth/login",
-    error: "/auth/error",
+    signIn: '/auth/login',
+    error: '/auth/error',
   },
   events: {
     async linkAccount({ user }) {
@@ -25,50 +25,50 @@ export const {
   },
   callbacks: {
     async signIn({ user, account }) {
-      if (account?.provider !== "credentials") {
-        return true;
+      if (account?.provider !== 'credentials') {
+        return true
       }
 
       if (!user?.id) {
-        return false;
+        return false
       }
 
-      const existingUser = await userApi.getUserById({ userId: user.id });
+      const existingUser = await userApi.getUserById({ userId: user.id })
 
-      if (!existingUser) return false;
+      if (!existingUser) return false
 
-      return true;
+      return true
     },
     async session({ session, token }) {
       if (session.user && token.sub) {
-        session.user.id = token.sub;
+        session.user.id = token.sub
       }
 
       if (session.user) {
-        session.user.username = token.username as string;
+        session.user.username = token.username as string
         session.user.image =
-          (token.image as string) || (token.picture as string);
-        session.user.email = token.email as string;
+          (token.image as string) || (token.picture as string)
+        session.user.email = token.email as string
       }
 
-      return session;
+      return session
     },
     async jwt({ token }) {
-      if (!token.sub) return token;
+      if (!token.sub) return token
 
       const { response: existingUser } = await userApi.getUserById({
         userId: token.sub,
-      });
+      })
 
-      if (!existingUser) return token;
+      if (!existingUser) return token
 
-      token.username = existingUser.username;
-      token.image = existingUser.image;
-      token.email = existingUser.email;
+      token.username = existingUser.username
+      token.image = existingUser.image
+      token.email = existingUser.email
 
-      return token;
+      return token
     },
   },
-  session: { strategy: "jwt" },
+  session: { strategy: 'jwt' },
   ...authConfig,
-});
+})

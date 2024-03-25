@@ -1,30 +1,30 @@
-"use client";
+'use client'
 
-import { useChatQuery } from "@/hooks/use-chat-query";
-import { useChatScroll } from "@/hooks/use-chat-scroll";
-import { useChatSocket } from "@/hooks/use-chat-socket";
-import { Member, Message, User } from "@/types";
-import { format } from "date-fns";
-import { Loader2, ServerCrash } from "lucide-react";
-import { ElementRef, Fragment, useRef } from "react";
+import { useChatQuery } from '@/hooks/use-chat-query'
+import { useChatScroll } from '@/hooks/use-chat-scroll'
+import { useChatSocket } from '@/hooks/use-chat-socket'
+import { Member, Message, User } from '@/types'
+import { format } from 'date-fns'
+import { Loader2, ServerCrash } from 'lucide-react'
+import { ElementRef, Fragment, useRef } from 'react'
 
-import { ChatItem, ChatItemSkeleton } from "./chat-item";
+import { ChatItem, ChatItemSkeleton } from './chat-item'
 
-const DATE_FORMAT = "d MMM yyyy, HH:mm";
+const DATE_FORMAT = 'd MMM yyyy, HH:mm'
 
 type MessageWithMember = Message & {
-  user: User;
-};
+  user: User
+}
 
 interface ChatMessagesProps {
-  name: string;
-  member: Member;
-  chatId: string;
-  socketUrl: string;
-  socketQuery: Record<string, string>;
-  roomId?: string;
-  conversationId?: string;
-  type: "room" | "conversation";
+  name: string
+  member: Member
+  chatId: string
+  socketUrl: string
+  socketQuery: Record<string, string>
+  roomId?: string
+  conversationId?: string
+  type: 'room' | 'conversation'
 }
 
 export const ChatMessages = ({
@@ -37,35 +37,35 @@ export const ChatMessages = ({
   conversationId,
   type,
 }: ChatMessagesProps) => {
-  const queryKey = `chat:${chatId}`;
-  const addKey = `chat:${chatId}:messages`;
-  const updateKey = `chat:${chatId}:messages:update`;
+  const queryKey = `chat:${chatId}`
+  const addKey = `chat:${chatId}:messages`
+  const updateKey = `chat:${chatId}:messages:update`
 
-  const chatRef = useRef<ElementRef<"div">>(null);
-  const bottomRef = useRef<ElementRef<"div">>(null);
+  const chatRef = useRef<ElementRef<'div'>>(null)
+  const bottomRef = useRef<ElementRef<'div'>>(null)
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status } =
     useChatQuery({
       queryKey,
       type,
-      roomId: roomId || "",
-      conversationId: conversationId || "",
-    });
+      roomId: roomId || '',
+      conversationId: conversationId || '',
+    })
 
-  useChatSocket({ queryKey, addKey, updateKey });
+  useChatSocket({ queryKey, addKey, updateKey })
   useChatScroll({
     chatRef,
     bottomRef,
     loadMore: fetchNextPage,
     shouldLoadMore: !isFetchingNextPage && !!hasNextPage,
     count: data?.pages?.[0]?.items?.length ?? 0,
-  });
+  })
 
   // if (status === 'pending') {
   //   return <ChatMessagesSkeleton />
   // }
 
-  if (status === "error") {
+  if (status === 'error') {
     return (
       <div className="flex flex-1 flex-col items-center justify-center">
         <ServerCrash className="my-4 size-7 text-zinc-500" />
@@ -73,7 +73,7 @@ export const ChatMessages = ({
           Something went wrong!
         </p>
       </div>
-    );
+    )
   }
 
   return (
@@ -98,7 +98,7 @@ export const ChatMessages = ({
         {data?.pages?.map((group, i) => (
           <Fragment key={i}>
             {group?.items?.map((message: MessageWithMember) => {
-              if (!message.content) return null;
+              if (!message.content) return null
 
               return (
                 <ChatItem
@@ -115,15 +115,15 @@ export const ChatMessages = ({
                   socketUrl={socketUrl}
                   socketQuery={socketQuery}
                 />
-              );
+              )
             })}
           </Fragment>
         ))}
       </div>
       <div ref={bottomRef} />
     </div>
-  );
-};
+  )
+}
 
 export const ChatMessagesSkeleton = () => (
   <div className="h-full flex-1">
@@ -131,4 +131,4 @@ export const ChatMessagesSkeleton = () => (
       <ChatItemSkeleton key={i} />
     ))}
   </div>
-);
+)

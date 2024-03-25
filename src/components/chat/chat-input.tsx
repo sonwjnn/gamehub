@@ -1,67 +1,67 @@
-"use client";
+'use client'
 
 // import { EmojiPicker } from "@/components/emoji-picker";
-import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+import { Form, FormControl, FormField, FormItem } from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
 // import { useModal } from "@/store/use-modal-store";
-import { zodResolver } from "@hookform/resolvers/zod";
-import axios from "axios";
-import { Plus } from "lucide-react";
-import { useRouter } from "next/navigation";
-import qs from "query-string";
-import { useForm } from "react-hook-form";
-import * as z from "zod";
+import { zodResolver } from '@hookform/resolvers/zod'
+import axios from 'axios'
+import { Plus } from 'lucide-react'
+import { useRouter } from 'next/navigation'
+import qs from 'query-string'
+import { useForm } from 'react-hook-form'
+import * as z from 'zod'
 
-import { Skeleton } from "../ui/skeleton";
-import { useCurrentUser } from "@/hooks/use-current-user";
+import { Skeleton } from '../ui/skeleton'
+import { useCurrentUser } from '@/hooks/use-current-user'
 
 interface ChatInputProps {
-  apiUrl: string;
-  query: Record<string, any>;
-  name: string;
-  type: "conversation" | "room";
+  apiUrl: string
+  query: Record<string, any>
+  name: string
+  type: 'conversation' | 'room'
 }
 
 const formSchema = z.object({
   content: z.string().min(1),
-});
+})
 
 export const ChatInput = ({ apiUrl, query, name, type }: ChatInputProps) => {
   // const { onOpen } = useModal();
-  const user = useCurrentUser();
+  const user = useCurrentUser()
 
-  const router = useRouter();
+  const router = useRouter()
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      content: "",
+      content: '',
     },
-  });
+  })
   // if (!currentUser) {
   //   return null;
   // }
 
-  const isLoading = form.formState.isSubmitting;
+  const isLoading = form.formState.isSubmitting
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       const url = qs.stringifyUrl({
         url: apiUrl,
         query,
-      });
+      })
 
       await axios.post(url, {
         ...values,
         user,
-      });
+      })
 
-      form.reset();
-      router.refresh();
+      form.reset()
+      router.refresh()
     } catch (error) {
       // console.log(error)
     }
-  };
+  }
 
   return (
     <Form {...form}>
@@ -93,7 +93,7 @@ export const ChatInput = ({ apiUrl, query, name, type }: ChatInputProps) => {
                     disabled={isLoading}
                     className="border-0 border-none bg-zinc-200/90  px-14 py-6 text-zinc-600 focus-visible:ring-0 focus-visible:ring-offset-0 dark:bg-zinc-700/75 dark:text-zinc-200"
                     placeholder={`Message ${
-                      type === "conversation" ? name : "#" + name
+                      type === 'conversation' ? name : '#' + name
                     }`}
                     {...field}
                   />
@@ -111,11 +111,11 @@ export const ChatInput = ({ apiUrl, query, name, type }: ChatInputProps) => {
         />
       </form>
     </Form>
-  );
-};
+  )
+}
 
 export const ChatInputSkeleton = () => (
   <div className="relative p-4 pb-6">
     <Skeleton className="h-10 w-full" />
   </div>
-);
+)

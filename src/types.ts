@@ -1,50 +1,51 @@
-import { Server as NetServer, Socket } from "net";
-import { NextApiResponse } from "next";
-import { Server as SocketIOServer } from "socket.io";
+import { Server as NetServer, Socket } from 'net'
+import { NextApiResponse } from 'next'
+import { Server as SocketIOServer } from 'socket.io'
 
 export type User = {
-  id: string;
-  username: string;
-  email: string;
-  image: string;
-  token: string;
-  createdAt: Date;
-  updatedAt: Date;
-};
+  id: string
+  username: string
+  email: string
+  image: string
+  token: string
+  salt: string
+  createdAt: Date
+  updatedAt: Date
+}
 
 export type Room = {
-  id: string;
-  name: string;
-  dealerId: string;
-  eventId: string;
+  id: string
+  name: string
+  dealerId: string
+  eventId: string
 
-  userId: string;
-  user?: User;
+  userId: string
+  user?: User
 
-  min: number;
-  max: number;
-  status: string;
-  createdAt: Date;
-  updatedAt: Date;
-};
+  min: number
+  max: number
+  status: string
+  createdAt: Date
+  updatedAt: Date
+}
 
 export type Member = {
-  id: string;
+  id: string
 
-  userId: string;
-  user?: User;
+  userId: string
+  user?: User
 
-  roomId: string;
-};
+  roomId: string
+}
 
 export type Message = {
-  id: string;
-  content: string;
-  memberId: string;
-  member?: Member;
-  deleted: boolean;
-  createdAt: Date;
-};
+  id: string
+  content: string
+  memberId: string
+  member?: Member
+  deleted: boolean
+  createdAt: Date
+}
 
 // export type DirectMessage = {
 //   id: string;
@@ -66,14 +67,14 @@ export type Message = {
 // export type MemberWithUser = Member & { user: User };
 
 export enum Role {
-  ADMIN = "ADMIN",
-  USER = "USER",
+  ADMIN = 'ADMIN',
+  USER = 'USER',
 }
 
 export type NextApiResponseServerIo = NextApiResponse & {
   socket: Socket & {
     server: NetServer & {
-      io: SocketIOServer;
-    };
-  };
-};
+      io: SocketIOServer
+    }
+  }
+}

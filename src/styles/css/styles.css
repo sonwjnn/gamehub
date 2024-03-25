@@ -98,7 +98,7 @@
 }
 #header .nav-link:before {
   position: absolute;
-  content: "";
+  content: '';
   bottom: 0;
   left: 0;
   height: 3px;
@@ -278,7 +278,7 @@
   transition: all 0.3s;
 }
 .language .dropdown-toggle:hover,
-.language .dropdown-toggle[aria-expanded="true"] {
+.language .dropdown-toggle[aria-expanded='true'] {
   background-color: rgba(255, 255, 255, 0.5);
   border-radius: 4px;
 }
@@ -489,7 +489,7 @@
   bottom: -6%;
   left: -12%;
   right: -11%;
-  content: "";
+  content: '';
   background-image: url(/images/flare.png);
   background-size: 100% 100%;
   z-index: 1;
@@ -681,7 +681,7 @@
   left: 1.5px;
   right: 1.5px;
   bottom: 1.5px;
-  content: "";
+  content: '';
   z-index: -1;
   border-width: 4px;
   border-radius: 6px;
@@ -990,14 +990,14 @@
   border-radius: 4px;
   display: block;
   max-height: 80px;
-  font-family: "Inter" !important;
+  font-family: 'Inter' !important;
   font-size: 12px !important;
   line-height: 18px !important;
   white-space: wrap !important;
   color: #fff;
 }
 .group_chat .chat_box .footer .textarea_custom * {
-  font-family: "Inter" !important;
+  font-family: 'Inter' !important;
   font-size: 12px !important;
   line-height: 18px !important;
   color: #fff !important;
@@ -1160,7 +1160,7 @@
   bottom: -6%;
   left: -12%;
   right: -11%;
-  content: "";
+  content: '';
   background-image: url(/images/flare.png);
   background-size: 100% 100%;
   z-index: 1;
@@ -1176,7 +1176,7 @@
   ~ div:not(.item_active)
   .imgDrop:before {
   position: absolute;
-  content: "";
+  content: '';
   top: 0;
   bottom: 0;
   left: 0;
@@ -1506,7 +1506,7 @@
   left: 0;
   right: 0;
   height: 70%;
-  content: "";
+  content: '';
   background-image: -webkit-gradient(
     linear,
     left bottom,

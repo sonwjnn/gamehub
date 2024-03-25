@@ -1,12 +1,12 @@
-import { useSocket } from "@/providers/socket-provider";
-import messsageApi from "@/services/api/modules/message-api";
-import { useInfiniteQuery } from "@tanstack/react-query";
+import { useSocket } from '@/providers/socket-provider'
+import messsageApi from '@/services/api/modules/message-api'
+import { useInfiniteQuery } from '@tanstack/react-query'
 
 interface ChatQueryProps {
-  queryKey: string;
-  type: "room" | "conversation";
-  roomId: string;
-  conversationId: string;
+  queryKey: string
+  type: 'room' | 'conversation'
+  roomId: string
+  conversationId: string
 }
 
 export const useChatQuery = ({
@@ -15,17 +15,17 @@ export const useChatQuery = ({
   roomId,
   conversationId,
 }: ChatQueryProps) => {
-  const { isConnected } = useSocket();
+  const { isConnected } = useSocket()
 
   const fetchMessages = async ({
     pageParam,
   }: {
-    pageParam: string | undefined;
+    pageParam: string | undefined
   }) => {
-    let res;
+    let res
 
-    if (type === "room") {
-      res = await messsageApi.getMessagesByRoomId({ roomId });
+    if (type === 'room') {
+      res = await messsageApi.getMessagesByRoomId({ roomId })
     }
     // else if (type === "conversation") {
     // res = await getDirectMessageByConversationId({
@@ -34,17 +34,17 @@ export const useChatQuery = ({
     // })
     // }
 
-    return res?.response;
-  };
+    return res?.response
+  }
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status } =
     useInfiniteQuery({
       initialPageParam: undefined,
       queryKey: [queryKey],
       queryFn: fetchMessages,
-      getNextPageParam: (lastPage) => lastPage?.nextCursor,
+      getNextPageParam: lastPage => lastPage?.nextCursor,
       refetchInterval: isConnected ? false : 1000,
-    });
+    })
 
   return {
     data,
@@ -52,5 +52,5 @@ export const useChatQuery = ({
     hasNextPage,
     isFetchingNextPage,
     status,
-  };
-};
+  }
+}

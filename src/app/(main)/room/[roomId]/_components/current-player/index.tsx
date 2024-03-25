@@ -1,16 +1,16 @@
-import { cn } from "@/lib/utils";
-import Image from "next/image";
-import { Hand } from "../hand";
-import { UserAvatar } from "@/components/user-avatar";
+import Image from 'next/image'
+import { Hand } from './hand'
+import { UserAvatar } from '@/components/user-avatar'
+import { CurrentPlayerAction } from './actions'
 
 interface CurrentPlayerProps {
-  type?: "fold" | "active" | "default";
-  flip?: boolean;
+  type?: 'fold' | 'active' | 'default'
+  showdown?: boolean
 }
 
 export const CurrentPlayer = ({
-  type = "default",
-  flip = false,
+  type = 'default',
+  showdown = false,
 }: CurrentPlayerProps) => {
   return (
     <div className="group_tool flex flex-space gap-12">
@@ -26,7 +26,7 @@ export const CurrentPlayer = ({
               width={0}
               height={0}
               sizes="100vw"
-              style={{ width: "100%", height: "auto" }}
+              style={{ width: '100%', height: 'auto' }}
             />
           </div>
           <div className="btn_detail">Detail</div>
@@ -51,7 +51,6 @@ export const CurrentPlayer = ({
                 <Hand
                   imageUrlFirst="/images/pocker_on.png"
                   imageUrlSecond="/images/pocker_on.png"
-                  flip={flip}
                 />
               </div>
             </div>
@@ -66,40 +65,7 @@ export const CurrentPlayer = ({
           </div>
         </div>
       </div>
-      <div className="toolbar">
-        <div className="item">
-          <span className="number">1</span>
-          <div className="value">Quarter</div>
-        </div>
-        <div className="item">
-          <span className="number">2</span>
-          <div className="value">Half</div>
-        </div>
-        <div className="item">
-          <span className="number">3</span>
-          <div className="value">Full</div>
-        </div>
-        <div className="item">
-          <span className="number number_left">4 </span>
-          <span className="number">5</span>
-        </div>
-        <div className="item">
-          <span className="number">5</span>
-          <div className="value">Raise</div>
-        </div>
-        <div className="item">
-          <span className="number">7</span>
-          <div className="value">Call</div>
-        </div>
-        <div className="item">
-          <span className="number">8</span>
-          <div className="value">Fold</div>
-        </div>
-        <div className="item">
-          <span className="number">9</span>
-          <div className="value">All in</div>
-        </div>
-      </div>
+      <CurrentPlayerAction />
     </div>
-  );
-};
+  )
+}
