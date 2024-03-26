@@ -1,4 +1,4 @@
-import { Button } from '@/components/ui/button'
+import { RoomButton } from '@/components/room-button'
 import { currentUser } from '@/lib/auth'
 import { redirect } from 'next/navigation'
 
@@ -9,5 +9,5 @@ export default async function Page() {
     return redirect('/auth/login')
   }
 
-  return <Button className="text-white">Go to room 2</Button>
+  return <RoomButton />
 }
