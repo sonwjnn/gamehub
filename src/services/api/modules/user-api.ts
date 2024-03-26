@@ -5,22 +5,30 @@ const userEndpoints = {
   getUserById: ({ userId }: { userId: string }) => `users/${userId}`,
   getUserByUsername: ({ username }: { username: string }) =>
     `users/username/${username}`,
-  register: `users/register`,
-  login: `users/login`,
+  register: `auth/register`,
+  login: `auth/login`,
 }
 
 const userApi = {
-  register: async (data: any) => {
+  login: async (data: any) => {
     try {
-      const response = await privateClient.post(userEndpoints.register, {
-        ...data,
-        member_id: data.memberId,
-      })
-      if (response && response.data)
-        return {
-          response: response.data,
-          success: 'Register successfully!',
-        }
+      const response = await privateClient.post(userEndpoints.login, data)
+
+      if (response && response.data) return { response: response.data }
+      return { response }
+    } catch (error) {
+      return { error: 'Something went wrong' }
+    }
+  },
+  register: async (data: {
+    email: string
+    username: string
+    password: string
+  }) => {
+    try {
+      const response = await privateClient.post(userEndpoints.register, data)
+
+      if (response && response.data) return { response: response.data }
       return { response }
     } catch (error) {
       return { error: 'Something went wrong' }

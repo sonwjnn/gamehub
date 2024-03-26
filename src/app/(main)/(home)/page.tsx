@@ -1,17 +1,13 @@
-'use client'
-
 import { Button } from '@/components/ui/button'
-import { useRouter } from 'next/navigation'
+import { currentUser } from '@/lib/auth'
+import { redirect } from 'next/navigation'
 
-export default function Page() {
-  const router = useRouter()
+export default async function Page() {
+  const user = await currentUser()
 
-  const onClick = () => {
-    return router.push('/room/2')
+  if (!user) {
+    return redirect('/auth/login')
   }
-  return (
-    <Button className="text-white" onClick={onClick}>
-      Go to room 2
-    </Button>
-  )
+
+  return <Button className="text-white">Go to room 2</Button>
 }

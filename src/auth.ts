@@ -49,6 +49,7 @@ export const {
         session.user.image =
           (token.image as string) || (token.picture as string)
         session.user.email = token.email as string
+        session.user.token = token.token as string
       }
 
       return session
@@ -65,6 +66,7 @@ export const {
       token.username = existingUser.username
       token.image = existingUser.image
       token.email = existingUser.email
+      token.token = existingUser.token
 
       return token
     },

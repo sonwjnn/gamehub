@@ -10,7 +10,8 @@ const privateClient = axios.create({
 })
 
 privateClient.interceptors.request.use(async (config: AxiosRequestConfig) => {
-  const token: string | null = localStorage.getItem('actkn')
+  // const token: string | null = localStorage?.getItem('actkn')
+  const token: string | null = 'token'
 
   return {
     ...config,

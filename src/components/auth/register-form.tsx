@@ -17,8 +17,10 @@ import { Input } from '@/components/ui/input'
 import { RegisterSchema } from '@/schemas'
 import userApi from '@/services/api/modules/user-api'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useRouter } from 'next/navigation'
 import { useState, useTransition } from 'react'
 import { useForm } from 'react-hook-form'
+import { toast } from 'sonner'
 import * as z from 'zod'
 
 interface RegisterFormProps {}
@@ -27,6 +29,8 @@ export const RegisterForm = ({}: RegisterFormProps) => {
   const [isPending, startTransition] = useTransition()
   const [error, setError] = useState<string | undefined>('')
   const [success, setSuccess] = useState<string | undefined>('')
+
+  const router = useRouter()
 
   const form = useForm<z.infer<typeof RegisterSchema>>({
     resolver: zodResolver(RegisterSchema),
@@ -41,10 +45,21 @@ export const RegisterForm = ({}: RegisterFormProps) => {
     setError('')
     setSuccess('')
     startTransition(async () => {
-      await userApi.register(values).then(({ response }) => {
-        setError(response.error)
-        setSuccess(response.success)
-      })
+      await userApi
+        .register(values)
+        .then(({ response, error }) => {
+          if (response && response.user) {
+            form.reset()
+            toast.success('Register successfully')
+            router.push('/auth/login')
+            return
+          }
+
+          if (error) {
+            setError(error)
+          }
+        })
+        .catch(error => console.log(error))
     })
   }
 
