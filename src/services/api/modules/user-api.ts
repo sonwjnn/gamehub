@@ -26,7 +26,7 @@ const userApi = {
     password: string
   }) => {
     try {
-      const response = await privateClient.post(userEndpoints.register, data)
+      const response = await publicClient.post(userEndpoints.register, data)
 
       if (response && response.data) return { response: response.data }
       return { response }

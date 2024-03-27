@@ -1,3 +1,4 @@
+import { AdminButton } from '@/components/admin-button'
 import { ChatButton } from '@/components/chat-button'
 import { RoomButton } from '@/components/room-button'
 import { currentUser } from '@/lib/auth'
@@ -14,6 +15,7 @@ export default async function Page() {
     <div className="flex gap-x-4">
       <RoomButton />
       <ChatButton />
+      <AdminButton />
     </div>
   )
 }

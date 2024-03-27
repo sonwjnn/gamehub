@@ -10,8 +10,7 @@ const privateClient = axios.create({
 })
 
 privateClient.interceptors.request.use(async (config: AxiosRequestConfig) => {
-  // const token: string | null = localStorage?.getItem('actkn')
-  const token: string | null = 'token'
+  const token = window?.localStorage?.getItem('SONWIN-AUTH')
 
   return {
     ...config,
@@ -25,6 +24,7 @@ privateClient.interceptors.request.use(async (config: AxiosRequestConfig) => {
 privateClient.interceptors.response.use(
   response => {
     if (response && response.data) return response.data
+
     return response.data
   },
   err => {

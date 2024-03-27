@@ -2,6 +2,11 @@ import { Server as NetServer, Socket } from 'net'
 import { NextApiResponse } from 'next'
 import { Server as SocketIOServer } from 'socket.io'
 
+export enum UserRole {
+  ADMIN = 'ADMIN',
+  USER = 'USER',
+}
+
 export type User = {
   id: string
   username: string
@@ -9,6 +14,7 @@ export type User = {
   image: string
   token: string
   salt: string
+  role: UserRole
   createdAt: Date
   updatedAt: Date
 }

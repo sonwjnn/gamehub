@@ -1,6 +1,7 @@
 import authConfig from '@/auth.config'
 import NextAuth from 'next-auth'
 import userApi from './services/api/modules/user-api'
+import { UserRole } from './types'
 
 export const {
   handlers: { GET, POST },
@@ -46,10 +47,9 @@ export const {
 
       if (session.user) {
         session.user.username = token.username as string
-        session.user.image =
-          (token.image as string) || (token.picture as string)
+        session.user.image = token.image as string
         session.user.email = token.email as string
-        session.user.token = token.token as string
+        session.user.role = token.role as UserRole
       }
 
       return session
@@ -66,7 +66,7 @@ export const {
       token.username = existingUser.username
       token.image = existingUser.image
       token.email = existingUser.email
-      token.token = existingUser.token
+      token.role = existingUser.role
 
       return token
     },

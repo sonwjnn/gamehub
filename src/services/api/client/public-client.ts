@@ -21,6 +21,7 @@ publicClient.interceptors.request.use(async (config: AxiosRequestConfig) => {
 publicClient.interceptors.response.use(
   response => {
     if (response && response.data) return response.data
+
     return response
   },
   err => {
