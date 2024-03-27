@@ -4,7 +4,7 @@
  * @type {string[]}
  */
 
-export const publicRoutes = ['/', '/auth/new-verification', '/search']
+export const publicRoutes = ['/']
 
 /**
  * An array of routes that are used for authentication .
@@ -37,4 +37,4 @@ export const apiWebhooksPrefix = '/api/webhooks'
  * The default redirect path after logging in.
  * @type {string}
  */
-export const DEFAULT_LOGIN_REDIRECT = '/'
+export const DEFAULT_LOGIN_REDIRECT = '/dashboard'
