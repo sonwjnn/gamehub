@@ -6,9 +6,12 @@ import { CurrentPlayer } from './_components/current-player'
 import { TableCards } from './_components/table-cards'
 import { useState } from 'react'
 import { cn } from '@/lib/utils'
+import { useModal } from '@/store/use-modal-store'
+import { Button } from '@/components/ui/button'
 
 const RoomPage = () => {
   const [isChatBoxVisible, setChatBoxVisible] = useState(false)
+  const { onOpen } = useModal()
 
   const handleChatButtonClick = () => {
     setChatBoxVisible(true)
@@ -45,6 +48,7 @@ const RoomPage = () => {
               <OtherPlayer />
             </div>
           </div>
+          B
         </div>
         <TableCards />
         <CurrentPlayer showdown />

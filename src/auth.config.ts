@@ -2,8 +2,6 @@ import userApi from '@/services/api/modules/user-api'
 import { LoginSchema } from '@/schemas'
 import type { NextAuthConfig } from 'next-auth'
 import Credentials from 'next-auth/providers/credentials'
-import { generateFakeCurrentUser } from './lib/mock'
-import { User } from './types'
 
 export default {
   providers: [
@@ -23,8 +21,6 @@ export default {
           const user = response.user
 
           return user
-          // const fakeCurrentUserData = generateFakeCurrentUser()
-          // return fakeCurrentUserData
         }
 
         return null

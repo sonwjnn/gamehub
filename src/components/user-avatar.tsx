@@ -35,7 +35,10 @@ export const UserAvatar = ({
   return (
     <div className={cn('rounded-full', className, avatarSizes({ size }))}>
       <Avatar className={cn(avatarSizes({ size }))}>
-        <AvatarImage src={imageUrl} className="object-cover" />
+        <AvatarImage
+          src={imageUrl || '/images/avatar.png'}
+          className="object-cover"
+        />
         <AvatarFallback style={{ backgroundColor: color }}>
           <User className="text-white" fontSize={18} />
         </AvatarFallback>

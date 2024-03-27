@@ -21,7 +21,6 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import { useState, useTransition } from 'react'
 import { useForm } from 'react-hook-form'
 import * as z from 'zod'
-import { toast } from 'sonner'
 import { login } from '@/actions/login'
 
 interface LoginFormProps {}
@@ -30,7 +29,6 @@ export const LoginForm = ({}: LoginFormProps) => {
   const [isPending, startTransition] = useTransition()
   const [error, setError] = useState<string | undefined>('')
   const [success, setSuccess] = useState<string | undefined>('')
-  const router = useRouter()
 
   const searchParams = useSearchParams()
   const callbackUrl = searchParams?.get('callbackUrl')

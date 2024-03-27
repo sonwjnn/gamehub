@@ -72,9 +72,8 @@ export type Message = {
 
 // export type MemberWithUser = Member & { user: User };
 
-export enum Role {
-  ADMIN = 'ADMIN',
-  USER = 'USER',
+export type RoomWithMembers = Room & {
+  members: Member[]
 }
 
 export type NextApiResponseServerIo = NextApiResponse & {
