@@ -10,7 +10,7 @@ const privateClient = axios.create({
 })
 
 privateClient.interceptors.request.use(async (config: AxiosRequestConfig) => {
-  const token = window?.localStorage?.getItem('SONWIN-AUTH')
+  const token = `window?.localStorage?.getItem('SONWIN-AUTH')`
 
   return {
     ...config,

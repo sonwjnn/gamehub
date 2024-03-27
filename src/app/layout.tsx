@@ -8,8 +8,6 @@ import type { Metadata } from 'next'
 import { Open_Sans } from 'next/font/google'
 
 import './globals.css'
-import '@/styles/css/layout.css'
-import '@/styles/css/styles.css'
 
 import { SessionProvider } from 'next-auth/react'
 import { auth } from '@/auth'

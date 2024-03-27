@@ -12,7 +12,7 @@ const userEndpoints = {
 const userApi = {
   login: async (data: any) => {
     try {
-      const response = await privateClient.post(userEndpoints.login, data)
+      const response = await publicClient.post(userEndpoints.login, data)
 
       if (response && response.data) return { response: response.data }
       return { response }

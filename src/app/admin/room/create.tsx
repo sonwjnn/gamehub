@@ -1,13 +1,36 @@
-import { SimpleForm, Create, TextInput, required } from 'react-admin'
+import {
+  SimpleForm,
+  Create,
+  TextInput,
+  required,
+  ReferenceInput,
+  NumberInput,
+  SelectInput,
+} from 'react-admin'
 
 export const RoomCreate = () => {
   return (
     <Create>
       <SimpleForm>
         <TextInput source="name" validate={[required()]} label="Name" />
-        <TextInput source="min" validate={[required()]} label="Min" />
-        <TextInput source="max" validate={[required()]} label="Max" />
-        <TextInput source="status" validate={[required()]} label="Status" />
+        <NumberInput source="min" validate={[required()]} label="Min" />
+        <NumberInput source="max" validate={[required()]} label="Max" />
+        <ReferenceInput source="userId" reference="users" />
+        <SelectInput
+          source="status"
+          choices={[
+            {
+              id: 'ACTIVE',
+              name: 'ACTIVE',
+            },
+            {
+              id: 'INACTIVE',
+              name: 'INACTIVE',
+            },
+          ]}
+          validate={[required()]}
+          label="Status"
+        />
       </SimpleForm>
     </Create>
   )
