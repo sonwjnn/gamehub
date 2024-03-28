@@ -5,7 +5,8 @@ import {
   SelectField,
   TextField,
   TextInput,
-} from 'react-admin'
+} from 'react-admin';
+
 
 const roomStatusChoices = [
   { id: 'ACTIVE', name: 'ACTIVE' },
