@@ -1,4 +1,13 @@
-import { Datagrid, List, NumberField, SelectField, TextField } from 'react-admin'
+import { Datagrid, List, NumberField, SelectField, TextField } from 'react-admin';
+
+
+const eventStatusChoices = [
+  { id: 'active', name: 'active' },
+  { id: 'inactive', name: 'inactive' },
+];
+
+
+const renderNumberField = (source: string | undefined) => <NumberField source={source} />;
 
 export const EventsList = () => {
   return (
@@ -7,26 +16,10 @@ export const EventsList = () => {
         <TextField source="id" />
         <TextField source="name" />
         <TextField source="prize" />
-        <NumberField source="min" />
-        <NumberField source="max" />
-        <SelectField
-          source="status"
-          choices={[
-            {
-              id: 'ADMIN',
-              name: 'ADMIN',
-            },
-            {
-              id: 'USER',
-              name: 'USER',
-            },
-          ]}
-        />
-        <TextField source="rooms" />
-        <TextField source="start" />
-        <TextField source="end" />
-        <TextField source="email" />
+        {renderNumberField("min")}
+        {renderNumberField("max")}
+        <SelectField source="status" choices={eventStatusChoices} />
       </Datagrid>
     </List>
-  )
-}
+  );
+};
