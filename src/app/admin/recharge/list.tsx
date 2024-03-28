@@ -12,14 +12,8 @@ export const RechargeList = () => {
         <SelectField
           source="status"
           choices={[
-            {
-              id: 'ADMIN',
-              name: 'ADMIN',
-            },
-            {
-              id: 'USER',
-              name: 'USER',
-            },
+            { id: 'active', name: 'active' },
+            { id: 'inactive', name: 'inactive' },
           ]}
         />
         <TextField source="rooms" />

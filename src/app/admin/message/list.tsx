@@ -1,5 +1,11 @@
 import { Datagrid, List, NumberField, SelectField, TextField } from 'react-admin'
 
+
+const messageStatusChoices = [
+  { id: 'active', name: 'active' },
+  { id: 'inactive', name: 'inactive' },
+]
+
 export const MessageList = () => {
   return (
     <List>
@@ -7,21 +13,9 @@ export const MessageList = () => {
         <TextField source="id" />
         <TextField source="name" />
         <TextField source="prize" />
-        <NumberField source="min" />
-        <NumberField source="max" />
-        <SelectField
-          source="status"
-          choices={[
-            {
-              id: 'ADMIN',
-              name: 'ADMIN',
-            },
-            {
-              id: 'USER',
-              name: 'USER',
-            },
-          ]}
-        />
+        <TextField source="min" />
+        <TextField source="max" />
+        <SelectField source="status" choices={messageStatusChoices} key={'status'} />
         <TextField source="rooms" />
         <TextField source="start" />
         <TextField source="end" />

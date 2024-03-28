@@ -19,14 +19,8 @@ export const RoomCreate = () => {
         <SelectInput
           source="status"
           choices={[
-            {
-              id: 'ACTIVE',
-              name: 'ACTIVE',
-            },
-            {
-              id: 'INACTIVE',
-              name: 'INACTIVE',
-            },
+            { id: 'active', name: 'active' },
+            { id: 'inactive', name: 'inactive' },
           ]}
           validate={[required()]}
           label="Status"

@@ -7,8 +7,8 @@ import {
 } from 'react-admin'
 
 const bankStatusChoices = [
-  { id: 'ADMIN', name: 'ADMIN' },
-  { id: 'USER', name: 'USER' },
+  { id: 'active', name: 'active' },
+  { id: 'inactive', name: 'inactive' },
 ];
 
 const renderNumberField = (source: string | undefined) => <NumberField source={source} />;
