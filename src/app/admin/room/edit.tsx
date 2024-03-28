@@ -13,8 +13,8 @@ export const RoomEdit = () => {
       <SimpleForm>
         <TextInput source="id" validate={[required()]} label="Id" />
         <TextInput source="name" validate={[required()]} label="Name" />
-        <NumberField source="min" validate={[required()]} label="Min" />
-        <NumberField source="max" validate={[required()]} label="Max" />
+        <TextInput source="min" validate={[required()]} label="Min" />
+        <TextInput source="max" validate={[required()]} label="Max" />
         <SelectInput
           source="status"
           choices={[

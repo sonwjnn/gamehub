@@ -1,5 +1,14 @@
 'use client'
 
+import { AdminLayout } from './adminLayout'
+import AccountBalanceIcon from '@mui/icons-material/AccountBalance'
+import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet'
+import WalletIcon from '@mui/icons-material/Wallet'
+import EventSeatIcon from '@mui/icons-material/EventSeat'
+import MeetingRoomIcon from '@mui/icons-material/MeetingRoom'
+import RememberMeIcon from '@mui/icons-material/RememberMe'
+import GroupIcon from '@mui/icons-material/Group'
+
 import { Admin, Resource } from 'react-admin'
 import simpleRestProvider from 'ra-data-simple-rest'
 
@@ -44,9 +53,11 @@ const dataProvider = simpleRestProvider(
 )
 
 const App = () => {
+
   return (
-    <Admin dataProvider={dataProvider}>
+    <Admin dataProvider={dataProvider} layout={AdminLayout}>
       <Resource
+        icon={GroupIcon}
         name="users"
         list={UserList}
         create={UserCreate}
@@ -56,6 +67,7 @@ const App = () => {
 
 
       <Resource
+        icon={RememberMeIcon}
         name="members"
         list={MemberList}
         create={MemberCreate}
@@ -64,6 +76,7 @@ const App = () => {
       />
 
       <Resource
+        icon={AccountBalanceIcon}
         name="banks"
         list={BanksList}
         create={BanksCreate}
@@ -72,6 +85,7 @@ const App = () => {
       />
 
       <Resource
+        icon={AccountBalanceWalletIcon}
         name="recharges"
         list={RechargeList}
         create={RechargeCreate}
@@ -80,6 +94,7 @@ const App = () => {
       />
 
       <Resource
+        icon={WalletIcon}
         name="withdraws"
         list={WithdrawList}
         create={WithdrawCreate}
@@ -88,6 +103,7 @@ const App = () => {
       />
 
       <Resource
+        icon={EventSeatIcon}
         name="events"
         list={EventsList}
         create={EventsCreate}
@@ -96,6 +112,7 @@ const App = () => {
       />
 
       <Resource
+        icon={MeetingRoomIcon}
         name="rooms"
         list={RoomList}
         create={RoomCreate}
