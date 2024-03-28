@@ -1,4 +1,4 @@
-import { Datagrid, List, SelectField, TextField, TextInput } from 'react-admin';
+import { Datagrid, List, SelectField, TextField, TextInput, DateField } from 'react-admin';
 
 const userRoleChoices = [
   { id: 'ADMIN', name: 'ADMIN' },
@@ -21,6 +21,7 @@ export const UserList = () => {
         <TextField source="name" />
         <TextField source="email" />
         <SelectField source="role" choices={userRoleChoices} key={'role'}/>
+        <DateField label="created" source="createdAt" />
       </Datagrid>
     </List>
   );

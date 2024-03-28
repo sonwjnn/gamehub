@@ -1,4 +1,4 @@
-import { Datagrid, List, NumberField, SelectField, TextField } from 'react-admin';
+import { Datagrid, DateField, List, NumberField, SelectField, TextField } from 'react-admin'
 
 
 const eventStatusChoices = [
@@ -18,6 +18,8 @@ export const EventsList = () => {
         <TextField source="prize" />
         {renderNumberField("min")}
         {renderNumberField("max")}
+        <DateField label="start" source="start" />
+        <DateField label="end" source="end" />
         <SelectField source="status" choices={eventStatusChoices} />
       </Datagrid>
     </List>

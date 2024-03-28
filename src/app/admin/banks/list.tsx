@@ -1,4 +1,4 @@
-import { Datagrid, List, NumberField, SelectField, TextField } from 'react-admin';
+import { Datagrid, DateField, List, NumberField, SelectField, TextField } from 'react-admin'
 
 
 const bankStatusChoices = [
@@ -19,6 +19,7 @@ export const BanksList = () => {
         <TextField source="branch" />
         <TextField source="username" />
         <TextField source="bankcode" />
+        <DateField label="created" source="createdAt" />
         <SelectField source="status" choices={bankStatusChoices} />
       </Datagrid>
     </List>

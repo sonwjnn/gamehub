@@ -1,11 +1,11 @@
 import {
-  Datagrid,
+  Datagrid, DateField,
   List,
   NumberField,
   SelectField,
   TextField,
   TextInput,
-} from 'react-admin';
+} from 'react-admin'
 
 
 const roomStatusChoices = [
@@ -29,6 +29,7 @@ export const RoomList = () => {
         <TextField source="name" />
         <NumberField source="min" />
         <NumberField source="max" />
+        <DateField label="created" source="createdAt" />
         <SelectField source="status" choices={roomStatusChoices} key="status" />
       </Datagrid>
     </List>
