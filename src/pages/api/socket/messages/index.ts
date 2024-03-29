@@ -1,7 +1,7 @@
 import { NextApiResponseServerIo } from '@/types'
 import { NextApiRequest } from 'next'
-import roomApi from '@/services/api/modules/room-api'
-import memberApi from '@/services/api/modules/member-api'
+import tableApi from '@/services/api/modules/table-api'
+import playerApi from '@/services/api/modules/player-api'
 import messsageApi from '@/services/api/modules/message-api'
 
 export default async function handler(
@@ -14,13 +14,13 @@ export default async function handler(
 
   try {
     const { content, user } = req.body
-    const { roomId } = req.query
+    const { tableId } = req.query
 
     if (!user) {
       return res.status(401).json({ error: 'Unauthorized' })
     }
 
-    if (!roomId) {
+    if (!tableId) {
       return res.status(400).json({ error: 'Channel ID missing' })
     }
 
@@ -28,35 +28,37 @@ export default async function handler(
       return res.status(400).json({ error: 'Content missing' })
     }
 
-    const { response: room } = await roomApi.getRoomById({
-      roomId: roomId as string,
+    const { response: table } = await tableApi.getTableById({
+      tableId: tableId as string,
     })
 
-    if (!room) {
-      return res.status(404).json({ message: 'room not found' })
+    if (!table) {
+      return res.status(404).json({ message: 'table not found' })
     }
 
-    const { response: currentMember } = await memberApi.getCurrentMemberOfRoom({
-      roomId: roomId as string,
-      userId: '2',
-    })
+    const { response: currentPlayer } = await playerApi.getCurrentPlayerOfTable(
+      {
+        tableId: tableId as string,
+        userId: user.id,
+      }
+    )
 
-    if (!currentMember) {
+    if (!currentPlayer) {
       return res
         .status(404)
-        .json({ message: 'Current member of room not found' })
+        .json({ message: 'Current player of table not found' })
     }
 
     const message = await messsageApi.createMessage({
       content,
-      memberId: currentMember.id,
-      deleted: 0,
+      playerId: currentPlayer.id,
+      deleted: false,
       createdAt: new Date(),
     })
 
-    const roomKey = `chat:${roomId}:messages`
+    const tableKey = `chat:${tableId}:messages`
 
-    res?.socket?.server?.io?.emit(roomKey, message)
+    res?.socket?.server?.io?.emit(tableKey, message)
 
     return res.status(200).json(message)
   } catch (error) {

@@ -1,10 +1,10 @@
-import { Room } from '@/types'
+import { Table } from '@/types'
 import { create } from 'zustand'
 
-export type ModalType = 'joinRoom' | 'invite'
+export type ModalType = 'joinTable' | 'invite'
 
 interface ModalData {
-  room?: Room
+  table?: Table
   apiUrl?: string
   query?: Record<string, any>
 }

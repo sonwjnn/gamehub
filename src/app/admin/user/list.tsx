@@ -1,27 +1,32 @@
-import { Datagrid, List, SelectField, TextField } from 'react-admin'
+import { Datagrid, List, SelectField, TextField, TextInput } from 'react-admin'
+
+const userRoleChoices = [
+  { id: 'ADMIN', name: 'ADMIN' },
+  { id: 'USER', name: 'USER' },
+]
+
+const createUserFilters = () => [
+  <TextInput
+    key="search-username"
+    label="Search"
+    source="q"
+    alwaysOn
+    name={'username'}
+  />,
+  <TextInput key="search-email" source="email" name={'email'} />,
+]
 
 export const UserList = () => {
+  const userFilters = createUserFilters()
+
   return (
-    <List>
+    <List filters={userFilters}>
       <Datagrid rowClick="edit">
         <TextField source="id" />
         <TextField source="username" />
         <TextField source="name" />
         <TextField source="email" />
-
-        <SelectField
-          source="role"
-          choices={[
-            {
-              id: 'ADMIN',
-              name: 'ADMIN',
-            },
-            {
-              id: 'USER',
-              name: 'USER',
-            },
-          ]}
-        />
+        <SelectField source="role" choices={userRoleChoices} key={'role'} />
       </Datagrid>
     </List>
   )

@@ -18,11 +18,11 @@ export const InviteModal = () => {
   const { isOpen, onClose, type, data } = useModal()
 
   const isModalOpen = isOpen && type === 'invite'
-  const { room } = data
+  const { table } = data
 
   const [copied, setCopied] = useState(false)
 
-  const inviteCode = room?.id
+  const inviteCode = table?.id
 
   const onCopy = () => {
     navigator.clipboard.writeText(`${inviteCode}`)
@@ -43,7 +43,7 @@ export const InviteModal = () => {
         </DialogHeader>
         <div className="p-6">
           <Label className="text-sm font-bold uppercase text-zinc-500 dark:text-zinc-300">
-            Room invite link
+            Table invite link
           </Label>
           <div className="mt-2 flex items-center gap-x-2">
             <Input

@@ -4,15 +4,15 @@ import { useInfiniteQuery } from '@tanstack/react-query'
 
 interface ChatQueryProps {
   queryKey: string
-  type: 'room' | 'conversation'
-  roomId: string
+  type: 'table' | 'conversation'
+  tableId: string
   conversationId: string
 }
 
 export const useChatQuery = ({
   queryKey,
   type,
-  roomId,
+  tableId,
   conversationId,
 }: ChatQueryProps) => {
   const { isConnected } = useSocket()
@@ -24,8 +24,8 @@ export const useChatQuery = ({
   }) => {
     let res
 
-    if (type === 'room') {
-      res = await messsageApi.getMessagesByRoomId({ roomId })
+    if (type === 'table') {
+      res = await messsageApi.getMessages({ tableId, cursor: pageParam })
     }
     // else if (type === "conversation") {
     // res = await getDirectMessageByConversationId({

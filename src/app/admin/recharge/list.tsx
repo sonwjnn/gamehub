@@ -6,27 +6,32 @@ import {
   TextField,
 } from 'react-admin'
 
-export const RoomList = () => {
+export const RechargeList = () => {
   return (
     <List>
       <Datagrid rowClick="edit">
         <TextField source="id" />
         <TextField source="name" />
+        <TextField source="prize" />
         <NumberField source="min" />
         <NumberField source="max" />
         <SelectField
           source="status"
           choices={[
             {
-              id: 'ACTIVE',
-              name: 'ACTIVE',
+              id: 'ADMIN',
+              name: 'ADMIN',
             },
             {
-              id: 'INACTIVE',
-              name: 'INACTIVE',
+              id: 'USER',
+              name: 'USER',
             },
           ]}
         />
+        <TextField source="rooms" />
+        <TextField source="start" />
+        <TextField source="end" />
+        <TextField source="email" />
       </Datagrid>
     </List>
   )

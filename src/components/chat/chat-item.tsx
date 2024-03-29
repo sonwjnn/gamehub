@@ -9,7 +9,7 @@ import { Skeleton } from '@/components/ui/skeleton'
 
 import { cn } from '@/lib/utils'
 // import { useModal } from "@/store/use-modal-store";
-import { User, Role, Member } from '@/types'
+import { User, Player } from '@/types'
 import { zodResolver } from '@hookform/resolvers/zod'
 import axios from 'axios'
 import { Edit, FileIcon, ShieldAlert, ShieldCheck, Trash } from 'lucide-react'
@@ -25,11 +25,11 @@ import { ChatItemSchema } from '@/schemas'
 interface ChatItemProps {
   id: string
   content: string
-  member: Member
+  player: Player
   timestamp: string
   // fileUrl: string | null;
   deleted: boolean
-  currentMember: Member
+  currentPlayer: Player
   socketUrl: string
   socketQuery: Record<string, string>
 }
@@ -43,37 +43,25 @@ const roleIconMap = {
 export const ChatItem = ({
   id,
   content,
-  // member,
+  player,
   timestamp,
   // fileUrl,
   deleted,
-  currentMember,
+  currentPlayer,
   socketUrl,
   socketQuery,
 }: ChatItemProps) => {
-  const member = {
-    id: '1',
-    userId: '1',
-    user: {
-      id: 'user1',
-      name: 'user1',
-      email: 'user1@gmail.com',
-      password: '123',
-    },
-    roomId: '2',
-  }
-
   const [isEditing, setIsEditing] = useState(false)
 
   const params = useParams()
   const router = useRouter()
 
-  const onMemberClick = () => {
-    if (member.id === currentMember.id) {
+  const onPlayerClick = () => {
+    if (player.id === currentPlayer.id) {
       return
     }
 
-    router.push(`/servers/${params?.serverId}/conversations/${member.id}`)
+    router.push(`/servers/${params?.serverId}/conversations/${player.id}`)
   }
 
   useEffect(() => {
@@ -100,7 +88,7 @@ export const ChatItem = ({
   const onSubmit = async (values: z.infer<typeof ChatItemSchema>) => {
     try {
       const url = qs.stringifyUrl({
-        url: `${socketUrl}/${id}`,
+        url: socketUrl,
         query: socketQuery,
       })
 
@@ -123,7 +111,7 @@ export const ChatItem = ({
 
   // const isAdmin = currentUser.role === Role.ADMIN;
   const isAdmin = false
-  const isOwner = currentMember.id === member.id
+  const isOwner = currentPlayer.id === player.id
   const canDeleteMessage = !deleted && (isAdmin || isOwner)
   const canEditMessage = !deleted && isOwner
   // const isPDF = fileType === "pdf" && fileUrl;
@@ -138,7 +126,7 @@ export const ChatItem = ({
         >
           <UserAvatar
             // imageUrl={user.user.image!}
-            name={member?.user?.name!}
+            name={player?.user?.username || 'Unknown'}
           />
         </div>
 
@@ -146,7 +134,7 @@ export const ChatItem = ({
           <div className="flex items-center gap-x-2">
             <div className="flex items-center">
               <p className="cursor-pointer text-sm font-semibold text-zinc-600 hover:underline dark:text-zinc-300">
-                {member?.user?.name}
+                {player?.user?.username}
               </p>
               {/* <Hint label={user.role}>{roleIconMap[user.role]}</Hint> */}
             </div>
