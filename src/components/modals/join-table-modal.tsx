@@ -24,7 +24,7 @@ import { Button } from '@/components/ui/button'
 import { useRouter } from 'next/navigation'
 import { useModal } from '@/store/use-modal-store'
 
-import roomApi from '@/services/api/modules/room-api'
+import tableApi from '@/services/api/modules/table-api'
 
 const formSchema = z.object({
   inviteCode: z.string().length(25, {
@@ -32,12 +32,12 @@ const formSchema = z.object({
   }),
 })
 
-export const JoinRoomModal = () => {
+export const JoinTableModal = () => {
   const { isOpen, onClose, type, data } = useModal()
   const router = useRouter()
 
-  const isModalOpen = isOpen && type === 'joinRoom'
-  const { room } = data
+  const isModalOpen = isOpen && type === 'joinTable'
+  const { table } = data
 
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -49,20 +49,20 @@ export const JoinRoomModal = () => {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      const { response: room } = await roomApi.getRoomById({
-        roomId: values.inviteCode,
+      const { response: table } = await tableApi.getTableById({
+        tableId: values.inviteCode,
       })
 
-      if (!room) {
+      if (!table) {
         form.setError('inviteCode', {
           type: 'manual',
-          message: 'Room not found!',
+          message: 'Table not found!',
         })
         return
       }
 
       form.reset()
-      router.push(`/dashboard/room/${room.id}`)
+      router.push(`/dashboard/table/${table.id}`)
       onClose()
     } catch (error) {
       console.log(error)
@@ -79,7 +79,7 @@ export const JoinRoomModal = () => {
       <DialogContent className="bg-white text-black p-0 overflow-hidden">
         <DialogHeader className="pt-8 px-6">
           <DialogTitle className="text-2xl text-center font-bold">
-            Join Room
+            Join Table
           </DialogTitle>
         </DialogHeader>
         <Form {...form}>

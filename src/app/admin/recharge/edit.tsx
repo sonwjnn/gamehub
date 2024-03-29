@@ -4,7 +4,7 @@ export const RechargeEdit = () => {
   return (
     <Edit>
       <SimpleForm>
-       <></>
+        <></>
       </SimpleForm>
     </Edit>
   )

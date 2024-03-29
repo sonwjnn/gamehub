@@ -1,11 +1,11 @@
-import { JoinRoom } from './_components/join-room'
-import { SelectRoom } from './_components/select-room'
+import { JoinTable } from './_components/join-table'
+import { SelectTable } from './_components/select-table'
 
 const DashboardPage = () => {
   return (
     <div className="flex items-center justify-center gap-x-4 w-full">
-      <JoinRoom />
-      <SelectRoom />
+      <JoinTable />
+      <SelectTable />
     </div>
   )
 }

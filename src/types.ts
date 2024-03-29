@@ -19,36 +19,83 @@ export type User = {
   updatedAt: Date
 }
 
-export type Room = {
+export type Card = {
+  id: string
+  rank: string
+  suit: string
+}
+
+export type History = {
+  id: string
+
+  content: string
+  deleted: boolean
+  tableId: string
+  table?: Table
+
+  playerId: string
+  player?: Player
+
+  createdAt: Date
+}
+
+export type Table = {
   id: string
   name: string
-  dealerId: string
   eventId: string
+  event?: Event
 
   userId: string
   user?: User
 
-  min: number
-  max: number
-  status: string
+  players: Player[]
+  messages: Message[]
+
+  limit: number
+  maxPlayers: number
+  seats: number
+  smallBlind: number
+  bigBlind: number
+  pot: number
+  mainPot: number
+  callAmount: number
+  wentToShowdown: boolean
+  minBet?: number
+  minRaise?: number
+  deck: Card[]
+  board: Card[]
+  sidePots: string
+  buttonId?: string
+  turn: boolean
+
+  histories: History[]
+
   createdAt: Date
   updatedAt: Date
 }
 
-export type Member = {
+export type Player = {
   id: string
 
   userId: string
   user?: User
 
-  roomId: string
+  tableId: string
+  table?: Table
+
+  createdAt: Date
 }
 
 export type Message = {
   id: string
   content: string
-  memberId: string
-  member?: Member
+
+  playerId: string
+  player?: Player
+
+  tableId: string
+  table?: Table
+
   deleted: boolean
   createdAt: Date
 }
@@ -70,10 +117,10 @@ export type Message = {
 //   userTwoId: string;
 // };
 
-// export type MemberWithUser = Member & { user: User };
+// export type PlayerWithUser = Player & { user: User };
 
-export type RoomWithMembers = Room & {
-  members: Member[]
+export type TableWithPlayers = Table & {
+  players: Player[]
 }
 
 export type NextApiResponseServerIo = NextApiResponse & {

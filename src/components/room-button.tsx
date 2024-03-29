@@ -3,13 +3,13 @@
 import { Button } from '@/components/ui/button'
 import { useRouter } from 'next/navigation'
 
-interface RoomButtonProps {}
+interface TableButtonProps {}
 
-export const RoomButton = ({}: RoomButtonProps) => {
+export const TableButton = ({}: TableButtonProps) => {
   const router = useRouter()
 
   const onClick = () => {
-    router.push('/room/2')
+    router.push('/table/2')
   }
-  return <Button onClick={onClick}>Room Button</Button>
+  return <Button onClick={onClick}>Table Button</Button>
 }

@@ -9,7 +9,7 @@ import { cn } from '@/lib/utils'
 import { useModal } from '@/store/use-modal-store'
 import { Button } from '@/components/ui/button'
 
-const RoomPage = () => {
+const TablePage = () => {
   const [isChatBoxVisible, setChatBoxVisible] = useState(false)
   const { onOpen } = useModal()
 
@@ -118,4 +118,4 @@ const RoomPage = () => {
   )
 }
 
-export default RoomPage
+export default TablePage

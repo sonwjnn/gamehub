@@ -1,7 +1,7 @@
 'use client'
 
 import { InviteModal } from '@/components/modals/invite-modal'
-import { JoinRoomModal } from '@/components/modals/join-room-modal'
+import { JoinTableModal } from '@/components/modals/join-table-modal'
 import { useOrigin } from '@/hooks/use-origin'
 
 export const ModalProvider = () => {
@@ -13,7 +13,7 @@ export const ModalProvider = () => {
 
   return (
     <>
-      <JoinRoomModal />
+      <JoinTableModal />
       <InviteModal />
     </>
   )

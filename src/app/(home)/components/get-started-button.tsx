@@ -1,31 +1,19 @@
-'use client'
-
 import { RegisterButton } from '@/components/auth/register-button'
 import { Button } from '@/components/ui/button'
-import { useCurrentUser } from '@/hooks/use-current-user'
-import { useOrigin } from '@/hooks/use-origin'
-import { useRouter } from 'next/navigation'
+import { currentUser } from '@/lib/auth'
+import { redirect } from 'next/navigation'
 
 interface GetStartedButtonProps {}
 
-export const GetStartedButton = ({}: GetStartedButtonProps) => {
-  const origin = useOrigin()
+export const GetStartedButton = async ({}: GetStartedButtonProps) => {
+  const user = await currentUser()
 
-  const user = useCurrentUser()
-  const router = useRouter()
-
-  const onClick = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
-    if (user) {
-      return router.push('/dashboard')
-    }
-  }
-
-  if (!origin) {
-    return null
+  if (user) {
+    redirect('/dashboard')
   }
 
   return (
-    <div onClick={onClick}>
+    <div>
       <RegisterButton mode="modal">
         <Button variant="destructive">Get started</Button>
       </RegisterButton>

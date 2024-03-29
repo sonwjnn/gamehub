@@ -2,18 +2,18 @@
 
 import { Button } from '@/components/ui/button'
 import { useModal } from '@/store/use-modal-store'
-import { Room } from '@/types'
+import { Table } from '@/types'
 
 interface InvitePlayerProps {
-  room: Room
+  table: Table
 }
 
-export const InvitePlayer = ({ room }: InvitePlayerProps) => {
+export const InvitePlayer = ({ table }: InvitePlayerProps) => {
   const { onOpen } = useModal()
 
   return (
     <div className="absolute left-0 top-0 z-10">
-      <Button onClick={() => onOpen('invite', { room })}>Invite</Button>
+      <Button onClick={() => onOpen('invite', { table })}>Invite</Button>
     </div>
   )
 }

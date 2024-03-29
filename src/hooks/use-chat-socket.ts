@@ -9,7 +9,7 @@ type ChatSocketProps = {
   queryKey: string
 }
 
-type MessageWithMember = Message & {
+type MessageWithPlayer = Message & {
   user: User
 }
 
@@ -26,7 +26,7 @@ export const useChatSocket = ({
       return
     }
 
-    socket.on(updateKey, (message: MessageWithMember) => {
+    socket.on(updateKey, (message: MessageWithPlayer) => {
       queryClient?.setQueryData([queryKey], (oldData: any) => {
         if (!oldData || !oldData.pages || oldData.pages.length === 0) {
           return oldData
@@ -35,7 +35,7 @@ export const useChatSocket = ({
         const newData = oldData.pages.map((page: any) => {
           return {
             ...page,
-            items: page.items.map((item: MessageWithMember) => {
+            items: page.items.map((item: MessageWithPlayer) => {
               if (item.id === message.id) {
                 return message
               }
@@ -51,7 +51,7 @@ export const useChatSocket = ({
       })
     })
 
-    socket.on(addKey, (message: MessageWithMember) => {
+    socket.on(addKey, (message: MessageWithPlayer) => {
       queryClient?.setQueryData([queryKey], (oldData: any) => {
         if (!oldData || !oldData.pages || oldData.pages.length === 0) {
           return {

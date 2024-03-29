@@ -1,20 +1,23 @@
 import privateClient from '@/services/api/client/private-client'
 
-const memberEndpoints = {
-  getCurrentMemberOfRoom: ({
-    roomId,
+const playerEndpoints = {
+  getCurrentPlayerOfTable: ({
+    tableId,
     userId,
   }: {
-    roomId: string
+    tableId: string
     userId: string
-  }) => `member/${roomId}/${userId}`,
+  }) => `players/${tableId}/${userId}`,
 }
 
-const memberApi = {
-  getCurrentMemberOfRoom: async (data: { roomId: string; userId: string }) => {
+const playerApi = {
+  getCurrentPlayerOfTable: async (data: {
+    tableId: string
+    userId: string
+  }) => {
     try {
       const response = await privateClient.get(
-        memberEndpoints.getCurrentMemberOfRoom(data)
+        playerEndpoints.getCurrentPlayerOfTable(data)
       )
       if (response && response.data) return { response: response.data }
       return { response }
@@ -24,4 +27,4 @@ const memberApi = {
   },
 }
 
-export default memberApi
+export default playerApi

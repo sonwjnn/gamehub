@@ -3,7 +3,7 @@
 import { useChatQuery } from '@/hooks/use-chat-query'
 import { useChatScroll } from '@/hooks/use-chat-scroll'
 import { useChatSocket } from '@/hooks/use-chat-socket'
-import { Member, Message, User } from '@/types'
+import { Player, Message, User } from '@/types'
 import { format } from 'date-fns'
 import { Loader2, ServerCrash } from 'lucide-react'
 import { ElementRef, Fragment, useRef } from 'react'
@@ -12,28 +12,28 @@ import { ChatItem, ChatItemSkeleton } from './chat-item'
 
 const DATE_FORMAT = 'd MMM yyyy, HH:mm'
 
-type MessageWithMember = Message & {
+type MessageWithPlayer = Message & {
   user: User
 }
 
 interface ChatMessagesProps {
   name: string
-  member: Member
+  player: Player
   chatId: string
   socketUrl: string
   socketQuery: Record<string, string>
-  roomId?: string
+  tableId?: string
   conversationId?: string
-  type: 'room' | 'conversation'
+  type: 'table' | 'conversation'
 }
 
 export const ChatMessages = ({
   name,
-  member,
+  player,
   chatId,
   socketUrl,
   socketQuery,
-  roomId,
+  tableId,
   conversationId,
   type,
 }: ChatMessagesProps) => {
@@ -48,7 +48,7 @@ export const ChatMessages = ({
     useChatQuery({
       queryKey,
       type,
-      roomId: roomId || '',
+      tableId: tableId || '',
       conversationId: conversationId || '',
     })
 
@@ -97,15 +97,15 @@ export const ChatMessages = ({
       <div className="mt-auto flex flex-col-reverse">
         {data?.pages?.map((group, i) => (
           <Fragment key={i}>
-            {group?.items?.map((message: MessageWithMember) => {
+            {group?.items?.map((message: MessageWithPlayer) => {
               if (!message.content) return null
 
               return (
                 <ChatItem
                   key={message.id}
                   id={message.id}
-                  currentMember={member}
-                  member={message.member!}
+                  currentPlayer={player}
+                  player={message.player!}
                   content={message.content}
                   // fileUrl={message.fileUrl}
                   deleted={message.deleted}

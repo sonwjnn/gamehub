@@ -4,7 +4,7 @@ export const WithdrawEdit = () => {
   return (
     <Edit>
       <SimpleForm>
-       <></>
+        <></>
       </SimpleForm>
     </Edit>
   )

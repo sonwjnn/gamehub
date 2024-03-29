@@ -1,39 +1,30 @@
 import publicClient from '@/services/api/client/public-client'
 import privateClient from '@/services/api/client/private-client'
+import qs from 'query-string'
 
 const messsageEndpoints = {
-  getMessagesByRoomIdWithCursor: ({
-    cursor,
-    roomId,
-  }: {
-    cursor: string
-    roomId: string
-  }) => `messages/room/${roomId}/${cursor}`,
-  getMessagesByRoomId: ({ roomId }: { roomId: string }) =>
-    `messages/room/${roomId}`,
-  createMessage: `messages/room`,
+  getMessages: `messages/`,
+  createMessage: `messages/`,
 }
 
 const messsageApi = {
-  getMessagesByRoomIdWithCursor: async (data: {
-    cursor: string
-    roomId: string
+  getMessages: async ({
+    cursor,
+    tableId,
+  }: {
+    cursor: string | undefined
+    tableId: string
   }) => {
     try {
-      const response = await publicClient.get(
-        messsageEndpoints.getMessagesByRoomIdWithCursor(data)
-      )
-      if (response && response.data) return { response: response.data }
-      return { response }
-    } catch (error) {
-      return { error }
-    }
-  },
-  getMessagesByRoomId: async (data: { roomId: string }) => {
-    try {
-      const response = await publicClient.get(
-        messsageEndpoints.getMessagesByRoomId(data)
-      )
+      const url = qs.stringifyUrl({
+        url: `${messsageEndpoints.getMessages}`,
+        query: {
+          cursor,
+          tableId,
+        },
+      })
+
+      const response = await publicClient.get(url)
       if (response && response.data) return { response: response.data }
       return { response }
     } catch (error) {
@@ -44,7 +35,7 @@ const messsageApi = {
     try {
       const response = await privateClient.post(
         messsageEndpoints.createMessage,
-        { ...data, member_id: data.memberId }
+        data
       )
       if (response && response.data) return { response: response.data }
       return { response }
