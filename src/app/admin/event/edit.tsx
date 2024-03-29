@@ -1,23 +1,13 @@
-import {
-  SimpleForm,
-  Edit,
-  TextInput,
-  required,
-  SelectInput,
-  TextField,
-  SelectField,
-  NumberField,
-} from 'react-admin'
-import { EventsList } from './list'
+import { SimpleForm, Edit, TextInput, required, SelectInput, TextField, SelectField, NumberField } from 'react-admin'
+import { EventsList } from '@/app/admin/events/list'
+
 
 const eventStatusChoices = [
   { id: 'active', name: 'active' },
   { id: 'inactive', name: 'inactive' },
-]
+];
 
-const renderNumberField = (source: string | undefined) => (
-  <NumberField source={source} />
-)
+const renderNumberField = (source: string | undefined) => <NumberField source={source} />;
 
 export const EventsEdit = () => {
   return (
@@ -28,11 +18,7 @@ export const EventsEdit = () => {
         <TextInput source="prize" />
         <TextInput source="min" />
         <TextInput source="max" />
-        <SelectInput
-          source="status"
-          choices={eventStatusChoices}
-          key={'status'}
-        />
+        <SelectInput source="status" choices={eventStatusChoices} key={'status'}/>
       </SimpleForm>
     </Edit>
   )

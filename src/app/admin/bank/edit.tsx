@@ -1,15 +1,6 @@
 import * as React from 'react'
-import {
-  SimpleForm,
-  Edit,
-  TextInput,
-  required,
-  SelectInput,
-  TextField,
-  SelectField,
-  NumberField,
-} from 'react-admin'
-import { Toolbar, SaveButton } from 'react-admin'
+import { SimpleForm, Edit, TextInput, required, SelectInput, TextField, SelectField, NumberField } from 'react-admin'
+import { Toolbar, SaveButton } from 'react-admin';
 import {
   TabbedForm,
   Datagrid,
@@ -30,27 +21,21 @@ export const MyToolbar = () => (
   <Toolbar>
     <SaveButton label="Save" />
   </Toolbar>
-)
+);
 
-const renderNumberField = (source: string | undefined) => (
-  <NumberField source={source} />
-)
+const renderNumberField = (source: string | undefined) => <NumberField source={source} />
 
 export const BanksEdit = () => {
   return (
-    <Edit>
-      <TabbedForm>
+    <Edit >
+      <TabbedForm >
         <TabbedForm.Tab label="Bank Detail">
           <TextInput source="id" disabled />
           <TextInput source="user_id" disabled />
           <TextInput source="number1" />
           <TextInput source="number2" />
           <TextInput source="branch" />
-          <SelectInput
-            source="status"
-            choices={bankStatusChoices}
-            key={'status'}
-          />
+          <SelectInput source="status" choices={bankStatusChoices} key={'status'} />
         </TabbedForm.Tab>
         <TabbedForm.Tab label="Password">
           <TextInput source="username" />

@@ -5,9 +5,8 @@ import {
   required,
   SelectInput,
 } from 'react-admin'
-import { EventsList } from '@/app/admin/events/list'
 
-export const EventsCreate = () => {
+export const SettingsCreate = () => {
   return (
     <Create>
       <SimpleForm>

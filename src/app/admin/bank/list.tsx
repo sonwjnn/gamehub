@@ -1,19 +1,12 @@
-import {
-  Datagrid,
-  List,
-  NumberField,
-  SelectField,
-  TextField,
-} from 'react-admin'
+import { Datagrid, List, NumberField, SelectField, TextField } from 'react-admin';
+
 
 const bankStatusChoices = [
   { id: 'active', name: 'active' },
   { id: 'inactive', name: 'inactive' },
-]
+];
 
-const renderNumberField = (source: string | undefined) => (
-  <NumberField source={source} />
-)
+const renderNumberField = (source: string | undefined) => <NumberField source={source} />;
 
 export const BanksList = () => {
   return (
@@ -29,5 +22,5 @@ export const BanksList = () => {
         <SelectField source="status" choices={bankStatusChoices} />
       </Datagrid>
     </List>
-  )
-}
+  );
+};
