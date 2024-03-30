@@ -1,4 +1,5 @@
 import { UserButton } from '@/components/auth/user-button'
+import { SocketIndicator } from '@/components/socket-indicator'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -7,6 +8,8 @@ interface ActionsProps {}
 export const Actions = ({}: ActionsProps) => {
   return (
     <div className="toolbar flex flex-midle">
+      <SocketIndicator />
+
       <div className="item flex flex-midle gap-8">
         <div className="icon flex-shrink">
           <Image

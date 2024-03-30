@@ -25,8 +25,10 @@ export const SocketProvider = ({ children }: { children: React.ReactNode }) => {
     const socketInstance = new (ClientIO as any)(
       process.env.NEXT_PUBLIC_SERVER_URL!,
       {
-        path: '/api/socket/io',
-        addTrailingSlash: false,
+        // path: '/api/socket/io',
+        // addTrailingSlash: false,
+        transports: ['websocket'],
+        upgrade: false,
       }
     )
 

@@ -3,15 +3,42 @@ import { Hand } from './hand'
 import { UserAvatar } from '@/components/user-avatar'
 import { CurrentPlayerAction } from './actions'
 
+import { shuffle } from 'lodash'
+import { useEffect } from 'react'
+
 interface CurrentPlayerProps {
   type?: 'fold' | 'active' | 'default'
   showdown?: boolean
+  imageUrlFirst: string
+  imageUrlSecond: string
+  isHandVisible: boolean
 }
 
 export const CurrentPlayer = ({
   type = 'default',
   showdown = false,
+  imageUrlFirst = '/images/pocker_on.png',
+  imageUrlSecond = '/images/pocker_on.png',
+  isHandVisible,
 }: CurrentPlayerProps) => {
+  const ranks = [
+    '2',
+    '3',
+    '4',
+    '5',
+    '6',
+    '7',
+    '8',
+    '9',
+    '10',
+    'j',
+    'q',
+    'k',
+    'a',
+  ]
+
+  // const imageUrlFirst = `/images/pocker/${randomRank}_of_${randomSuit}.png`
+
   return (
     <div className="group_tool flex flex-space gap-12">
       <div className="group_flush">
@@ -49,8 +76,9 @@ export const CurrentPlayer = ({
               </div>
               <div className="right">
                 <Hand
-                  imageUrlFirst="/images/pocker_on.png"
-                  imageUrlSecond="/images/pocker_on.png"
+                  imageUrlFirst={imageUrlFirst}
+                  imageUrlSecond={imageUrlSecond}
+                  isHidden={!isHandVisible}
                 />
               </div>
             </div>

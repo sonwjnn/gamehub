@@ -6,11 +6,17 @@ import { UserAvatar } from '@/components/user-avatar'
 interface OtherPlayerProps {
   type?: 'fold' | 'active' | 'default'
   showdown?: boolean
+  imageUrlFirst: string
+  imageUrlSecond: string
+  isHandVisible?: boolean
 }
 
 export const OtherPlayer = ({
   type = 'default',
   showdown = false,
+  imageUrlFirst,
+  imageUrlSecond,
+  isHandVisible,
 }: OtherPlayerProps) => {
   return (
     <div
@@ -36,9 +42,10 @@ export const OtherPlayer = ({
           <div className="right">
             {type !== 'fold' ? (
               <Hand
-                imageUrlFirst="/images/pocker_on.png"
-                imageUrlSecond="/images/pocker_on.png"
+                imageUrlFirst={imageUrlFirst}
+                imageUrlSecond={imageUrlSecond}
                 showdown={showdown}
+                isHidden={!isHandVisible}
               />
             ) : (
               <div className="text_fold fw-900">FOLD</div>
