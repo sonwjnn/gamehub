@@ -1,6 +1,6 @@
 import { cn } from '@/lib/utils'
 import { Card } from '../card'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 interface HandProps {
   showdown?: boolean
@@ -15,11 +15,15 @@ export const Hand = ({
   // showdown,
   isHidden = true,
 }: HandProps) => {
-  const [isFlipped, setFlipped] = useState(true)
+  const [isFlipped, setFlipped] = useState(false)
 
   const onToggle = () => {
     setFlipped(!isFlipped)
   }
+
+  useEffect(() => {
+    if (isHidden) setFlipped(false)
+  }, [isHidden])
 
   return (
     <div
@@ -28,9 +32,9 @@ export const Hand = ({
     >
       <div
         className={cn(
-          'item flipped transition opacity-0',
+          'item flipped opacity-0',
           // isFlipped && 'status_active',
-          isFlipped && 'hide',
+          !isFlipped && 'hide',
           !isHidden && 'opacity-100'
         )}
       >
@@ -40,9 +44,9 @@ export const Hand = ({
       </div>
       <div
         className={cn(
-          'item flipped transition opacity-0',
+          'item flipped opacity-0',
           // isFlipped && 'status_active',
-          isFlipped && 'hide',
+          !isFlipped && 'hide',
           !isHidden && 'opacity-100'
         )}
       >

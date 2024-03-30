@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import Sound from '@/utils/contants/sound'
 
 interface CardProps {
   imageUrl: string
@@ -8,9 +9,13 @@ interface CardProps {
 }
 
 export const Card = ({ imageUrl, className, showdown }: CardProps) => {
+  const onClick = () => {
+    new Audio(Sound.soundOpen).play()
+  }
+
   return (
     <>
-      <div className="front">
+      <div className="front" onClick={onClick}>
         <Image
           src={imageUrl}
           alt="pokerOnImage"
@@ -20,7 +25,7 @@ export const Card = ({ imageUrl, className, showdown }: CardProps) => {
           style={{ width: 'auto', height: '100%' }}
         />
       </div>
-      <div className="back">
+      <div className="back" onClick={onClick}>
         <Image
           src="/images/pocker.png"
           alt="pokerOnImage"

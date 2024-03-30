@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react'
 import { Card } from './card'
 import { cn } from '@/lib/utils'
+import Sound from '@/utils/contants/sound'
 
 interface BoardProps {
   cards: string[]
   isHidden?: boolean
+  isShuffle?: boolean
 }
 
 const BoardCard = ({
@@ -23,7 +25,7 @@ const BoardCard = ({
   )
 }
 
-export const Board = ({ cards, isHidden = false }: BoardProps) => {
+export const Board = ({ cards, isHidden = false, isShuffle }: BoardProps) => {
   const [isFirst, setFirst] = useState(false)
   const [isFlop, setFlop] = useState(false)
   const [isTurn, setTurn] = useState(false)
@@ -32,6 +34,7 @@ export const Board = ({ cards, isHidden = false }: BoardProps) => {
   const handleMultipleActions = () => {
     if (!isFirst) {
       setFirst(true)
+      new Audio(Sound.soundShare).play()
       return
     }
     if (!isFlop) {
@@ -47,6 +50,15 @@ export const Board = ({ cards, isHidden = false }: BoardProps) => {
       return
     }
   }
+
+  useEffect(() => {
+    if (isShuffle) {
+      setFirst(false)
+      setFlop(false)
+      setTurn(false)
+      setRiver(false)
+    }
+  }, [isShuffle])
 
   return (
     <div className="group_midle">

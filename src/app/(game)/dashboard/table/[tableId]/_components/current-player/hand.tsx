@@ -17,18 +17,13 @@ export const Hand = ({
 }: HandProps) => {
   const [isFlipped, setFlipped] = useState(true)
 
-  const onToggle = () => {
-    setFlipped(!isFlipped)
-  }
-
   return (
-    <div className="pocker_list" onClick={onToggle}>
+    <div className="pocker_list">
       {!isHidden && (
         <>
           <div
             className={cn(
               `item flipped opacity-0 transition`,
-              isFlipped && 'hide',
               !isHidden && 'opacity-100'
             )}
           >
@@ -39,7 +34,6 @@ export const Hand = ({
           <div
             className={cn(
               `item flipped opacity-0 transition`,
-              isFlipped && 'hide',
               !isHidden && 'opacity-100'
             )}
           >

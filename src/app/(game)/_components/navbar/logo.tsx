@@ -6,16 +6,14 @@ interface LogoProps {}
 export const Logo = ({}: LogoProps) => {
   return (
     <Link className="logo" href="/dashboard">
-      <div className="size-full relative">
-        <Image
-          src="/images/logo.png"
-          alt="Logo"
-          width={0}
-          height={0}
-          sizes="100vw"
-          style={{ width: '100%', height: 'auto' }}
-        />
-      </div>
+      <Image
+        src="/images/logo.png"
+        alt="Logo"
+        width={0}
+        height={0}
+        sizes="100vw"
+        style={{ width: '100%', height: '80%' }}
+      />
     </Link>
   )
 }

@@ -13,7 +13,7 @@ const TableIdLayout = async ({
   })
 
   return (
-    <div className="relative h-full w-full">
+    <div className="relative h-full w-full px-[70px]">
       <InvitePlayer table={table} />
       {children}
     </div>
