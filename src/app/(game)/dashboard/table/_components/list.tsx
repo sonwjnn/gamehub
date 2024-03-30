@@ -11,7 +11,7 @@ interface TableListProps {
 export const TableList = ({ tables }: TableListProps) => {
   const router = useRouter()
 
-  if (!tables.length)
+  if (!Array.isArray(tables) || !tables.length)
     return (
       <div>
         <h2>No tables found</h2>
