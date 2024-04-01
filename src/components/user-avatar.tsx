@@ -7,6 +7,7 @@ import { User } from 'lucide-react'
 const avatarSizes = cva('', {
   variants: {
     size: {
+      sm: 'size-[36px]',
       default: 'w-full h-full',
       md: 'size-12',
       lg: 'size-14',

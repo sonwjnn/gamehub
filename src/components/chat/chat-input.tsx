@@ -12,8 +12,9 @@ import qs from 'query-string'
 import { useForm } from 'react-hook-form'
 import * as z from 'zod'
 
-import { Skeleton } from '../ui/skeleton'
+import { Skeleton } from '@/components/ui/skeleton'
 import { useCurrentUser } from '@/hooks/use-current-user'
+import { Textarea } from '@/components/ui/textarea'
 
 interface ChatInputProps {
   apiUrl: string
@@ -72,37 +73,29 @@ export const ChatInput = ({ apiUrl, query, name, type }: ChatInputProps) => {
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <div className="relative p-4 pb-6">
-                  {/* <button
-                    type="button"
-                    onClick={() =>
-                      onOpen("messageFile", {
-                        apiUrl,
-                        query: {
-                          ...query,
-                          content: form.getValues("content"),
-                          reset: form.reset,
-                        },
-                      })
-                    }
-                    className="absolute left-8 top-7 flex h-[24px] w-[24px] items-center justify-center rounded-full bg-zinc-500 p-1 transition hover:bg-zinc-600 dark:bg-zinc-400 dark:hover:bg-zinc-300"
+                <div className="relative mx-[12px] ">
+                  <div className="h-[36px]">
+                    <Textarea
+                      disabled={isLoading}
+                      className="border-0 border-none resize-none rounded-t-none   text-[12px] pl-[8px] pr-[50px] py-[4px] bg-[#181818]  no-scrollbar  text-white min-h-[36px] max-h-[36px] focus-visible:ring-0 focus-visible:ring-offset-0  "
+                      placeholder={`Typing message...`}
+                      onKeyDown={event => {
+                        if (event.key === 'Enter' && !event.shiftKey) {
+                          event.preventDefault()
+                          form.handleSubmit(onSubmit)()
+                        }
+                      }}
+                      {...field}
+                    />
+                  </div>
+
+                  <div
+                    className="absolute right-0 inset-y-0 w-[60px] flex items-center justify-center hover:bg-black/50 rounded-br-md"
+                    onClick={() => form.handleSubmit(onSubmit)()}
                   >
-                    <Plus className="text-white dark:text-[#313338]" />
-                  </button> */}
-                  <Input
-                    disabled={isLoading}
-                    className="border-0 border-none bg-zinc-200/90  px-14 py-6 text-zinc-600 focus-visible:ring-0 focus-visible:ring-offset-0 dark:bg-zinc-700/75 dark:text-zinc-200"
-                    placeholder={`Message ${
-                      type === 'conversation' ? name : '#' + name
-                    }`}
-                    {...field}
-                  />
-                  <div className="absolute right-8 top-7">
-                    {/* <EmojiPicker
-                      onChange={(emoji: string) =>
-                        field.onChange(`${field.value} ${emoji}`)
-                      }
-                    /> */}
+                    <span className="icon sz-24">
+                      <i className="icon-send"></i>
+                    </span>
                   </div>
                 </div>
               </FormControl>

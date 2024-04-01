@@ -4,15 +4,20 @@ import { currentUser } from '@/lib/auth'
 import playerApi from '@/services/api/modules/player-api'
 import tableApi from '@/services/api/modules/table-api'
 import { redirect } from 'next/navigation'
+import { Wrapper } from './wrapper'
 
-const HomePage = async () => {
+interface ChatProps {
+  tableId: string
+}
+
+export const Chat = async ({ tableId }: ChatProps) => {
   const user = await currentUser()
 
   if (!user) {
     redirect('/auth/login')
   }
 
-  const tableId = 'clubenabu0001v38ym2r1vmm0'
+  // const tableId = 'clubenabu0001v38ym2r1vmm0'
   const { response: table } = await tableApi.getTableById({ tableId })
 
   const { response: player } = await playerApi.getCurrentPlayerOfTable({
@@ -25,31 +30,28 @@ const HomePage = async () => {
   }
 
   return (
-    <div className="w-full h-full">
+    <Wrapper>
       <ChatMessages
         player={player}
-        name={table?.name}
-        // chatId={table.id}
-        chatId={tableId}
+        name={table.name}
+        chatId={table.id}
         type="table"
         socketUrl={`${process.env.NEXT_PUBLIC_SERVER_URL}/api/socket/messages`}
         socketQuery={{
-          // tableId: table.id,
-          tableId: tableId,
+          tableId: table.id,
         }}
-        // tableId={table.id}
-        tableId={tableId}
+        tableId={table.id}
       />
-      <ChatInput
-        name={table?.name}
-        type="table"
-        apiUrl={`${process.env.NEXT_PUBLIC_SERVER_URL}/api/socket/messages`}
-        query={{
-          tableId: tableId,
-        }}
-      />
-    </div>
+      <div className="fixed bottom-0 inset-x-[-12px]">
+        <ChatInput
+          name={table?.name}
+          type="table"
+          apiUrl={`${process.env.NEXT_PUBLIC_SERVER_URL}/api/socket/messages`}
+          query={{
+            tableId: tableId,
+          }}
+        />
+      </div>
+    </Wrapper>
   )
 }
-
-export default HomePage

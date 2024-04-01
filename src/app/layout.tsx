@@ -15,8 +15,8 @@ import { auth } from '@/auth'
 const font = Open_Sans({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Rediscord',
-  description: 'A Discord clone built with Next.js and Tailwind CSS.',
+  title: 'Poker',
+  description: 'A Poker Game built with Next.js and Tailwind CSS.',
 }
 
 export default async function RootLayout({
@@ -35,7 +35,7 @@ export default async function RootLayout({
             attribute="class"
             defaultTheme="dark"
             enableSystem={false}
-            storageKey="discord-theme"
+            storageKey="game-theme"
           >
             <SocketProvider>
               <ModalProvider />

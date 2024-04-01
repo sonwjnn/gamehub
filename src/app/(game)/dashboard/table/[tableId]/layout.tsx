@@ -1,5 +1,6 @@
 import tableApi from '@/services/api/modules/table-api'
 import { InvitePlayer } from './_components/invite-player'
+import { Chat } from './_components/chat'
 
 const TableIdLayout = async ({
   children,
@@ -16,6 +17,7 @@ const TableIdLayout = async ({
     <div className="relative h-full w-full px-[70px]">
       <InvitePlayer table={table} />
       {children}
+      <Chat tableId={params.tableId} />
     </div>
   )
 }

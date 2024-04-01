@@ -3,16 +3,17 @@
 import Image from 'next/image'
 import { OtherPlayer } from './_components/other-player'
 import { CurrentPlayer } from './_components/current-player'
-import { cn } from '@/lib/utils'
-import { useModal } from '@/store/use-modal-store'
 import { Button } from '@/components/ui/button'
-import { set, shuffle } from 'lodash'
+import { shuffle } from 'lodash'
 import { Board } from './_components/board'
-import { useState, useEffect, useRef, use } from 'react'
+import { useState, useEffect, useRef, use, Suspense } from 'react'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 
 import SoundUrls from '@/utils/contants/sound'
+import { Chat } from './_components/chat'
+import { useParams } from 'next/navigation'
+import { useOrigin } from '@/hooks/use-origin'
 
 const ranks = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'j', 'q', 'k', 'a']
 const suits = ['hearts', 'diamonds', 'clubes', 'spades']
@@ -25,9 +26,9 @@ const TablePage = () => {
     [] as Array<{ first: string; second: string }>
   )
   const [boardCards, setBoardCards] = useState([] as string[])
-
   const [isShuffle, setSuffle] = useState(false)
-
+  const params = useParams()
+  const origin = useOrigin()
   const handleChatButtonClick = () => {
     setChatBoxVisible(true)
   }
@@ -125,13 +126,15 @@ const TablePage = () => {
         zIndex: (i: number) => zIndex++,
         stagger: 0.03,
         onComplete: () => {
-          const elements = document.querySelectorAll('.player-card')
-          elements.forEach(element => {
-            element?.parentNode?.removeChild(element)
-          })
-
           setHandVisible(true)
           setSuffle(false)
+
+          setTimeout(() => {
+            const elements = document.querySelectorAll('.player-card')
+            elements.forEach(element => {
+              element?.parentNode?.removeChild(element)
+            })
+          }, 0)
         },
       })
     }
@@ -186,6 +189,10 @@ const TablePage = () => {
     setHandVisible(false)
   }
 
+  if (!origin) return null
+
+  if (!params?.tableId) return null
+
   return (
     <>
       <div className="absolute flex items-center gap-x-8  left-1/2 translate-x-[-50%] top-[25%] z-10">
@@ -236,13 +243,16 @@ const TablePage = () => {
           isHandVisible={isHandVisible}
         />
       </div>
-      <div className="group_chat">
+      {/* <div className="group_chat">
         <div
           className={cn('chat_box', isChatBoxVisible && 'is-show')}
           id="chat_box"
-          onClick={handleCloseChatClick}
         >
-          <div className="btn_close icon sz-24" id="close_chat">
+          <div
+            className="btn_close icon sz-24"
+            id="close_chat"
+            onClick={handleCloseChatClick}
+          >
             <i className="icon-down"></i>
           </div>
           <div className="body">
@@ -286,17 +296,8 @@ const TablePage = () => {
             </div>
           </div>
         </div>
-        <div
-          onClick={handleChatButtonClick}
-          className={cn('btn_chat', isChatBoxVisible && 'is-hide')}
-          id="btn_chat"
-        >
-          <div className="icon sz-24">
-            <i className="icon-chat"></i>
-          </div>
-          <span>Chat</span>
-        </div>
-      </div>
+        
+      </div> */}
     </>
   )
 }

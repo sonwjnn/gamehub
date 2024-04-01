@@ -9,8 +9,9 @@ import { Loader2, ServerCrash } from 'lucide-react'
 import { ElementRef, Fragment, useRef } from 'react'
 
 import { ChatItem, ChatItemSkeleton } from './chat-item'
+import { useCurrentUser } from '@/hooks/use-current-user'
 
-const DATE_FORMAT = 'd MMM yyyy, HH:mm'
+const DATE_FORMAT = 'HH:mm'
 
 type MessageWithPlayer = Message & {
   user: User
@@ -37,6 +38,8 @@ export const ChatMessages = ({
   conversationId,
   type,
 }: ChatMessagesProps) => {
+  const user = useCurrentUser()
+
   const queryKey = `chat:${chatId}`
   const addKey = `chat:${chatId}:messages`
   const updateKey = `chat:${chatId}:messages:update`
@@ -61,9 +64,9 @@ export const ChatMessages = ({
     count: data?.pages?.[0]?.items?.length ?? 0,
   })
 
-  // if (status === 'pending') {
-  //   return <ChatMessagesSkeleton />
-  // }
+  if (status === 'pending') {
+    return <ChatMessagesSkeleton />
+  }
 
   if (status === 'error') {
     return (
@@ -77,10 +80,10 @@ export const ChatMessages = ({
   }
 
   return (
-    <div ref={chatRef} className="flex flex-1 flex-col overflow-y-auto py-4">
+    <div ref={chatRef} className="flex flex-1 flex-col overflow-y-auto py-4 ">
       {!hasNextPage && <div className="flex-1" />}
       {/* {!hasNextPage && <ChatWelcome type={type} name={name} />} */}
-      {/* {hasNextPage && (
+      {hasNextPage && (
         <div className="flex justify-center">
           {isFetchingNextPage ? (
             <Loader2 className="my-4 size-6 animate-spin text-zinc-500" />
@@ -93,28 +96,53 @@ export const ChatMessages = ({
             </button>
           )}
         </div>
-      )} */}
-      <div className="mt-auto flex flex-col-reverse">
+      )}
+      <div className="mt-auto flex flex-col-reverse gap-y-2">
         {data?.pages?.map((group, i) => (
           <Fragment key={i}>
             {group?.items?.map((message: MessageWithPlayer) => {
               if (!message.content) return null
-
+              const isOwner = player.id === message.player?.id
               return (
-                <ChatItem
-                  key={message.id}
-                  id={message.id}
-                  currentPlayer={player}
-                  player={message.player!}
-                  content={message.content}
-                  // fileUrl={message.fileUrl}
-                  deleted={message.deleted}
-                  // timestamp={format(new Date(message.createdAt), DATE_FORMAT)}
-                  timestamp={format(Date.now(), DATE_FORMAT)}
-                  // isUpdated={message.updatedAt !== message.createdAt}
-                  socketUrl={socketUrl}
-                  socketQuery={socketQuery}
-                />
+                <>
+                  {isOwner ? (
+                    <div className="ml-auto max-w-[85%]" key={message.id}>
+                      <ChatItem
+                        id={message.id}
+                        currentPlayer={player}
+                        player={message.player!}
+                        content={message.content}
+                        // fileUrl={message.fileUrl}
+                        deleted={message.deleted}
+                        timestamp={format(
+                          new Date(message.createdAt),
+                          DATE_FORMAT
+                        )}
+                        // isUpdated={message.updatedAt !== message.createdAt}
+                        socketUrl={socketUrl}
+                        socketQuery={socketQuery}
+                      />
+                    </div>
+                  ) : (
+                    <div className="mr-auto max-w-[85%]" key={message.id}>
+                      <ChatItem
+                        id={message.id}
+                        currentPlayer={player}
+                        player={message.player!}
+                        content={message.content}
+                        // fileUrl={message.fileUrl}
+                        deleted={message.deleted}
+                        timestamp={format(
+                          new Date(message.createdAt),
+                          DATE_FORMAT
+                        )}
+                        // isUpdated={message.updatedAt !== message.createdAt}
+                        socketUrl={socketUrl}
+                        socketQuery={socketQuery}
+                      />
+                    </div>
+                  )}
+                </>
               )
             })}
           </Fragment>

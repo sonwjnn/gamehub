@@ -10,28 +10,25 @@ export const WithdrawList = () => {
   return (
     <List>
       <Datagrid rowClick="edit">
-        <TextField source="id" />
-        <TextField source="name" />
-        <TextField source="prize" />
-        <NumberField source="min" />
-        <NumberField source="max" />
+        {/*<TextField source="id" />*/}
+        <TextField source="userId" />
+        <TextField source="cardName" />
+        <TextField source="cardCode" />
+        <TextField source="comment" disabled />
+        <NumberField source="amount" />
         <SelectField
           source="status"
           choices={[
             {
-              id: 'ADMIN',
-              name: 'ADMIN',
+              id: 'active',
+              name: 'active',
             },
             {
-              id: 'USER',
-              name: 'USER',
+              id: 'inactive',
+              name: 'inactive',
             },
           ]}
         />
-        <TextField source="rooms" />
-        <TextField source="start" />
-        <TextField source="end" />
-        <TextField source="email" />
       </Datagrid>
     </List>
   )

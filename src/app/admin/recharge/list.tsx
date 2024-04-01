@@ -10,28 +10,23 @@ export const RechargeList = () => {
   return (
     <List>
       <Datagrid rowClick="edit">
-        <TextField source="id" />
-        <TextField source="name" />
-        <TextField source="prize" />
-        <NumberField source="min" />
-        <NumberField source="max" />
+        {/*<TextField source="id" />*/}
+        <TextField source="userId" />
+        <TextField source="amount" />
+        <TextField source="number1" />
         <SelectField
           source="status"
           choices={[
             {
-              id: 'ADMIN',
-              name: 'ADMIN',
+              id: 'active',
+              name: 'active',
             },
             {
-              id: 'USER',
-              name: 'USER',
+              id: 'inactive',
+              name: 'inactive',
             },
           ]}
         />
-        <TextField source="rooms" />
-        <TextField source="start" />
-        <TextField source="end" />
-        <TextField source="email" />
       </Datagrid>
     </List>
   )
