@@ -15,8 +15,8 @@ import { auth } from '@/auth'
 const font = Open_Sans({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Rediscord',
-  description: 'A Discord clone built with Next.js and Tailwind CSS.',
+  title: process.env.TITTLE ?? "Poker",
+  description: process.env.DESCRIPTION ?? "Poker Page",
 }
 
 export default async function RootLayout({

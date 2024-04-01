@@ -1,5 +1,4 @@
 import { SimpleForm, Edit, TextInput, required, SelectInput, TextField, SelectField, NumberField } from 'react-admin'
-import { EventsList } from '@/app/admin/events/list'
 
 
 const eventStatusChoices = [
