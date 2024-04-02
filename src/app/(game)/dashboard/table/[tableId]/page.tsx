@@ -11,7 +11,6 @@ import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 
 import SoundUrls from '@/utils/contants/sound'
-import { Chat } from './_components/chat'
 import { useParams } from 'next/navigation'
 import { useOrigin } from '@/hooks/use-origin'
 
@@ -19,7 +18,6 @@ const ranks = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'j', 'q', 'k', 'a']
 const suits = ['hearts', 'diamonds', 'clubes', 'spades']
 
 const TablePage = () => {
-  const [isChatBoxVisible, setChatBoxVisible] = useState(false)
   const [isHandVisible, setHandVisible] = useState(false)
   const [deck, setDeck] = useState([] as Array<{ suit: string; rank: string }>)
   const [pairs, setPairs] = useState(
@@ -29,16 +27,6 @@ const TablePage = () => {
   const [isShuffle, setSuffle] = useState(false)
   const params = useParams()
   const origin = useOrigin()
-  const handleChatButtonClick = () => {
-    setChatBoxVisible(true)
-  }
-
-  const handleCloseChatClick = (e: any) => {
-    e.stopPropagation()
-    e.preventDefault()
-
-    setChatBoxVisible(false)
-  }
 
   const createDeckAndShuffle = () => {
     let cards = [] as Array<{ suit: string; rank: string }>
@@ -201,7 +189,7 @@ const TablePage = () => {
           variant="outline"
           onClick={onSuffleClick}
         >
-          Suffle
+          Shuffle
         </Button>
       </div>
       <div className="wrapper" ref={wrapperRef}>

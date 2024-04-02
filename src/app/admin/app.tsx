@@ -36,9 +36,9 @@ import { TableList } from './table/list'
 import { TableEdit } from './table/edit'
 import { TableCreate } from './table/create'
 
-// import { SettingsList } from './settings/list'
-// import { SettingsEdit } from './settings/edit'
-// import { SettingsCreate } from './settings/create'
+import { PlayerList } from './player/list'
+import { PlayerEdit } from './player/edit'
+import { PlayerCreate } from './player/create'
 
 const dataProvider = simpleRestProvider(
   `${process.env.NEXT_PUBLIC_SERVER_URL}/api`
@@ -98,6 +98,15 @@ const App = () => {
         list={TableList}
         create={TableCreate}
         edit={TableEdit}
+        recordRepresentation="name"
+      />
+
+      <Resource
+        icon={RememberMeIcon}
+        name="players"
+        list={PlayerList}
+        create={PlayerCreate}
+        edit={PlayerEdit}
         recordRepresentation="name"
       />
 
