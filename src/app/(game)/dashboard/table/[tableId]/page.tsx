@@ -203,10 +203,6 @@ const TablePage = () => {
         >
           Suffle
         </Button>
-
-        {/* <Button className=" text-white" variant="outline">
-          Game over
-        </Button> */}
       </div>
       <div className="wrapper" ref={wrapperRef}>
         <Image
@@ -243,61 +239,6 @@ const TablePage = () => {
           isHandVisible={isHandVisible}
         />
       </div>
-      {/* <div className="group_chat">
-        <div
-          className={cn('chat_box', isChatBoxVisible && 'is-show')}
-          id="chat_box"
-        >
-          <div
-            className="btn_close icon sz-24"
-            id="close_chat"
-            onClick={handleCloseChatClick}
-          >
-            <i className="icon-down"></i>
-          </div>
-          <div className="body">
-            <div className="wrap scrollbar">
-              <div className="chat_item">
-                <div className="name">Player2012:</div>
-                <div className="des">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce
-                  odio mauris, interdum id ultrices et,
-                </div>
-                <div className="time">2:05 p.m</div>
-              </div>
-              <div className="chat_item">
-                <div className="name">Player2012:</div>
-                <div className="des">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce
-                  odio mauris, interdum id ultrices et,
-                </div>
-                <div className="time">2:05 p.m</div>
-              </div>
-              <div className="chat_item me">
-                <div className="name">Player2012:</div>
-                <div className="des">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce
-                  odio mauris, interdum id ultrices et,
-                </div>
-                <div className="time">2:05 p.m</div>
-              </div>
-            </div>
-          </div>
-          <div className="footer">
-            <div
-              className="textarea_custom scrollbar"
-              contentEditable="true"
-              aria-placeholder="Typing here..."
-            ></div>
-            <div className="btn_send">
-              <span className="icon sz-24">
-                <i className="icon-send"></i>
-              </span>
-            </div>
-          </div>
-        </div>
-        
-      </div> */}
     </>
   )
 }
