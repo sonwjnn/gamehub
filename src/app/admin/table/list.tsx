@@ -7,9 +7,8 @@ export const TableList = () => {
         <TextField source="id" />
         <TextField source="name" />
         <TextField source="user.id" label="Owner" />
-        <NumberField source="limit" />
-        <NumberField source="minBet" />
-        <NumberField source="minRaise" />
+        <NumberField source="minBuyIn" label="Min Buy-in" />
+        <NumberField source="maxBuyIn" label="Max Buy-in" />
         <NumberField source="maxPlayers" />
       </Datagrid>
     </List>
