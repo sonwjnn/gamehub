@@ -1,4 +1,5 @@
 import privateClient from '@/services/api/client/private-client'
+import qs from 'query-string'
 
 const playerEndpoints = {
   getCurrentPlayerOfTable: ({
@@ -9,13 +10,7 @@ const playerEndpoints = {
     userId: string
   }) => `players/${tableId}/${userId}`,
   createPlayer: 'players/',
-  removePlayer: ({
-    tableId,
-    playerId,
-  }: {
-    tableId: string
-    playerId: string
-  }) => `players/${tableId}/${playerId}`,
+  removePlayer: (playerId: string) => `players/${playerId}`,
 }
 
 const playerApi = {
@@ -45,11 +40,22 @@ const playerApi = {
       return { error }
     }
   },
-  removePlayer: async (data: { tableId: string; playerId: string }) => {
+  removePlayer: async ({
+    tableId,
+    playerId,
+  }: {
+    tableId: string
+    playerId: string
+  }) => {
     try {
-      const response = await privateClient.delete(
-        playerEndpoints.removePlayer(data)
-      )
+      const url = qs.stringifyUrl({
+        url: `${playerEndpoints.removePlayer(playerId)}`,
+        query: {
+          tableId,
+        },
+      })
+
+      const response = await privateClient.delete(url)
       if (response && response.data) return { response: response.data }
       return { response }
     } catch (error) {

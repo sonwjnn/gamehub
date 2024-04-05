@@ -9,7 +9,6 @@ import { Loader2, ServerCrash } from 'lucide-react'
 import { ElementRef, Fragment, useRef } from 'react'
 
 import { ChatItem, ChatItemSkeleton } from './chat-item'
-import { useCurrentUser } from '@/hooks/use-current-user'
 
 const DATE_FORMAT = 'HH:mm'
 
@@ -38,8 +37,6 @@ export const ChatMessages = ({
   conversationId,
   type,
 }: ChatMessagesProps) => {
-  const user = useCurrentUser()
-
   const queryKey = `chat:${chatId}`
   const addKey = `chat:${chatId}:messages`
   const updateKey = `chat:${chatId}:messages:update`

@@ -5,6 +5,7 @@ import { CurrentPlayerAction } from './actions'
 
 import { shuffle } from 'lodash'
 import { useEffect } from 'react'
+import { PlayerWithUser } from '@/types'
 
 interface CurrentPlayerProps {
   type?: 'fold' | 'active' | 'default'
@@ -12,6 +13,7 @@ interface CurrentPlayerProps {
   imageUrlFirst: string
   imageUrlSecond: string
   isHandVisible: boolean
+  player: PlayerWithUser | undefined
 }
 
 export const CurrentPlayer = ({
@@ -20,24 +22,9 @@ export const CurrentPlayer = ({
   imageUrlFirst = '/images/pocker_on.png',
   imageUrlSecond = '/images/pocker_on.png',
   isHandVisible,
+  player,
 }: CurrentPlayerProps) => {
-  const ranks = [
-    '2',
-    '3',
-    '4',
-    '5',
-    '6',
-    '7',
-    '8',
-    '9',
-    '10',
-    'j',
-    'q',
-    'k',
-    'a',
-  ]
-
-  // const imageUrlFirst = `/images/pocker/${randomRank}_of_${randomSuit}.png`
+  if (!player) return null
 
   return (
     <div className="group_tool flex flex-space gap-12">
@@ -84,7 +71,7 @@ export const CurrentPlayer = ({
             </div>
             <div className="flex info_user">
               <div className="left sp_full">
-                <div className="name text-center">Player2012</div>
+                <div className="name text-center">{player.user?.username}</div>
               </div>
               <div className="right sp_full">
                 <div className="money fw-700">$ 1.500.324</div>

@@ -49,6 +49,7 @@ export const InviteModal = () => {
             <Input
               className="border-0 bg-zinc-300/50 text-black focus-visible:ring-0 focus-visible:ring-offset-0"
               value={inviteCode}
+              readOnly
             />
             <Button onClick={onCopy} size="icon">
               {copied ? (

@@ -1,6 +1,9 @@
 import tableApi from '@/services/api/modules/table-api'
 import { InvitePlayer } from './_components/invite-player'
 import { Chat } from './_components/chat'
+import { LeaveTable } from './_components/leave-table'
+import playerApi from '@/services/api/modules/player-api'
+import { currentUser } from '@/lib/auth'
 
 const TableIdLayout = async ({
   children,
@@ -9,13 +12,27 @@ const TableIdLayout = async ({
   children: React.ReactNode
   params: { tableId: string }
 }) => {
+  const user = await currentUser()
+
   const { response: table } = await tableApi.getTableById({
     tableId: params.tableId,
   })
 
+  const { response: currentPlayer } = await playerApi.getCurrentPlayerOfTable({
+    tableId: params.tableId,
+    userId: user?.id as string,
+  })
+
+  if (!table || !currentPlayer) {
+    return null
+  }
+
   return (
     <div className="relative h-full w-full px-[70px]">
-      <InvitePlayer table={table} />
+      <div className="absolute left-0 top-0 z-10 p-[12px] flex gap-x-4">
+        <InvitePlayer table={table} />
+        <LeaveTable table={table} player={currentPlayer} />
+      </div>
       {children}
       <Chat tableId={params.tableId} />
     </div>

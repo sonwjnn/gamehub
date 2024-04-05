@@ -6,13 +6,19 @@ import { CurrentPlayer } from './_components/current-player'
 import { Button } from '@/components/ui/button'
 import { shuffle } from 'lodash'
 import { Board } from './_components/board'
-import { useState, useEffect, useRef, use, Suspense } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 
 import SoundUrls from '@/utils/contants/sound'
 import { useParams } from 'next/navigation'
+import { useRouter } from 'next/router'
 import { useOrigin } from '@/hooks/use-origin'
+import tableApi from '@/services/api/modules/table-api'
+import { PlayerWithUser, PokerActions } from '@/types'
+import { useCurrentUser } from '@/hooks/use-current-user'
+import { useSocket } from '@/providers/socket-provider'
+import { toast } from 'sonner'
 
 const ranks = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'j', 'q', 'k', 'a']
 const suits = ['hearts', 'diamonds', 'clubes', 'spades']
@@ -24,9 +30,15 @@ const TablePage = () => {
     [] as Array<{ first: string; second: string }>
   )
   const [boardCards, setBoardCards] = useState([] as string[])
+  const [players, setPlayers] = useState<PlayerWithUser[]>([])
+  const [currentPlayer, setCurrentPlayer] = useState<
+    PlayerWithUser | undefined
+  >(undefined)
   const [isShuffle, setSuffle] = useState(false)
   const params = useParams()
   const origin = useOrigin()
+  const user = useCurrentUser()
+  const { socket } = useSocket()
 
   const createDeckAndShuffle = () => {
     let cards = [] as Array<{ suit: string; rank: string }>
@@ -64,7 +76,7 @@ const TablePage = () => {
     const offsetX = 0
     const offsetY = 0
     const positions = Array.from(players).map(playerPosition)
-    const numPlayers = 10
+    const numPlayers = players.length
     const totalCards = numPlayers * cardsHand
     let round = -1
     let zIndex = 0
@@ -140,6 +152,65 @@ const TablePage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isShuffle])
 
+  useEffect(() => {
+    const getPlayers = async () => {
+      const { response } = await tableApi.getTableById({
+        tableId: params?.tableId as string,
+      })
+
+      if (!response) {
+        setPlayers([])
+        return
+      }
+
+      let currentPlayer = null
+      const players = response.players.filter((item: PlayerWithUser) => {
+        if (item.userId === user?.id) {
+          currentPlayer = item
+          return false
+        }
+        return true
+      })
+
+      if (currentPlayer) {
+        setCurrentPlayer(currentPlayer)
+      }
+      setPlayers(players)
+    }
+    getPlayers()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  useEffect(() => {
+    if (socket) {
+      socket.on(
+        PokerActions.JOIN_TABLE,
+        ({ tableId, player }: { tableId: string; player: PlayerWithUser }) => {
+          if (tableId !== params?.tableId) return
+
+          setPlayers(prev => [...prev, player])
+
+          toast.success(`${player.user.username} joined the table`)
+        }
+      )
+
+      socket.on(
+        PokerActions.LEAVE_TABLE,
+        ({ tableId, player }: { tableId: string; player: PlayerWithUser }) => {
+          if (tableId !== params?.tableId) return
+          setPlayers(prev => prev.filter(item => item.userId !== player.userId))
+        }
+      )
+    }
+
+    return () => {
+      if (socket) {
+        socket.off(PokerActions.JOIN_TABLE)
+        socket.off(PokerActions.LEAVE_TABLE)
+      }
+    }
+  }, [socket, params])
+
   const init = () => {
     const deck = createDeckAndShuffle()
 
@@ -206,23 +277,26 @@ const TablePage = () => {
             <div className="dealer" ref={dealerRef}></div>
 
             <div className="wrap_list">
-              {pairs.slice(0, 9).map(({ first, second }, index) => {
-                return (
-                  <OtherPlayer
-                    key={index}
-                    imageUrlFirst={first}
-                    imageUrlSecond={second}
-                    isHandVisible={isHandVisible}
-                  />
-                )
-              })}
+              {Array.isArray(players) &&
+                players.map((player, index) => {
+                  return (
+                    <OtherPlayer
+                      key={index}
+                      player={player}
+                      imageUrlFirst={pairs[index]?.first}
+                      imageUrlSecond={pairs[index]?.second}
+                      isHandVisible={isHandVisible}
+                    />
+                  )
+                })}
             </div>
           </div>
         </div>
         <Board cards={boardCards} isShuffle={isShuffle} />
         <CurrentPlayer
-          imageUrlFirst={pairs[9]?.first}
-          imageUrlSecond={pairs[9]?.second}
+          player={currentPlayer}
+          imageUrlFirst={pairs[players.length]?.first}
+          imageUrlSecond={pairs[players.length]?.second}
           showdown
           isHandVisible={isHandVisible}
         />

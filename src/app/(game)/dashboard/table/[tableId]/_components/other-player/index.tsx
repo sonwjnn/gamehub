@@ -2,6 +2,7 @@ import { cn } from '@/lib/utils'
 import Image from 'next/image'
 import { Hand } from './hand'
 import { UserAvatar } from '@/components/user-avatar'
+import {  PlayerWithUser } from '@/types'
 
 interface OtherPlayerProps {
   type?: 'fold' | 'active' | 'default'
@@ -9,6 +10,7 @@ interface OtherPlayerProps {
   imageUrlFirst: string
   imageUrlSecond: string
   isHandVisible?: boolean
+  player: PlayerWithUser
 }
 
 export const OtherPlayer = ({
@@ -17,6 +19,7 @@ export const OtherPlayer = ({
   imageUrlFirst,
   imageUrlSecond,
   isHandVisible,
+  player
 }: OtherPlayerProps) => {
   return (
     <div
@@ -54,7 +57,7 @@ export const OtherPlayer = ({
         </div>
         <div className="flex info_user">
           <div className="left sp_full">
-            <div className="name text-center">OtherPlayer2012</div>
+            <div className="name text-center">{player.user?.username}</div>
           </div>
           <div className="right sp_full">
             <div className="money fw-700">$ 1.500.324</div>
