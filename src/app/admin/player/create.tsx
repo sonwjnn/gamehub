@@ -12,7 +12,6 @@ export const PlayerCreate = () => {
   return (
     <Create>
       <SimpleForm>
-        <TextInput source="name" validate={[required()]} label="Name" />
         <ReferenceInput source="userId" reference="users">
           <SelectInput optionText="username" />
         </ReferenceInput>

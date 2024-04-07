@@ -107,7 +107,7 @@ const App = () => {
         list={PlayerList}
         create={PlayerCreate}
         edit={PlayerEdit}
-        recordRepresentation="name"
+        // recordRepresentation="name"
       />
 
       {/*<Resource*/}
