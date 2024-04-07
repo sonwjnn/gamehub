@@ -2,6 +2,7 @@ import { UserButton } from '@/components/auth/user-button'
 import { SocketIndicator } from '@/components/socket-indicator'
 import Image from 'next/image'
 import Link from 'next/link'
+import { ChipsAmount } from './chips-amount'
 
 interface ActionsProps {}
 
@@ -55,7 +56,7 @@ export const Actions = ({}: ActionsProps) => {
           <span>Setting</span>
         </div>
       </Link>
-
+      <ChipsAmount />
       <UserButton />
     </div>
   )

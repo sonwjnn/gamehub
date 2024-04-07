@@ -4,6 +4,7 @@ import { Chat } from './_components/chat'
 import { LeaveTable } from './_components/leave-table'
 import playerApi from '@/services/api/modules/player-api'
 import { currentUser } from '@/lib/auth'
+import { redirect } from 'next/navigation'
 
 const TableIdLayout = async ({
   children,
@@ -14,16 +15,30 @@ const TableIdLayout = async ({
 }) => {
   const user = await currentUser()
 
-  const { response: table } = await tableApi.getTableById({
-    tableId: params.tableId,
-  })
+  if (!user) {
+    return null
+  }
 
-  const { response: currentPlayer } = await playerApi.getCurrentPlayerOfTable({
-    tableId: params.tableId,
-    userId: user?.id as string,
-  })
+  const { tableId } = params
+  const { id: userId } = user
 
-  if (!table || !currentPlayer) {
+  const [{ response: table }, { response: currentPlayer }] = await Promise.all([
+    tableApi.getTableById({ tableId }),
+    playerApi.getCurrentPlayerOfTable({ tableId, userId }),
+  ])
+
+  let finalCurrentPlayer = currentPlayer
+
+  if (table && !currentPlayer) {
+    if (table.players.length === table.maxPlayers) {
+      redirect('/dashboard')
+    }
+
+    const { response } = await playerApi.createPlayer({ tableId, userId })
+    finalCurrentPlayer = response
+  }
+
+  if (!table || !finalCurrentPlayer) {
     return null
   }
 
@@ -31,10 +46,10 @@ const TableIdLayout = async ({
     <div className="relative h-full w-full px-[70px]">
       <div className="absolute left-0 top-0 z-10 p-[12px] flex gap-x-4">
         <InvitePlayer table={table} />
-        <LeaveTable table={table} player={currentPlayer} />
+        <LeaveTable table={table} player={finalCurrentPlayer} />
       </div>
       {children}
-      <Chat tableId={params.tableId} />
+      <Chat tableId={tableId} />
     </div>
   )
 }

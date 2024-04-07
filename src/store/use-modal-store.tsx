@@ -1,7 +1,7 @@
 import { Player, Table } from '@/types'
 import { create } from 'zustand'
 
-export type ModalType = 'joinTable' | 'invite' | 'leaveTable'
+export type ModalType = 'joinTable' | 'invite' | 'leaveTable' | 'buyChips'
 
 interface ModalData {
   table?: Table

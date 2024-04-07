@@ -2,25 +2,40 @@ import { cn } from '@/lib/utils'
 import Image from 'next/image'
 import { Hand } from './hand'
 import { UserAvatar } from '@/components/user-avatar'
-import {  PlayerWithUser } from '@/types'
+import { Participant, PlayerWithUser } from '@/types'
+import { useEffect, useState } from 'react'
 
 interface OtherPlayerProps {
   type?: 'fold' | 'active' | 'default'
   showdown?: boolean
-  imageUrlFirst: string
-  imageUrlSecond: string
   isHandVisible?: boolean
   player: PlayerWithUser
+  participants: Participant[]
 }
 
 export const OtherPlayer = ({
   type = 'default',
   showdown = false,
-  imageUrlFirst,
-  imageUrlSecond,
   isHandVisible,
-  player
+  player,
+  participants,
 }: OtherPlayerProps) => {
+  const [imageUrlFirst, setImageUrlFirst] = useState('')
+  const [imageUrlSecond, setImageUrlSecond] = useState('')
+
+  useEffect(() => {
+    if (Array.isArray(participants) && participants.length > 0) {
+      const participant = participants.find(
+        participant => participant.playerId === player.id
+      )
+      const imageUrlFirst = `/images/pocker/${participant?.cardOne.rank.toLocaleLowerCase()}_${participant?.cardOne.suit.toLocaleLowerCase()}.png`
+      const imageUrlSecond = `/images/pocker/${participant?.cardTwo.rank.toLocaleLowerCase()}_${participant?.cardTwo.suit.toLocaleLowerCase()}.png`
+
+      setImageUrlFirst(imageUrlFirst)
+      setImageUrlSecond(imageUrlSecond)
+    }
+  }, [participants, player])
+
   return (
     <div
       className={cn(

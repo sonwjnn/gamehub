@@ -15,6 +15,7 @@ export type User = {
   token: string
   salt: string
   role: UserRole
+  chipsAmount: number
   createdAt: Date
   updatedAt: Date
 }
@@ -50,23 +51,23 @@ export type Table = {
 
   players: Player[]
   messages: Message[]
+  matches?: Match[]
 
-  limit: number
+  minBuyIn: number
+  maxBuyIn: number
+  // limit: number
   maxPlayers: number
-  seats: number
-  smallBlind: number
-  bigBlind: number
-  pot: number
-  mainPot: number
-  callAmount: number
-  wentToShowdown: boolean
-  minBet?: number
-  minRaise?: number
-  deck: Card[]
-  board: Card[]
-  sidePots: string
-  buttonId?: string
-  turn: boolean
+  // smallBlind: number
+  // bigBlind: number
+  // pot: number
+  // mainPot: number
+  // callAmount: number
+  // wentToShowdown: boolean
+  // minBet?: number
+  // minRaise?: number
+  // sidePots: string
+  // buttonId?: string
+  // turn: boolean
 
   histories: History[]
 
@@ -82,6 +83,8 @@ export type Player = {
 
   tableId: string
   table?: Table
+
+  isTurn: boolean
 
   createdAt: Date
 }
@@ -100,22 +103,34 @@ export type Message = {
   createdAt: Date
 }
 
-// export type DirectMessage = {
-//   id: string;
-//   content: string;
-//   userId: string;
-//   conversationId: string;
-//   deleted: boolean;
+export type Deck = {
+  id: string
+  tableId: string
+  table: Table
+  cards?: Card[]
+  matches?: Match[]
+}
 
-//   createdAt: Date;
-//   updatedAt: Date;
-// };
+export type Match = {
+  id: string
+  tableId: string
+  table: Table
+  numberPlayers: number
+  deckId: string
+  deck: Deck
+  participants?: Participant[]
+  board: Card[]
+}
 
-// export type Conversation = {
-//   id: string;
-//   userOneId: string;
-//   userTwoId: string;
-// };
+export type Participant = {
+  id: string
+  matchId: string
+  match: string
+  playerId: string
+  player: Player
+  cardOne: Card
+  cardTwo: Card
+}
 
 export type PlayerWithUser = Player & { user: User }
 

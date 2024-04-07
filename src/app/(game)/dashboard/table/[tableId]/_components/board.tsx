@@ -2,9 +2,10 @@ import { useEffect, useState } from 'react'
 import { Card } from './card'
 import { cn } from '@/lib/utils'
 import Sound from '@/utils/contants/sound'
+import { Card as CardType } from '@/types'
 
 interface BoardProps {
-  cards: string[]
+  cards: CardType[]
   isHidden?: boolean
   isShuffle?: boolean
 }
@@ -60,6 +61,8 @@ export const Board = ({ cards, isHidden = false, isShuffle }: BoardProps) => {
     }
   }, [isShuffle])
 
+  if (Array.isArray(cards) && cards.length === 0) return null
+
   return (
     <div className="group_midle">
       {!isHidden && (
@@ -78,15 +81,33 @@ export const Board = ({ cards, isHidden = false, isShuffle }: BoardProps) => {
                 !isFirst && 'pocker_hide'
               )}
             >
-              {cards.slice(0, 3).map((card, index) => (
-                <BoardCard key={card} imageUrl={card} isHidden={!isFlop} />
-              ))}
-              {cards.slice(3, 4).map((card, index) => (
-                <BoardCard key={card} imageUrl={card} isHidden={!isTurn} />
-              ))}
-              {cards.slice(4, 5).map((card, index) => (
-                <BoardCard key={card} imageUrl={card} isHidden={!isRiver} />
-              ))}
+              {cards
+                ?.slice(0, 3)
+                .map((card, index) => (
+                  <BoardCard
+                    key={card.id}
+                    imageUrl={`/images/pocker/${card.rank.toLowerCase()}_${card.suit.toLowerCase()}.png`}
+                    isHidden={!isFlop}
+                  />
+                ))}
+              {cards
+                ?.slice(3, 4)
+                .map((card, index) => (
+                  <BoardCard
+                    key={card.id}
+                    imageUrl={`/images/pocker/${card.rank.toLowerCase()}_${card.suit.toLowerCase()}.png`}
+                    isHidden={!isTurn}
+                  />
+                ))}
+              {cards
+                ?.slice(4, 5)
+                .map((card, index) => (
+                  <BoardCard
+                    key={card.id}
+                    imageUrl={`/images/pocker/${card.rank.toLowerCase()}_${card.suit.toLowerCase()}.png`}
+                    isHidden={!isRiver}
+                  />
+                ))}
             </div>
           </div>
           <div className="group_number flex flex-midle flex-center gap-24">

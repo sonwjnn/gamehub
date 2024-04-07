@@ -4,27 +4,69 @@ import { UserAvatar } from '@/components/user-avatar'
 import { CurrentPlayerAction } from './actions'
 
 import { shuffle } from 'lodash'
-import { useEffect } from 'react'
-import { PlayerWithUser } from '@/types'
+import { useEffect, useState } from 'react'
+import { Match, Participant, PlayerWithUser, PokerActions } from '@/types'
+import { useSocket } from '@/providers/socket-provider'
 
 interface CurrentPlayerProps {
   type?: 'fold' | 'active' | 'default'
   showdown?: boolean
-  imageUrlFirst: string
-  imageUrlSecond: string
+  match: Match | null
+  participants: Participant[]
   isHandVisible: boolean
   player: PlayerWithUser | undefined
+  tableId: string
 }
 
 export const CurrentPlayer = ({
   type = 'default',
+  match,
   showdown = false,
-  imageUrlFirst = '/images/pocker_on.png',
-  imageUrlSecond = '/images/pocker_on.png',
+  participants,
   isHandVisible,
   player,
+  tableId,
 }: CurrentPlayerProps) => {
-  if (!player) return null
+  const { socket } = useSocket()
+  const [imageUrlFirst, setImageUrlFirst] = useState('')
+  const [imageUrlSecond, setImageUrlSecond] = useState('')
+  const [turn, setTurn] = useState<boolean>(false)
+  const [turnTimeOutHandle, setHandle] = useState<NodeJS.Timeout | null>(null)
+
+  useEffect(() => {
+    if (Array.isArray(participants) && participants.length > 0) {
+      const participant = participants.find(
+        participant => participant.playerId === player?.id
+      )
+      const imageUrlFirst = `/images/pocker/${participant?.cardOne.rank.toLocaleLowerCase()}_${participant?.cardOne.suit.toLocaleLowerCase()}.png`
+      const imageUrlSecond = `/images/pocker/${participant?.cardTwo.rank.toLocaleLowerCase()}_${participant?.cardTwo.suit.toLocaleLowerCase()}.png`
+
+      setImageUrlFirst(imageUrlFirst)
+      setImageUrlSecond(imageUrlSecond)
+    }
+  }, [participants, player])
+
+  useEffect(() => {
+    turn !== player?.isTurn && setTurn(player?.isTurn || false)
+    // eslint-disable-next-line
+  }, [])
+
+  useEffect(() => {
+    if (turn && !turnTimeOutHandle) {
+      const handle = setTimeout(fold, 15000)
+      setHandle(handle)
+    } else {
+      turnTimeOutHandle && clearTimeout(turnTimeOutHandle)
+      turnTimeOutHandle && setHandle(null)
+    }
+    // eslint-disable-next-line
+  }, [turn])
+
+  const fold = () => {
+    if (socket) {
+      socket.emit(PokerActions.FOLD, tableId)
+    }
+  }
 
   return (
     <div className="group_tool flex flex-space gap-12">
@@ -71,7 +113,7 @@ export const CurrentPlayer = ({
             </div>
             <div className="flex info_user">
               <div className="left sp_full">
-                <div className="name text-center">{player.user?.username}</div>
+                <div className="name text-center">{player?.user?.username}</div>
               </div>
               <div className="right sp_full">
                 <div className="money fw-700">$ 1.500.324</div>

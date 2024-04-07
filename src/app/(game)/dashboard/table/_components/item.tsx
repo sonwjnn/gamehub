@@ -4,7 +4,8 @@ import { useCurrentUser } from '@/hooks/use-current-user'
 import { cn } from '@/lib/utils'
 import { useSocket } from '@/providers/socket-provider'
 import playerApi from '@/services/api/modules/player-api'
-import { PokerActions, Table } from '@/types'
+import { useModal } from '@/store/use-modal-store'
+import { Table } from '@/types'
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
 
@@ -14,15 +15,12 @@ interface ItemProps {
 
 export const Item = ({ table }: ItemProps) => {
   const router = useRouter()
+  const { onOpen } = useModal()
   const user = useCurrentUser()
   const { socket } = useSocket()
 
   const onClick = async () => {
     try {
-      if (table.players.length === table.maxPlayers) {
-        return toast.error('Table is full')
-      }
-
       if (!user) return router.push('/auth/login')
 
       const isHaveCurrentPlayer = table.players.some(
@@ -33,9 +31,18 @@ export const Item = ({ table }: ItemProps) => {
         return router.push(`/dashboard/table/${table.id}`)
       }
 
+      if (table.players.length === table.maxPlayers) {
+        return toast.error('This table is full')
+      }
+
+      if (user.chipsAmount < table.minBuyIn) {
+        return onOpen('buyChips')
+      }
+
       await playerApi.createPlayer({
         tableId: table.id,
         userId: user.id,
+        socketId: socket.id,
       })
 
       router.push(`/dashboard/table/${table.id}`)
@@ -58,13 +65,23 @@ export const Item = ({ table }: ItemProps) => {
         {table.name}
       </p>
 
-      <p
-        className={cn(
-          'line-clamp-1 text-sm font-semibold text-zinc-400 transition group-hover:text-zinc-500 ml-auto'
-        )}
-      >
-        {`${table.players.length}/10`}
-      </p>
+      <div className="ml-auto flex gap-x-4">
+        <p
+          className={cn(
+            'line-clamp-1 text-sm font-semibold text-zinc-400 transition group-hover:text-zinc-500'
+          )}
+        >
+          Buy-in: {table.minBuyIn}
+        </p>
+
+        <p
+          className={cn(
+            'line-clamp-1 text-sm font-semibold text-zinc-400 transition group-hover:text-zinc-500'
+          )}
+        >
+          {`${table.players.length}/10`}
+        </p>
+      </div>
     </div>
   )
 }

@@ -26,7 +26,7 @@ export const Chat = async ({ tableId }: ChatProps) => {
   })
 
   if (!table || !player) {
-    return redirect('/')
+    redirect('/')
   }
 
   return (

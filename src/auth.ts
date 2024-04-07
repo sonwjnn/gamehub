@@ -50,6 +50,7 @@ export const {
         session.user.image = token.image as string
         session.user.email = token.email as string
         session.user.role = token.role as UserRole
+        session.user.chipsAmount = token.chipsAmount as number
       }
 
       return session
@@ -67,6 +68,7 @@ export const {
       token.image = existingUser.image
       token.email = existingUser.email
       token.role = existingUser.role
+      token.chipsAmount = existingUser.chipsAmount
 
       return token
     },

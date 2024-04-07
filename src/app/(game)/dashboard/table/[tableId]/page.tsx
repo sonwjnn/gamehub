@@ -4,7 +4,7 @@ import Image from 'next/image'
 import { OtherPlayer } from './_components/other-player'
 import { CurrentPlayer } from './_components/current-player'
 import { Button } from '@/components/ui/button'
-import { shuffle } from 'lodash'
+import { set, shuffle } from 'lodash'
 import { Board } from './_components/board'
 import { useState, useEffect, useRef } from 'react'
 import gsap from 'gsap'
@@ -12,24 +12,22 @@ import { useGSAP } from '@gsap/react'
 
 import SoundUrls from '@/utils/contants/sound'
 import { useParams } from 'next/navigation'
-import { useRouter } from 'next/router'
 import { useOrigin } from '@/hooks/use-origin'
 import tableApi from '@/services/api/modules/table-api'
-import { PlayerWithUser, PokerActions } from '@/types'
+import { Card, Deck, Match, PlayerWithUser, PokerActions, Table } from '@/types'
 import { useCurrentUser } from '@/hooks/use-current-user'
 import { useSocket } from '@/providers/socket-provider'
 import { toast } from 'sonner'
 
-const ranks = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'j', 'q', 'k', 'a']
-const suits = ['hearts', 'diamonds', 'clubes', 'spades']
+import matchApi from '@/services/api/modules/match-api'
+import participantApi from '@/services/api/modules/participant-api'
 
 const TablePage = () => {
-  const [isHandVisible, setHandVisible] = useState(false)
-  const [deck, setDeck] = useState([] as Array<{ suit: string; rank: string }>)
+  const [isHandVisible, setHandVisible] = useState(true)
   const [pairs, setPairs] = useState(
     [] as Array<{ first: string; second: string }>
   )
-  const [boardCards, setBoardCards] = useState([] as string[])
+  const [boardCards, setBoardCards] = useState([] as Card[])
   const [players, setPlayers] = useState<PlayerWithUser[]>([])
   const [currentPlayer, setCurrentPlayer] = useState<
     PlayerWithUser | undefined
@@ -40,25 +38,32 @@ const TablePage = () => {
   const user = useCurrentUser()
   const { socket } = useSocket()
 
-  const createDeckAndShuffle = () => {
-    let cards = [] as Array<{ suit: string; rank: string }>
+  const [messages, setMessages] = useState([] as string[])
+  const [match, setMatch] = useState<Match | null>(null)
+  const [deck, setDeck] = useState<Deck | null>(null)
+  const [playerHands, setPlayerHands] = useState(
+    [] as Array<{ card1: Card; card2: Card }>
+  )
+  const [hand, setHand] = useState([])
+  const [chips, setChips] = useState([2000])
+  const [pot, setPot] = useState(0)
+  const [river, setRiver] = useState([])
+  const [turn, setTurn] = useState([])
+  const [flop, setFlop] = useState([])
+  const [play, setPlay] = useState([])
+  const [participants, setParticipants] = useState([])
 
-    suits.forEach(suit => {
-      ranks.forEach(rank => {
-        cards.push({ suit, rank })
-      })
-    })
+  const [handSuits, setHandSuits] = useState([])
+  const [flopSuits, setFlopSuits] = useState([])
+  const [turnSuits, setTurnSuits] = useState([])
+  const [riverSuits, setRiverSuits] = useState([])
 
-    for (let i = 0; i <= 7; i++) {
-      cards = shuffle(cards)
-    }
-
-    return cards
-  }
+  const [start, setStart] = useState([true])
 
   const tableRef = useRef<HTMLDivElement | null>(null)
   const wrapperRef = useRef<HTMLDivElement | null>(null)
   const dealerRef = useRef<HTMLDivElement | null>(null)
+  let timerId: NodeJS.Timeout | null = null
 
   useGSAP(() => {
     const table = tableRef.current
@@ -129,7 +134,7 @@ const TablePage = () => {
           setHandVisible(true)
           setSuffle(false)
 
-          setTimeout(() => {
+          timerId = setTimeout(() => {
             const elements = document.querySelectorAll('.player-card')
             elements.forEach(element => {
               element?.parentNode?.removeChild(element)
@@ -138,19 +143,18 @@ const TablePage = () => {
         },
       })
     }
-  }, [isShuffle])
 
-  useEffect(() => {
-    init()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
-  useEffect(() => {
-    if (isShuffle) {
-      init()
+    return () => {
+      if (timerId) {
+        clearTimeout(timerId)
+      }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isShuffle])
+
+  // useEffect(() => {
+  //   init()
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [])
 
   useEffect(() => {
     const getPlayers = async () => {
@@ -183,6 +187,25 @@ const TablePage = () => {
 
   useEffect(() => {
     if (socket) {
+      // window.addEventListener('unload', leaveTable)
+      // window.addEventListener('close', leaveTable)
+
+      socket.on(
+        PokerActions.TABLES_UPDATED,
+        ({
+          table,
+          message,
+          from,
+        }: {
+          table: Table
+          message: string
+          from: any
+        }) => {
+          // console.log(TABLE_UPDATED, table, message, from);
+          message && addMessage(message)
+        }
+      )
+
       socket.on(
         PokerActions.JOIN_TABLE,
         ({ tableId, player }: { tableId: string; player: PlayerWithUser }) => {
@@ -190,7 +213,11 @@ const TablePage = () => {
 
           setPlayers(prev => [...prev, player])
 
-          toast.success(`${player.user.username} joined the table`)
+          // toast.success(`${player.user?.username} joined the table`)
+          socket.emit(PokerActions.TABLE_JOINED, {
+            tableId: params?.tableId,
+            player,
+          })
         }
       )
 
@@ -199,53 +226,124 @@ const TablePage = () => {
         ({ tableId, player }: { tableId: string; player: PlayerWithUser }) => {
           if (tableId !== params?.tableId) return
           setPlayers(prev => prev.filter(item => item.userId !== player.userId))
+
+          socket.emit(PokerActions.TABLE_LEFT, {
+            tableId: params?.tableId,
+            player,
+          })
+          // toast.success(`${player.user?.username} left the table`)
         }
       )
-    }
 
-    return () => {
-      if (socket) {
-        socket.off(PokerActions.JOIN_TABLE)
-        socket.off(PokerActions.LEAVE_TABLE)
+      return () => {
+        if (socket) {
+          socket.off(PokerActions.JOIN_TABLE)
+          socket.off(PokerActions.TABLES_UPDATED)
+          socket.off(PokerActions.LEAVE_TABLE)
+        }
       }
     }
   }, [socket, params])
 
-  const init = () => {
-    const deck = createDeckAndShuffle()
+  useEffect(() => {
+    window.addEventListener('popstate', e => {
+      window.history.go(1)
+    })
+  }, [])
 
-    const cardsForPairing =
-      deck.length % 2 === 0 ? deck : deck.slice(0, deck.length - 1)
+  // useEffect(() => {
 
-    const pairs = []
+  //     turn !== currentPlayer.turn &&
+  //     setTurn(currentTable.seats[seatId].turn);
+  //   // eslint-disable-next-line
+  // }, [currentTable]);
 
-    for (let i = 0; i < cardsForPairing.length; i += 2) {
-      const card1 = cardsForPairing[i]
-      const card2 = cardsForPairing[i + 1]
+  // useEffect(() => {
+  //   if (turn && !turnTimeOutHandle) {
+  //     const handle = setTimeout(fold, 15000)
+  //     setHandle(handle)
+  //   } else {
+  //     turnTimeOutHandle && clearTimeout(turnTimeOutHandle)
+  //     turnTimeOutHandle && setHandle(null)
+  //   }
+  //   // eslint-disable-next-line
+  // }, [turn])
 
-      pairs.push({
-        first: `/images/pocker/${card1.rank}_${card1.suit}.png`,
-        second: `/images/pocker/${card2.rank}_${card2.suit}.png`,
+  useEffect(() => {
+    const init = async () => {
+      const participants = [
+        ...players.map(player => player.id),
+        currentPlayer?.id as string,
+      ]
+
+      const { response, error } = await matchApi.createMatch({
+        tableId: params?.tableId as string,
+        numberPlayers: players.length + 1,
+        participants,
       })
+
+      if (error) {
+        return toast.error('Error creating match')
+      }
+
+      if (response) {
+        setMatch(response)
+        setParticipants(response.participants)
+        setBoardCards(response.board)
+        setDeck(response.deck?.cards)
+      }
     }
+    if (isShuffle) {
+      init()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isShuffle])
 
-    const boardCards = pairs
-      .slice(10)
-      .reduce((items: string[], { first, second }) => {
-        if (items.length >= 5) return items
-        if (items.length === 4) return [...items, first]
+  useEffect(() => {
+    const getCurrentMatchByTableId = async () => {
+      const { response } = await matchApi.getCurrentMatchByTableId({
+        tableId: params?.tableId as string,
+      })
 
-        return [...items, first, second]
-      }, [])
+      if (response) {
+        setMatch(response)
+        setParticipants(response.participants)
+        setBoardCards(response.board)
+      }
+    }
+    getCurrentMatchByTableId()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
-    setDeck(deck)
-    setPairs(pairs)
-    setBoardCards(boardCards)
+  const addMessage = (message: string) => {
+    setMessages((prevMessages: string[]) => [...prevMessages, message])
+    console.log(message)
   }
 
   const onSuffleClick = () => {
     setSuffle(true)
     setHandVisible(false)
+  }
+
+  const check = () => {
+    socket.emit('next')
+  }
+
+  const call = () => {
+    socket.emit('next')
+  }
+
+  const raise = () => {
+    socket.emit('next')
+  }
+
+  const fold = () => {
+    socket.emit(PokerActions.FOLD, params?.tableId)
+  }
+
+  const round = () => {
+    setStart([true])
+    socket.emit('round')
   }
 
   if (!origin) return null
@@ -283,8 +381,7 @@ const TablePage = () => {
                     <OtherPlayer
                       key={index}
                       player={player}
-                      imageUrlFirst={pairs[index]?.first}
-                      imageUrlSecond={pairs[index]?.second}
+                      participants={participants}
                       isHandVisible={isHandVisible}
                     />
                   )
@@ -293,12 +390,23 @@ const TablePage = () => {
           </div>
         </div>
         <Board cards={boardCards} isShuffle={isShuffle} />
+        {/* {players.length + 1 <= 1 && (
+          <div className="absolute text-white font-bold top-1/2 left-1/2 translate-y-[-50%] translate-x-[-50%]">
+            Waiting for more players...
+          </div>
+        )} */}
+        {messages && messages.length > 0 && (
+          <div className="absolute  font-bold top-1/2 text-lime-500 left-1/2 translate-y-[-50%] translate-x-[-50%]">
+            {messages[messages.length - 1]}
+          </div>
+        )}
         <CurrentPlayer
+          match={match}
           player={currentPlayer}
-          imageUrlFirst={pairs[players.length]?.first}
-          imageUrlSecond={pairs[players.length]?.second}
+          participants={participants}
           showdown
           isHandVisible={isHandVisible}
+          tableId={params?.tableId as string}
         />
       </div>
     </>
