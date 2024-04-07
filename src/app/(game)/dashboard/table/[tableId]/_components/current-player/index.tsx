@@ -7,6 +7,7 @@ import { shuffle } from 'lodash'
 import { useEffect, useState } from 'react'
 import { Match, Participant, PlayerWithUser, PokerActions } from '@/types'
 import { useSocket } from '@/providers/socket-provider'
+import { cn } from '@/lib/utils'
 
 interface CurrentPlayerProps {
   type?: 'fold' | 'active' | 'default'
@@ -31,7 +32,11 @@ export const CurrentPlayer = ({
   const [imageUrlFirst, setImageUrlFirst] = useState('')
   const [imageUrlSecond, setImageUrlSecond] = useState('')
   const [turn, setTurn] = useState<boolean>(false)
-  const [turnTimeOutHandle, setHandle] = useState<NodeJS.Timeout | null>(null)
+  const [counter, setCounter] = useState(2)
+
+  const currentParticipant = participants.find(
+    item => item.playerId === player?.id
+  )
 
   useEffect(() => {
     if (Array.isArray(participants) && participants.length > 0) {
@@ -47,26 +52,39 @@ export const CurrentPlayer = ({
   }, [participants, player])
 
   useEffect(() => {
-    turn !== player?.isTurn && setTurn(player?.isTurn || false)
-    // eslint-disable-next-line
-  }, [])
-
-  useEffect(() => {
-    if (turn && !turnTimeOutHandle) {
-      const handle = setTimeout(fold, 15000)
-      setHandle(handle)
-    } else {
-      turnTimeOutHandle && clearTimeout(turnTimeOutHandle)
-      turnTimeOutHandle && setHandle(null)
+    if (player && turn !== player?.isTurn) {
+      setTurn(player?.isTurn)
     }
     // eslint-disable-next-line
-  }, [turn])
+  }, [player?.isTurn])
+
+  useEffect(() => {
+    let timer: NodeJS.Timeout | null = null
+    if (turn && counter > 0) {
+      timer = setInterval(() => setCounter(counter - 1), 1000)
+    }
+    return () => {
+      if (timer) {
+        clearInterval(timer)
+      }
+    }
+  }, [counter, turn])
 
   const fold = () => {
     if (socket) {
-      socket.emit(PokerActions.FOLD, tableId)
+      socket.emit(PokerActions.FOLD, {
+        tableId,
+        participantId: currentParticipant?.id,
+      })
     }
   }
+
+  useEffect(() => {
+    if (counter === 0) {
+      fold()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [counter])
 
   return (
     <div className="group_tool flex flex-space gap-12">
@@ -89,7 +107,7 @@ export const CurrentPlayer = ({
         </div>
       </div>
       <div className="group_left">
-        <div className="group_user">
+        <div className={cn('group_user', player?.isTurn && 'is-status')}>
           <div className="wrap">
             <div className="flex flex-midle">
               <div className="left">
@@ -118,11 +136,37 @@ export const CurrentPlayer = ({
               <div className="right sp_full">
                 <div className="money fw-700">$ 1.500.324</div>
               </div>
+
+              {turn && (
+                <div className="absolute top-0 right-0 text-[50px] text-white font-bold">
+                  {counter}
+                </div>
+              )}
+
+              <div className="status">
+                <div className="wrap_status status_raise">
+                  <svg viewBox="0 0 200 200">
+                    <circle
+                      className="circle"
+                      cx="100"
+                      cy="100"
+                      r="95"
+                      stroke="#231f20"
+                      stroke-width="8"
+                      fill-opacity="0"
+                    ></circle>
+                  </svg>
+                  <span>라이즈</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
-      <CurrentPlayerAction />
+      <CurrentPlayerAction
+        tableId={tableId}
+        currentParticipant={currentParticipant}
+      />
     </div>
   )
 }

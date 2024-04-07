@@ -118,7 +118,7 @@ export type Match = {
   numberPlayers: number
   deckId: string
   deck: Deck
-  participants?: Participant[]
+  participants: Participant[]
   board: Card[]
 }
 
@@ -168,4 +168,6 @@ export enum PokerActions {
   SITTING_OUT = 'SITTING_OUT',
   SITTING_IN = 'SITTING_IN',
   DISCONNECT = 'DISCONNECT',
+  MATCH_STARTED = 'MATCH_STARTED',
+  CHANGE_TURN = 'CHANGE_TURN',
 }

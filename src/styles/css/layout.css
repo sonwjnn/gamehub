@@ -8950,6 +8950,17 @@ img {
 .bdrs-60 {
   border-radius: 60px;
 }
+.color-main {
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-image: linear-gradient(
+    222.46deg,
+    #feffe1 0.98%,
+    #fcff74 52.73%,
+    #758319 103.46%
+  );
+  font-weight: 600;
+}
 .text-limit {
   display: block;
   text-overflow: ellipsis;
@@ -8971,6 +8982,9 @@ img {
 }
 .text-unline {
   text-decoration: none;
+}
+.text-link {
+  cursor: pointer;
 }
 .text p {
   margin-bottom: 0;
@@ -9041,20 +9055,6 @@ img {
 .btn-secon {
   background-color: #ece855;
   border-color: #ece855;
-}
-.btn-submit {
-  border-radius: 12px;
-  background-color: #ffaa00 !important;
-  font-weight: 700;
-  border: none;
-  line-height: 40px;
-  padding: 0 24px !important;
-}
-.btn-submit:hover {
-  -webkit-transform: scale(1);
-  -ms-transform: scale(1);
-  transform: scale(1);
-  opacity: 0.7;
 }
 input,
 select,
@@ -9147,6 +9147,126 @@ input:not([type='checkbox']),
 input:not([type='radio']) {
   width: 100%;
 }
+form {
+  margin-bottom: 0;
+}
+.input-group {
+  position: relative;
+  display: block;
+  padding-bottom: 32px;
+}
+.input-group label {
+  position: absolute;
+  left: 18px;
+  color: rgba(255, 255, 255, 0.5);
+  z-index: 9;
+  pointer-events: none;
+  line-height: inherit;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  top: 50%;
+  font-size: inherit;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+.input-group .wrap-input {
+  position: relative;
+}
+.input-group .validation {
+  font-size: 12px;
+  color: red;
+  display: block;
+  opacity: 0;
+  pointer-events: none;
+  margin-left: 2px;
+  position: absolute;
+  top: 100%;
+}
+.input-group .form-control {
+  width: 100%;
+  border: 1px solid transparent;
+  background-color: transparent;
+  background:
+    linear-gradient(180deg, #08032b 0%, #050216 100%) padding-box,
+    linear-gradient(
+        221.05deg,
+        #2e2089 -1.65%,
+        #513adc 27.49%,
+        #8a76ff 55.31%,
+        #735ef0 116.23%,
+        #0c0054 130.8%
+      )
+      border-box;
+  border-radius: 8px !important;
+  height: 56px;
+  font-size: inherit;
+  line-height: inherit;
+  padding-top: 18px;
+  padding-left: 16px;
+  color: #fff;
+}
+.input-group
+  .form-control:required:invalid:not(:-moz-placeholder-shown)
+  ~ label {
+  top: 4px;
+  font-size: 12px;
+  transform: translateY(0);
+}
+.input-group
+  .form-control:required:invalid:not(:-ms-input-placeholder)
+  ~ label {
+  top: 4px;
+  font-size: 12px;
+  -ms-transform: translateY(0);
+  transform: translateY(0);
+}
+.input-group .form-control:focus ~ label,
+.input-group .form-control:required:invalid:not(:placeholder-shown) ~ label,
+.input-group .form-control:valid ~ label {
+  top: 4px;
+  font-size: 12px;
+  -webkit-transform: translateY(0);
+  -ms-transform: translateY(0);
+  transform: translateY(0);
+}
+.input-group
+  .form-control:required:invalid:not(:-moz-placeholder-shown)
+  ~ .validation {
+  opacity: 1;
+  pointer-events: all;
+}
+.input-group
+  .form-control:required:invalid:not(:-ms-input-placeholder)
+  ~ .validation {
+  opacity: 1;
+  pointer-events: all;
+}
+.input-group
+  .form-control:required:invalid:not(:placeholder-shown)
+  ~ .validation {
+  opacity: 1;
+  pointer-events: all;
+}
+.input-group button {
+  border: 1px solid #4b4b4b;
+  background-color: transparent;
+  background-image: -webkit-gradient(
+    linear,
+    left bottom,
+    left top,
+    from(rgba(75, 75, 75, 0)),
+    color-stop(192.86%, #b1b0b0)
+  );
+  background-image: linear-gradient(
+    0deg,
+    rgba(75, 75, 75, 0) 0%,
+    #b1b0b0 192.86%
+  );
+  color: rgba(255, 255, 255, 0.5);
+  font-size: inherit;
+  border-radius: 8px;
+}
 .list {
   list-style-type: none;
   padding-left: 0;
@@ -9171,21 +9291,31 @@ body {
   font-family: 'Inter';
   font-style: normal;
   font-weight: 300;
-  background: #efefef;
-  color: #161a1d;
   font-size: 16px;
   line-height: 24px;
+  background-color: #333;
+  color: #fff;
+  background-image: url(/images/bg_body.jpg);
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  position: relative;
+}
+body:not(.game):before {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  content: '';
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+  pointer-events: none;
 }
 @media (min-width: 992px) {
   body {
-    font-size: 16px;
-    line-height: 24px;
-  }
-}
-@media (min-width: 1801px) {
-  body {
-    font-size: 20px;
-    line-height: 28px;
+    font-size: 15px;
+    line-height: 23px;
   }
 }
 .inner_page {

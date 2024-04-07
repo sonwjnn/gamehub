@@ -14,7 +14,15 @@ import SoundUrls from '@/utils/contants/sound'
 import { useParams } from 'next/navigation'
 import { useOrigin } from '@/hooks/use-origin'
 import tableApi from '@/services/api/modules/table-api'
-import { Card, Deck, Match, PlayerWithUser, PokerActions, Table } from '@/types'
+import {
+  Card,
+  Deck,
+  Match,
+  Participant,
+  PlayerWithUser,
+  PokerActions,
+  Table,
+} from '@/types'
 import { useCurrentUser } from '@/hooks/use-current-user'
 import { useSocket } from '@/providers/socket-provider'
 import { toast } from 'sonner'
@@ -23,16 +31,14 @@ import matchApi from '@/services/api/modules/match-api'
 import participantApi from '@/services/api/modules/participant-api'
 
 const TablePage = () => {
-  const [isHandVisible, setHandVisible] = useState(true)
+  const [isHandVisible, setHandVisible] = useState(false)
   const [pairs, setPairs] = useState(
     [] as Array<{ first: string; second: string }>
   )
   const [boardCards, setBoardCards] = useState([] as Card[])
   const [players, setPlayers] = useState<PlayerWithUser[]>([])
-  const [currentPlayer, setCurrentPlayer] = useState<
-    PlayerWithUser | undefined
-  >(undefined)
-  const [isShuffle, setSuffle] = useState(false)
+
+  const [isShuffle, setShuffle] = useState(false)
   const params = useParams()
   const origin = useOrigin()
   const user = useCurrentUser()
@@ -40,10 +46,7 @@ const TablePage = () => {
 
   const [messages, setMessages] = useState([] as string[])
   const [match, setMatch] = useState<Match | null>(null)
-  const [deck, setDeck] = useState<Deck | null>(null)
-  const [playerHands, setPlayerHands] = useState(
-    [] as Array<{ card1: Card; card2: Card }>
-  )
+
   const [hand, setHand] = useState([])
   const [chips, setChips] = useState([2000])
   const [pot, setPot] = useState(0)
@@ -51,7 +54,7 @@ const TablePage = () => {
   const [turn, setTurn] = useState([])
   const [flop, setFlop] = useState([])
   const [play, setPlay] = useState([])
-  const [participants, setParticipants] = useState([])
+  const [participants, setParticipants] = useState<Participant[]>([])
 
   const [handSuits, setHandSuits] = useState([])
   const [flopSuits, setFlopSuits] = useState([])
@@ -132,7 +135,7 @@ const TablePage = () => {
         stagger: 0.03,
         onComplete: () => {
           setHandVisible(true)
-          setSuffle(false)
+          setShuffle(false)
 
           timerId = setTimeout(() => {
             const elements = document.querySelectorAll('.player-card')
@@ -167,19 +170,7 @@ const TablePage = () => {
         return
       }
 
-      let currentPlayer = null
-      const players = response.players.filter((item: PlayerWithUser) => {
-        if (item.userId === user?.id) {
-          currentPlayer = item
-          return false
-        }
-        return true
-      })
-
-      if (currentPlayer) {
-        setCurrentPlayer(currentPlayer)
-      }
-      setPlayers(players)
+      setPlayers(response.players)
     }
     getPlayers()
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -191,16 +182,41 @@ const TablePage = () => {
       // window.addEventListener('close', leaveTable)
 
       socket.on(
-        PokerActions.TABLES_UPDATED,
+        PokerActions.MATCH_STARTED,
         ({
-          table,
-          message,
-          from,
+          tableId,
+          match,
+          player,
         }: {
-          table: Table
-          message: string
-          from: any
+          tableId: string
+          match: Match
+          player: PlayerWithUser
         }) => {
+          if (match) {
+            setShuffle(true)
+            setPlayers(prev =>
+              prev.map(item => {
+                if (item.id === player.id) {
+                  return player
+                }
+                return item
+              })
+            )
+
+            setTimeout(() => {
+              setMatch(match)
+              setParticipants(match.participants)
+              setBoardCards(match.board)
+
+              setShuffle(false)
+            }, 1000)
+          }
+        }
+      )
+
+      socket.on(
+        PokerActions.TABLE_MESSAGE,
+        ({ message, from }: { message: string; from: any }) => {
           // console.log(TABLE_UPDATED, table, message, from);
           message && addMessage(message)
         }
@@ -235,14 +251,30 @@ const TablePage = () => {
         }
       )
 
+      socket.on(
+        PokerActions.CHANGE_TURN,
+        ({ player }: { player: PlayerWithUser }) => {
+          setPlayers(prev =>
+            prev.map(item => {
+              if (item.id === player.id) {
+                return player
+              }
+              return item
+            })
+          )
+        }
+      )
+
       return () => {
         if (socket) {
           socket.off(PokerActions.JOIN_TABLE)
-          socket.off(PokerActions.TABLES_UPDATED)
+          socket.off(PokerActions.TABLE_MESSAGE)
           socket.off(PokerActions.LEAVE_TABLE)
+          socket.off(PokerActions.MATCH_STARTED)
         }
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [socket, params])
 
   useEffect(() => {
@@ -252,11 +284,8 @@ const TablePage = () => {
   }, [])
 
   // useEffect(() => {
-
-  //     turn !== currentPlayer.turn &&
-  //     setTurn(currentTable.seats[seatId].turn);
-  //   // eslint-disable-next-line
-  // }, [currentTable]);
+  //   console.log(currentPlayer, players)
+  // }, [currentPlayer, players])
 
   // useEffect(() => {
   //   if (turn && !turnTimeOutHandle) {
@@ -268,36 +297,6 @@ const TablePage = () => {
   //   }
   //   // eslint-disable-next-line
   // }, [turn])
-
-  useEffect(() => {
-    const init = async () => {
-      const participants = [
-        ...players.map(player => player.id),
-        currentPlayer?.id as string,
-      ]
-
-      const { response, error } = await matchApi.createMatch({
-        tableId: params?.tableId as string,
-        numberPlayers: players.length + 1,
-        participants,
-      })
-
-      if (error) {
-        return toast.error('Error creating match')
-      }
-
-      if (response) {
-        setMatch(response)
-        setParticipants(response.participants)
-        setBoardCards(response.board)
-        setDeck(response.deck?.cards)
-      }
-    }
-    if (isShuffle) {
-      init()
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isShuffle])
 
   useEffect(() => {
     const getCurrentMatchByTableId = async () => {
@@ -315,13 +314,18 @@ const TablePage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  useEffect(() => {
+    if (match) {
+      setHandVisible(true)
+    }
+  }, [match])
+
   const addMessage = (message: string) => {
     setMessages((prevMessages: string[]) => [...prevMessages, message])
-    console.log(message)
   }
 
-  const onSuffleClick = () => {
-    setSuffle(true)
+  const onShuffleClick = () => {
+    setShuffle(true)
     setHandVisible(false)
   }
 
@@ -352,15 +356,15 @@ const TablePage = () => {
 
   return (
     <>
-      <div className="absolute flex items-center gap-x-8  left-1/2 translate-x-[-50%] top-[25%] z-10">
+      {/* <div className="absolute flex items-center gap-x-8  left-1/2 translate-x-[-50%] top-[25%] z-10">
         <Button
           className="px-[16px] py-[8px] text-white"
           variant="outline"
-          onClick={onSuffleClick}
+          onClick={onShuffleClick}
         >
           Shuffle
         </Button>
-      </div>
+      </div> */}
       <div className="wrapper" ref={wrapperRef}>
         <Image
           src="/images/table_v2.png"
@@ -377,12 +381,17 @@ const TablePage = () => {
             <div className="wrap_list">
               {Array.isArray(players) &&
                 players.map((player, index) => {
+                  if (player.userId === user?.id) {
+                    return
+                  }
+
                   return (
                     <OtherPlayer
                       key={index}
                       player={player}
                       participants={participants}
                       isHandVisible={isHandVisible}
+                      tableId={params?.tableId as string}
                     />
                   )
                 })}
@@ -402,7 +411,7 @@ const TablePage = () => {
         )}
         <CurrentPlayer
           match={match}
-          player={currentPlayer}
+          player={players.find(p => p.userId === user?.id)}
           participants={participants}
           showdown
           isHandVisible={isHandVisible}
