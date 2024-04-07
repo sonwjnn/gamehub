@@ -194,19 +194,20 @@ const TablePage = () => {
         }) => {
           if (match) {
             setShuffle(true)
-            setPlayers(prev =>
-              prev.map(item => {
-                if (item.id === player.id) {
-                  return player
-                }
-                return item
-              })
-            )
 
             setTimeout(() => {
               setMatch(match)
               setParticipants(match.participants)
               setBoardCards(match.board)
+
+              setPlayers(prev =>
+                prev.map(item => {
+                  if (item.id === player.id) {
+                    return player
+                  }
+                  return { ...item, isTurn: false }
+                })
+              )
 
               setShuffle(false)
             }, 1000)
@@ -259,7 +260,7 @@ const TablePage = () => {
               if (item.id === player.id) {
                 return player
               }
-              return item
+              return { ...item, isTurn: false }
             })
           )
         }

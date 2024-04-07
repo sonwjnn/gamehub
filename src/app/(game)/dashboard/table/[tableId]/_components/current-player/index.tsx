@@ -32,7 +32,7 @@ export const CurrentPlayer = ({
   const [imageUrlFirst, setImageUrlFirst] = useState('')
   const [imageUrlSecond, setImageUrlSecond] = useState('')
   const [turn, setTurn] = useState<boolean>(false)
-  const [counter, setCounter] = useState(2)
+  const [counter, setCounter] = useState(15)
 
   const currentParticipant = participants.find(
     item => item.playerId === player?.id
@@ -52,23 +52,18 @@ export const CurrentPlayer = ({
   }, [participants, player])
 
   useEffect(() => {
-    if (player && turn !== player?.isTurn) {
-      setTurn(player?.isTurn)
-    }
-    // eslint-disable-next-line
-  }, [player?.isTurn])
-
-  useEffect(() => {
     let timer: NodeJS.Timeout | null = null
-    if (turn && counter > 0) {
-      timer = setInterval(() => setCounter(counter - 1), 1000)
+    if (player?.isTurn && counter > 0) {
+      timer = setInterval(() => {
+        setCounter(counter - 1)
+      }, 1000)
     }
     return () => {
       if (timer) {
         clearInterval(timer)
       }
     }
-  }, [counter, turn])
+  }, [counter, player?.isTurn])
 
   const fold = () => {
     if (socket) {
@@ -80,7 +75,13 @@ export const CurrentPlayer = ({
   }
 
   useEffect(() => {
-    if (counter === 0) {
+    if (player?.isTurn) {
+      setCounter(15)
+    }
+  }, [player?.isTurn])
+
+  useEffect(() => {
+    if (counter === 0 && player?.isTurn) {
       fold()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -137,7 +138,7 @@ export const CurrentPlayer = ({
                 <div className="money fw-700">$ 1.500.324</div>
               </div>
 
-              {turn && (
+              {player?.isTurn && (
                 <div className="absolute top-0 right-0 text-[50px] text-white font-bold">
                   {counter}
                 </div>
