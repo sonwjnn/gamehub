@@ -3,8 +3,6 @@
 import Image from 'next/image'
 import { OtherPlayer } from './_components/other-player'
 import { CurrentPlayer } from './_components/current-player'
-import { Button } from '@/components/ui/button'
-import { set, shuffle } from 'lodash'
 import { Board } from './_components/board'
 import { useState, useEffect, useRef } from 'react'
 import gsap from 'gsap'
@@ -14,28 +12,15 @@ import SoundUrls from '@/utils/contants/sound'
 import { useParams } from 'next/navigation'
 import { useOrigin } from '@/hooks/use-origin'
 import tableApi from '@/services/api/modules/table-api'
-import {
-  Card,
-  Deck,
-  Match,
-  Participant,
-  PlayerWithUser,
-  PokerActions,
-  Table,
-} from '@/types'
+import { Match, Participant, PlayerWithUser, PokerActions } from '@/types'
 import { useCurrentUser } from '@/hooks/use-current-user'
 import { useSocket } from '@/providers/socket-provider'
-import { toast } from 'sonner'
 
 import matchApi from '@/services/api/modules/match-api'
-import participantApi from '@/services/api/modules/participant-api'
 
 const TablePage = () => {
   const [isHandVisible, setHandVisible] = useState(false)
-  const [pairs, setPairs] = useState(
-    [] as Array<{ first: string; second: string }>
-  )
-  const [boardCards, setBoardCards] = useState([] as Card[])
+
   const [players, setPlayers] = useState<PlayerWithUser[]>([])
 
   const [isShuffle, setShuffle] = useState(false)
@@ -47,21 +32,7 @@ const TablePage = () => {
   const [messages, setMessages] = useState([] as string[])
   const [match, setMatch] = useState<Match | null>(null)
 
-  const [hand, setHand] = useState([])
-  const [chips, setChips] = useState([2000])
-  const [pot, setPot] = useState(0)
-  const [river, setRiver] = useState([])
-  const [turn, setTurn] = useState([])
-  const [flop, setFlop] = useState([])
-  const [play, setPlay] = useState([])
   const [participants, setParticipants] = useState<Participant[]>([])
-
-  const [handSuits, setHandSuits] = useState([])
-  const [flopSuits, setFlopSuits] = useState([])
-  const [turnSuits, setTurnSuits] = useState([])
-  const [riverSuits, setRiverSuits] = useState([])
-
-  const [start, setStart] = useState([true])
 
   const tableRef = useRef<HTMLDivElement | null>(null)
   const wrapperRef = useRef<HTMLDivElement | null>(null)
@@ -154,25 +125,7 @@ const TablePage = () => {
     }
   }, [isShuffle])
 
-  // useEffect(() => {
-  //   init()
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [])
-
   useEffect(() => {
-    const getPlayers = async () => {
-      const { response } = await tableApi.getTableById({
-        tableId: params?.tableId as string,
-      })
-
-      if (!response) {
-        setPlayers([])
-        return
-      }
-
-      setPlayers(response.players)
-    }
-    getPlayers()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -186,11 +139,11 @@ const TablePage = () => {
         ({
           tableId,
           match,
-          player,
+          playerId,
         }: {
           tableId: string
           match: Match
-          player: PlayerWithUser
+          playerId: string
         }) => {
           if (match) {
             setShuffle(true)
@@ -198,12 +151,11 @@ const TablePage = () => {
             setTimeout(() => {
               setMatch(match)
               setParticipants(match.participants)
-              setBoardCards(match.board)
 
               setPlayers(prev =>
                 prev.map(item => {
-                  if (item.id === player.id) {
-                    return player
+                  if (item.id === playerId) {
+                    return { ...item, isTurn: true }
                   }
                   return { ...item, isTurn: false }
                 })
@@ -254,15 +206,18 @@ const TablePage = () => {
 
       socket.on(
         PokerActions.CHANGE_TURN,
-        ({ player }: { player: PlayerWithUser }) => {
+        ({ match, playerId }: { match: Match | null; playerId: string }) => {
           setPlayers(prev =>
             prev.map(item => {
-              if (item.id === player.id) {
-                return player
+              if (item.id === playerId) {
+                return { ...item, isTurn: true }
               }
               return { ...item, isTurn: false }
             })
           )
+          if (match) {
+            setMatch(match)
+          }
         }
       )
 
@@ -272,6 +227,7 @@ const TablePage = () => {
           socket.off(PokerActions.TABLE_MESSAGE)
           socket.off(PokerActions.LEAVE_TABLE)
           socket.off(PokerActions.MATCH_STARTED)
+          socket.off(PokerActions.CHANGE_TURN)
         }
       }
     }
@@ -284,22 +240,23 @@ const TablePage = () => {
     })
   }, [])
 
-  // useEffect(() => {
-  //   console.log(currentPlayer, players)
-  // }, [currentPlayer, players])
-
-  // useEffect(() => {
-  //   if (turn && !turnTimeOutHandle) {
-  //     const handle = setTimeout(fold, 15000)
-  //     setHandle(handle)
-  //   } else {
-  //     turnTimeOutHandle && clearTimeout(turnTimeOutHandle)
-  //     turnTimeOutHandle && setHandle(null)
-  //   }
-  //   // eslint-disable-next-line
-  // }, [turn])
-
   useEffect(() => {
+    const getPlayers = async () => {
+      const { response } = await tableApi.getTableById({
+        tableId: params?.tableId as string,
+      })
+
+      if (!response) {
+        setPlayers([])
+        return
+      }
+
+      setPlayers(response.players)
+
+      if (response.players.length > 1) {
+        getCurrentMatchByTableId()
+      }
+    }
     const getCurrentMatchByTableId = async () => {
       const { response } = await matchApi.getCurrentMatchByTableId({
         tableId: params?.tableId as string,
@@ -308,12 +265,11 @@ const TablePage = () => {
       if (response) {
         setMatch(response)
         setParticipants(response.participants)
-        setBoardCards(response.board)
       }
     }
-    getCurrentMatchByTableId()
+    getPlayers()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [params?.tableId])
 
   useEffect(() => {
     if (match) {
@@ -323,32 +279,6 @@ const TablePage = () => {
 
   const addMessage = (message: string) => {
     setMessages((prevMessages: string[]) => [...prevMessages, message])
-  }
-
-  const onShuffleClick = () => {
-    setShuffle(true)
-    setHandVisible(false)
-  }
-
-  const check = () => {
-    socket.emit('next')
-  }
-
-  const call = () => {
-    socket.emit('next')
-  }
-
-  const raise = () => {
-    socket.emit('next')
-  }
-
-  const fold = () => {
-    socket.emit(PokerActions.FOLD, params?.tableId)
-  }
-
-  const round = () => {
-    setStart([true])
-    socket.emit('round')
   }
 
   if (!origin) return null
@@ -399,7 +329,7 @@ const TablePage = () => {
             </div>
           </div>
         </div>
-        <Board cards={boardCards} isShuffle={isShuffle} />
+        <Board match={match} isShuffle={isShuffle} />
         {/* {players.length + 1 <= 1 && (
           <div className="absolute text-white font-bold top-1/2 left-1/2 translate-y-[-50%] translate-x-[-50%]">
             Waiting for more players...

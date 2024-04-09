@@ -2,10 +2,10 @@ import { useEffect, useState } from 'react'
 import { Card } from './card'
 import { cn } from '@/lib/utils'
 import Sound from '@/utils/contants/sound'
-import { Card as CardType } from '@/types'
+import { Card as CardType, Match } from '@/types'
 
 interface BoardProps {
-  cards: CardType[]
+  match: Match | null
   isHidden?: boolean
   isShuffle?: boolean
 }
@@ -26,48 +26,30 @@ const BoardCard = ({
   )
 }
 
-export const Board = ({ cards, isHidden = false, isShuffle }: BoardProps) => {
-  const [isFirst, setFirst] = useState(false)
+export const Board = ({ match, isHidden = false, isShuffle }: BoardProps) => {
+  const [isPreFlop, setPreFlop] = useState(true)
   const [isFlop, setFlop] = useState(false)
   const [isTurn, setTurn] = useState(false)
   const [isRiver, setRiver] = useState(false)
-
-  const handleMultipleActions = () => {
-    if (!isFirst) {
-      setFirst(true)
-      new Audio(Sound.soundShare).play()
-      return
-    }
-    if (!isFlop) {
-      setFlop(true)
-      return
-    }
-    if (!isTurn) {
-      setTurn(true)
-      return
-    }
-    if (!isRiver) {
-      setRiver(true)
-      return
-    }
-  }
+  const [board, setBoard] = useState<CardType[] | null>(null)
 
   useEffect(() => {
-    if (isShuffle) {
-      setFirst(false)
-      setFlop(false)
-      setTurn(false)
-      setRiver(false)
+    if (match) {
+      setPreFlop(match.isPreFlop)
+      setFlop(match.isFlop)
+      setTurn(match.isTurn)
+      setRiver(match.isRiver)
+      setBoard(match.board)
     }
-  }, [isShuffle])
+  }, [match])
 
-  if (Array.isArray(cards) && cards.length === 0) return null
+  if (!match) return null
 
   return (
     <div className="group_midle">
-      {!isHidden && (
+      {isPreFlop && (
         <>
-          <div className="group_pocker" onClick={handleMultipleActions}>
+          <div className="group_pocker">
             <div className="list_pocker group_mask">
               <div className="item"></div>
               <div className="item"></div>
@@ -78,10 +60,10 @@ export const Board = ({ cards, isHidden = false, isShuffle }: BoardProps) => {
             <div
               className={cn(
                 'list_pocker  pocker_action',
-                !isFirst && 'pocker_hide'
+                !isPreFlop && 'pocker_hide'
               )}
             >
-              {cards
+              {board
                 ?.slice(0, 3)
                 .map((card, index) => (
                   <BoardCard
@@ -90,7 +72,7 @@ export const Board = ({ cards, isHidden = false, isShuffle }: BoardProps) => {
                     isHidden={!isFlop}
                   />
                 ))}
-              {cards
+              {board
                 ?.slice(3, 4)
                 .map((card, index) => (
                   <BoardCard
@@ -99,7 +81,7 @@ export const Board = ({ cards, isHidden = false, isShuffle }: BoardProps) => {
                     isHidden={!isTurn}
                   />
                 ))}
-              {cards
+              {board
                 ?.slice(4, 5)
                 .map((card, index) => (
                   <BoardCard

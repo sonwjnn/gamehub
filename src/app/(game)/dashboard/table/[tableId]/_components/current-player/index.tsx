@@ -65,6 +65,32 @@ export const CurrentPlayer = ({
     }
   }, [counter, player?.isTurn])
 
+  useEffect(() => {
+    if (player?.isTurn) {
+      setCounter(15)
+    }
+  }, [player?.isTurn])
+
+  useEffect(() => {
+    const handleBeforeUnload = (event: any) => {
+      event.preventDefault()
+      event.returnValue = ''
+    }
+
+    window.addEventListener('beforeunload', handleBeforeUnload)
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload)
+    }
+  }, [])
+
+  useEffect(() => {
+    if (counter === 0 && player?.isTurn) {
+      fold()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [counter])
+
   const fold = () => {
     if (socket) {
       socket.emit(PokerActions.FOLD, {
@@ -73,19 +99,6 @@ export const CurrentPlayer = ({
       })
     }
   }
-
-  useEffect(() => {
-    if (player?.isTurn) {
-      setCounter(15)
-    }
-  }, [player?.isTurn])
-
-  useEffect(() => {
-    if (counter === 0 && player?.isTurn) {
-      fold()
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [counter])
 
   return (
     <div className="group_tool flex flex-space gap-12">
@@ -164,10 +177,12 @@ export const CurrentPlayer = ({
           </div>
         </div>
       </div>
-      <CurrentPlayerAction
-        tableId={tableId}
-        currentParticipant={currentParticipant}
-      />
+      {player?.isTurn && (
+        <CurrentPlayerAction
+          tableId={tableId}
+          currentParticipant={currentParticipant}
+        />
+      )}
     </div>
   )
 }

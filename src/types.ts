@@ -120,6 +120,10 @@ export type Match = {
   deck: Deck
   participants: Participant[]
   board: Card[]
+  isPreFlop: boolean
+  isFlop: boolean
+  isTurn: boolean
+  isRiver: boolean
 }
 
 export type Participant = {
