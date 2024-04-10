@@ -5,10 +5,10 @@ interface CardProps {
   imageUrl: string
   value: number
   className?: string
-  showdown?: boolean
+  isShowdown?: boolean
 }
 
-export const Card = ({ imageUrl, className, showdown }: CardProps) => {
+export const Card = ({ imageUrl, className, isShowdown }: CardProps) => {
   const onClick = () => {
     new Audio(Sound.soundOpen).play()
   }

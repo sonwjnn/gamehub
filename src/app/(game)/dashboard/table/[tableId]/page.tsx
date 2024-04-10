@@ -17,6 +17,7 @@ import { useCurrentUser } from '@/hooks/use-current-user'
 import { useSocket } from '@/providers/socket-provider'
 
 import matchApi from '@/services/api/modules/match-api'
+import { set } from 'lodash'
 
 const TablePage = () => {
   const [isHandVisible, setHandVisible] = useState(false)
@@ -126,11 +127,8 @@ const TablePage = () => {
   }, [isShuffle])
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
-  useEffect(() => {
     if (socket) {
+      let timeoutId: NodeJS.Timeout | null = null
       // window.addEventListener('unload', leaveTable)
       // window.addEventListener('close', leaveTable)
 
@@ -145,12 +143,17 @@ const TablePage = () => {
           match: Match
           playerId: string
         }) => {
+          setMatch(null)
+          setParticipants([])
+          setHandVisible(false)
+
           if (match) {
             setShuffle(true)
 
             setTimeout(() => {
               setMatch(match)
               setParticipants(match.participants)
+              setHandVisible(true)
 
               setPlayers(prev =>
                 prev.map(item => {
@@ -162,7 +165,7 @@ const TablePage = () => {
               )
 
               setShuffle(false)
-            }, 1000)
+            }, 2000)
           }
         }
       )
@@ -217,6 +220,7 @@ const TablePage = () => {
           )
           if (match) {
             setMatch(match)
+            setParticipants(match.participants)
           }
         }
       )
@@ -228,6 +232,10 @@ const TablePage = () => {
           socket.off(PokerActions.LEAVE_TABLE)
           socket.off(PokerActions.MATCH_STARTED)
           socket.off(PokerActions.CHANGE_TURN)
+
+          if (timeoutId) {
+            clearTimeout(timeoutId)
+          }
         }
       }
     }
@@ -271,12 +279,6 @@ const TablePage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params?.tableId])
 
-  useEffect(() => {
-    if (match) {
-      setHandVisible(true)
-    }
-  }, [match])
-
   const addMessage = (message: string) => {
     setMessages((prevMessages: string[]) => [...prevMessages, message])
   }
@@ -287,15 +289,6 @@ const TablePage = () => {
 
   return (
     <>
-      {/* <div className="absolute flex items-center gap-x-8  left-1/2 translate-x-[-50%] top-[25%] z-10">
-        <Button
-          className="px-[16px] py-[8px] text-white"
-          variant="outline"
-          onClick={onShuffleClick}
-        >
-          Shuffle
-        </Button>
-      </div> */}
       <div className="wrapper" ref={wrapperRef}>
         <Image
           src="/images/table_v2.png"
@@ -318,6 +311,7 @@ const TablePage = () => {
 
                   return (
                     <OtherPlayer
+                      match={match}
                       key={index}
                       player={player}
                       participants={participants}
@@ -344,7 +338,6 @@ const TablePage = () => {
           match={match}
           player={players.find(p => p.userId === user?.id)}
           participants={participants}
-          showdown
           isHandVisible={isHandVisible}
           tableId={params?.tableId as string}
         />

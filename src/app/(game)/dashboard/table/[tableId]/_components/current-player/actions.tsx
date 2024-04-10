@@ -17,41 +17,50 @@ export const CurrentPlayerAction = ({
   const { socket } = useSocket()
 
   const [bet, setBet] = useState(0)
+  const [isProcessing, setIsProcessing] = useState(false)
   const maxBet = currentParticipant?.player?.user?.chipsAmount || 10000
 
-  const fold = () => {
-    if (socket) {
-      socket.emit(PokerActions.FOLD, {
+  const fold = async () => {
+    if (socket && !isProcessing) {
+      setIsProcessing(true)
+      await socket.emit(PokerActions.FOLD, {
         tableId,
         participantId: currentParticipant?.id,
       })
+      setIsProcessing(false)
     }
   }
 
   const check = () => {
-    if (socket) {
+    if (socket && !isProcessing) {
+      setIsProcessing(true)
       socket.emit(PokerActions.CHECK, {
         tableId,
         participantId: currentParticipant?.id,
       })
+      setIsProcessing(false)
     }
   }
 
   const call = () => {
-    if (socket) {
+    if (socket && !isProcessing) {
+      setIsProcessing(true)
       socket.emit(PokerActions.CALL, {
         tableId,
         participantId: currentParticipant?.id,
       })
+      setIsProcessing(false)
     }
   }
 
   const raise = (amount: number) => {
-    if (socket) {
+    if (socket && !isProcessing) {
+      setIsProcessing(true)
       socket.emit(PokerActions.RAISE, {
         tableId,
         participantId: currentParticipant?.id,
       })
+      setIsProcessing(false)
     }
   }
 
@@ -70,23 +79,31 @@ export const CurrentPlayerAction = ({
           <span className="number">3</span>
           <div className="value">Full</div>
         </div>
-        <div className="item" onClick={check}>
+        <button
+          className="item disabled:pointer-events-none"
+          onClick={check}
+          disabled={isProcessing}
+        >
           {/* <span className="number number_left">4 </span> */}
           <span className="number">5</span>
           <div className=" text-white text-[32px] font-bold">Check</div>
-        </div>
-        <div className="item" onClick={() => raise(0)}>
+        </button>
+        <button
+          className="item"
+          onClick={() => raise(0)}
+          disabled={isProcessing}
+        >
           <span className="number">5</span>
           <div className="value">Raise</div>
-        </div>
-        <div className="item" onClick={call}>
+        </button>
+        <button className="item" onClick={call} disabled={isProcessing}>
           <span className="number">7</span>
           <div className="value">Call</div>
-        </div>
-        <div className="item" onClick={fold}>
+        </button>
+        <button className="item" onClick={fold} disabled={isProcessing}>
           <span className="number">8</span>
           <div className="value">Fold</div>
-        </div>
+        </button>
         <div className="item">
           <span className="number">9</span>
           <div className="value">All in</div>

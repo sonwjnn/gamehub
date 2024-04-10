@@ -33,9 +33,6 @@ const TableIdLayout = async ({
     if (table.players.length === table.maxPlayers) {
       redirect('/dashboard')
     }
-
-    const { response } = await playerApi.createPlayer({ tableId, userId })
-    finalCurrentPlayer = response
   }
 
   if (!table || !finalCurrentPlayer) {

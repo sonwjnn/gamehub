@@ -45,9 +45,13 @@ export const Board = ({ match, isHidden = false, isShuffle }: BoardProps) => {
 
   if (!match) return null
 
+  const isHandOver = match?.table?.isHandOver
+
+  console.log(isHandOver, match?.table)
+
   return (
     <div className="group_midle">
-      {isPreFlop && (
+      {isPreFlop && !isShuffle && (
         <>
           <div className="group_pocker">
             <div className="list_pocker group_mask">

@@ -52,6 +52,7 @@ export type Table = {
   players: Player[]
   messages: Message[]
   matches?: Match[]
+  isHandOver: boolean
 
   minBuyIn: number
   maxBuyIn: number
@@ -124,6 +125,9 @@ export type Match = {
   isFlop: boolean
   isTurn: boolean
   isRiver: boolean
+  isShowdown: boolean
+  winnerId?: string
+  winner?: Player
 }
 
 export type Participant = {
@@ -134,6 +138,8 @@ export type Participant = {
   player: Player
   cardOne: Card
   cardTwo: Card
+  isChecked: boolean
+  isFolded: boolean
 }
 
 export type PlayerWithUser = Player & { user: User }
