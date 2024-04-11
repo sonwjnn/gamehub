@@ -23,17 +23,17 @@ export const CardWrapper = ({
   type = 'login',
 }: CardWrapperProps) => {
   return (
-    <Card className="w-[400px] shadow-md">
-      <CardHeader>
+    <Card className="w-[460px] shadow-md p-[32px] z-20 bg-black/60 border-solid border-2 border-white/30">
+      <CardHeader className="p-0">
         <Header label={headerLabel} description={headerDescription} />
       </CardHeader>
-      <CardContent>{children}</CardContent>
+      <CardContent className="p-0">{children}</CardContent>
       {showSocial ? (
         <CardFooter>
           <Social />
         </CardFooter>
       ) : null}
-      <CardFooter>
+      <CardFooter className="p-0">
         <BackButton label={backButtonLabel} href={backButtonHref}></BackButton>
       </CardFooter>
     </Card>

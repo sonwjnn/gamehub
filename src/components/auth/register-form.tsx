@@ -69,23 +69,28 @@ export const RegisterForm = ({}: RegisterFormProps) => {
       headerDescription="Create an account by verify email."
       backButtonLabel="Already have an account?"
       backButtonHref="/auth/login"
-      showSocial
     >
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-          <div className="space-y-4">
+        <form onSubmit={form.handleSubmit(onSubmit)}>
+          <div className="mt-[28px]">
             <FormField
               control={form.control}
               name="username"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>User name</FormLabel>
                   <FormControl>
-                    <Input
-                      disabled={isPending}
-                      placeholder="sonwin111"
-                      {...field}
-                    />
+                    <div className="input-group">
+                      <div className="wrap-input">
+                        <Input
+                          disabled={isPending}
+                          placeholder="Username"
+                          className="form-control"
+                          {...field}
+                        />
+                        <label>Username</label>
+                        <span className="validation">Text err</span>
+                      </div>
+                    </div>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -97,14 +102,20 @@ export const RegisterForm = ({}: RegisterFormProps) => {
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <Input
-                      type="email"
-                      disabled={isPending}
-                      placeholder="sonwin@example.com"
-                      {...field}
-                    />
+                    <div className="input-group">
+                      <div className="wrap-input">
+                        <Input
+                          type="email"
+                          disabled={isPending}
+                          className="form-control"
+                          placeholder="Email"
+                          {...field}
+                        />
+                        <label>Email</label>
+                        <span className="validation">Text err</span>
+                      </div>
+                    </div>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -116,14 +127,20 @@ export const RegisterForm = ({}: RegisterFormProps) => {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Password</FormLabel>
                   <FormControl>
-                    <Input
-                      disabled={isPending}
-                      type="password"
-                      placeholder="********"
-                      {...field}
-                    />
+                    <div className="input-group">
+                      <div className="wrap-input">
+                        <Input
+                          disabled={isPending}
+                          className="form-control"
+                          type="password"
+                          placeholder="Password"
+                          {...field}
+                        />
+                        <label>Password</label>
+                        <span className="validation">Text err</span>
+                      </div>
+                    </div>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -132,10 +149,15 @@ export const RegisterForm = ({}: RegisterFormProps) => {
           </div>
           <FormError message={error} />
           <FormSuccess message={success} />
-          <Button type="submit" disabled={isPending} className="w-full">
-            {isPending ? <Spinner className="mr-2 dark:text-black" /> : null}
-            Create an account
-          </Button>
+          <div className="input-group text-center">
+            <button
+              type="submit"
+              className="btn btn-submit disabled:pointer-events-none disabled:opacity-50"
+              disabled={isPending}
+            >
+              <span className="color-main">Create an account</span>
+            </button>
+          </div>
         </form>
       </Form>
     </CardWrapper>

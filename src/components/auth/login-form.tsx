@@ -22,6 +22,7 @@ import { useState, useTransition } from 'react'
 import { useForm } from 'react-hook-form'
 import * as z from 'zod'
 import { login } from '@/actions/login'
+import Image from 'next/image'
 
 interface LoginFormProps {}
 
@@ -70,26 +71,31 @@ export const LoginForm = ({}: LoginFormProps) => {
     <CardWrapper
       headerLabel="Welcome  back"
       headerDescription="Log in to your account."
-      backButtonLabel="Don't have an account?"
+      backButtonLabel="Sign up here"
       backButtonHref="/auth/register"
-      showSocial
     >
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-          <div className="space-y-4">
+        <form onSubmit={form.handleSubmit(onSubmit)}>
+          <div className=" mt-[28px]">
             <FormField
               control={form.control}
               name="username"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <Input
-                      type="text"
-                      disabled={isPending}
-                      placeholder="sonwin@example.com"
-                      {...field}
-                    />
+                    <div className="input-group">
+                      <div className="wrap-input">
+                        <Input
+                          type="text"
+                          className="form-control"
+                          disabled={isPending}
+                          placeholder="Username"
+                          {...field}
+                        />
+                        <label>Username</label>
+                        <span className="validation">Text err</span>
+                      </div>
+                    </div>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -101,14 +107,20 @@ export const LoginForm = ({}: LoginFormProps) => {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Password</FormLabel>
                   <FormControl>
-                    <Input
-                      disabled={isPending}
-                      type="password"
-                      placeholder="********"
-                      {...field}
-                    />
+                    <div className="input-group">
+                      <div className="wrap-input">
+                        <Input
+                          className="form-control"
+                          disabled={isPending}
+                          type="password"
+                          placeholder="Password"
+                          {...field}
+                        />
+                        <label>Password</label>
+                        <span className="validation">Text err</span>
+                      </div>
+                    </div>
                   </FormControl>
 
                   {/* <Button
@@ -126,12 +138,18 @@ export const LoginForm = ({}: LoginFormProps) => {
           </div>
           <FormError message={error || urlError} />
           <FormSuccess message={success} />
-          <Button type="submit" disabled={isPending} className="w-full">
-            {isPending ? (
-              <Spinner className="mr-2 text-white dark:text-black" />
-            ) : null}
-            {'Login'}
-          </Button>
+          <p className="text-center color-main fz-12 mb-32 text-link mt-0">
+            Forgot password
+          </p>
+          <div className="input-group text-center">
+            <button
+              type="submit"
+              className="btn btn-submit disabled:pointer-events-none disabled:opacity-50"
+              disabled={isPending}
+            >
+              <span className="color-main">Login</span>
+            </button>
+          </div>
         </form>
       </Form>
     </CardWrapper>
