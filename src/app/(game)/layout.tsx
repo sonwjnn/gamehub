@@ -1,6 +1,5 @@
 import { Navbar } from './_components/navbar'
 import '@/styles/css/layout.css'
-import '@/styles/css/styles.css'
 import '@/styles/css/game.css'
 
 interface SetupLayoutProps {

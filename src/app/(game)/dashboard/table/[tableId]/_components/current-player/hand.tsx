@@ -15,8 +15,6 @@ export const Hand = ({
   imageUrlSecond,
   isHidden = true,
 }: HandProps) => {
-  const [isFlipped, setFlipped] = useState(true)
-
   return (
     <div className="pocker_list">
       {!isHidden && (

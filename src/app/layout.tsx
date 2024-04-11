@@ -11,6 +11,7 @@ import './globals.css'
 
 import { SessionProvider } from 'next-auth/react'
 import { auth } from '@/auth'
+import Head from 'next/head'
 
 const font = Open_Sans({ subsets: ['latin'] })
 
@@ -28,6 +29,12 @@ export default async function RootLayout({
 
   return (
     <SessionProvider session={session}>
+      <Head>
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=no"
+        />
+      </Head>
       <html lang="en" suppressHydrationWarning>
         <body className={cn(font.className, 'bg-white dark:bg-[#213338] game')}>
           <Toaster />

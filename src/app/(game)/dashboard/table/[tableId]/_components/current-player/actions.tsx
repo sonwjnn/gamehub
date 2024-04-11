@@ -2,23 +2,29 @@
 
 import { BetSlider } from '@/components/bet-slider'
 import { useSocket } from '@/providers/socket-provider'
-import { Participant, PokerActions } from '@/types'
+import { Match, Participant, Player, PokerActions } from '@/types'
 import { useState } from 'react'
 
 interface CurrentPlayerActionProps {
   tableId: string
   currentParticipant: Participant | undefined
+  match: Match | null
+  bet: number
+  setBet: (bet: number) => void
+  player: Player | undefined
 }
 
 export const CurrentPlayerAction = ({
   tableId,
   currentParticipant,
+  match,
+  bet,
+  setBet,
+  player,
 }: CurrentPlayerActionProps) => {
   const { socket } = useSocket()
 
-  const [bet, setBet] = useState(0)
   const [isProcessing, setIsProcessing] = useState(false)
-  const maxBet = currentParticipant?.player?.user?.chipsAmount || 10000
 
   const fold = async () => {
     if (socket && !isProcessing) {
@@ -59,59 +65,87 @@ export const CurrentPlayerAction = ({
       socket.emit(PokerActions.RAISE, {
         tableId,
         participantId: currentParticipant?.id,
+        amount,
       })
       setIsProcessing(false)
     }
   }
 
+  const currentChipsAmount =
+    currentParticipant?.player?.user?.chipsAmount ||
+    player?.user?.chipsAmount ||
+    0
+  const currentBet = currentParticipant?.bet ? currentParticipant?.bet : 0
+  const currentCallAmount = match?.callAmount ? match?.callAmount : 0
+  const canCall = currentBet > 0 || currentBet < currentCallAmount
+  const canNotCheck = currentCallAmount !== currentBet && currentCallAmount > 0
+
   return (
     <>
       <div className="toolbar">
-        <div className="item" onClick={() => setBet(maxBet / 4)}>
+        <div className="item" onClick={() => setBet(currentChipsAmount / 4)}>
           <span className="number">1</span>
           <div className="value">Quarter</div>
         </div>
-        <div className="item" onClick={() => setBet(maxBet / 2)}>
+        <div className="item" onClick={() => setBet(currentChipsAmount / 2)}>
           <span className="number">2</span>
           <div className="value">Half</div>
         </div>
-        <div className="item" onClick={() => setBet(maxBet)}>
+        <div className="item" onClick={() => setBet(currentChipsAmount)}>
           <span className="number">3</span>
           <div className="value">Full</div>
         </div>
-        <button
-          className="item disabled:pointer-events-none"
-          onClick={check}
-          disabled={isProcessing}
-        >
+        <button className="item disabled:pointer-events-none disabled:opacity-50">
           {/* <span className="number number_left">4 </span> */}
-          <span className="number">5</span>
-          <div className=" text-white text-[32px] font-bold">Check</div>
+          <span className="number">4</span>
+          <div className=" text-white text-[32px] font-bold value"></div>
         </button>
         <button
-          className="item"
-          onClick={() => raise(0)}
+          className="item disabled:pointer-events-none disabled:opacity-50"
+          onClick={() => raise(bet + currentBet)}
           disabled={isProcessing}
         >
           <span className="number">5</span>
           <div className="value">Raise</div>
         </button>
-        <button className="item" onClick={call} disabled={isProcessing}>
+        <button
+          className="item disabled:pointer-events-none disabled:opacity-50"
+          onClick={call}
+          disabled={isProcessing || !canCall}
+        >
           <span className="number">7</span>
           <div className="value">Call</div>
         </button>
-        <button className="item" onClick={fold} disabled={isProcessing}>
+        <button
+          className="item disabled:pointer-events-none disabled:opacity-50"
+          onClick={fold}
+          disabled={isProcessing}
+        >
           <span className="number">8</span>
           <div className="value">Fold</div>
         </button>
-        <div className="item">
+        {/* <button
+          className="item disabled:pointer-events-none disabled:opacity-50"
+          onClick={() => raise(currentChipsAmount + currentBet)}
+          disabled={isProcessing}
+        >
           <span className="number">9</span>
           <div className="value">All in</div>
-        </div>
+        </button> */}
+
+        <button
+          className="item disabled:pointer-events-none disabled:opacity-50"
+          onClick={check}
+          disabled={isProcessing || canNotCheck}
+        >
+          {/* <span className="number number_left">4 </span> */}
+          <span className="number">9</span>
+          <div className=" value">Check</div>
+        </button>
       </div>
 
-      <div className="absolute right-[-50%] bottom-4">
-        <BetSlider value={bet} setValue={setBet} max={maxBet} />
+      <div className="fixed right-12  bottom-9">
+        <BetSlider value={bet} setValue={setBet} max={currentChipsAmount} />
       </div>
     </>
   )

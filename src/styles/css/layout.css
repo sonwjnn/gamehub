@@ -101,6 +101,36 @@ img {
 .icon-web {
   background-image: url(/images/icon/icon_web.svg);
 }
+.icon-coin {
+  background-image: url(/images/icon/icon_coin.png);
+}
+.icon-sliver {
+  background-image: url(/images/icon/icon_sliver.png);
+}
+.icon-gold {
+  background-image: url(/images/icon/icon_gold.png);
+}
+.icon-daimond {
+  background-image: url(/images/icon/icon_daimond.png);
+}
+.icon-points {
+  background-image: url(/images/icon/icon_points.png);
+}
+.icon-lose {
+  background-image: url(/images/icon/icon_lose.png);
+}
+.icon-win {
+  background-image: url(/images/icon/icon_win.png);
+}
+.icon-user {
+  background-image: url(/images/icon/icon_user.png);
+}
+.icon-cash {
+  background-image: url(/images/icon/icon_cash.png);
+}
+.icon-bell {
+  background-image: url(/images/icon/icon_bell.png);
+}
 .icon-color-black {
   -webkit-filter: brightness(0) saturate(100%) invert(0%) sepia(91%)
     saturate(7448%) hue-rotate(41deg) brightness(104%) contrast(98%);
@@ -8986,6 +9016,18 @@ img {
 .text-link {
   cursor: pointer;
 }
+.text-gold {
+  background: linear-gradient(
+    236.68deg,
+    #ceb900 13.29%,
+    #fafbc0 30.82%,
+    #feffdc 43.82%,
+    #ffec42 59.09%,
+    #c4ff9f 69.83%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
 .text p {
   margin-bottom: 0;
 }
@@ -9153,7 +9195,7 @@ form {
 .input-group {
   position: relative;
   display: block;
-  padding-bottom: 32px;
+  padding-bottom: 24px;
 }
 .input-group label {
   position: absolute;
@@ -9165,6 +9207,7 @@ form {
   -webkit-transition: all 0.3s;
   transition: all 0.3s;
   top: 50%;
+  font-size: 14px !important;
   font-size: inherit;
   -webkit-transform: translateY(-50%);
   -ms-transform: translateY(-50%);
@@ -9199,25 +9242,26 @@ form {
       )
       border-box;
   border-radius: 8px !important;
-  height: 56px;
   font-size: inherit;
   line-height: inherit;
+  color: #fff;
   padding-top: 18px;
   padding-left: 16px;
-  color: #fff;
+  height: 52px;
+  font-size: 14px;
 }
 .input-group
   .form-control:required:invalid:not(:-moz-placeholder-shown)
   ~ label {
   top: 4px;
-  font-size: 12px;
+  font-size: 10px !important;
   transform: translateY(0);
 }
 .input-group
   .form-control:required:invalid:not(:-ms-input-placeholder)
   ~ label {
   top: 4px;
-  font-size: 12px;
+  font-size: 10px !important;
   -ms-transform: translateY(0);
   transform: translateY(0);
 }
@@ -9225,7 +9269,7 @@ form {
 .input-group .form-control:required:invalid:not(:placeholder-shown) ~ label,
 .input-group .form-control:valid ~ label {
   top: 4px;
-  font-size: 12px;
+  font-size: 10px !important;
   -webkit-transform: translateY(0);
   -ms-transform: translateY(0);
   transform: translateY(0);
@@ -9267,6 +9311,16 @@ form {
   font-size: inherit;
   border-radius: 8px;
 }
+.form_custom {
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 16px;
+  border-radius: 8px;
+}
+@media (min-width: 1241px) {
+  .form_custom {
+    padding: 32px;
+  }
+}
 .list {
   list-style-type: none;
   padding-left: 0;
@@ -9301,7 +9355,7 @@ body {
   background-attachment: fixed;
   position: relative;
 }
-body:not(.game):before {
+body.loginPage:before {
   position: absolute;
   top: 0;
   bottom: 0;
@@ -9327,9 +9381,9 @@ body:not(.game):before {
   -webkit-box-direction: normal;
   -ms-flex-direction: column;
   flex-direction: column;
-  -webkit-box-pack: justify;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
 }
 .inner_page main {
   overflow-x: hidden;

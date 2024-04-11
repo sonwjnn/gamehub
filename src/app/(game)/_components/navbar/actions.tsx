@@ -19,7 +19,7 @@ export const Actions = ({}: ActionsProps) => {
             width={0}
             height={0}
             sizes="100vw"
-            style={{ width: '100%', height: 'auto' }}
+            className="w-full h-auto"
           />
         </div>
         <span>Top</span>
@@ -34,7 +34,7 @@ export const Actions = ({}: ActionsProps) => {
               width={0}
               height={0}
               sizes="100vw"
-              style={{ width: '100%', height: 'auto' }}
+              className="w-full h-auto"
             />
           </div>
           <span>Rule</span>
@@ -50,7 +50,7 @@ export const Actions = ({}: ActionsProps) => {
               width={0}
               height={0}
               sizes="100vw"
-              style={{ width: '100%', height: 'auto' }}
+              className="w-full h-auto"
             />
           </div>
           <span>Setting</span>

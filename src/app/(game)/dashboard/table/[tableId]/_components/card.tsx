@@ -17,12 +17,12 @@ export const Card = ({ imageUrl, className, isShowdown }: CardProps) => {
     <>
       <div className="front" onClick={onClick}>
         <Image
-          src={imageUrl}
+          src={imageUrl || '/images/pocker.png'}
           alt="pokerOnImage"
           width={0}
           height={0}
           sizes="100vw"
-          style={{ width: 'auto', height: '100%' }}
+          className="w-auto h-full"
         />
       </div>
       <div className="back" onClick={onClick}>
@@ -32,7 +32,7 @@ export const Card = ({ imageUrl, className, isShowdown }: CardProps) => {
           width={0}
           height={0}
           sizes="100vw"
-          style={{ width: 'auto', height: '100%' }}
+          className="w-auto h-full"
         />
       </div>
     </>

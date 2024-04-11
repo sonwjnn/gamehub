@@ -40,7 +40,7 @@ const TableIdLayout = async ({
   }
 
   return (
-    <div className="relative h-full w-full px-[70px]">
+    <div className="relative h-full w-full">
       <div className="absolute left-0 top-0 z-10 p-[12px] flex gap-x-4">
         <InvitePlayer table={table} />
         <LeaveTable table={table} player={finalCurrentPlayer} />

@@ -45,10 +45,6 @@ export const Board = ({ match, isHidden = false, isShuffle }: BoardProps) => {
 
   if (!match) return null
 
-  const isHandOver = match?.table?.isHandOver
-
-  console.log(isHandOver, match?.table)
-
   return (
     <div className="group_midle">
       {isPreFlop && !isShuffle && (

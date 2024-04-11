@@ -3,11 +3,11 @@ import { Hand } from './hand'
 import { UserAvatar } from '@/components/user-avatar'
 import { CurrentPlayerAction } from './actions'
 
-import { shuffle } from 'lodash'
 import { useEffect, useState } from 'react'
 import { Match, Participant, PlayerWithUser, PokerActions } from '@/types'
 import { useSocket } from '@/providers/socket-provider'
 import { cn } from '@/lib/utils'
+import { formatChipsAmount } from '@/utils/formatting'
 
 interface CurrentPlayerProps {
   type?: 'fold' | 'active' | 'default'
@@ -31,6 +31,7 @@ export const CurrentPlayer = ({
   const [imageUrlFirst, setImageUrlFirst] = useState('')
   const [imageUrlSecond, setImageUrlSecond] = useState('')
   const [counter, setCounter] = useState(15)
+  const [bet, setBet] = useState(0)
 
   const currentParticipant = participants.find(
     item => item.playerId === player?.id
@@ -39,19 +40,27 @@ export const CurrentPlayer = ({
   const isFolded = currentParticipant?.isFolded
   const isWinner = !isFolded && match?.winnerId === player?.id
   const isTurn = !isFolded && player?.isTurn
+  const chipsAmount =
+    currentParticipant?.player?.user?.chipsAmount ||
+    player?.user?.chipsAmount ||
+    0
 
   useEffect(() => {
-    if (Array.isArray(participants) && participants.length > 0) {
-      const participant = participants.find(
-        participant => participant.playerId === player?.id
-      )
-      const imageUrlFirst = `/images/pocker/${participant?.cardOne.rank.toLocaleLowerCase()}_${participant?.cardOne.suit.toLocaleLowerCase()}.png`
-      const imageUrlSecond = `/images/pocker/${participant?.cardTwo.rank.toLocaleLowerCase()}_${participant?.cardTwo.suit.toLocaleLowerCase()}.png`
+    if (
+      currentParticipant &&
+      currentParticipant.cardOne &&
+      currentParticipant.cardTwo
+    ) {
+      const imageUrlFirst = `/images/pocker/${currentParticipant.cardOne?.rank.toLocaleLowerCase()}_${currentParticipant.cardOne?.suit.toLocaleLowerCase()}.png`
+      const imageUrlSecond = `/images/pocker/${currentParticipant.cardTwo?.rank.toLocaleLowerCase()}_${currentParticipant.cardTwo?.suit.toLocaleLowerCase()}.png`
 
       setImageUrlFirst(imageUrlFirst)
       setImageUrlSecond(imageUrlSecond)
+    } else {
+      setImageUrlFirst('')
+      setImageUrlSecond('')
     }
-  }, [participants, player])
+  }, [participants, player, currentParticipant])
 
   useEffect(() => {
     let timer: NodeJS.Timeout | null = null
@@ -122,14 +131,19 @@ export const CurrentPlayer = ({
               width={0}
               height={0}
               sizes="100vw"
-              style={{ width: '100%', height: 'auto' }}
+              className="w-full h-auto"
             />
           </div>
           <div className="btn_detail">Detail</div>
         </div>
       </div>
       <div className="group_left">
-        <div className={cn('group_user', player?.isTurn && 'is-status')}>
+        <div
+          className={cn(
+            'group_user before:border-none',
+            player?.isTurn && 'is-status'
+          )}
+        >
           <div className="wrap">
             <div className="flex flex-midle">
               <div className="left">
@@ -162,7 +176,9 @@ export const CurrentPlayer = ({
                 </div>
               </div>
               <div className="right sp_full">
-                <div className="money fw-700">$ 1.500.324</div>
+                <div className="money fw-700">
+                  $ {formatChipsAmount(chipsAmount)}
+                </div>
               </div>
 
               {isWinner && (
@@ -173,7 +189,7 @@ export const CurrentPlayer = ({
                     width={0}
                     height={0}
                     sizes="100vw"
-                    style={{ width: 'auto', height: '100%' }}
+                    className="w-auto h-full"
                   />
                 </div>
               )}
@@ -223,8 +239,12 @@ export const CurrentPlayer = ({
           </div>
         </div>
       </div>
-      {player?.isTurn && (
+      {true && (
         <CurrentPlayerAction
+          player={player}
+          bet={bet}
+          setBet={setBet}
+          match={match}
           tableId={tableId}
           currentParticipant={currentParticipant}
         />

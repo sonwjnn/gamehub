@@ -5,6 +5,7 @@ import { UserAvatar } from '@/components/user-avatar'
 import { Match, Participant, PlayerWithUser, PokerActions } from '@/types'
 import { useEffect, useState } from 'react'
 import { useSocket } from '@/providers/socket-provider'
+import { formatChipsAmount } from '@/utils/formatting'
 
 interface OtherPlayerProps {
   type?: 'fold' | 'active' | 'default'
@@ -34,19 +35,27 @@ export const OtherPlayer = ({
   const isFolded = currentParticipant?.isFolded
   const isWinner = !isFolded && match?.winnerId === player?.id
   const isTurn = !isFolded && player?.isTurn
+  const chipsAmount =
+    currentParticipant?.player?.user?.chipsAmount ||
+    player?.user?.chipsAmount ||
+    0
 
   useEffect(() => {
-    if (Array.isArray(participants) && participants.length > 0) {
-      const participant = participants.find(
-        participant => participant.playerId === player.id
-      )
-      const imageUrlFirst = `/images/pocker/${participant?.cardOne.rank.toLocaleLowerCase()}_${participant?.cardOne.suit.toLocaleLowerCase()}.png`
-      const imageUrlSecond = `/images/pocker/${participant?.cardTwo.rank.toLocaleLowerCase()}_${participant?.cardTwo.suit.toLocaleLowerCase()}.png`
+    if (
+      currentParticipant &&
+      currentParticipant.cardOne &&
+      currentParticipant.cardTwo
+    ) {
+      const imageUrlFirst = `/images/pocker/${currentParticipant.cardOne?.rank.toLocaleLowerCase()}_${currentParticipant.cardOne?.suit.toLocaleLowerCase()}.png`
+      const imageUrlSecond = `/images/pocker/${currentParticipant.cardTwo?.rank.toLocaleLowerCase()}_${currentParticipant.cardTwo?.suit.toLocaleLowerCase()}.png`
 
       setImageUrlFirst(imageUrlFirst)
       setImageUrlSecond(imageUrlSecond)
+    } else {
+      setImageUrlFirst('')
+      setImageUrlSecond('')
     }
-  }, [participants, player])
+  }, [participants, player, currentParticipant])
 
   useEffect(() => {
     let timer: NodeJS.Timeout | null = null
@@ -83,8 +92,6 @@ export const OtherPlayer = ({
       })
     }
   }
-
-  console.log(currentParticipant)
 
   return (
     <div
@@ -128,7 +135,9 @@ export const OtherPlayer = ({
             </div>
           </div>
           <div className="right sp_full">
-            <div className="money fw-700">$ 1.500.324</div>
+            <div className="money fw-700">
+              $ {formatChipsAmount(chipsAmount)}
+            </div>
           </div>
 
           {isWinner && (
@@ -139,7 +148,7 @@ export const OtherPlayer = ({
                 width={0}
                 height={0}
                 sizes="100vw"
-                style={{ width: 'auto', height: '100%' }}
+                className="w-auto h-full"
               />
             </div>
           )}

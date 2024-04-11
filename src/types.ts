@@ -56,19 +56,7 @@ export type Table = {
 
   minBuyIn: number
   maxBuyIn: number
-  // limit: number
   maxPlayers: number
-  // smallBlind: number
-  // bigBlind: number
-  // pot: number
-  // mainPot: number
-  // callAmount: number
-  // wentToShowdown: boolean
-  // minBet?: number
-  // minRaise?: number
-  // sidePots: string
-  // buttonId?: string
-  // turn: boolean
 
   histories: History[]
 
@@ -128,18 +116,23 @@ export type Match = {
   isShowdown: boolean
   winnerId?: string
   winner?: Player
+  callAmount: number
+  pot: number
 }
 
 export type Participant = {
   id: string
   matchId: string
-  match: string
+  match?: string
   playerId: string
-  player: Player
-  cardOne: Card
-  cardTwo: Card
+  player?: Player
+  cardOneId: string
+  cardTwoId: string
+  cardOne?: Card
+  cardTwo?: Card
   isChecked: boolean
   isFolded: boolean
+  bet: number
 }
 
 export type PlayerWithUser = Player & { user: User }

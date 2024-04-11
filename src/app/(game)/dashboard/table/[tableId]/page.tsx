@@ -17,7 +17,8 @@ import { useCurrentUser } from '@/hooks/use-current-user'
 import { useSocket } from '@/providers/socket-provider'
 
 import matchApi from '@/services/api/modules/match-api'
-import { set } from 'lodash'
+import { formatChipsAmount } from '@/utils/formatting'
+import { Button } from '@/components/ui/button'
 
 const TablePage = () => {
   const [isHandVisible, setHandVisible] = useState(false)
@@ -32,7 +33,6 @@ const TablePage = () => {
 
   const [messages, setMessages] = useState([] as string[])
   const [match, setMatch] = useState<Match | null>(null)
-
   const [participants, setParticipants] = useState<Participant[]>([])
 
   const tableRef = useRef<HTMLDivElement | null>(null)
@@ -114,7 +114,7 @@ const TablePage = () => {
             elements.forEach(element => {
               element?.parentNode?.removeChild(element)
             })
-          }, 0)
+          }, 1000)
         },
       })
     }
@@ -128,7 +128,8 @@ const TablePage = () => {
 
   useEffect(() => {
     if (socket) {
-      let timeoutId: NodeJS.Timeout | null = null
+      let timerMatchId: NodeJS.Timeout | null = null
+
       // window.addEventListener('unload', leaveTable)
       // window.addEventListener('close', leaveTable)
 
@@ -150,10 +151,9 @@ const TablePage = () => {
           if (match) {
             setShuffle(true)
 
-            setTimeout(() => {
+            timerMatchId = setTimeout(() => {
               setMatch(match)
               setParticipants(match.participants)
-              setHandVisible(true)
 
               setPlayers(prev =>
                 prev.map(item => {
@@ -163,8 +163,6 @@ const TablePage = () => {
                   return { ...item, isTurn: false }
                 })
               )
-
-              setShuffle(false)
             }, 2000)
           }
         }
@@ -185,7 +183,6 @@ const TablePage = () => {
 
           setPlayers(prev => [...prev, player])
 
-          // toast.success(`${player.user?.username} joined the table`)
           socket.emit(PokerActions.TABLE_JOINED, {
             tableId: params?.tableId,
             player,
@@ -233,8 +230,8 @@ const TablePage = () => {
           socket.off(PokerActions.MATCH_STARTED)
           socket.off(PokerActions.CHANGE_TURN)
 
-          if (timeoutId) {
-            clearTimeout(timeoutId)
+          if (timerMatchId) {
+            clearTimeout(timerMatchId)
           }
         }
       }
@@ -289,14 +286,15 @@ const TablePage = () => {
 
   return (
     <>
-      <div className="wrapper" ref={wrapperRef}>
+      <div className="wrapper " ref={wrapperRef}>
         <Image
           src="/images/table_v2.png"
           alt="tableImage"
           width={0}
           height={0}
           sizes="100vw"
-          style={{ width: '100%', height: 'auto' }}
+          className="w-full h-auto"
+          // style={{ width: '100%', height: 'auto' }}
         />
         <div className="inner">
           <div className="list_user" ref={tableRef}>
@@ -324,13 +322,20 @@ const TablePage = () => {
           </div>
         </div>
         <Board match={match} isShuffle={isShuffle} />
-        {/* {players.length + 1 <= 1 && (
+        <Button
+          variant="secondary"
+          className="absolute font-bold top-[20%] text-white text-2xl left-1/2 translate-y-[-50%] translate-x-[-50%] rounded-xl pointer-events-none"
+        >
+          Pot: {formatChipsAmount(match?.pot || 0)}
+        </Button>
+
+        {players.length + 1 <= 1 && (
           <div className="absolute text-white font-bold top-1/2 left-1/2 translate-y-[-50%] translate-x-[-50%]">
             Waiting for more players...
           </div>
-        )} */}
+        )}
         {messages && messages.length > 0 && (
-          <div className="absolute  font-bold top-1/2 text-lime-500 left-1/2 translate-y-[-50%] translate-x-[-50%]">
+          <div className="absolute  font-bold top-[60%] text-lime-500 text-xl left-1/2 translate-y-[-50%] translate-x-[-50%]">
             {messages[messages.length - 1]}
           </div>
         )}
