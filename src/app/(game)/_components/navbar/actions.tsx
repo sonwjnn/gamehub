@@ -3,61 +3,30 @@ import { SocketIndicator } from '@/components/socket-indicator'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ChipsAmount } from './chips-amount'
+import { MobileToggle } from './mobile-toggle'
 
 interface ActionsProps {}
 
 export const Actions = ({}: ActionsProps) => {
   return (
     <div className="toolbar flex flex-midle">
-      <SocketIndicator />
-
-      <div className="item flex flex-midle gap-8">
-        <div className="icon flex-shrink">
-          <Image
-            src="/images/icon_top.svg"
-            alt="iconTopImage"
-            width={0}
-            height={0}
-            sizes="100vw"
-            className="w-full h-auto"
-          />
-        </div>
-        <span>Top</span>
+      <div className="mr-[24px]">
+        <SocketIndicator />
       </div>
-      <div className="line"></div>
-      <Link href={'/dashboard/rule'}>
-        <div className="item flex flex-midle gap-8">
-          <div className="icon flex-shrink">
-            <Image
-              src="/images/icon_rule.svg"
-              alt="iconRuleImage"
-              width={0}
-              height={0}
-              sizes="100vw"
-              className="w-full h-auto"
-            />
-          </div>
-          <span>Rule</span>
+      <Link href="/dashboard" className="item btn_play flex flex-midle gap-8">
+        <div className="icon flex-shrink sz-16">
+          <i className="icon-play icon-color-white" />
         </div>
+        <span>PLAY </span>
       </Link>
-      <div className="line"></div>
-      <Link href={'/dashboard/setting'}>
-        <div className="item flex flex-midle gap-8 mr-2">
-          <div className="icon flex-shrink">
-            <Image
-              src="/images/icon_setting.svg"
-              alt="iconSettingImage"
-              width={0}
-              height={0}
-              sizes="100vw"
-              className="w-full h-auto"
-            />
-          </div>
-          <span>Setting</span>
+      <div className="item flex flex-midle gap-8 item_rule flex-center">
+        <div className="icon flex-shrink sz-32 icon-color-white">
+          <i className="icon-rule" />
         </div>
-      </Link>
-      <ChipsAmount />
+      </div>
+      {/* <ChipsAmount /> */}
       <UserButton />
+      <MobileToggle />
     </div>
   )
 }

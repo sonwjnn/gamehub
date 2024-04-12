@@ -1,4 +1,3 @@
-import tableApi from '@/services/api/modules/table-api'
 import { InvitePlayer } from './_components/invite-player'
 import { Chat } from './_components/chat'
 import { LeaveTable } from './_components/leave-table'
@@ -20,6 +19,15 @@ const TableIdLayout = async ({
   }
 
   const { tableId } = params
+
+  const {response: currentPlayer} = await playerApi.getCurrentPlayerOfTable({
+    tableId,
+    userId: user.id,
+  })
+
+  if (!currentPlayer) {
+    redirect('/dashboard')
+  }
 
   return (
     <div className="relative h-full w-full">

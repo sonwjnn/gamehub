@@ -1,4 +1,3 @@
-import React from 'react'
 import '@/styles/css/layout.css'
 
 const AuthLayout = ({ children }: { children: React.ReactNode }) => {

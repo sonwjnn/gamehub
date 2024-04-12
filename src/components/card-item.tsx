@@ -23,7 +23,7 @@ export const CardItem = ({ imageUrl, title, redirectUrl }: CardItemProps) => {
       onClick={onClick}
       className="group relative mb-3 flex cursor-pointer flex-col items-center justify-center gap-x-4 overflow-hidden rounded-md bg-neutral-400/5 p-4 transition hover:bg-neutral-400/10"
     >
-      <div className="relative aspect-square h-full w-full overflow-hidden rounded-md shadow-base">
+      <div className="relative aspect-square h-full w-full overflow-hidden rounded-md shadow-base min-h-[300px]">
         {imageUrl ? (
           <Image
             className="object-cover transition group-hover:scale-110"
@@ -33,12 +33,14 @@ export const CardItem = ({ imageUrl, title, redirectUrl }: CardItemProps) => {
             sizes="100%"
           />
         ) : (
-          <div className="flex h-full w-full items-center justify-center bg-neutral-800 text-white"></div>
+          <div className="flex h-full w-full items-center justify-center bg-blue-950/60 text-white"></div>
         )}
       </div>
 
       <div className="flex w-full flex-col items-start gap-y-1 pt-4">
-        <p className="w-full truncate font-semibold text-white">{title}</p>
+        <p className="w-full truncate text-xl text-center mt-2 font-semibold text-white">
+          {title}
+        </p>
       </div>
     </div>
   )
