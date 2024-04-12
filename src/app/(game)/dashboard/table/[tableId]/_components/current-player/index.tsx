@@ -239,7 +239,7 @@ export const CurrentPlayer = ({
           </div>
         </div>
       </div>
-      {true && (
+      {isTurn && (
         <CurrentPlayerAction
           player={player}
           bet={bet}
