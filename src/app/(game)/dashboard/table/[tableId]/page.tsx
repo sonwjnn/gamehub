@@ -12,7 +12,14 @@ import SoundUrls from '@/utils/contants/sound'
 import { useParams } from 'next/navigation'
 import { useOrigin } from '@/hooks/use-origin'
 import tableApi from '@/services/api/modules/table-api'
-import { Match, Participant, PlayerWithUser, PokerActions } from '@/types'
+import {
+  Match,
+  Participant,
+  PlayerWithUser,
+  PokerActions,
+  TableWithPlayersWithUser,
+  // TableWithPlayers,
+} from '@/types'
 import { useCurrentUser } from '@/hooks/use-current-user'
 import { useSocket } from '@/providers/socket-provider'
 

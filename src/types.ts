@@ -141,6 +141,10 @@ export type TableWithPlayers = Table & {
   players: Player[]
 }
 
+export type TableWithPlayersWithUser = Table & {
+  players: PlayerWithUser[]
+}
+
 export type NextApiResponseServerIo = NextApiResponse & {
   socket: Socket & {
     server: NetServer & {
@@ -170,7 +174,7 @@ export enum PokerActions {
   STAND_UP = 'STAND_UP',
   SITTING_OUT = 'SITTING_OUT',
   SITTING_IN = 'SITTING_IN',
-  DISCONNECT = 'DISCONNECT',
+  DISCONNECTED = 'DISCONNECTED',
   MATCH_STARTED = 'MATCH_STARTED',
   CHANGE_TURN = 'CHANGE_TURN',
 }
