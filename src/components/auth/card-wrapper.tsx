@@ -23,7 +23,7 @@ export const CardWrapper = ({
   type = 'login',
 }: CardWrapperProps) => {
   return (
-    <Card className="w-[460px] shadow-md p-[32px] z-20 bg-black/60 border-solid border-2 border-white/30">
+    <Card className="max-w-[460px] w-full  shadow-md p-[32px] z-20 bg-black/60 border-solid border-2 border-white/30">
       <CardHeader className="p-0">
         <Header label={headerLabel} description={headerDescription} />
       </CardHeader>

@@ -28,7 +28,7 @@ export const RegisterButton = ({
     return (
       <Dialog>
         <DialogTrigger asChild={asChild}>{children}</DialogTrigger>
-        <DialogContent className="w-auto border-none bg-transparent p-0">
+        <DialogContent className="max-w-[460px] w-full border-none bg-transparent p-0 !rounded-[24px]  px-[16px]">
           <RegisterForm />
         </DialogContent>
       </Dialog>
