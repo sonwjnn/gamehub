@@ -10,25 +10,66 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog'
+import { useCurrentUser } from '@/hooks/use-current-user'
 import playerApi from '@/services/api/modules/player-api'
+import tableApi from '@/services/api/modules/table-api'
 import { useModal } from '@/store/use-modal-store'
+import { Table } from '@/types'
 import { useRouter } from 'next/navigation'
-import { useTransition } from 'react'
+import { useEffect, useState, useTransition } from 'react'
 import { toast } from 'sonner'
 
 export const LeaveTableModal = () => {
   const { isOpen, onClose, type, data } = useModal()
   const [isPending, startTransition] = useTransition()
+
+  const [table, setTable] = useState<Table | null>(null)
+  const user = useCurrentUser()
   const router = useRouter()
 
   const isModalOpen = isOpen && type === 'leaveTable'
-  const { table, player } = data
+  const { tableId } = data
+
+  useEffect(() => {
+    const getTableById = async () => {
+      console.log(123)
+      if (!tableId) return
+
+      const { response, error } = await tableApi.getTableById({ tableId })
+
+      if (error) {
+        console.log(error)
+        return
+      }
+
+      setTable(response)
+    }
+
+    if (isModalOpen) {
+      getTableById()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isModalOpen])
 
   const onClick = async () => {
-    if (!table || !player) return
+    if (!user || !table) return
+
+    const currentPlayerOfTable = table.players.find(
+      item => item.userId === user.id
+    )
+
+    if (!currentPlayerOfTable) return
 
     startTransition(async () => {
-      await playerApi.removePlayer({ tableId: table.id, playerId: player.id })
+      const { response, error } = await playerApi.removePlayer({
+        tableId: table.id,
+        playerId: currentPlayerOfTable.id,
+      })
+
+      if (error) {
+        toast.error('Error when leaving table')
+        return
+      }
 
       onClose()
       router.push('/dashboard/table')
@@ -37,9 +78,9 @@ export const LeaveTableModal = () => {
 
   return (
     <Dialog open={isModalOpen} onOpenChange={onClose}>
-      <DialogContent className="overflow-hidden bg-white p-0 text-black">
+      <DialogContent className="overflow-hidden  p-0 text-black">
         <DialogHeader className="px-6 pt-8">
-          <DialogTitle className="text-center text-2xl font-bold">
+          <DialogTitle className="text-center  text-2xl font-bold">
             Leave Table
           </DialogTitle>
           <DialogDescription className="text-center text-zinc-500">

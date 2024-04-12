@@ -18,11 +18,11 @@ export const InviteModal = () => {
   const { isOpen, onClose, type, data } = useModal()
 
   const isModalOpen = isOpen && type === 'invite'
-  const { table } = data
+  const { tableId } = data
 
   const [copied, setCopied] = useState(false)
 
-  const inviteCode = table?.id
+  const inviteCode = tableId
 
   const onCopy = () => {
     navigator.clipboard.writeText(`${inviteCode}`)

@@ -144,6 +144,8 @@ const TablePage = () => {
           match: Match
           playerId: string
         }) => {
+          if (tableId !== params?.tableId) return
+
           setMatch(null)
           setParticipants([])
           setHandVisible(false)
@@ -171,7 +173,6 @@ const TablePage = () => {
       socket.on(
         PokerActions.TABLE_MESSAGE,
         ({ message, from }: { message: string; from: any }) => {
-          // console.log(TABLE_UPDATED, table, message, from);
           message && addMessage(message)
         }
       )
@@ -207,6 +208,8 @@ const TablePage = () => {
       socket.on(
         PokerActions.CHANGE_TURN,
         ({ match, playerId }: { match: Match | null; playerId: string }) => {
+          if (match?.tableId !== params?.tableId) return
+
           setPlayers(prev =>
             prev.map(item => {
               if (item.id === playerId) {
@@ -329,11 +332,11 @@ const TablePage = () => {
           Pot: {formatChipsAmount(match?.pot || 0)}
         </Button>
 
-        {players.length + 1 <= 1 && (
+        {/* {players.length + 1 <= 1 && (
           <div className="absolute text-white font-bold top-1/2 left-1/2 translate-y-[-50%] translate-x-[-50%]">
             Waiting for more players...
           </div>
-        )}
+        )} */}
         {messages && messages.length > 0 && (
           <div className="absolute  font-bold top-[60%] text-lime-500 text-xl left-1/2 translate-y-[-50%] translate-x-[-50%]">
             {messages[messages.length - 1]}

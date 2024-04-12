@@ -2,20 +2,19 @@
 
 import { Button } from '@/components/ui/button'
 import { useModal } from '@/store/use-modal-store'
-import { Player, Table } from '@/types'
+import { Table } from '@/types'
 
 interface LeaveTableProps {
-  table: Table
-  player: Player
+  tableId: string
 }
 
-export const LeaveTable = ({ table, player }: LeaveTableProps) => {
+export const LeaveTable = ({ tableId }: LeaveTableProps) => {
   const { onOpen } = useModal()
 
   return (
     <Button
       variant="destructive"
-      onClick={() => onOpen('leaveTable', { table, player })}
+      onClick={() => onOpen('leaveTable', { tableId })}
     >
       Leave Table
     </Button>

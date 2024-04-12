@@ -4,7 +4,7 @@ import { create } from 'zustand'
 export type ModalType = 'joinTable' | 'invite' | 'leaveTable' | 'buyChips'
 
 interface ModalData {
-  table?: Table
+  tableId?: string
   player?: Player
   apiUrl?: string
   query?: Record<string, any>
