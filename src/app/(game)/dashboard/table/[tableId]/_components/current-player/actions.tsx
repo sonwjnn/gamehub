@@ -4,6 +4,7 @@ import { BetSlider } from '@/components/bet-slider'
 import { useSocket } from '@/providers/socket-provider'
 import { Match, Participant, Player, PokerActions } from '@/types'
 import { useState } from 'react'
+import Sound from '@/utils/contants/sound'
 
 interface CurrentPlayerActionProps {
   tableId: string
@@ -28,6 +29,7 @@ export const CurrentPlayerAction = ({
 
   const fold = async () => {
     if (socket && !isProcessing) {
+      new Audio(Sound.soundFoldBoy).play()
       setIsProcessing(true)
       await socket.emit(PokerActions.FOLD, {
         tableId,
@@ -39,6 +41,7 @@ export const CurrentPlayerAction = ({
 
   const check = () => {
     if (socket && !isProcessing) {
+      // new Audio(Sound.sou).play()
       setIsProcessing(true)
       socket.emit(PokerActions.CHECK, {
         tableId,
@@ -50,6 +53,8 @@ export const CurrentPlayerAction = ({
 
   const call = () => {
     if (socket && !isProcessing) {
+      new Audio(Sound.soundCallBoy).play()
+
       setIsProcessing(true)
       socket.emit(PokerActions.CALL, {
         tableId,
@@ -61,6 +66,7 @@ export const CurrentPlayerAction = ({
 
   const raise = (amount: number) => {
     if (socket && !isProcessing) {
+      new Audio(Sound.soundCallBoy).play()
       setIsProcessing(true)
       socket.emit(PokerActions.RAISE, {
         tableId,
@@ -98,7 +104,14 @@ export const CurrentPlayerAction = ({
         <button className="item disabled:pointer-events-none disabled:opacity-50">
           {/* <span className="number number_left">4 </span> */}
           <span className="number">4</span>
-          <div className=" text-white text-[32px] font-bold value"></div>
+          <div className=" text-white text-[32px] font-bold value">
+            <BetSlider
+              match={match}
+              bet={bet}
+              setBet={setBet}
+              currentChipsAmount={currentChipsAmount}
+            />
+          </div>
         </button>
         <button
           className="item disabled:pointer-events-none disabled:opacity-50"
@@ -144,9 +157,7 @@ export const CurrentPlayerAction = ({
         </button>
       </div>
 
-      <div className="fixed right-12  bottom-9">
-        <BetSlider value={bet} setValue={setBet} max={currentChipsAmount} />
-      </div>
+      <div className="fixed right-12  bottom-9"></div>
     </>
   )
 }

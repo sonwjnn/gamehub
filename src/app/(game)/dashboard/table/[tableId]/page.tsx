@@ -26,6 +26,10 @@ import { useSocket } from '@/providers/socket-provider'
 import matchApi from '@/services/api/modules/match-api'
 import { formatChipsAmount } from '@/utils/formatting'
 import { Button } from '@/components/ui/button'
+import { LeaveTableCheckbox } from './_components/leave-table-checkbox'
+import { LeaveTable } from './_components/leave-table'
+import { InvitePlayer } from './_components/invite-player'
+import { cn } from '@/lib/utils'
 
 const TablePage = () => {
   const [isHandVisible, setHandVisible] = useState(false)
@@ -153,7 +157,6 @@ const TablePage = () => {
         }) => {
           if (tableId !== params?.tableId) return
 
-          setMatch(null)
           setParticipants([])
           setHandVisible(false)
 
@@ -200,13 +203,13 @@ const TablePage = () => {
 
       socket.on(
         PokerActions.LEAVE_TABLE,
-        ({ tableId, player }: { tableId: string; player: PlayerWithUser }) => {
+        ({ tableId, playerId }: { tableId: string; playerId: string }) => {
           if (tableId !== params?.tableId) return
-          setPlayers(prev => prev.filter(item => item.userId !== player.userId))
+          setPlayers(prev => prev.filter(item => item.id !== playerId))
 
           socket.emit(PokerActions.TABLE_LEFT, {
             tableId: params?.tableId,
-            player,
+            playerId,
           })
           // toast.success(`${player.user?.username} left the table`)
         }
@@ -229,6 +232,21 @@ const TablePage = () => {
             setMatch(match)
             setParticipants(match.participants)
           }
+        }
+      )
+
+      socket.on(
+        PokerActions.PLAYERS_UPDATED,
+        ({
+          tableId,
+          players,
+        }: {
+          tableId: string
+          players: PlayerWithUser[]
+        }) => {
+          if (tableId !== params?.tableId) return
+
+          setPlayers(players)
         }
       )
 
@@ -267,23 +285,8 @@ const TablePage = () => {
       }
 
       setPlayers(response.players)
-
-      if (response.players.length > 1) {
-        getCurrentMatchByTableId()
-      }
-    }
-    const getCurrentMatchByTableId = async () => {
-      const { response } = await matchApi.getCurrentMatchByTableId({
-        tableId: params?.tableId as string,
-      })
-
-      if (response) {
-        setMatch(response)
-        setParticipants(response.participants)
-      }
     }
     getPlayers()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params?.tableId])
 
   const addMessage = (message: string) => {
@@ -296,6 +299,28 @@ const TablePage = () => {
 
   return (
     <>
+      <div className="absolute left-0 top-0 z-10 p-[12px] flex gap-x-4">
+        <InvitePlayer tableId={params?.tableId as string} />
+        <LeaveTable
+          tableId={params?.tableId as string}
+          className={cn(
+            'hidden',
+            !(match && players.length > 1 && !match.isShowdown) && 'block'
+          )}
+        />
+        <LeaveTableCheckbox
+          tableId={params?.tableId as string}
+          player={players.find(p => p.userId === user?.id)}
+          match={match}
+          className={cn(
+            'opacity-0 pointer-events-none',
+            match &&
+              players.length > 1 &&
+              !match.isShowdown &&
+              'opacity-100 pointer-events-auto'
+          )}
+        />
+      </div>
       <div className="wrapper " ref={wrapperRef}>
         <Image
           src="/images/table_v2.png"
@@ -304,7 +329,6 @@ const TablePage = () => {
           height={0}
           sizes="100vw"
           className="w-full h-auto"
-          // style={{ width: '100%', height: 'auto' }}
         />
         <div className="inner">
           <div className="list_user" ref={tableRef}>
@@ -334,16 +358,11 @@ const TablePage = () => {
         <Board match={match} isShuffle={isShuffle} />
         <Button
           variant="secondary"
-          className="absolute font-bold top-[20%] text-white text-2xl left-1/2 translate-y-[-50%] translate-x-[-50%] rounded-xl pointer-events-none"
+          className="absolute font-bold top-[20%] z-10 text-white text-2xl left-1/2 translate-y-[-50%] translate-x-[-50%] rounded-xl pointer-events-none"
         >
           Pot: {formatChipsAmount(match?.pot || 0)}
         </Button>
 
-        {/* {players.length + 1 <= 1 && (
-          <div className="absolute text-white font-bold top-1/2 left-1/2 translate-y-[-50%] translate-x-[-50%]">
-            Waiting for more players...
-          </div>
-        )} */}
         {messages && messages.length > 0 && (
           <div className="absolute  font-bold top-[60%] text-lime-500 text-xl left-1/2 translate-y-[-50%] translate-x-[-50%]">
             {messages[messages.length - 1]}

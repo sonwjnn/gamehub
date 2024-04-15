@@ -65,8 +65,10 @@
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  position: relative;
+  position: sticky;
+  top: 0;
   z-index: 999;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 @media (min-width: 1024px), ((min-width: 768px) and (orientation: portrait)) {
   .game_heading {
@@ -200,7 +202,7 @@
   margin-bottom: 0;
 }
 @media (min-width: 992px) {
-  .game_heading .toolbar .item_account .dropdown_content .list_menu ul li {
+  .game_heading .toolbar .item_account .dropdown_content .list_menu ul li a {
     padding: 10px 16px;
   }
 }
@@ -230,6 +232,7 @@
   -webkit-box-pack: center;
   -ms-flex-pack: center;
   justify-content: center;
+  margin-left: 12px;
 }
 @media (min-width: 992px) {
   .game_heading .btn_hamburger {

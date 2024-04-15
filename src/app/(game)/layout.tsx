@@ -1,21 +1,26 @@
+'use client'
+
 import { Navbar } from './_components/navbar'
 import '@/styles/css/layout.css'
 import '@/styles/css/game.css'
-import '@/styles/css/styles.css'
+import { usePathname } from 'next/navigation'
 
-interface SetupLayoutProps {
+interface GameLayoutProps {
   children: React.ReactNode
 }
 
-const SetupLayout = async ({ children }: SetupLayoutProps) => {
+const GameLayout = ({ children }: GameLayoutProps) => {
+  const pathname = usePathname()
+
+  const isTableIdRoute = pathname?.includes('/dashboard/table/')
   return (
     <div className="inner_page">
       <main>
-        <Navbar />
+        {!isTableIdRoute && <Navbar />}
         <div className="game_body">{children}</div>
       </main>
     </div>
   )
 }
 
-export default SetupLayout
+export default GameLayout

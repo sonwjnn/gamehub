@@ -102,6 +102,16 @@ export const CurrentPlayer = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [counter])
 
+  useEffect(() => {
+    if (match) {
+      match.callAmount > match.minBet
+        ? setBet(match.callAmount)
+        : match.pot > 0
+          ? setBet(match.minRaise)
+          : setBet(match.minBet)
+    }
+  }, [match])
+
   const fold = () => {
     if (socket) {
       socket.emit(PokerActions.FOLD, {
@@ -204,8 +214,8 @@ export const CurrentPlayer = ({
                         cy="100"
                         r="95"
                         stroke="#231f20"
-                        stroke-width="8"
-                        fill-opacity="0"
+                        strokeWidth="8"
+                        fillOpacity="0"
                       />
                     </svg>
                     <span>풀</span>
@@ -228,8 +238,8 @@ export const CurrentPlayer = ({
                       cy="100"
                       r="95"
                       stroke="#231f20"
-                      stroke-width="8"
-                      fill-opacity="0"
+                      strokeWidth="8"
+                      fillOpacity="0"
                     ></circle>
                   </svg>
                   <span>라이즈</span>

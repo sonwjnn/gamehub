@@ -1,6 +1,5 @@
 import { GetStartedButton } from './components/get-started-button'
-import '@/styles/css/layout.css'
-import '@/styles/css/styles.css'
+
 import { Container } from './components/container'
 
 export default function Page() {

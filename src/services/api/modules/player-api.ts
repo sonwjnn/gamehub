@@ -13,6 +13,7 @@ const playerEndpoints = {
     `players/table/user/${userId}`,
   createPlayer: 'players/',
   removePlayer: (playerId: string) => `players/${playerId}`,
+  updatePlayer: (playerId: string) => `players/${playerId}`,
 }
 
 const playerApi = {
@@ -74,6 +75,19 @@ const playerApi = {
       })
 
       const response = await privateClient.delete(url)
+      if (response && response.data) return { response: response.data }
+      return { response }
+    } catch (error) {
+      return { error }
+    }
+  },
+
+  updatePlayer: async (data: any) => {
+    try {
+      const response = await privateClient.put(
+        playerEndpoints.updatePlayer(data.id),
+        data
+      )
       if (response && response.data) return { response: response.data }
       return { response }
     } catch (error) {

@@ -74,6 +74,7 @@ export type Player = {
   table?: Table
 
   isTurn: boolean
+  leaveNextMatch: boolean
 
   createdAt: Date
 }
@@ -117,6 +118,8 @@ export type Match = {
   winnerId?: string
   winner?: Player
   callAmount: number
+  minRaise: number
+  minBet: number
   pot: number
 }
 

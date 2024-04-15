@@ -7,6 +7,7 @@ import { twMerge } from 'tailwind-merge'
 interface SliderProps {
   value?: number
   maxValue?: number
+  minValue?: number
   step?: number
   onChange?: (value: number) => void
   onMouseUp?: (value: number) => void
@@ -17,6 +18,7 @@ export const Slider: React.FC<SliderProps> = ({
   className,
   value = 0,
   maxValue = 100,
+  minValue = 0,
   step = 1,
   onChange,
   onMouseUp,
@@ -39,6 +41,7 @@ export const Slider: React.FC<SliderProps> = ({
       onValueChange={handleChange}
       onValueCommit={handleMouseUp}
       max={maxValue}
+      min={minValue}
       step={step}
     >
       <SliderPrimitive.Track className="relative  h-[8px] grow rounded-full bg-neutral-600">

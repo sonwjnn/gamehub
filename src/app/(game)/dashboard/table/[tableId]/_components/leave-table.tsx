@@ -1,18 +1,20 @@
 'use client'
 
 import { Button } from '@/components/ui/button'
+import { cn } from '@/lib/utils'
 import { useModal } from '@/store/use-modal-store'
-import { Table } from '@/types'
 
 interface LeaveTableProps {
   tableId: string
+  className?: string
 }
 
-export const LeaveTable = ({ tableId }: LeaveTableProps) => {
+export const LeaveTable = ({ className, tableId }: LeaveTableProps) => {
   const { onOpen } = useModal()
 
   return (
     <Button
+      className={cn(className)}
       variant="destructive"
       onClick={() => onOpen('leaveTable', { tableId })}
     >
