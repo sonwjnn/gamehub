@@ -8,6 +8,7 @@ import { Match, Participant, PlayerWithUser, PokerActions } from '@/types'
 import { useSocket } from '@/providers/socket-provider'
 import { cn } from '@/lib/utils'
 import { formatChipsAmount } from '@/utils/formatting'
+import { ChipsAmountBadge } from '@/components/chips-amount-badge'
 
 interface CurrentPlayerProps {
   type?: 'fold' | 'active' | 'default'
@@ -44,6 +45,7 @@ export const CurrentPlayer = ({
     currentParticipant?.player?.user?.chipsAmount ||
     player?.user?.chipsAmount ||
     0
+  const currentBet = currentParticipant?.bet || 0
 
   useEffect(() => {
     if (
@@ -124,7 +126,7 @@ export const CurrentPlayer = ({
   return (
     <div
       className={cn(
-        'group_tool flex flex-space gap-12',
+        'group_tool flex flex-space gap-12 before:border-none',
         (isWinner || isTurn) && 'user_active',
         isFolded && 'user_fold'
       )}
@@ -157,12 +159,15 @@ export const CurrentPlayer = ({
           <div className="wrap">
             <div className="flex flex-midle">
               <div className="left">
-                <div className="avatar">
-                  <div className="imgDrop ratio_1_1">
-                    <UserAvatar
-                      className="absolute inset-0"
-                      imageUrl="/images/avatar.png"
-                      name="user"
+                <div className="avatar before:!content-none">
+                  <div className="imgDrop ratio_1_1 aspect-square">
+                    <Image
+                      src="/images/avt/1.jpg"
+                      alt="image alt"
+                      width={0}
+                      height={0}
+                      sizes="100vw"
+                      className="w-auto h-full object-cover "
                     />
                   </div>
                 </div>
@@ -249,7 +254,7 @@ export const CurrentPlayer = ({
           </div>
         </div>
       </div>
-      {isTurn && (
+      {true && (
         <CurrentPlayerAction
           player={player}
           bet={bet}
@@ -259,6 +264,9 @@ export const CurrentPlayer = ({
           currentParticipant={currentParticipant}
         />
       )}
+      <div className="absolute bottom-0">
+        <ChipsAmountBadge value={currentBet} />
+      </div>
     </div>
   )
 }

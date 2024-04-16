@@ -1,15 +1,23 @@
-import { User } from "@/types";
-import { JWT } from "@auth/core/jwt";
-import NextAuth, { type DefaultSession } from "next-auth";
+import { User } from '@/types'
+import { JWT } from '@auth/core/jwt'
+import NextAuth, { type DefaultSession } from 'next-auth'
 
-export type ExtendedUser = DefaultSession["user"] & User;
+export type ExtendedUser = DefaultSession['user'] & User
 
-declare module "next-auth" {
+declare module 'next-auth' {
   interface Session {
-    user: ExtendedUser;
+    user: ExtendedUser
   }
 }
 
-declare module "next-auth/jwt" {
+declare module 'next-auth/jwt' {
   interface JWT extends ExtendedUser {}
+}
+
+declare global {
+  namespace JSX {
+    interface IntrinsicElements {
+      feturbulence: React.SVGProps<SVGFETurbulenceElement>
+    }
+  }
 }

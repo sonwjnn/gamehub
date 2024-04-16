@@ -6,6 +6,7 @@ import { Match, Participant, PlayerWithUser, PokerActions } from '@/types'
 import { useEffect, useState } from 'react'
 import { useSocket } from '@/providers/socket-provider'
 import { formatChipsAmount } from '@/utils/formatting'
+import { ChipsAmountBadge } from '@/components/chips-amount-badge'
 
 interface OtherPlayerProps {
   type?: 'fold' | 'active' | 'default'
@@ -39,6 +40,7 @@ export const OtherPlayer = ({
     currentParticipant?.player?.user?.chipsAmount ||
     player?.user?.chipsAmount ||
     0
+  const currentBet = currentParticipant?.bet || 0
 
   useEffect(() => {
     if (
@@ -96,7 +98,7 @@ export const OtherPlayer = ({
   return (
     <div
       className={cn(
-        'group_user',
+        'group_user before:border-none',
         (isTurn || isWinner) && 'user_active',
         isFolded && 'user_fold',
         isTurn && 'is-status'
@@ -105,12 +107,15 @@ export const OtherPlayer = ({
       <div className="wrap">
         <div className="flex flex-midle">
           <div className="left">
-            <div className="avatar">
+            <div className="avatar before:!content-none">
               <div className="imgDrop ratio_1_1">
-                <UserAvatar
-                  className="absolute inset-0"
-                  imageUrl="/images/avatar.png"
-                  name="user"
+                <Image
+                  src="/images/avt/1.jpg"
+                  alt="image alt"
+                  width={0}
+                  height={0}
+                  sizes="100vw"
+                  className="w-auto h-full object-cover"
                 />
               </div>
             </div>
@@ -195,6 +200,10 @@ export const OtherPlayer = ({
             </div>
           </div>
         </div>
+      </div>
+
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2">
+        <ChipsAmountBadge value={currentBet} />
       </div>
     </div>
   )

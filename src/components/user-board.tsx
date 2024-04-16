@@ -1,13 +1,15 @@
 'use client'
 
-import { UserAvatar } from '@/components/user-avatar'
 import { useCurrentUser } from '@/hooks/use-current-user'
 import { formatChipsAmount } from '@/utils/formatting'
 import Image from 'next/image'
+import Link from 'next/link'
 import { useRouter } from 'next/navigation'
+import { useState } from 'react'
 
-export const Sidebar = () => {
+export const UserBoard = () => {
   const user = useCurrentUser()
+  const [activeLink, setActiveLink] = useState('/settings/profile')
 
   const router = useRouter()
 
@@ -17,7 +19,7 @@ export const Sidebar = () => {
   }
 
   return (
-    <div className="sidebar_left">
+    <div className="sidebar_left ">
       <div className="info_profile mt-8">
         <div className="avatar mx-auto">
           <div className="images">
@@ -99,37 +101,62 @@ export const Sidebar = () => {
       </div>
       <div className="list_menu mt-16 fz-14">
         <ul>
-          <li className="active">
-            <a href="profile.html">
+          <li className={activeLink === '/settings/profile' ? 'active' : ''}>
+            <Link
+              href="/settings/profile"
+              onClick={() => setActiveLink('/settings/profile')}
+            >
               <span className="icon sz-20 icon-color-white">
                 <i className="icon-user"></i>
               </span>
               <span>Profile</span>
-            </a>
+            </Link>
           </li>
-          <li>
-            <a href="cash.html">
+          <li className={activeLink === '/settings/cash' ? 'active' : ''}>
+            <Link
+              href="/settings/cash"
+              onClick={() => setActiveLink('/settings/cash')}
+            >
               <span className="icon sz-20 icon-color-white">
                 <i className="icon-cash"></i>
               </span>
               <span>Cash Games</span>
-            </a>
+            </Link>
           </li>
-          <li>
-            <a href="points.html">
+          <li className={activeLink === '/settings/point' ? 'active' : ''}>
+            <Link
+              href="/settings/cash"
+              onClick={() => setActiveLink('/settings/point')}
+            >
               <span className="icon sz-20 icon-color-white">
                 <i className="icon-points"></i>
               </span>
               <span>Points</span>
-            </a>
+            </Link>
           </li>
-          <li>
-            <a href="notifications.html">
+          <li className={activeLink === '/settings/history' ? 'active' : ''}>
+            <Link
+              href="/settings/history"
+              onClick={() => setActiveLink('/settings/history')}
+            >
+              <span className="icon sz-20 icon-color-white">
+                <i className="icon-history"></i>
+              </span>
+              <span>History</span>
+            </Link>
+          </li>
+          <li
+            className={activeLink === '/settings/notification' ? 'active' : ''}
+          >
+            <Link
+              href="/settings/history"
+              onClick={() => setActiveLink('/settings/notification')}
+            >
               <span className="icon sz-20 icon-color-white">
                 <i className="icon-bell"></i>
               </span>
               <span>Notifications</span>
-            </a>
+            </Link>
           </li>
         </ul>
       </div>

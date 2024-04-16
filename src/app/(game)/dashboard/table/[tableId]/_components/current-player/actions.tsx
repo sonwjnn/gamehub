@@ -85,32 +85,43 @@ export const CurrentPlayerAction = ({
   const currentCallAmount = match?.callAmount ? match?.callAmount : 0
   const canCall = currentBet > 0 || currentBet < currentCallAmount
   const canNotCheck = currentCallAmount !== currentBet && currentCallAmount > 0
+  const callSize =
+    currentCallAmount &&
+    currentBet < currentCallAmount &&
+    currentCallAmount <= currentChipsAmount
+      ? currentCallAmount - currentBet
+      : ''
+
+  const min =
+    match?.minBet && match?.minBet >= currentCallAmount
+      ? match?.minBet
+      : currentCallAmount
+
+  const max =
+    match?.table?.minBuyIn && currentChipsAmount < match?.table?.minBuyIn
+      ? currentChipsAmount
+      : match?.table?.minBuyIn
 
   return (
     <>
       <div className="toolbar">
         <div className="item" onClick={() => setBet(currentChipsAmount / 4)}>
           <span className="number">1</span>
-          <div className="value">Quarter</div>
+          <div className="value">쿼터</div>
         </div>
         <div className="item" onClick={() => setBet(currentChipsAmount / 2)}>
           <span className="number">2</span>
-          <div className="value">Half</div>
+          <div className="value">하프</div>
         </div>
         <div className="item" onClick={() => setBet(currentChipsAmount)}>
           <span className="number">3</span>
-          <div className="value">Full</div>
+          <div className="value">풀</div>
         </div>
-        <button className="item disabled:pointer-events-none disabled:opacity-50">
+        <button className="item ">
           {/* <span className="number number_left">4 </span> */}
           <span className="number">4</span>
-          <div className=" text-white text-[32px] font-bold value">
-            <BetSlider
-              match={match}
-              bet={bet}
-              setBet={setBet}
-              currentChipsAmount={currentChipsAmount}
-            />
+          <div className=" !text-white text-[32px] font-bold value">
+            <BetSlider min={min} bet={bet} setBet={setBet} max={max!} />
           </div>
         </button>
         <button
@@ -119,7 +130,7 @@ export const CurrentPlayerAction = ({
           disabled={isProcessing}
         >
           <span className="number">5</span>
-          <div className="value">Raise</div>
+          <div className="value">라이즈</div>
         </button>
         <button
           className="item disabled:pointer-events-none disabled:opacity-50"
@@ -127,7 +138,7 @@ export const CurrentPlayerAction = ({
           disabled={isProcessing || !canCall}
         >
           <span className="number">7</span>
-          <div className="value">Call</div>
+          <div className="value">콜 {callSize}</div>
         </button>
         <button
           className="item disabled:pointer-events-none disabled:opacity-50"
@@ -135,7 +146,7 @@ export const CurrentPlayerAction = ({
           disabled={isProcessing}
         >
           <span className="number">8</span>
-          <div className="value">Fold</div>
+          <div className="value">다이</div>
         </button>
         {/* <button
           className="item disabled:pointer-events-none disabled:opacity-50"
@@ -153,7 +164,7 @@ export const CurrentPlayerAction = ({
         >
           {/* <span className="number number_left">4 </span> */}
           <span className="number">9</span>
-          <div className=" value">Check</div>
+          <div className=" value">확인하다</div>
         </button>
       </div>
 

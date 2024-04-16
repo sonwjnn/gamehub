@@ -12,18 +12,10 @@ import SoundUrls from '@/utils/contants/sound'
 import { useParams } from 'next/navigation'
 import { useOrigin } from '@/hooks/use-origin'
 import tableApi from '@/services/api/modules/table-api'
-import {
-  Match,
-  Participant,
-  PlayerWithUser,
-  PokerActions,
-  TableWithPlayersWithUser,
-  // TableWithPlayers,
-} from '@/types'
+import { Match, Participant, PlayerWithUser, PokerActions } from '@/types'
 import { useCurrentUser } from '@/hooks/use-current-user'
 import { useSocket } from '@/providers/socket-provider'
 
-import matchApi from '@/services/api/modules/match-api'
 import { formatChipsAmount } from '@/utils/formatting'
 import { Button } from '@/components/ui/button'
 import { LeaveTableCheckbox } from './_components/leave-table-checkbox'
@@ -356,12 +348,6 @@ const TablePage = () => {
           </div>
         </div>
         <Board match={match} isShuffle={isShuffle} />
-        <Button
-          variant="secondary"
-          className="absolute font-bold top-[20%] z-10 text-white text-2xl left-1/2 translate-y-[-50%] translate-x-[-50%] rounded-xl pointer-events-none"
-        >
-          Pot: {formatChipsAmount(match?.pot || 0)}
-        </Button>
 
         {messages && messages.length > 0 && (
           <div className="absolute  font-bold top-[60%] text-lime-500 text-xl left-1/2 translate-y-[-50%] translate-x-[-50%]">

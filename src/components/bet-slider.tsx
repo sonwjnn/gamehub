@@ -4,29 +4,16 @@ import { Slider } from '@/components/ui/slider'
 import { Match } from '@/types'
 
 interface BetSliderProps {
-  match: Match | null
   bet: number
   setBet: (bet: number) => void
-  currentChipsAmount: number
+  min: number
+  max: number
 }
 
-export const BetSlider = ({
-  match,
-  bet,
-  setBet,
-  currentChipsAmount,
-}: BetSliderProps) => {
+export const BetSlider = ({ bet, setBet, min, max }: BetSliderProps) => {
   const handleBetChange = (bet: number): void => {
     setBet(bet)
   }
-
-  if (!match) return null
-
-  const min = match.minBet >= match.callAmount ? match.minBet : match.callAmount
-  const max =
-    currentChipsAmount < match.table.minBuyIn
-      ? currentChipsAmount
-      : match.table.maxBuyIn
 
   return (
     <div className="flex items-center justify-end gap-x-4 ">
@@ -37,7 +24,7 @@ export const BetSlider = ({
         <Slider
           minValue={min}
           value={bet}
-          step={500}
+          step={10}
           maxValue={max}
           onChange={handleBetChange}
         />

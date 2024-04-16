@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 import { Card } from './card'
 import { cn } from '@/lib/utils'
-import Sound from '@/utils/contants/sound'
 import { Card as CardType, Match } from '@/types'
+import { formatChipsAmount } from '@/utils/formatting'
 
 interface BoardProps {
   match: Match | null
@@ -94,10 +94,16 @@ export const Board = ({ match, isHidden = false, isShuffle }: BoardProps) => {
           </div>
           <div className="group_number flex flex-midle flex-center gap-24">
             <div className="text">
-              Total:<span className="fw-900">$ 5.252</span>
+              Total:
+              <span className="fw-900">
+                $ {formatChipsAmount(match?.pot || 0)}
+              </span>
             </div>
             <div className="text">
-              Call:<span className="fw-900">$ 1.500</span>
+              Call:
+              <span className="fw-900">
+                $ {formatChipsAmount(match?.callAmount || 0)}
+              </span>
             </div>
           </div>
         </>
