@@ -4,8 +4,7 @@ import { LogoutButton } from '@/components/auth/logout-button'
 
 import { useCurrentUser } from '@/hooks/use-current-user'
 
-import { UserAvatar } from '@/components/user-avatar'
-import { useRouter } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { formatChipsAmount } from '@/utils/formatting'
 import Link from 'next/link'
 import Image from 'next/image'
@@ -13,6 +12,7 @@ import Image from 'next/image'
 export const UserButton = () => {
   const router = useRouter()
   const user = useCurrentUser()
+  const pathname = usePathname()
 
   if (!user) {
     router.push('/auth/login')
@@ -26,7 +26,7 @@ export const UserButton = () => {
           <div className="images">
             <div className="imgDrop">
               <Image
-                src="/images/avt/1.jpg"
+                src={user.image}
                 alt="image alt"
                 width={0}
                 height={0}
@@ -139,29 +139,49 @@ export const UserButton = () => {
           </div>
           <div className="list_menu">
             <ul>
-              <li className="active">
+              <li className={pathname === '/settings/profile' ? 'active' : ''}>
                 <Link href="/settings/profile">
-                  <span className="icon sz-16 icon-color-white">
+                  <span className="icon sz-20 icon-color-white">
                     <i className="icon-user"></i>
                   </span>
-                  <span className="icon-color-white">Profile</span>
+                  <span>Profile</span>
                 </Link>
               </li>
-              <li>
-                <a href="">
-                  <span className="icon sz-16 icon-color-white">
+              <li className={pathname === '/settings/cash' ? 'active' : ''}>
+                <Link href="/settings/cash">
+                  <span className="icon sz-20 icon-color-white">
                     <i className="icon-cash"></i>
                   </span>
-                  <span className="icon-color-white">Cash Games</span>
-                </a>
+                  <span>Cash Games</span>
+                </Link>
               </li>
-              <li>
-                <a href="">
-                  <span className="icon sz-16 icon-color-white">
+              <li className={pathname === '/settings/point' ? 'active' : ''}>
+                <Link href="/settings/cash">
+                  <span className="icon sz-20 icon-color-white">
                     <i className="icon-points"></i>
                   </span>
-                  <span className="icon-color-white">Points</span>
-                </a>
+                  <span>Points</span>
+                </Link>
+              </li>
+              <li className={pathname === '/settings/history' ? 'active' : ''}>
+                <Link href="/settings/history">
+                  <span className="icon sz-20 icon-color-white">
+                    <i className="icon-history"></i>
+                  </span>
+                  <span>History</span>
+                </Link>
+              </li>
+              <li
+                className={
+                  pathname === '/settings/notification' ? 'active' : ''
+                }
+              >
+                <Link href="/settings/history">
+                  <span className="icon sz-20 icon-color-white">
+                    <i className="icon-bell"></i>
+                  </span>
+                  <span>Notifications</span>
+                </Link>
               </li>
               <li>
                 <LogoutButton>

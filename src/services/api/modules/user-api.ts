@@ -7,6 +7,9 @@ const userEndpoints = {
     `users/username/${username}`,
   register: `auth/register`,
   login: `auth/login`,
+  newPassword: ({ userId }: { userId: string }) =>
+    `auth/new-password/${userId}`,
+  update: ({ userId }: { userId: string }) => `users/${userId}`,
 }
 
 const userApi = {
@@ -54,6 +57,32 @@ const userApi = {
       return { response }
     } catch (error) {
       return { error }
+    }
+  },
+  updateUser: async (data: any, userId: string) => {
+    try {
+      const response = await privateClient.put(
+        userEndpoints.update({ userId }),
+        data
+      )
+
+      if (response && response.data) return { response: response.data }
+      return { response }
+    } catch (error) {
+      return { error: 'Something went wrong' }
+    }
+  },
+  newPassword: async (data: any, userId: string) => {
+    try {
+      const response = await privateClient.post(
+        userEndpoints.newPassword({ userId }),
+        data
+      )
+
+      if (response && response.data) return { response: response.data }
+      return { response }
+    } catch (error) {
+      return { error: 'Something went wrong' }
     }
   },
 }

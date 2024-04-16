@@ -41,7 +41,7 @@ export const MobileToggle = () => {
                 <div className="images">
                   <div className="imgDrop">
                     <Image
-                      src="/images/avt/1.jpg"
+                      src={user.image}
                       alt="image alt"
                       width={0}
                       height={0}

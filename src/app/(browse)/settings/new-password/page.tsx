@@ -1,6 +1,6 @@
-import { ProfileContent } from './_components/profile-content'
+import { NewPasswordContent } from './_components/new-password-content'
 
-export default function PageProfile() {
+const NewPasswordPage = () => {
   return (
     <div className="form_custom">
       <h2 className="ttl_main fz-18">
@@ -8,10 +8,12 @@ export default function PageProfile() {
           <strong className="icon sz-24 icon-color-white flex-shrink">
             <i className="icon-user"></i>
           </strong>
-          THÔNG TIN NGƯỜI DÙNG
+          NEW PASSWORD
         </span>
       </h2>
-      <ProfileContent />
+      <NewPasswordContent />
     </div>
   )
 }
+
+export default NewPasswordPage

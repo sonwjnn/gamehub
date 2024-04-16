@@ -1,9 +1,7 @@
 import { UserButton } from '@/components/auth/user-button'
 import { SocketIndicator } from '@/components/socket-indicator'
-import Image from 'next/image'
 import Link from 'next/link'
-import { ChipsAmount } from './chips-amount'
-import { MobileToggle } from './mobile-toggle'
+import { MobileToggle } from '@/components/mobile-toggle'
 
 interface ActionsProps {}
 
@@ -24,7 +22,6 @@ export const Actions = ({}: ActionsProps) => {
           <i className="icon-rule" />
         </div>
       </div>
-      {/* <ChipsAmount /> */}
       <UserButton />
       <MobileToggle />
     </div>

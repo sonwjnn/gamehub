@@ -2,16 +2,17 @@
 
 import { useCurrentUser } from '@/hooks/use-current-user'
 import { formatChipsAmount } from '@/utils/formatting'
+import { RotateCcw } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { useState } from 'react'
 
 export const UserBoard = () => {
   const user = useCurrentUser()
-  const [activeLink, setActiveLink] = useState('/settings/profile')
 
   const router = useRouter()
+  const pathname = usePathname()
 
   if (!user) {
     router.push('/auth/login')
@@ -25,7 +26,7 @@ export const UserBoard = () => {
           <div className="images">
             <div className="imgDrop">
               <Image
-                src="/images/avt/1.jpg"
+                src={user.image}
                 alt="image alt"
                 width={0}
                 height={0}
@@ -101,61 +102,53 @@ export const UserBoard = () => {
       </div>
       <div className="list_menu mt-16 fz-14">
         <ul>
-          <li className={activeLink === '/settings/profile' ? 'active' : ''}>
-            <Link
-              href="/settings/profile"
-              onClick={() => setActiveLink('/settings/profile')}
-            >
+          <li className={pathname === '/settings/profile' ? 'active' : ''}>
+            <Link href="/settings/profile">
               <span className="icon sz-20 icon-color-white">
                 <i className="icon-user"></i>
               </span>
               <span>Profile</span>
             </Link>
           </li>
-          <li className={activeLink === '/settings/cash' ? 'active' : ''}>
-            <Link
-              href="/settings/cash"
-              onClick={() => setActiveLink('/settings/cash')}
-            >
+          <li className={pathname === '/settings/cash' ? 'active' : ''}>
+            <Link href="/settings/cash">
               <span className="icon sz-20 icon-color-white">
                 <i className="icon-cash"></i>
               </span>
               <span>Cash Games</span>
             </Link>
           </li>
-          <li className={activeLink === '/settings/point' ? 'active' : ''}>
-            <Link
-              href="/settings/cash"
-              onClick={() => setActiveLink('/settings/point')}
-            >
+          <li className={pathname === '/settings/point' ? 'active' : ''}>
+            <Link href="/settings/cash">
               <span className="icon sz-20 icon-color-white">
                 <i className="icon-points"></i>
               </span>
               <span>Points</span>
             </Link>
           </li>
-          <li className={activeLink === '/settings/history' ? 'active' : ''}>
-            <Link
-              href="/settings/history"
-              onClick={() => setActiveLink('/settings/history')}
-            >
+          <li className={pathname === '/settings/history' ? 'active' : ''}>
+            <Link href="/settings/history">
               <span className="icon sz-20 icon-color-white">
                 <i className="icon-history"></i>
               </span>
               <span>History</span>
             </Link>
           </li>
-          <li
-            className={activeLink === '/settings/notification' ? 'active' : ''}
-          >
-            <Link
-              href="/settings/history"
-              onClick={() => setActiveLink('/settings/notification')}
-            >
+          <li className={pathname === '/settings/notification' ? 'active' : ''}>
+            <Link href="/settings/history">
               <span className="icon sz-20 icon-color-white">
                 <i className="icon-bell"></i>
               </span>
               <span>Notifications</span>
+            </Link>
+          </li>
+
+          <li className={pathname === '/settings/new-password' ? 'active' : ''}>
+            <Link href="/settings/new-password">
+              <span className="icon sz-20 icon-color-white">
+                <RotateCcw size={20} />
+              </span>
+              <span>New Password</span>
             </Link>
           </li>
         </ul>

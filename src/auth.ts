@@ -47,6 +47,7 @@ export const {
 
       if (session.user) {
         session.user.username = token.username as string
+        session.user.name = token.name as string
         session.user.image = token.image as string
         session.user.email = token.email as string
         session.user.role = token.role as UserRole
@@ -65,6 +66,7 @@ export const {
       if (!existingUser) return token
 
       token.username = existingUser.username
+      token.name = existingUser.name
       token.image = existingUser.image
       token.email = existingUser.email
       token.role = existingUser.role

@@ -18,9 +18,9 @@ const CashPage = () => {
               <div className="input-group select-group undefined">
                 <div className="wrap-input">
                   <input
-                    className="form-control"
+                    className="form-control transition rounded-md"
                     type="text"
-                    value="label"
+                    value=""
                     placeholder=""
                     required
                     readOnly
@@ -43,9 +43,9 @@ const CashPage = () => {
               <div className="input-group select-group undefined">
                 <div className="wrap-input">
                   <input
-                    className="form-control"
+                    className="form-control transition rounded-md"
                     type="text"
-                    value="label"
+                    value=""
                     placeholder=""
                     required
                     readOnly
@@ -75,9 +75,9 @@ const CashPage = () => {
               <div className="input-group">
                 <div className="wrap-input">
                   <input
-                    className="form-control"
+                    className="form-control transition rounded-md"
                     type="text"
-                    value="label"
+                    value=""
                     placeholder=""
                     required
                   />
@@ -90,9 +90,9 @@ const CashPage = () => {
                   <div className="input-group">
                     <div className="wrap-input">
                       <input
-                        className="form-control"
+                        className="form-control transition rounded-md"
                         type="text"
-                        value="label"
+                        value=""
                         placeholder=""
                         required
                       />
@@ -105,9 +105,9 @@ const CashPage = () => {
                   <div className="input-group">
                     <div className="wrap-input">
                       <input
-                        className="form-control"
+                        className="form-control transition rounded-md"
                         type="text"
-                        value="label"
+                        value=""
                         placeholder=""
                         required
                       />
@@ -120,9 +120,9 @@ const CashPage = () => {
               <div className="input-group">
                 <div className="wrap-input">
                   <input
-                    className="form-control"
+                    className="form-control transition rounded-md"
                     type="text"
-                    value="label"
+                    value=""
                     placeholder=""
                     required
                   />

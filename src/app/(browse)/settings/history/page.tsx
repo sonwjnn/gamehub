@@ -16,10 +16,10 @@ const HistoryPage = () => {
               <div className="input-group">
                 <div className="wrap-input">
                   <input
-                    className="form-control"
+                    className="form-control transition rounded-md"
                     type="text"
                     value=""
-                    placeholder="Room"
+                    placeholder=""
                     required
                   />
                   <label>Room</label>
@@ -31,9 +31,9 @@ const HistoryPage = () => {
               <div className="input-group select-group undefined">
                 <div className="wrap-input">
                   <input
-                    className="form-control"
+                    className="form-control transition rounded-md"
                     type="text"
-                    value="label"
+                    value=""
                     placeholder=""
                     required
                     readOnly
@@ -56,9 +56,9 @@ const HistoryPage = () => {
               <div className="input-group select-group undefined">
                 <div className="wrap-input">
                   <input
-                    className="form-control"
+                    className="form-control transition rounded-md"
                     type="text"
-                    value="label"
+                    value=""
                     placeholder=""
                     required
                     readOnly
