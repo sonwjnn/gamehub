@@ -16,8 +16,8 @@ import { Match, Participant, PlayerWithUser, PokerActions } from '@/types'
 import { useCurrentUser } from '@/hooks/use-current-user'
 import { useSocket } from '@/providers/socket-provider'
 
-import { formatChipsAmount } from '@/utils/formatting'
-import { Button } from '@/components/ui/button'
+import '@/styles/css/game.css'
+
 import { LeaveTableCheckbox } from './_components/leave-table-checkbox'
 import { LeaveTable } from './_components/leave-table'
 import { InvitePlayer } from './_components/invite-player'
@@ -313,7 +313,7 @@ const TablePage = () => {
           )}
         />
       </div>
-      <div className="wrapper " ref={wrapperRef}>
+      <div className="wrapper" ref={wrapperRef}>
         <Image
           src="/images/table_v2.png"
           alt="tableImage"

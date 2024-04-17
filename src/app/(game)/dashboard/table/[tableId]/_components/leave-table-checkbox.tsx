@@ -5,6 +5,7 @@ import { useCurrentUser } from '@/hooks/use-current-user'
 import { cn } from '@/lib/utils'
 import playerApi from '@/services/api/modules/player-api'
 import { Match, PlayerWithUser } from '@/types'
+import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { useDebouncedCallback } from 'use-debounce'
@@ -26,6 +27,8 @@ export const LeaveTableCheckbox = ({
   const router = useRouter()
 
   const [isChecked, setIsChecked] = useState(player?.leaveNextMatch)
+
+  const { update } = useSession()
 
   const hanleToggleCheckbox = async () => {
     if (!user) {
@@ -65,8 +68,10 @@ export const LeaveTableCheckbox = ({
 
   useEffect(() => {
     if (isChecked && match?.isShowdown) {
+      update()
       router.push('/dashboard')
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isChecked, match, router])
 
   return (

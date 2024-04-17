@@ -21,7 +21,7 @@ export const BuyChipsModal = () => {
 
   return (
     <Dialog open={isModalOpen} onOpenChange={onClose}>
-      <DialogContent className="overflow-hidden bg-white p-0 text-black">
+      <DialogContent className="overflow-hidden p-0 ">
         <DialogHeader className="px-[24px] pt-[32px]">
           <DialogTitle className="text-center text-2xl font-bold">
             Chips

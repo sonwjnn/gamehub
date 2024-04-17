@@ -37,7 +37,6 @@ export const JoinTableModal = () => {
   const router = useRouter()
 
   const isModalOpen = isOpen && type === 'joinTable'
-  const { table } = data
 
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -76,7 +75,7 @@ export const JoinTableModal = () => {
 
   return (
     <Dialog open={isModalOpen} onOpenChange={handleClose}>
-      <DialogContent className="bg-white text-black p-0 overflow-hidden">
+      <DialogContent className=" p-0 overflow-hidden">
         <DialogHeader className="pt-8 px-6">
           <DialogTitle className="text-2xl text-center font-bold">
             Join Table
@@ -96,7 +95,7 @@ export const JoinTableModal = () => {
                     <FormControl>
                       <Input
                         disabled={isLoading}
-                        className="bg-zinc-300/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0"
+                        className="bg-zinc-300/50 border-0 focus-visible:ring-0  focus-visible:ring-offset-0"
                         placeholder="Enter your invite code"
                         {...field}
                       />

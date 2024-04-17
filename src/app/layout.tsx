@@ -35,8 +35,10 @@ export default async function RootLayout({
           content="width=device-width, initial-scale=1.0, user-scalable=no"
         />
       </Head>
-      <html lang="en" suppressHydrationWarning>
-        <body className={cn(font.className, 'bg-white dark:bg-[#213338] game')}>
+      <html className="h-full" lang="en" suppressHydrationWarning>
+        <body
+          className={cn(font.className, 'bg-white dark:bg-[#213338] h-full')}
+        >
           <Toaster />
           <ThemeProvider
             attribute="class"

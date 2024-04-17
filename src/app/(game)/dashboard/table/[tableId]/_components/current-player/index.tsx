@@ -9,9 +9,9 @@ import { useSocket } from '@/providers/socket-provider'
 import { cn } from '@/lib/utils'
 import { formatChipsAmount } from '@/utils/formatting'
 import { ChipsAmountBadge } from '@/components/chips-amount-badge'
+import { useCurrentUser } from '@/hooks/use-current-user'
 
 interface CurrentPlayerProps {
-  type?: 'fold' | 'active' | 'default'
   isShowdown?: boolean
   match: Match | null
   participants: Participant[]
@@ -21,13 +21,13 @@ interface CurrentPlayerProps {
 }
 
 export const CurrentPlayer = ({
-  type = 'default',
   match,
   participants,
   isHandVisible,
   player,
   tableId,
 }: CurrentPlayerProps) => {
+  const user = useCurrentUser()
   const { socket } = useSocket()
   const [imageUrlFirst, setImageUrlFirst] = useState('')
   const [imageUrlSecond, setImageUrlSecond] = useState('')
@@ -41,10 +41,7 @@ export const CurrentPlayer = ({
   const isFolded = currentParticipant?.isFolded
   const isWinner = !isFolded && match?.winnerId === player?.id
   const isTurn = !isFolded && player?.isTurn
-  const chipsAmount =
-    currentParticipant?.player?.user?.chipsAmount ||
-    player?.user?.chipsAmount ||
-    0
+  const currentStack = currentParticipant?.player?.stack || player?.stack || 0
   const currentBet = currentParticipant?.bet || 0
 
   useEffect(() => {
@@ -162,12 +159,12 @@ export const CurrentPlayer = ({
                 <div className="avatar before:!content-none">
                   <div className="imgDrop ratio_1_1 aspect-square">
                     <Image
-                      src="/images/avt/1.jpg"
+                      src={user?.image || '/images/avt/1.jpg'}
                       alt="image alt"
                       width={0}
                       height={0}
                       sizes="100vw"
-                      className="w-auto h-full object-cover "
+                      className="w-auto h-full object-cover rounded-full"
                     />
                   </div>
                 </div>
@@ -192,7 +189,7 @@ export const CurrentPlayer = ({
               </div>
               <div className="right sp_full">
                 <div className="money fw-700">
-                  $ {formatChipsAmount(chipsAmount)}
+                  $ {formatChipsAmount(currentStack)}
                 </div>
               </div>
 
@@ -254,7 +251,7 @@ export const CurrentPlayer = ({
           </div>
         </div>
       </div>
-      {true && (
+      {isTurn && (
         <CurrentPlayerAction
           player={player}
           bet={bet}

@@ -1,10 +1,16 @@
 import { Player, Table } from '@/types'
 import { create } from 'zustand'
 
-export type ModalType = 'joinTable' | 'invite' | 'leaveTable' | 'buyChips'
+export type ModalType =
+  | 'joinTable'
+  | 'invite'
+  | 'leaveTable'
+  | 'buyChips'
+  | 'buyIn'
 
 interface ModalData {
   tableId?: string
+  table?: Table
   player?: Player
   apiUrl?: string
   query?: Record<string, any>

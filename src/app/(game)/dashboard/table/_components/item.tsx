@@ -51,19 +51,21 @@ export const Item = ({ table }: ItemProps) => {
         }
       }
 
-      const { response, error } = await playerApi.createPlayer({
-        tableId: table.id,
-        userId: user.id,
-        socketId: socket.id,
-      })
+      // const { response, error } = await playerApi.createPlayer({
+      //   tableId: table.id,
+      //   userId: user.id,
+      //   socketId: socket.id,
+      // })
 
-      if (error) {
-        console.log(error)
-        toast.error('Error joining table')
-        return
-      }
+      // if (error) {
+      //   console.log(error)
+      //   toast.error('Error joining table')
+      //   return
+      // }
 
-      router.push(`/dashboard/table/${table.id}`)
+      return onOpen('buyIn', { table })
+
+      // router.push(`/dashboard/table/${table.id}`)
     } catch {
     } finally {
       setIsLoading(false)

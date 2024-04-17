@@ -47,6 +47,7 @@ const playerApi = {
     tableId: string
     userId: string
     socketId: string
+    buyIn: number
   }) => {
     try {
       const response = await privateClient.post(

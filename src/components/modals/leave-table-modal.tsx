@@ -15,6 +15,7 @@ import playerApi from '@/services/api/modules/player-api'
 import tableApi from '@/services/api/modules/table-api'
 import { useModal } from '@/store/use-modal-store'
 import { Table } from '@/types'
+import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState, useTransition } from 'react'
 import { toast } from 'sonner'
@@ -26,13 +27,13 @@ export const LeaveTableModal = () => {
   const [table, setTable] = useState<Table | null>(null)
   const user = useCurrentUser()
   const router = useRouter()
+  const { update } = useSession()
 
   const isModalOpen = isOpen && type === 'leaveTable'
   const { tableId } = data
 
   useEffect(() => {
     const getTableById = async () => {
-      console.log(123)
       if (!tableId) return
 
       const { response, error } = await tableApi.getTableById({ tableId })
@@ -72,6 +73,7 @@ export const LeaveTableModal = () => {
       }
 
       onClose()
+      update()
       router.push('/dashboard/table')
     })
   }

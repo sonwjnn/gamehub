@@ -108,11 +108,7 @@ export const ProfileContent = ({}: ProfileContentProps) => {
                     User name
                   </FormLabel>
                   <FormControl>
-                    <Input
-                      disabled={true}
-                      className="border-0  focus-visible:ring-0 focus-visible:ring-offset-0"
-                      {...field}
-                    />
+                    <Input disabled={true} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -131,7 +127,6 @@ export const ProfileContent = ({}: ProfileContentProps) => {
                       <FormControl>
                         <Input
                           disabled={isPending}
-                          className="border-0  focus-visible:ring-0 focus-visible:ring-offset-0"
                           placeholder="Enter your name"
                           {...field}
                         />
@@ -151,11 +146,7 @@ export const ProfileContent = ({}: ProfileContentProps) => {
                         Email
                       </FormLabel>
                       <FormControl>
-                        <Input
-                          disabled={true}
-                          className="border-0  focus-visible:ring-0 focus-visible:ring-offset-0"
-                          {...field}
-                        />
+                        <Input disabled={true} {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>

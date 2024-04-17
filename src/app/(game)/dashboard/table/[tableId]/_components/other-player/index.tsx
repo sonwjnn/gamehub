@@ -18,7 +18,6 @@ interface OtherPlayerProps {
 }
 
 export const OtherPlayer = ({
-  type = 'default',
   isHandVisible,
   player,
   match,
@@ -36,10 +35,7 @@ export const OtherPlayer = ({
   const isFolded = currentParticipant?.isFolded
   const isWinner = !isFolded && match?.winnerId === player?.id
   const isTurn = !isFolded && player?.isTurn
-  const chipsAmount =
-    currentParticipant?.player?.user?.chipsAmount ||
-    player?.user?.chipsAmount ||
-    0
+  const currentStack = currentParticipant?.player?.stack || player?.stack || 0
   const currentBet = currentParticipant?.bet || 0
 
   useEffect(() => {
@@ -110,12 +106,12 @@ export const OtherPlayer = ({
             <div className="avatar before:!content-none">
               <div className="imgDrop ratio_1_1">
                 <Image
-                  src="/images/avt/1.jpg"
+                  src={player?.user?.image || '/images/avt/1.jpg'}
                   alt="image alt"
                   width={0}
                   height={0}
                   sizes="100vw"
-                  className="w-auto h-full object-cover"
+                  className="w-auto h-full object-cover rounded-full"
                 />
               </div>
             </div>
@@ -141,7 +137,7 @@ export const OtherPlayer = ({
           </div>
           <div className="right sp_full">
             <div className="money fw-700">
-              $ {formatChipsAmount(chipsAmount)}
+              $ {formatChipsAmount(currentStack)}
             </div>
           </div>
 

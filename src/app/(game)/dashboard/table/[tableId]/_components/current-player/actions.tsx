@@ -77,10 +77,7 @@ export const CurrentPlayerAction = ({
     }
   }
 
-  const currentChipsAmount =
-    currentParticipant?.player?.user?.chipsAmount ||
-    player?.user?.chipsAmount ||
-    0
+  const currentStack = currentParticipant?.player?.stack || player?.stack || 0
   const currentBet = currentParticipant?.bet ? currentParticipant?.bet : 0
   const currentCallAmount = match?.callAmount ? match?.callAmount : 0
   const canCall = currentBet > 0 || currentBet < currentCallAmount
@@ -88,7 +85,7 @@ export const CurrentPlayerAction = ({
   const callSize =
     currentCallAmount &&
     currentBet < currentCallAmount &&
-    currentCallAmount <= currentChipsAmount
+    currentCallAmount <= currentStack
       ? currentCallAmount - currentBet
       : ''
 
@@ -98,22 +95,22 @@ export const CurrentPlayerAction = ({
       : currentCallAmount
 
   const max =
-    match?.table?.minBuyIn && currentChipsAmount < match?.table?.minBuyIn
-      ? currentChipsAmount
-      : match?.table?.minBuyIn
+    match?.table?.maxBuyIn && currentStack < match?.table?.maxBuyIn
+      ? currentStack
+      : match?.table?.maxBuyIn
 
   return (
     <>
       <div className="toolbar">
-        <div className="item" onClick={() => setBet(currentChipsAmount / 4)}>
+        <div className="item" onClick={() => setBet(currentStack / 4)}>
           <span className="number">1</span>
           <div className="value">쿼터</div>
         </div>
-        <div className="item" onClick={() => setBet(currentChipsAmount / 2)}>
+        <div className="item" onClick={() => setBet(currentStack / 2)}>
           <span className="number">2</span>
           <div className="value">하프</div>
         </div>
-        <div className="item" onClick={() => setBet(currentChipsAmount)}>
+        <div className="item" onClick={() => setBet(currentStack)}>
           <span className="number">3</span>
           <div className="value">풀</div>
         </div>

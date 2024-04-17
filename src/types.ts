@@ -73,6 +73,8 @@ export type Player = {
 
   tableId: string
   table?: Table
+  stack: number
+  buyIn: number
 
   isTurn: boolean
   leaveNextMatch: boolean
