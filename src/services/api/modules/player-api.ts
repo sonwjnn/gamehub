@@ -14,6 +14,7 @@ const playerEndpoints = {
   createPlayer: 'players/',
   removePlayer: (playerId: string) => `players/${playerId}`,
   updatePlayer: (playerId: string) => `players/${playerId}`,
+  rebuy: (playerId: string) => `players/rebuy/${playerId}`,
 }
 
 const playerApi = {
@@ -87,6 +88,19 @@ const playerApi = {
     try {
       const response = await privateClient.put(
         playerEndpoints.updatePlayer(data.id),
+        data
+      )
+      if (response && response.data) return { response: response.data }
+      return { response }
+    } catch (error) {
+      return { error }
+    }
+  },
+
+  rebuy: async (data: { id: string; tableId: string; buyIn: number }) => {
+    try {
+      const response = await privateClient.post(
+        playerEndpoints.rebuy(data.id),
         data
       )
       if (response && response.data) return { response: response.data }

@@ -20,7 +20,7 @@ const GameLayout = ({ children }: GameLayoutProps) => {
     <div className={cn(isTableIdRoute ? 'game-html' : 'page-sub')}>
       <div className={cn(isTableIdRoute && 'game')}>
         <div className="inner_page">
-          <main className="min-h-screen">
+          <main className={cn(!isTableIdRoute && 'min-h-screen')}>
             {!isTableIdRoute && <Navbar />}
             <div className={cn(isTableIdRoute && 'game_body')}>{children}</div>
           </main>

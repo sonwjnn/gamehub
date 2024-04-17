@@ -242,6 +242,20 @@ const TablePage = () => {
         }
       )
 
+      socket.on(
+        PokerActions.REBUY,
+        ({ tableId, player }: { tableId: string; player: PlayerWithUser }) => {
+          if (tableId !== params?.tableId) return
+
+          setPlayers(prev => [...prev, player])
+
+          socket.emit(PokerActions.REBOUGHT, {
+            tableId: params?.tableId,
+            player,
+          })
+        }
+      )
+
       return () => {
         if (socket) {
           socket.off(PokerActions.JOIN_TABLE)
