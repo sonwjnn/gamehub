@@ -1,26 +1,22 @@
 'use client'
 
-// import { Navbar } from '@/components/navbar'
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
 import { cn } from '@/lib/utils'
 import { useState } from 'react'
-import { UserBoard } from './user-board'
 import { formatChipsAmount } from '@/utils/formatting'
 import Image from 'next/image'
 import { useCurrentUser } from '@/hooks/use-current-user'
-import { useRouter } from 'next/navigation'
 import { LogoutButton } from './auth/logout-button'
 import Link from 'next/link'
+import '@/styles/css/styles.css'
 
 export const MobileToggle = () => {
   const [isOpen, setIsOpen] = useState(false)
-  const router = useRouter()
 
   const user = useCurrentUser()
 
   if (!user) {
-    router.push('/auth/login')
-    return
+    return null
   }
 
   return (
@@ -34,7 +30,7 @@ export const MobileToggle = () => {
         </div>
       </SheetTrigger>
       <SheetContent side="left" className="flex gap-0 p-0">
-        <div className="bg-[#00152d] w-full p-[12px]">
+        <div className="page-sub bg-[#00152d] w-full p-[12px]">
           <div className="sidebar_left w-full pt-[50px]">
             <div className="info_profile mt-8">
               <div className="avatar mx-auto">
