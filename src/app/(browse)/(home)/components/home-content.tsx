@@ -86,7 +86,7 @@ export const HomeContent = ({}: HomeContentProps) => {
   return (
     <div className="boding_main flex-wrap">
       <div className="container">
-        <div className="py-24 gapy-24 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
+        <div className="row py-24 gapy-24 ">
           <div className="col-12 col-md-6 col-lg-4 hidden md:block">
             <UserBoard />
           </div>
@@ -156,7 +156,7 @@ export const HomeContent = ({}: HomeContentProps) => {
               </div>
             </div>
           </div>
-          <div className="col-12 col-md-12 col-lg-8 col-span-1 md:col-span-2">
+          <div className="col-12 col-md-12 col-lg-8 ">
             <div className="banner_play ">
               <svg>
                 <filter id="noiseFilter2">
@@ -259,7 +259,7 @@ export const HomeContent = ({}: HomeContentProps) => {
       </div>
       <div className="block_footer pt-32">
         <div className="container">
-          <div className="row gapy-24 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
+          <div className="row gapy-24 ">
             <div className="col-12 col-md-6 col-lg-4">
               <div className="p-16">
                 <div className="ttl_sub">

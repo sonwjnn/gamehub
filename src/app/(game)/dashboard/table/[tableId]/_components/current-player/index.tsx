@@ -156,15 +156,15 @@ export const CurrentPlayer = ({
           <div className="wrap">
             <div className="flex flex-midle">
               <div className="left">
-                <div className="avatar before:!content-none">
-                  <div className="imgDrop ratio_1_1 aspect-square">
+                <div className="images">
+                  <div className="imgDrop ratio_1_1">
                     <Image
-                      src={user?.image || '/images/avt/1.jpg'}
+                      src={player?.user?.image || '/images/avt/1.jpg'}
                       alt="image alt"
                       width={0}
                       height={0}
                       sizes="100vw"
-                      className="w-auto h-full object-cover rounded-full"
+                      className="w-auto h-full object-cover"
                     />
                   </div>
                 </div>

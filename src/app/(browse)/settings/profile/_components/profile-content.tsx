@@ -81,9 +81,9 @@ export const ProfileContent = ({}: ProfileContentProps) => {
   return (
     <Form {...form}>
       <form className="mt-32" onSubmit={form.handleSubmit(onSubmit)}>
-        <div className="row flex flex-center gapy-60 flex-col lg:flex-row">
-          <div className="col-7 col-md-6 col-lg-4 mx-auto lg:mx-0 flex-[33%]">
-            <div className="avatar mx-auto flex-srink  aspect-square min-w-[280px] lg:min-w-[300px] xl:min-w-[380px]">
+        <div className="row  flex-center gapy-60 ">
+          <div className="col-7 col-md-6 col-lg-4">
+            <div className="avatar mx-auto flex-srink  aspect-square">
               <div className="images ">
                 <div className="imgDrop ">
                   <Image
@@ -98,7 +98,7 @@ export const ProfileContent = ({}: ProfileContentProps) => {
               </div>
             </div>
           </div>
-          <div className="col-12 col-md-12 col-lg-8 form_content flex-[66%] space-y-4">
+          <div className="col-12 col-md-12 col-lg-8 form_content space-y-4">
             <FormField
               control={form.control}
               name="username"
@@ -114,8 +114,8 @@ export const ProfileContent = ({}: ProfileContentProps) => {
                 </FormItem>
               )}
             />
-            <div className="row flex flex-col lg:flex-row">
-              <div className="col-12 col-xl-6 w-full">
+            <div className="row">
+              <div className="col-12 col-xl-6">
                 <FormField
                   control={form.control}
                   name="name"
@@ -136,7 +136,7 @@ export const ProfileContent = ({}: ProfileContentProps) => {
                   )}
                 />
               </div>
-              <div className="col-12 col-xl-6 w-full">
+              <div className="col-12 col-xl-6">
                 <FormField
                   control={form.control}
                   name="email"

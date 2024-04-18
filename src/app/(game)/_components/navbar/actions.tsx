@@ -11,7 +11,10 @@ export const Actions = ({}: ActionsProps) => {
       <div className="mr-[24px]">
         <SocketIndicator />
       </div>
-      <Link href="/dashboard" className="item btn_play flex flex-midle gap-8">
+      <Link
+        href="/dashboard/table"
+        className="item btn_play flex flex-midle gap-8"
+      >
         <div className="icon flex-shrink sz-16">
           <i className="icon-play icon-color-white" />
         </div>

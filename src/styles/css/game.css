@@ -2005,6 +2005,76 @@
     #c4ff9f 69.83%
   );
 }
+.game-html .avatar {
+  background-image: url(/images/avt_bg2.png);
+  background-size: 100%;
+  background-repeat: no-repeat;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  position: relative;
+  max-width: 380px;
+  margin: auto;
+}
+.game-html .avatar:before {
+  display: block;
+  width: 100%;
+  content: '';
+  padding-top: 100%;
+}
+.game-html .avatar .images {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  width: 72%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+.game-html .avatar .imgDrop {
+  width: 100%;
+  padding-top: 100%;
+  border-radius: 50%;
+  border: 4px solid transparent;
+  background-image: linear-gradient(
+    234.96deg,
+    #ffffff -58.26%,
+    #2e5381 -27.18%,
+    #0a4991 8.63%,
+    #ffffff 47.14%,
+    #517197 76.87%
+  );
+  -webkit-box-shadow: 0 0 20px #020d2f;
+  box-shadow: 0 0 20px #020d2f;
+  z-index: 1;
+}
+.game-html .avatar .imgDrop:before {
+  position: absolute;
+  content: '';
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  -webkit-box-shadow: inset 0 0 5px #020d2f;
+  box-shadow: inset 0 0 5px #020d2f;
+  z-index: 1;
+  border-radius: 50%;
+}
+.game-html .avatar.sz-36 .imgDrop {
+  border-width: 1px;
+}
 @media (min-width: 320px) and (max-width: 1024px) and (orientation: portrait) {
   .game-html {
     -webkit-transform: rotate(-90deg);

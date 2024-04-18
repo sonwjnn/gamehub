@@ -14,9 +14,9 @@ export const TableList = ({ tables }: TableListProps) => {
     )
 
   return (
-    <div className="row grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
+    <div className="row ">
       {tables.map(table => (
-        <div key={table.id} className="col-6 col-md-3 min-h-full">
+        <div key={table.id} className="col-6 col-md-3">
           <Item table={table} />
         </div>
       ))}

@@ -67,8 +67,8 @@ export const UserBoard = ({ hasMenu = false }: UserBoardProps) => {
           </span>
           <div className="number">{formatChipsAmount(user.chipsAmount)} $</div>
         </div>
-        <div className="row info_more fz-10 mt-12 grid gap-x-2 grid-cols-12">
-          <div className="col-span-4">
+        <div className="row info_more fz-10 mt-12">
+          <div className="col-4">
             <dl className="text-center">
               <dt>
                 <div className="icon sz-20 icon-color-white mx-auto">
@@ -79,7 +79,7 @@ export const UserBoard = ({ hasMenu = false }: UserBoardProps) => {
               <dd>1000</dd>
             </dl>
           </div>
-          <div className="col-span-4">
+          <div className="col-4">
             <dl className="text-center">
               <dt>
                 <div className="icon sz-20 icon-color-white mx-auto">
@@ -90,7 +90,7 @@ export const UserBoard = ({ hasMenu = false }: UserBoardProps) => {
               <dd>30/120</dd>
             </dl>
           </div>
-          <div className="col-span-4">
+          <div className="col-4">
             <dl className="text-center">
               <dt>
                 <div className="icon sz-20 icon-color-white mx-auto">

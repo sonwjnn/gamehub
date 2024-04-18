@@ -9,7 +9,7 @@ const HistoryPage = () => {
           HISTORY
         </span>
       </h2>
-      <div className="row flex flex-center mt-16 flex-col">
+      <div className="row flex flex-center mt-16 ">
         <div className="col-12">
           <div className="filter_history flex flex-end gap-16 flex-midle">
             <div>
