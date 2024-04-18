@@ -103,7 +103,6 @@ export const UserButton = () => {
                 <dl className="text-center">
                   <dt>
                     <div className="icon sz-20 icon-color-white mx-auto">
-                      {' '}
                       <i className="icon-points"></i>
                     </div>
                     <span>Points</span>
@@ -115,7 +114,6 @@ export const UserButton = () => {
                 <dl className="text-center">
                   <dt>
                     <div className="icon sz-20 icon-color-white mx-auto">
-                      {' '}
                       <i className="icon-win"></i>
                     </div>
                     <span>Total win</span>
@@ -127,7 +125,6 @@ export const UserButton = () => {
                 <dl className="text-center">
                   <dt>
                     <div className="icon sz-20 icon-color-white mx-auto">
-                      {' '}
                       <i className="icon-lose"></i>
                     </div>
                     <span>Total lose</span>

@@ -1,12 +1,13 @@
-import { GetStartedButton } from './components/get-started-button'
-
 import { Container } from './components/container'
+import { HomeContent } from './components/home-content'
+
+import '@/styles/css/styles.css'
 
 export default function Page() {
   return (
-    <div className="h-full w-full flex items-center justify-center">
+    <div className="home">
       <Container>
-        <GetStartedButton />
+        <HomeContent />
       </Container>
     </div>
   )

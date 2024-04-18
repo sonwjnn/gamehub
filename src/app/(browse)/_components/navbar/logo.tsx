@@ -5,7 +5,7 @@ interface LogoProps {}
 
 export const Logo = ({}: LogoProps) => {
   return (
-    <Link className="logo block" href="/dashboard">
+    <Link className="logo block" href="/">
       <Image
         src="/images/logo.png"
         alt="Logo"

@@ -52,6 +52,15 @@
   -ms-flex-pack: justify;
   justify-content: space-between;
 }
+.game-html .btn_play {
+  -webkit-animation: glow 1s infinite;
+  animation: glow 1s infinite;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+  border-radius: 20px;
+  text-decoration: none;
+  padding: 6px 16px;
+}
 .game-html .game_heading {
   -ms-flex-negative: 0;
   flex-shrink: 0;
@@ -126,15 +135,6 @@
   line-height: 18px;
   border: 1px solid transparent;
   cursor: pointer;
-}
-.game-html .game_heading .toolbar .btn_play {
-  -webkit-animation: glow 1s infinite;
-  animation: glow 1s infinite;
-  -webkit-transition: 0.5s;
-  transition: 0.5s;
-  border-radius: 20px;
-  text-decoration: none;
-  padding: 6px 16px;
 }
 .game-html .game_heading .toolbar .item_rule {
   min-width: 60px;

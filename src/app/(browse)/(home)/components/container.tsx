@@ -11,5 +11,9 @@ export const Container = ({ children }: ContainerProps) => {
 
   if (!origin) return null
 
-  return <div className="h-full w-full">{children}</div>
+  return (
+    <div className="inner_page">
+      <main>{children}</main>
+    </div>
+  )
 }

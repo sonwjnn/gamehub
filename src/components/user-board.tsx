@@ -6,9 +6,12 @@ import { RotateCcw } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
-import { useState } from 'react'
 
-export const UserBoard = () => {
+interface UserBoardProps {
+  hasMenu?: boolean
+}
+
+export const UserBoard = ({ hasMenu = false }: UserBoardProps) => {
   const user = useCurrentUser()
 
   const router = useRouter()
@@ -20,7 +23,7 @@ export const UserBoard = () => {
   }
 
   return (
-    <div className="sidebar_left ">
+    <>
       <div className="info_profile mt-8">
         <div className="avatar mx-auto">
           <div className="images">
@@ -100,59 +103,65 @@ export const UserBoard = () => {
           </div>
         </div>
       </div>
-      <div className="list_menu mt-16 fz-14">
-        <ul>
-          <li className={pathname === '/settings/profile' ? 'active' : ''}>
-            <Link href="/settings/profile">
-              <span className="icon sz-20 icon-color-white">
-                <i className="icon-user"></i>
-              </span>
-              <span>Profile</span>
-            </Link>
-          </li>
-          <li className={pathname === '/settings/cash' ? 'active' : ''}>
-            <Link href="/settings/cash">
-              <span className="icon sz-20 icon-color-white">
-                <i className="icon-cash"></i>
-              </span>
-              <span>Cash Games</span>
-            </Link>
-          </li>
-          <li className={pathname === '/settings/point' ? 'active' : ''}>
-            <Link href="/settings/cash">
-              <span className="icon sz-20 icon-color-white">
-                <i className="icon-points"></i>
-              </span>
-              <span>Points</span>
-            </Link>
-          </li>
-          <li className={pathname === '/settings/history' ? 'active' : ''}>
-            <Link href="/settings/history">
-              <span className="icon sz-20 icon-color-white">
-                <i className="icon-history"></i>
-              </span>
-              <span>History</span>
-            </Link>
-          </li>
-          <li className={pathname === '/settings/notification' ? 'active' : ''}>
-            <Link href="/settings/history">
-              <span className="icon sz-20 icon-color-white">
-                <i className="icon-bell"></i>
-              </span>
-              <span>Notifications</span>
-            </Link>
-          </li>
+      {hasMenu ? (
+        <div className="list_menu mt-16 fz-14">
+          <ul>
+            <li className={pathname === '/settings/profile' ? 'active' : ''}>
+              <Link href="/settings/profile">
+                <span className="icon sz-20 icon-color-white">
+                  <i className="icon-user"></i>
+                </span>
+                <span>Profile</span>
+              </Link>
+            </li>
+            <li className={pathname === '/settings/cash' ? 'active' : ''}>
+              <Link href="/settings/cash">
+                <span className="icon sz-20 icon-color-white">
+                  <i className="icon-cash"></i>
+                </span>
+                <span>Cash Games</span>
+              </Link>
+            </li>
+            <li className={pathname === '/settings/point' ? 'active' : ''}>
+              <Link href="/settings/cash">
+                <span className="icon sz-20 icon-color-white">
+                  <i className="icon-points"></i>
+                </span>
+                <span>Points</span>
+              </Link>
+            </li>
+            <li className={pathname === '/settings/history' ? 'active' : ''}>
+              <Link href="/settings/history">
+                <span className="icon sz-20 icon-color-white">
+                  <i className="icon-history"></i>
+                </span>
+                <span>History</span>
+              </Link>
+            </li>
+            <li
+              className={pathname === '/settings/notification' ? 'active' : ''}
+            >
+              <Link href="/settings/history">
+                <span className="icon sz-20 icon-color-white">
+                  <i className="icon-bell"></i>
+                </span>
+                <span>Notifications</span>
+              </Link>
+            </li>
 
-          <li className={pathname === '/settings/new-password' ? 'active' : ''}>
-            <Link href="/settings/new-password">
-              <span className="icon sz-20 icon-color-white">
-                <RotateCcw size={20} />
-              </span>
-              <span>New Password</span>
-            </Link>
-          </li>
-        </ul>
-      </div>
-    </div>
+            <li
+              className={pathname === '/settings/new-password' ? 'active' : ''}
+            >
+              <Link href="/settings/new-password">
+                <span className="icon sz-20 icon-color-white">
+                  <RotateCcw size={20} />
+                </span>
+                <span>New Password</span>
+              </Link>
+            </li>
+          </ul>
+        </div>
+      ) : null}
+    </>
   )
 }

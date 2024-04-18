@@ -9,7 +9,9 @@ const SettingsLayout = ({ children }: SettingsLayoutProps) => {
   return (
     <main className="w-full  z-20 ">
       <div className="boding_main">
-        <UserBoard />
+        <div className="sidebar_left">
+          <UserBoard hasMenu />
+        </div>
         <div className="content_main">
           <div className="inner">{children}</div>
         </div>

@@ -1,12 +1,16 @@
 import tableApi from '@/services/api/modules/table-api'
 import { TableList } from './_components/list'
+import { UserBoard } from '@/components/user-board'
 
 const TablePage = async () => {
   const { response: tables } = await tableApi.getTables()
 
   return (
     <div className="boding_main">
-      <div className="content_main min-w-full bg-[rgba(21,19,19,0.9)]">
+      <div className="sidebar_left">
+        <UserBoard />
+      </div>
+      <div className="content_main">
         <div className="inner">
           <div className="form_custom form_room w-full ">
             <h2 className="ttl_main fz-18">
@@ -37,7 +41,7 @@ const TablePage = async () => {
                   ></rect>
                 </clipPath>
               </svg>
-              <div className="col-12 col-md-8 flex-[80%]">
+              <div className="col-12 col-md-8 flex-[70%]">
                 <TableList tables={tables} />
 
                 <nav className="pagination mt-16 flex flex-end">
@@ -77,7 +81,7 @@ const TablePage = async () => {
                   </ul>
                 </nav>
               </div>
-              <div className="col-12 col-md-4 py-8 flex-[20%]">
+              <div className="col-12 col-md-4 py-8 flex-[30%]">
                 <div className="room room_event">
                   <p className="text-center">COMMING SOON</p>
                   <br />
