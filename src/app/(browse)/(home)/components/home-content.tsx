@@ -128,7 +128,7 @@ export const HomeContent = ({}: HomeContentProps) => {
                   CONTACT US
                 </h3>
                 <div className="text-center fz-12 mt-8">
-                  Neque porro quisquam est qui dolorem{' '}
+                  Neque porro quisquam est qui dolorem
                 </div>
                 <ul className="flex flex-center gap-8 mt-16">
                   <li className="p-16">
@@ -296,15 +296,13 @@ export const HomeContent = ({}: HomeContentProps) => {
               </div>
             </div>
             <div className="col-12 col-md-6 col-lg-4">
-              <div className="p-16">
-                <div className="ttl_sub">
-                  {' '}
-                  <span>Download</span>
-                </div>
-                <a className="bnr_link bnr_download mt-20" href="">
-                  Click on<b>Download</b>
-                </a>
+              <div className="ttl_sub">
+                {' '}
+                <span>Download</span>
               </div>
+              <a className="bnr_link bnr_download mt-20" href="">
+                Click on<b>Download</b>
+              </a>
             </div>
           </div>
         </div>

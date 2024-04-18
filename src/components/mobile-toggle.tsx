@@ -30,7 +30,7 @@ export const MobileToggle = () => {
           <span />
         </div>
       </SheetTrigger>
-      <SheetContent side="left" className="flex gap-0 p-0">
+      <SheetContent side="left" className="flex gap-0 p-0 z-[9999]">
         <div className="page-sub bg-[#00152d] w-full p-[12px] mt-[56px]">
           <div className="sidebar_left">
             <UserBoard hasMenu={false} />

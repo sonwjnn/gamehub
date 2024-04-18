@@ -104,11 +104,17 @@ export const ProfileContent = ({}: ProfileContentProps) => {
               name="username"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-xs text-white/50">
-                    User name
-                  </FormLabel>
                   <FormControl>
-                    <Input disabled={true} {...field} />
+                    <div className="input-group">
+                      <div className="wrap-input">
+                        <input
+                          className="form-control"
+                          disabled={true}
+                          {...field}
+                        />
+                        <label>User name</label>
+                      </div>
+                    </div>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -121,15 +127,17 @@ export const ProfileContent = ({}: ProfileContentProps) => {
                   name="name"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-xs text-white/50">
-                        Name
-                      </FormLabel>
                       <FormControl>
-                        <Input
-                          disabled={isPending}
-                          placeholder="Enter your name"
-                          {...field}
-                        />
+                        <div className="input-group">
+                          <div className="wrap-input">
+                            <input
+                              className="form-control"
+                              disabled={isPending}
+                              {...field}
+                            />
+                            <label>Name</label>
+                          </div>
+                        </div>
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -142,11 +150,17 @@ export const ProfileContent = ({}: ProfileContentProps) => {
                   name="email"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-xs text-white/50">
-                        Email
-                      </FormLabel>
                       <FormControl>
-                        <Input disabled={true} {...field} />
+                        <div className="input-group">
+                          <div className="wrap-input">
+                            <input
+                              className="form-control"
+                              disabled={true}
+                              {...field}
+                            />
+                            <label>Email</label>
+                          </div>
+                        </div>
                       </FormControl>
                       <FormMessage />
                     </FormItem>
