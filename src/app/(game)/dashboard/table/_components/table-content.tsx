@@ -15,7 +15,7 @@ export const TableContent = ({ tables }: TableContentProps) => {
   if (!origin) return null
 
   return (
-    <>
+    <div className="boding_main">
       <div className="sidebar_left">
         <UserBoard />
       </div>
@@ -102,6 +102,6 @@ export const TableContent = ({ tables }: TableContentProps) => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   )
 }

@@ -5,11 +5,7 @@ import { TableContent } from './_components/table-content'
 const TablePage = async () => {
   const { response: tables } = await tableApi.getTables()
 
-  return (
-    <div className="boding_main">
-      <TableContent tables={tables} />
-    </div>
-  )
+  return <TableContent tables={tables} />
 }
 
 export default TablePage
