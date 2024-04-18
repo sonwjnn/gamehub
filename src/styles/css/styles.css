@@ -3,6 +3,9 @@
 }
 .inner_page main {
   height: 100%;
+  -webkit-box-flex: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
 }
 
 @supports not (background: paint(something)) {
@@ -126,13 +129,8 @@
   display: block;
 }
 .page-sub .game_heading .logo img {
-  height: 80%;
+  height: 33px;
   width: auto;
-}
-@media (max-width: 991px) {
-  .page-sub .game_heading .logo img {
-    height: 60%;
-  }
 }
 .page-sub .game_heading .toolbar {
   height: 100%;
@@ -384,14 +382,6 @@
 .page-sub body:not(.game) .game_heading {
   height: 56px;
   padding: 0 16px;
-}
-.page-sub body:not(.game) .game_heading .logo img {
-  height: 60%;
-}
-@media (max-width: 991px) {
-  .page-sub body:not(.game) .game_heading .logo img {
-    height: 42%;
-  }
 }
 .page-sub .avatar {
   background-image: url(/images/avt_bg2.png);

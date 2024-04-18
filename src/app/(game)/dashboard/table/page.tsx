@@ -21,7 +21,7 @@ const TablePage = async () => {
                 LIST TABLE
               </span>
             </h2>
-            <div className="row  gapy-40 flex w-full flex-wrap md:flex-nowrap">
+            <div className="row flex flex-center gapy-40">
               <svg>
                 <filter id="noiseFilter2">
                   <feturbulence
@@ -41,7 +41,7 @@ const TablePage = async () => {
                   ></rect>
                 </clipPath>
               </svg>
-              <div className="col-12 col-md-8 flex-[70%]">
+              <div className="col-12 col-md-8">
                 <TableList tables={tables} />
 
                 <nav className="pagination mt-16 flex flex-end">
@@ -81,7 +81,7 @@ const TablePage = async () => {
                   </ul>
                 </nav>
               </div>
-              <div className="col-12 col-md-4 py-8 flex-[30%]">
+              <div className="col-12 col-md-4 py-8">
                 <div className="room room_event">
                   <p className="text-center">COMMING SOON</p>
                   <br />

@@ -16,7 +16,7 @@ export const TableList = ({ tables }: TableListProps) => {
   return (
     <div className="row ">
       {tables.map(table => (
-        <div key={table.id} className="col-6 col-md-3">
+        <div key={table.id} className="col-6 col-md-3 col-xl-3">
           <Item table={table} />
         </div>
       ))}

@@ -10,9 +10,11 @@ interface BrowseLayoutProps {
 const BrowseLayout = ({ children }: BrowseLayoutProps) => {
   return (
     <div className="page-sub">
-      <div className="h-dvh">
-        <Navbar />
-        {children}
+      <div className="inner_page">
+        <main>
+          <Navbar />
+          {children}
+        </main>
       </div>
     </div>
   )

@@ -7,16 +7,14 @@ interface SettingsLayoutProps {
 
 const SettingsLayout = ({ children }: SettingsLayoutProps) => {
   return (
-    <main className="w-full  z-20 ">
-      <div className="boding_main">
-        <div className="sidebar_left">
-          <UserBoard hasMenu />
-        </div>
-        <div className="content_main">
-          <div className="inner">{children}</div>
-        </div>
+    <div className="boding_main">
+      <div className="sidebar_left">
+        <UserBoard hasMenu />
       </div>
-    </main>
+      <div className="content_main">
+        <div className="inner">{children}</div>
+      </div>
+    </div>
   )
 }
 

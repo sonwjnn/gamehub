@@ -104,13 +104,8 @@
   display: block;
 }
 .game-html .game_heading .logo img {
-  height: 80%;
+  height: 33px;
   width: auto;
-}
-@media (max-width: 991px) {
-  .game-html .game_heading .logo img {
-    height: 60%;
-  }
 }
 .game-html .game_heading .toolbar {
   height: 100%;
@@ -368,14 +363,6 @@
 .game-html body:not(.game) .game_heading {
   height: 56px;
   padding: 0 16px;
-}
-.game-html body:not(.game) .game_heading .logo img {
-  height: 60%;
-}
-@media (max-width: 991px) {
-  .game-html body:not(.game) .game_heading .logo img {
-    height: 42%;
-  }
 }
 .game-html .group_user {
   background-color: #0e063a;
