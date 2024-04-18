@@ -24,7 +24,7 @@ const GameLayout = ({ children }: GameLayoutProps) => {
         <div className="inner_page">
           <main>
             {!isTableIdRoute && <Navbar />}
-            <div className={cn(isTableIdRoute && 'game_body')}>{children}</div>
+            {children}
           </main>
         </div>
       </div>
