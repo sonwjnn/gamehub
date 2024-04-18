@@ -1269,11 +1269,17 @@
   position: absolute;
   display: block;
   list-style: none;
-  width: 120px;
-  height: 165px;
   -webkit-animation: animate 25s linear infinite;
   animation: animate 25s linear infinite;
-  bottom: -150px;
+  bottom: -50px;
+  width: 80px;
+  height: 110px;
+}
+@media (min-width: 992px) {
+  .page-sub .banner_play .circles li {
+    width: 120px;
+    height: 165px;
+  }
 }
 .page-sub .banner_play .circles li span {
   display: block;
@@ -1436,6 +1442,14 @@
 }
 .page-sub .h-full {
   height: 100%;
+}
+@media (max-width: 991px) {
+  .page-sub .block_contact {
+    -webkit-box-ordinal-group: 10;
+    -ms-flex-order: 9;
+    order: 9;
+    padding-top: 0;
+  }
 }
 .page-sub .block_noti,
 .page-sub .block_support,
@@ -2112,6 +2126,11 @@
   padding: 8px;
   background-color: #000;
 }
+@media (max-width: 991px) {
+  .page-sub .block_points {
+    min-height: 300px;
+  }
+}
 .page-sub .block_points:before {
   position: absolute;
   content: '';
@@ -2141,6 +2160,16 @@
   left: 0;
   right: 0;
   width: 120px;
+}
+.page-sub .block_support li {
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+}
+.page-sub .block_support li:hover {
+  background-color: rgba(255, 255, 255, 0.2);
 }
 .page-sub .button-animation {
   position: relative;

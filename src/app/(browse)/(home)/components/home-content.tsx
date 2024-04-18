@@ -122,7 +122,39 @@ export const HomeContent = ({}: HomeContentProps) => {
             </div>
           </div>
           <div className="col-12 col-md-6 col-lg-4 pt-8">
-            <div className="block_support h-full"></div>
+            <div className="block_support h-full flex flex-center flex-midle">
+              <div className="content">
+                <h3 className="title text-center fw-700 fz-24 color-main">
+                  CONTACT US
+                </h3>
+                <div className="text-center fz-12 mt-8">
+                  Neque porro quisquam est qui dolorem{' '}
+                </div>
+                <ul className="flex flex-center gap-8 mt-16">
+                  <li className="p-16">
+                    <a className="block" href="">
+                      <div className="icon sz-24 icon-color-white">
+                        <i className="icon-email"></i>
+                      </div>
+                    </a>
+                  </li>
+                  <li className="p-16">
+                    <a className="block" href="">
+                      <div className="icon sz-24 icon-color-white">
+                        <i className="icon-facebook"></i>
+                      </div>
+                    </a>
+                  </li>
+                  <li className="p-16">
+                    <a className="block" href="">
+                      <div className="icon sz-24 icon-color-white">
+                        <i className="icon-telegram"></i>
+                      </div>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
           </div>
           <div className="col-12 col-md-12 col-lg-8 col-span-1 md:col-span-2">
             <div className="banner_play ">
