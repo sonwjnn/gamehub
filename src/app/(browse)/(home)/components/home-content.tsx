@@ -261,39 +261,35 @@ export const HomeContent = ({}: HomeContentProps) => {
         <div className="container">
           <div className="row gapy-24 ">
             <div className="col-12 col-md-6 col-lg-4">
-              <div className="p-16">
-                <div className="ttl_sub">
-                  {' '}
-                  <span>Điều khoản luật chơi</span>
-                </div>
-                <ul className="list_btn mt-20">
-                  <li>
-                    <a href="#">
-                      {' '}
-                      <span className="text">Điều khoản & Điều kiện</span>
-                      <span className="arrow"></span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      {' '}
-                      <span className="text">Luật chơi Poker</span>
-                      <span className="arrow"></span>
-                    </a>
-                  </li>
-                </ul>
+              <div className="ttl_sub">
+                {' '}
+                <span>Điều khoản luật chơi</span>
               </div>
+              <ul className="list_btn mt-20">
+                <li>
+                  <a href="#">
+                    {' '}
+                    <span className="text">Điều khoản & Điều kiện</span>
+                    <span className="arrow"></span>
+                  </a>
+                </li>
+                <li>
+                  <a href="#">
+                    {' '}
+                    <span className="text">Luật chơi Poker</span>
+                    <span className="arrow"></span>
+                  </a>
+                </li>
+              </ul>
             </div>
             <div className="col-12 col-md-6 col-lg-4">
-              <div className="p-16">
-                <div className="ttl_sub">
-                  {' '}
-                  <span>Đổi điểm counp</span>
-                </div>
-                <a className="bnr_link bnr_points mt-20" href="#">
-                  Click on<b>Change Points</b>
-                </a>
+              <div className="ttl_sub">
+                {' '}
+                <span>Đổi điểm counp</span>
               </div>
+              <a className="bnr_link bnr_points mt-20" href="#">
+                Click on<b>Change Points</b>
+              </a>
             </div>
             <div className="col-12 col-md-6 col-lg-4">
               <div className="ttl_sub">

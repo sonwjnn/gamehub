@@ -24,14 +24,14 @@ export const MobileToggle = () => {
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
       <SheetTrigger asChild>
         <div
-          className={cn('btn_hamburger', isOpen && 'active')}
+          className={cn('btn_hamburger shrink-0', isOpen && 'active')}
           id="btn_hamburger"
         >
           <span />
         </div>
       </SheetTrigger>
-      <SheetContent side="left" className="flex gap-0 p-0 z-[9999]">
-        <div className="page-sub bg-[#00152d] w-full p-[12px] mt-[56px]">
+      <SheetContent side="left" className="flex gap-0 p-0 z-[9999] w-full">
+        <div className="page-sub bg-[#00152d] w-full p-[12px]">
           <div className="sidebar_left">
             <UserBoard hasMenu={false} />
           </div>
