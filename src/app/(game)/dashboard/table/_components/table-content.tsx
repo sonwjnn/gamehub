@@ -1,5 +1,3 @@
-'use client'
-
 import { TableWithPlayers } from '@/types'
 import { TableList } from './list'
 import { useOrigin } from '@/hooks/use-origin'
@@ -10,10 +8,6 @@ interface TableContentProps {
 }
 
 export const TableContent = ({ tables }: TableContentProps) => {
-  const origin = useOrigin()
-
-  if (!origin) return null
-
   return (
     <div className="boding_main">
       <div className="sidebar_left">

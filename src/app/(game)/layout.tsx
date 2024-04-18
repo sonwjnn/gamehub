@@ -9,22 +9,27 @@ import '@/styles/css/game.css'
 
 import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
+import { useOrigin } from '@/hooks/use-origin'
 
 interface GameLayoutProps {
   children: React.ReactNode
 }
 
 const GameLayout = ({ children }: GameLayoutProps) => {
+  const origin = useOrigin()
+
   const pathname = usePathname()
 
   const isTableIdRoute = pathname?.includes('/dashboard/table/')
+
+  if (!origin) return null
   return (
     <div className={cn(isTableIdRoute ? 'game-html' : 'page-sub')}>
       <div className={cn(isTableIdRoute && 'game')}>
         <div className="inner_page">
           <main>
             {!isTableIdRoute && <Navbar />}
-            <div className={cn(isTableIdRoute && 'game_body')}>{children}</div>
+            {children}
           </main>
         </div>
       </div>
