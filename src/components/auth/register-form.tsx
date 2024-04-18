@@ -65,7 +65,7 @@ export const RegisterForm = ({}: RegisterFormProps) => {
 
   return (
     <CardWrapper
-      headerLabel="Register"
+      headerLabel=""
       headerDescription="Create an account by verify email."
       backButtonLabel="Already have an account?"
       backButtonHref="/auth/login"

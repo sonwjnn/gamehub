@@ -69,7 +69,7 @@ export const LoginForm = ({}: LoginFormProps) => {
 
   return (
     <CardWrapper
-      headerLabel="Welcome  back"
+      headerLabel=""
       headerDescription="Log in to your account."
       backButtonLabel="Sign up here"
       backButtonHref="/auth/register"

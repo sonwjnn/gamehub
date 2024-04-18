@@ -28,7 +28,7 @@ export const HomeContent = ({}: HomeContentProps) => {
       textWrapperRef.current.innerHTML =
         textWrapperRef.current.textContent.replace(
           /\S/g,
-          "<span class='letter'>$&</span>"
+          "<span className='letter'>$&</span>"
         )
 
       anime

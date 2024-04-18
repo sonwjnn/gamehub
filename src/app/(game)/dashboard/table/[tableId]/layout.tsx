@@ -22,7 +22,7 @@ const TableIdLayout = async ({
   const { tableId } = params
 
   return (
-    <div className="game_body">
+    <div className="relative w-full h-full">
       {children}
       <Chat tableId={tableId} />
     </div>
