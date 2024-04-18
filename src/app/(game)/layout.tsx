@@ -22,18 +22,21 @@ const GameLayout = ({ children }: GameLayoutProps) => {
 
   const isTableIdRoute = pathname?.includes('/dashboard/table/')
 
-  if (!origin) return null
   return (
-    <div className={cn(isTableIdRoute ? 'game-html' : 'page-sub')}>
-      <div className={cn(isTableIdRoute && 'game')}>
-        <div className="inner_page">
-          <main>
-            {!isTableIdRoute && <Navbar />}
-            {children}
-          </main>
+    <>
+      {origin && (
+        <div className={cn(isTableIdRoute ? 'game-html' : 'page-sub')}>
+          <div className={cn(isTableIdRoute && 'game')}>
+            <div className="inner_page">
+              <main>
+                {!isTableIdRoute && <Navbar />}
+                {children}
+              </main>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
+      )}
+    </>
   )
 }
 
