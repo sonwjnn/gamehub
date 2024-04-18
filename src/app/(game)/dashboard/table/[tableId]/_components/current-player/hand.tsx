@@ -2,7 +2,6 @@
 
 import { cn } from '@/lib/utils'
 import { Card } from '../card'
-import { useState } from 'react'
 
 interface HandProps {
   imageUrlFirst: string

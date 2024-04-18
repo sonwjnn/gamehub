@@ -80,24 +80,25 @@ export const LeaveTableModal = () => {
 
   return (
     <Dialog open={isModalOpen} onOpenChange={onClose}>
-      <DialogContent className="overflow-hidden  p-0 text-black">
-        <DialogHeader className="px-6 pt-8">
+      <DialogContent className="overflow-hidden  p-0">
+        <DialogHeader className="px-[24px] pt-[32px]">
           <DialogTitle className="text-center  text-2xl font-bold">
             Leave Table
           </DialogTitle>
           <DialogDescription className="text-center text-zinc-500">
             Are you sure you want to leave
-            <span className="font-semibold text-indigo-500">{table?.name}</span>
+            <span className="font-semibold text-indigo-500">
+              Table {table?.name}
+            </span>
             ?
           </DialogDescription>
         </DialogHeader>
-        <DialogFooter className="bg-gray-100 px-6 py-4">
+        <DialogFooter className="px-[24px] py-[16px]">
           <div className="flex w-full items-center justify-between">
             <Button disabled={isPending} onClick={onClose} variant="ghost">
               Cancel
             </Button>
             <Button disabled={isPending} variant="primary" onClick={onClick}>
-              {isPending ? <Spinner className="mr-2" /> : null}
               Confirm
             </Button>
           </div>

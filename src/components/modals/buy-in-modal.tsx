@@ -104,10 +104,10 @@ export const BuyInModal = () => {
             You have to buy in to play. Please buy in to join this table.
           </div>
 
-          <div className="mt-4 gap-x-2 text-center  text-zinc-300 font-bold text-xl mb-3">
-            Min buy in: {table?.minBuyIn}
+          <div className="mt-4 gap-x-2 text-center  text-zinc-300 font-bold text-xl mb-3 ">
+            Min : {table?.minBuyIn}
             <br />
-            Max buy in: {table?.maxBuyIn}
+            Max : {table?.maxBuyIn}
           </div>
 
           <Form {...form}>
@@ -117,26 +117,27 @@ export const BuyInModal = () => {
                 name="buyIn"
                 render={({ field }) => (
                   <FormItem>
-                    {/* <FormLabel className="uppercase text-xs font-bold text-zinc-500">
-                    Invite code
-                  </FormLabel> */}
                     <FormControl>
-                      <Input
-                        className="text-center text-base text-white font-semibold"
-                        type="number"
-                        min={table?.minBuyIn}
-                        max={table?.maxBuyIn}
-                        disabled={isLoading}
-                        {...field}
-                        onChange={e => field.onChange(+e.target.value)}
-                      />
+                      <div className="input-group">
+                        <div className="wrap-input flex justify-center">
+                          <Input
+                            className="w-auto py-0 "
+                            type="number"
+                            min={table?.minBuyIn}
+                            max={table?.maxBuyIn}
+                            disabled={isLoading}
+                            {...field}
+                            onChange={e => field.onChange(+e.target.value)}
+                          />
+                        </div>
+                      </div>
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
 
-              <DialogFooter className="bg-gray-100 px-[24px] py-[16px] ">
+              <DialogFooter className="px-[24px] py-[16px] ">
                 <Button
                   variant="primary"
                   className="mx-auto"

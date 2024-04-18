@@ -3,8 +3,6 @@
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
 import { cn } from '@/lib/utils'
 import { useState } from 'react'
-import { formatChipsAmount } from '@/utils/formatting'
-import Image from 'next/image'
 import { useCurrentUser } from '@/hooks/use-current-user'
 import { LogoutButton } from './auth/logout-button'
 import Link from 'next/link'
@@ -39,7 +37,7 @@ export const MobileToggle = () => {
           <div className="list_menu mt-[12px]">
             <ul>
               <li>
-                <Link href="/settings/profile">
+                <Link href="/settings/profile" onClick={() => setIsOpen(false)}>
                   <span className="icon sz-16 icon-color-white">
                     <i className="icon-user"></i>
                   </span>
@@ -47,7 +45,7 @@ export const MobileToggle = () => {
                 </Link>
               </li>
               <li>
-                <Link href="/settings/cash">
+                <Link href="/settings/cash" onClick={() => setIsOpen(false)}>
                   <span className="icon sz-20 icon-color-white">
                     <i className="icon-cash"></i>
                   </span>
@@ -55,7 +53,7 @@ export const MobileToggle = () => {
                 </Link>
               </li>
               <li>
-                <Link href="/settings/cash">
+                <Link href="/settings/cash" onClick={() => setIsOpen(false)}>
                   <span className="icon sz-20 icon-color-white">
                     <i className="icon-points"></i>
                   </span>
@@ -64,7 +62,7 @@ export const MobileToggle = () => {
               </li>
 
               <li>
-                <Link href="/settings/history">
+                <Link href="/settings/history" onClick={() => setIsOpen(false)}>
                   <span className="icon sz-20 icon-color-white">
                     <i className="icon-history"></i>
                   </span>

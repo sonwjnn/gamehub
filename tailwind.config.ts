@@ -78,7 +78,9 @@ const config = {
         'accordion-up': 'accordion-up 0.2s ease-out',
         aitf: 'aitf 80s linear infinite',
       },
-
+      transitionDuration: {
+        '17000': '17000ms',
+      },
       content: {
         none: 'none',
       },

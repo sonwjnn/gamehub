@@ -1,6 +1,7 @@
+'use client'
+
 import Image from 'next/image'
 import { Hand } from './hand'
-import { UserAvatar } from '@/components/user-avatar'
 import { CurrentPlayerAction } from './actions'
 
 import { useEffect, useState } from 'react'
@@ -9,7 +10,7 @@ import { useSocket } from '@/providers/socket-provider'
 import { cn } from '@/lib/utils'
 import { formatChipsAmount } from '@/utils/formatting'
 import { ChipsAmountBadge } from '@/components/chips-amount-badge'
-import { useCurrentUser } from '@/hooks/use-current-user'
+import Sound from '@/utils/contants/sound'
 
 interface CurrentPlayerProps {
   isShowdown?: boolean
@@ -27,11 +28,11 @@ export const CurrentPlayer = ({
   player,
   tableId,
 }: CurrentPlayerProps) => {
-  const user = useCurrentUser()
   const { socket } = useSocket()
   const [imageUrlFirst, setImageUrlFirst] = useState('')
   const [imageUrlSecond, setImageUrlSecond] = useState('')
-  const [counter, setCounter] = useState(15)
+  const [isAction, setIsAction] = useState(false)
+  const [counter, setCounter] = useState(10)
   const [bet, setBet] = useState(0)
 
   const currentParticipant = participants.find(
@@ -41,6 +42,8 @@ export const CurrentPlayer = ({
   const isFolded = currentParticipant?.isFolded
   const isWinner = !isFolded && match?.winnerId === player?.id
   const isTurn = !isFolded && player?.isTurn
+  const isShowdown = match?.isShowdown
+
   const currentStack = currentParticipant?.player?.stack || player?.stack || 0
   const currentBet = currentParticipant?.bet || 0
 
@@ -63,7 +66,7 @@ export const CurrentPlayer = ({
 
   useEffect(() => {
     let timer: NodeJS.Timeout | null = null
-    if (isTurn && counter > 0) {
+    if (isTurn && counter > 0 && !isAction) {
       timer = setInterval(() => {
         setCounter(counter - 1)
       }, 1000)
@@ -73,11 +76,11 @@ export const CurrentPlayer = ({
         clearInterval(timer)
       }
     }
-  }, [counter, isTurn])
+  }, [counter, isTurn, isAction])
 
   useEffect(() => {
     if (isTurn) {
-      setCounter(15)
+      setCounter(10)
     }
   }, [isTurn])
 
@@ -111,6 +114,13 @@ export const CurrentPlayer = ({
     }
   }, [match])
 
+  useEffect(() => {
+    if (!isWinner && isShowdown) {
+      const audio = new Audio(Sound.soundLose)
+      audio.play()
+    }
+  }, [isWinner, isShowdown])
+
   const fold = () => {
     if (socket) {
       socket.emit(PokerActions.FOLD, {
@@ -124,8 +134,9 @@ export const CurrentPlayer = ({
     <div
       className={cn(
         'group_tool flex flex-space gap-12 before:border-none',
-        (isWinner || isTurn) && 'user_active',
-        isFolded && 'user_fold'
+        isTurn && 'user_active',
+        isFolded && 'user_fold',
+        !isWinner && isShowdown && 'is-lose'
       )}
     >
       <div className="group_flush">
@@ -148,24 +159,23 @@ export const CurrentPlayer = ({
       </div>
       <div className="group_left">
         <div
-          className={cn(
-            'group_user before:border-none',
-            player?.isTurn && 'is-status'
-          )}
+          className={cn('group_user before:border-none', isTurn && 'is-status')}
         >
           <div className="wrap">
             <div className="flex flex-midle">
               <div className="left">
-                <div className="images">
-                  <div className="imgDrop ratio_1_1">
-                    <Image
-                      src={player?.user?.image || '/images/avt/1.jpg'}
-                      alt="image alt"
-                      width={0}
-                      height={0}
-                      sizes="100vw"
-                      className="w-auto h-full object-cover"
-                    />
+                <div className="avatar sz-36">
+                  <div className="images">
+                    <div className="imgDrop ratio_1_1">
+                      <Image
+                        src={player?.user?.image || '/images/avt/1.jpg'}
+                        alt="image alt"
+                        width={0}
+                        height={0}
+                        sizes="100vw"
+                        className="w-auto h-full object-cover"
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -183,7 +193,7 @@ export const CurrentPlayer = ({
             </div>
             <div className="flex info_user">
               <div className="left sp_full">
-                <div className="name text-center text-sm font-semibold">
+                <div className="name text-center ">
                   {player?.user?.username}
                 </div>
               </div>
@@ -226,41 +236,40 @@ export const CurrentPlayer = ({
               )}
 
               {isTurn && (
-                <div className="absolute top-0 right-0 text-[50px] text-white font-bold">
-                  {counter}
+                <div className="status">
+                  <div className="wrap_status status_countdown">
+                    <span className="money">
+                      {formatChipsAmount(currentBet)} $
+                    </span>
+                    <svg viewBox="0 0 200 200">
+                      <circle
+                        className="circle !animate-[stroke_17s_ease-out_forwards]"
+                        cx="100"
+                        cy="100"
+                        r="95"
+                        stroke="#231f20"
+                        stroke-width="8"
+                        fill-opacity="0"
+                      ></circle>
+                    </svg>
+                    <span>{counter}s</span>
+                  </div>
                 </div>
               )}
-
-              <div className="status">
-                <div className="wrap_status status_raise">
-                  <svg viewBox="0 0 200 200">
-                    <circle
-                      className="circle"
-                      cx="100"
-                      cy="100"
-                      r="95"
-                      stroke="#231f20"
-                      strokeWidth="8"
-                      fillOpacity="0"
-                    ></circle>
-                  </svg>
-                  <span>라이즈</span>
-                </div>
-              </div>
             </div>
           </div>
         </div>
       </div>
-      {isTurn && (
-        <CurrentPlayerAction
-          player={player}
-          bet={bet}
-          setBet={setBet}
-          match={match}
-          tableId={tableId}
-          currentParticipant={currentParticipant}
-        />
-      )}
+      <CurrentPlayerAction
+        isTurn={isTurn}
+        player={player}
+        bet={bet}
+        setIsAction={setIsAction}
+        setBet={setBet}
+        match={match}
+        tableId={tableId}
+        currentParticipant={currentParticipant}
+      />
       <div className="absolute bottom-0">
         <ChipsAmountBadge value={currentBet} />
       </div>

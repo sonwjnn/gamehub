@@ -132,6 +132,11 @@
   height: 33px;
   width: auto;
 }
+@media (max-width: 991px) {
+  .page-sub .game_heading .logo img {
+    height: 24px;
+  }
+}
 .page-sub .game_heading .toolbar {
   height: 100%;
 }

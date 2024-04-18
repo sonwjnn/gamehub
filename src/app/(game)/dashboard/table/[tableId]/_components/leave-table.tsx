@@ -14,11 +14,12 @@ export const LeaveTable = ({ className, tableId }: LeaveTableProps) => {
 
   return (
     <Button
+      size="sm"
       className={cn(className)}
       variant="destructive"
       onClick={() => onOpen('leaveTable', { tableId })}
     >
-      Leave Table
+      Leave
     </Button>
   )
 }

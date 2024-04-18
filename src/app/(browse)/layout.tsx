@@ -1,6 +1,5 @@
 import { Navbar } from '@/components/navbar'
 
-import '@/styles/bootstrap.css'
 import '@/styles/css/styles.css'
 import '@/styles/css/layout.css'
 interface BrowseLayoutProps {

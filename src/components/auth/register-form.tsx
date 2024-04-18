@@ -81,12 +81,7 @@ export const RegisterForm = ({}: RegisterFormProps) => {
                   <FormControl>
                     <div className="input-group">
                       <div className="wrap-input">
-                        <Input
-                          disabled={isPending}
-                          placeholder="Username"
-                          className="form-control"
-                          {...field}
-                        />
+                        <Input disabled={isPending} {...field} />
                         <label>Username</label>
                         <span className="validation">Text err</span>
                       </div>
@@ -105,13 +100,7 @@ export const RegisterForm = ({}: RegisterFormProps) => {
                   <FormControl>
                     <div className="input-group">
                       <div className="wrap-input">
-                        <Input
-                          type="email"
-                          disabled={isPending}
-                          className="form-control"
-                          placeholder="Email"
-                          {...field}
-                        />
+                        <Input type="email" disabled={isPending} {...field} />
                         <label>Email</label>
                         <span className="validation">Text err</span>
                       </div>

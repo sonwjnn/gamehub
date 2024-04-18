@@ -75,17 +75,18 @@ export const NewPasswordContent = ({}: NewPasswordContentProps) => {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-xs text-white/50">
-                    Password
-                  </FormLabel>
                   <FormControl>
-                    <Input
-                      disabled={isPending}
-                      className="border-0  focus-visible:ring-0 focus-visible:ring-offset-0"
-                      placeholder="**********"
-                      type="password"
-                      {...field}
-                    />
+                    <div className="input-group">
+                      <div className="wrap-input">
+                        <Input
+                          disabled={isPending}
+                          placeholder="**********"
+                          type="password"
+                          {...field}
+                        />
+                        <label>Password</label>
+                      </div>
+                    </div>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -96,17 +97,18 @@ export const NewPasswordContent = ({}: NewPasswordContentProps) => {
               name="newPassword"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-xs text-white/50">
-                    New Password
-                  </FormLabel>
                   <FormControl>
-                    <Input
-                      disabled={isPending}
-                      className="border-0  focus-visible:ring-0 focus-visible:ring-offset-0"
-                      type="password"
-                      placeholder="**********"
-                      {...field}
-                    />
+                    <div className="input-group">
+                      <div className="wrap-input">
+                        <Input
+                          disabled={isPending}
+                          type="password"
+                          placeholder="**********"
+                          {...field}
+                        />
+                        <label>New password</label>
+                      </div>
+                    </div>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -117,17 +119,18 @@ export const NewPasswordContent = ({}: NewPasswordContentProps) => {
               name="confirmNewPassword"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-xs text-white/50">
-                    Confirm new password
-                  </FormLabel>
                   <FormControl>
-                    <Input
-                      disabled={isPending}
-                      className="border-0  focus-visible:ring-0 focus-visible:ring-offset-0"
-                      type="password"
-                      placeholder="**********"
-                      {...field}
-                    />
+                    <div className="input-group">
+                      <div className="wrap-input">
+                        <Input
+                          disabled={isPending}
+                          type="password"
+                          placeholder="**********"
+                          {...field}
+                        />
+                        <label>Confirm new password</label>
+                      </div>
+                    </div>
                   </FormControl>
                   <FormMessage />
                 </FormItem>

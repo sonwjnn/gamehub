@@ -69,7 +69,7 @@ export const LeaveTableCheckbox = ({
   useEffect(() => {
     if (isChecked && match?.isShowdown) {
       update()
-      router.push('/dashboard')
+      router.push('/dashboard/table')
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isChecked, match, router])

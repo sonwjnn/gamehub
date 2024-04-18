@@ -196,7 +196,7 @@ export const RebuyModal = () => {
                 )}
               />
 
-              <DialogFooter className="bg-gray-100 px-[24px] py-[16px] ">
+              <DialogFooter className="px-[24px] py-[16px] ">
                 <Button variant="ghost" onClick={onCancel}>
                   Cancel
                 </Button>

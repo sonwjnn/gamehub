@@ -1,7 +1,8 @@
+'use client'
+
 import { cn } from '@/lib/utils'
 import Image from 'next/image'
 import { Hand } from './hand'
-import { UserAvatar } from '@/components/user-avatar'
 import { Match, Participant, PlayerWithUser, PokerActions } from '@/types'
 import { useEffect, useState } from 'react'
 import { useSocket } from '@/providers/socket-provider'
@@ -27,7 +28,7 @@ export const OtherPlayer = ({
   const { socket } = useSocket()
   const [imageUrlFirst, setImageUrlFirst] = useState('')
   const [imageUrlSecond, setImageUrlSecond] = useState('')
-  const [counter, setCounter] = useState(15)
+  const [counter, setCounter] = useState(10)
 
   const currentParticipant = participants.find(
     item => item.playerId === player?.id
@@ -35,6 +36,8 @@ export const OtherPlayer = ({
   const isFolded = currentParticipant?.isFolded
   const isWinner = !isFolded && match?.winnerId === player?.id
   const isTurn = !isFolded && player?.isTurn
+  const isShowdown = match?.isShowdown
+
   const currentStack = currentParticipant?.player?.stack || player?.stack || 0
   const currentBet = currentParticipant?.bet || 0
 
@@ -71,48 +74,36 @@ export const OtherPlayer = ({
 
   useEffect(() => {
     if (isTurn) {
-      setCounter(15)
+      setCounter(10)
     }
   }, [isTurn])
-
-  useEffect(() => {
-    if (counter === 0 && isTurn) {
-      fold()
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [counter])
-
-  const fold = () => {
-    if (socket) {
-      socket.emit(PokerActions.FOLD, {
-        tableId,
-        participantId: currentParticipant?.id,
-      })
-    }
-  }
 
   return (
     <div
       className={cn(
         'group_user before:border-none',
-        (isTurn || isWinner) && 'user_active',
+        isTurn && 'user_active',
         isFolded && 'user_fold',
-        isTurn && 'is-status'
+        isTurn && 'is-status',
+        isWinner && isShowdown && 'user_done',
+        !isWinner && isShowdown && 'is-lose'
       )}
     >
       <div className="wrap">
         <div className="flex flex-midle">
           <div className="left">
-            <div className="avatar before:!content-none">
-              <div className="imgDrop ratio_1_1">
-                <Image
-                  src={player?.user?.image || '/images/avt/1.jpg'}
-                  alt="image alt"
-                  width={0}
-                  height={0}
-                  sizes="100vw"
-                  className="w-auto h-full object-cover rounded-full"
-                />
+            <div className="avatar sz-36">
+              <div className="images">
+                <div className="imgDrop ratio_1_1">
+                  <Image
+                    src={player?.user?.image || '/images/avt/1.jpg'}
+                    alt="image alt"
+                    width={0}
+                    height={0}
+                    sizes="100vw"
+                    className="w-auto h-full object-cover rounded-full"
+                  />
+                </div>
               </div>
             </div>
           </div>
@@ -121,7 +112,7 @@ export const OtherPlayer = ({
               <Hand
                 imageUrlFirst={imageUrlFirst}
                 imageUrlSecond={imageUrlSecond}
-                isShowdown={match?.isShowdown}
+                isShowdown={isShowdown}
                 isHidden={!isHandVisible}
               />
             ) : (
@@ -131,9 +122,7 @@ export const OtherPlayer = ({
         </div>
         <div className="flex info_user">
           <div className="left sp_full">
-            <div className="name text-center text-sm font-semibold">
-              {player.user?.username}
-            </div>
+            <div className="name text-center">{player.user?.username}</div>
           </div>
           <div className="right sp_full">
             <div className="money fw-700">
@@ -174,27 +163,24 @@ export const OtherPlayer = ({
           )}
 
           {isTurn && (
-            <div className="absolute top-0 right-0 text-[50px] text-white font-bold">
-              {counter}
+            <div className="status">
+              <div className="wrap_status status_countdown">
+                <span className="money">{formatChipsAmount(currentBet)} $</span>
+                <svg viewBox="0 0 200 200">
+                  <circle
+                    className="circle !animate-[stroke_17s_ease-out_forwards]"
+                    cx="100"
+                    cy="100"
+                    r="95"
+                    stroke="#231f20"
+                    stroke-width="8"
+                    fill-opacity="0"
+                  ></circle>
+                </svg>
+                <span>{counter}s</span>
+              </div>
             </div>
           )}
-
-          <div className="status">
-            <div className="wrap_status status_raise">
-              <svg viewBox="0 0 200 200">
-                <circle
-                  className="circle"
-                  cx="100"
-                  cy="100"
-                  r="95"
-                  stroke="#231f20"
-                  strokeWidth="8"
-                  fillOpacity="0"
-                ></circle>
-              </svg>
-              <span>라이즈</span>
-            </div>
-          </div>
         </div>
       </div>
 

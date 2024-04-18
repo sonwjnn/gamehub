@@ -27,13 +27,13 @@ export const BuyChipsModal = () => {
             Chips
           </DialogTitle>
         </DialogHeader>
-        <div className="p-6">
-          <div className="mt-2 flex items-center gap-x-2 text-center  text-zinc-300">
+        <div className="px-[24px]">
+          <div className="mt-[8px] flex items-center gap-x-2 text-center  text-zinc-300">
             You dont have enough chips to play. Please buy chips to continue
             playing.
           </div>
         </div>
-        <DialogFooter className="bg-gray-100 px-[24px] py-[16px] ">
+        <DialogFooter className="px-[24px] py-[16px] ">
           <Button variant="primary" className="mx-auto" onClick={onClick}>
             Buy chips
           </Button>

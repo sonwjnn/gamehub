@@ -8,7 +8,7 @@ const TablePage = async () => {
 
   return (
     <div className="boding_main">
-      <div className="sidebar_left">
+      <div className="sidebar_left ">
         <UserBoard />
       </div>
       <TableContent tables={tables} />

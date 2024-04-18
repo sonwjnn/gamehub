@@ -85,15 +85,8 @@ export const LoginForm = ({}: LoginFormProps) => {
                   <FormControl>
                     <div className="input-group">
                       <div className="wrap-input">
-                        <Input
-                          type="text"
-                          className="form-control"
-                          disabled={isPending}
-                          placeholder="Username"
-                          {...field}
-                        />
+                        <Input type="text" disabled={isPending} {...field} />
                         <label>Username</label>
-                        <span className="validation">Text err</span>
                       </div>
                     </div>
                   </FormControl>
@@ -111,10 +104,8 @@ export const LoginForm = ({}: LoginFormProps) => {
                     <div className="input-group">
                       <div className="wrap-input">
                         <Input
-                          className="form-control"
                           disabled={isPending}
                           type="password"
-                          placeholder="Password"
                           {...field}
                         />
                         <label>Password</label>

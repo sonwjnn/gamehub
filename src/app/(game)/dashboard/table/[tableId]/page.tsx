@@ -327,7 +327,7 @@ const TablePage = () => {
           )}
         />
       </div>
-      <div className="wrapper" ref={wrapperRef}>
+      <div className="wrapper w-full" ref={wrapperRef}>
         <Image
           src="/images/table_v2.png"
           alt="tableImage"

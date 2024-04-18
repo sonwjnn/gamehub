@@ -41,16 +41,17 @@ export const InviteModal = () => {
             Invite Players
           </DialogTitle>
         </DialogHeader>
-        <div className="p-6">
-          <Label className="text-sm font-bold uppercase text-zinc-500 dark:text-zinc-300">
+        <div className="p-[24px]">
+          <Label className="text-sm font-bold text-zinc-500 dark:text-zinc-300">
             Table invite link
           </Label>
           <div className="mt-2 flex items-center gap-x-2">
-            <Input
-              className="border-0 bg-zinc-300/50 text-black focus-visible:ring-0 focus-visible:ring-offset-0"
-              value={inviteCode}
-              readOnly
-            />
+            <div className="input-group">
+              <div className="wrap-input">
+                <Input className=" py-0 " value={inviteCode} readOnly />
+              </div>
+            </div>
+
             <Button onClick={onCopy} size="icon">
               {copied ? (
                 <Check className="size-4" />

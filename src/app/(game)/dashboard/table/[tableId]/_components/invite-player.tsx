@@ -11,8 +11,12 @@ export const InvitePlayer = ({ tableId }: InvitePlayerProps) => {
   const { onOpen } = useModal()
 
   return (
-    <Button variant="secondary" onClick={() => onOpen('invite', { tableId })}>
-      Invite Players
+    <Button
+      size="sm"
+      variant="secondary"
+      onClick={() => onOpen('invite', { tableId })}
+    >
+      Invite
     </Button>
   )
 }

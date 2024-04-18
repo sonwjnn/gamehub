@@ -13,45 +13,58 @@ interface CurrentPlayerActionProps {
   bet: number
   setBet: (bet: number) => void
   player: Player | undefined
+  isTurn: boolean | undefined
+  setIsAction: (isAction: boolean) => void
 }
 
 export const CurrentPlayerAction = ({
+  isTurn,
   tableId,
   currentParticipant,
   match,
   bet,
   setBet,
   player,
+  setIsAction,
 }: CurrentPlayerActionProps) => {
   const { socket } = useSocket()
 
   const [isProcessing, setIsProcessing] = useState(false)
 
   const fold = async () => {
+    setIsAction(true)
     if (socket && !isProcessing) {
       new Audio(Sound.soundFoldBoy).play()
       setIsProcessing(true)
-      await socket.emit(PokerActions.FOLD, {
+      socket.emit(PokerActions.FOLD, {
         tableId,
         participantId: currentParticipant?.id,
       })
       setIsProcessing(false)
+      setTimeout(() => {
+        setIsAction(false)
+      }, 2000)
     }
   }
 
   const check = () => {
+    setIsAction(true)
     if (socket && !isProcessing) {
-      // new Audio(Sound.sou).play()
+      new Audio(Sound.soundCheckBoy).play()
       setIsProcessing(true)
       socket.emit(PokerActions.CHECK, {
         tableId,
         participantId: currentParticipant?.id,
       })
       setIsProcessing(false)
+      setTimeout(() => {
+        setIsAction(false)
+      }, 2000)
     }
   }
 
   const call = () => {
+    setIsAction(true)
     if (socket && !isProcessing) {
       new Audio(Sound.soundCallBoy).play()
 
@@ -61,10 +74,14 @@ export const CurrentPlayerAction = ({
         participantId: currentParticipant?.id,
       })
       setIsProcessing(false)
+      setTimeout(() => {
+        setIsAction(false)
+      }, 2000)
     }
   }
 
   const raise = (amount: number) => {
+    setIsAction(true)
     if (socket && !isProcessing) {
       new Audio(Sound.soundCallBoy).play()
       setIsProcessing(true)
@@ -74,6 +91,9 @@ export const CurrentPlayerAction = ({
         amount,
       })
       setIsProcessing(false)
+      setTimeout(() => {
+        setIsAction(false)
+      }, 2000)
     }
   }
 
@@ -102,19 +122,34 @@ export const CurrentPlayerAction = ({
   return (
     <>
       <div className="toolbar">
-        <div className="item" onClick={() => setBet(currentStack / 4)}>
+        <button
+          className="item disabled:pointer-events-none disabled:opacity-50"
+          onClick={() => raise(currentStack / 4)}
+          disabled={!isTurn || isProcessing}
+        >
           <span className="number">1</span>
           <div className="value">쿼터</div>
-        </div>
-        <div className="item" onClick={() => setBet(currentStack / 2)}>
+        </button>
+        <button
+          className="item disabled:pointer-events-none disabled:opacity-50"
+          onClick={() => raise(currentStack / 2)}
+          disabled={!isTurn || isProcessing}
+        >
           <span className="number">2</span>
           <div className="value">하프</div>
-        </div>
-        <div className="item" onClick={() => setBet(currentStack)}>
+        </button>
+        <button
+          className="item disabled:pointer-events-none disabled:opacity-50"
+          onClick={() => raise(currentStack)}
+          disabled={!isTurn || isProcessing}
+        >
           <span className="number">3</span>
-          <div className="value">풀</div>
-        </div>
-        <button className="item ">
+          <div className="value">올인</div>
+        </button>
+        <button
+          className="item disabled:pointer-events-none disabled:opacity-50"
+          disabled={!isTurn || isProcessing}
+        >
           {/* <span className="number number_left">4 </span> */}
           <span className="number">4</span>
           <div className=" !text-white text-[32px] font-bold value">
@@ -124,7 +159,7 @@ export const CurrentPlayerAction = ({
         <button
           className="item disabled:pointer-events-none disabled:opacity-50"
           onClick={() => raise(bet + currentBet)}
-          disabled={isProcessing}
+          disabled={!isTurn || isProcessing}
         >
           <span className="number">5</span>
           <div className="value">라이즈</div>
@@ -132,7 +167,7 @@ export const CurrentPlayerAction = ({
         <button
           className="item disabled:pointer-events-none disabled:opacity-50"
           onClick={call}
-          disabled={isProcessing || !canCall}
+          disabled={!isTurn || isProcessing || !canCall}
         >
           <span className="number">7</span>
           <div className="value">콜 {callSize}</div>
@@ -140,7 +175,7 @@ export const CurrentPlayerAction = ({
         <button
           className="item disabled:pointer-events-none disabled:opacity-50"
           onClick={fold}
-          disabled={isProcessing}
+          disabled={!isTurn || isProcessing}
         >
           <span className="number">8</span>
           <div className="value">다이</div>
@@ -157,7 +192,7 @@ export const CurrentPlayerAction = ({
         <button
           className="item disabled:pointer-events-none disabled:opacity-50"
           onClick={check}
-          disabled={isProcessing || canNotCheck}
+          disabled={!isTurn || isProcessing || canNotCheck}
         >
           {/* <span className="number number_left">4 </span> */}
           <span className="number">9</span>

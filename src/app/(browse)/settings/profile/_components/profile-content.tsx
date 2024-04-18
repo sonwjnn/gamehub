@@ -107,11 +107,7 @@ export const ProfileContent = ({}: ProfileContentProps) => {
                   <FormControl>
                     <div className="input-group">
                       <div className="wrap-input">
-                        <input
-                          className="form-control"
-                          disabled={true}
-                          {...field}
-                        />
+                        <Input disabled={true} {...field} />
                         <label>User name</label>
                       </div>
                     </div>
@@ -130,11 +126,7 @@ export const ProfileContent = ({}: ProfileContentProps) => {
                       <FormControl>
                         <div className="input-group">
                           <div className="wrap-input">
-                            <input
-                              className="form-control"
-                              disabled={isPending}
-                              {...field}
-                            />
+                            <Input disabled={isPending} {...field} />
                             <label>Name</label>
                           </div>
                         </div>
@@ -153,11 +145,7 @@ export const ProfileContent = ({}: ProfileContentProps) => {
                       <FormControl>
                         <div className="input-group">
                           <div className="wrap-input">
-                            <input
-                              className="form-control"
-                              disabled={true}
-                              {...field}
-                            />
+                            <Input disabled={true} {...field} />
                             <label>Email</label>
                           </div>
                         </div>
