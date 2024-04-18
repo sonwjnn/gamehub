@@ -94,7 +94,7 @@ export const Board = ({ match, isHidden = false, isShuffle }: BoardProps) => {
           </div>
           <div className="group_number flex flex-midle flex-center gap-24">
             <div className="text">
-              Total:
+              Pot:
               <span className="fw-900">
                 $ {formatChipsAmount(match?.pot || 0)}
               </span>

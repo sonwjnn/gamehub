@@ -76,9 +76,10 @@ export const BuyInModal = () => {
         return
       }
 
-      onClose()
-      update()
       router.push(`/dashboard/table/${table.id}`)
+
+      update()
+      onClose()
     } catch {
     } finally {
       setIsLoading(false)
