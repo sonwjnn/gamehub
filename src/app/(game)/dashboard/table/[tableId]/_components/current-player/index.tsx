@@ -11,6 +11,7 @@ import { cn } from '@/lib/utils'
 import { formatChipsAmount } from '@/utils/formatting'
 import { ChipsAmountBadge } from '@/components/chips-amount-badge'
 import Sound from '@/utils/contants/sound'
+import { useIsWinner } from '@/store/use-is-winner'
 
 interface CurrentPlayerProps {
   isShowdown?: boolean
@@ -29,6 +30,7 @@ export const CurrentPlayer = ({
   tableId,
 }: CurrentPlayerProps) => {
   const { socket } = useSocket()
+  const { setIsWinner } = useIsWinner()
   const [imageUrlFirst, setImageUrlFirst] = useState('')
   const [imageUrlSecond, setImageUrlSecond] = useState('')
   const [isAction, setIsAction] = useState(false)
@@ -121,6 +123,28 @@ export const CurrentPlayer = ({
     }
   }, [isWinner, isShowdown])
 
+  useEffect(() => {
+    let timeoutId: NodeJS.Timeout | null = null
+
+    if (isWinner && isShowdown) {
+      setIsWinner(true)
+      new Audio(Sound.soundWin).play()
+
+      timeoutId = setTimeout(() => {
+        setIsWinner(false)
+      }, 5000)
+    } else {
+      setIsWinner(false)
+    }
+
+    return () => {
+      if (timeoutId) {
+        clearTimeout(timeoutId)
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isWinner])
+
   const fold = () => {
     if (socket) {
       socket.emit(PokerActions.FOLD, {
@@ -203,7 +227,7 @@ export const CurrentPlayer = ({
                 </div>
               </div>
 
-              {isWinner && (
+              {isWinner && isShowdown && (
                 <div className="status status_win !opacity-100">
                   <Image
                     src="/images/status_win.png"
@@ -267,9 +291,6 @@ export const CurrentPlayer = ({
         tableId={tableId}
         currentParticipant={currentParticipant}
       />
-      <div className="absolute bottom-0">
-        <ChipsAmountBadge value={currentBet} />
-      </div>
     </div>
   )
 }

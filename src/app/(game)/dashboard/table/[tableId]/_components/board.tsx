@@ -3,9 +3,11 @@ import { Card } from './card'
 import { cn } from '@/lib/utils'
 import { Card as CardType, Match } from '@/types'
 import { formatChipsAmount } from '@/utils/formatting'
+import Sound from '@/utils/contants/sound'
 
 interface BoardProps {
   match: Match | null
+
   isHidden?: boolean
   isShuffle?: boolean
 }
@@ -22,6 +24,7 @@ const BoardCard = ({
   useEffect(() => {
     if (!isHidden) {
       const timer = setTimeout(() => {
+        new Audio(Sound.soundOpen).play()
         setHiddenClass('')
       }, 2000)
 
@@ -54,6 +57,12 @@ export const Board = ({ match, isHidden = false, isShuffle }: BoardProps) => {
       setBoard(match.board)
     }
   }, [match])
+
+  useEffect(() => {
+    if (isFlop) {
+      new Audio(Sound.soundShare).play()
+    }
+  }, [isFlop])
 
   return (
     <div className="group_midle">
@@ -117,68 +126,5 @@ export const Board = ({ match, isHidden = false, isShuffle }: BoardProps) => {
         </div>
       </div>
     </div>
-    // <div className="group_midle">
-    //   <div className="group_pocker">
-    //     <div className="list_pocker group_mask">
-    //       <div className="item"></div>
-    //       <div className="item"></div>
-    //       <div className="item"></div>
-    //       <div className="item"></div>
-    //       <div className="item"></div>
-    //     </div>
-    //     <div className="list_pocker pocker_hide pocker_action">
-    //       <div className="item flipped hide">
-    //         <div className="pocker">
-    //           <div className="front">
-    //             <img src="/images/pocker/2_clubes.png" alt="" />
-    //           </div>
-    //           <div className="back">
-    //             <img src="/images/pocker.png" alt="" />
-    //           </div>
-    //         </div>
-    //       </div>
-    //       <div className="item flipped hide">
-    //         <div className="pocker">
-    //           <div className="front">
-    //             <img src="/images/pocker/2_clubes.png" alt="" />
-    //           </div>
-    //           <div className="back">
-    //             <img src="/images/pocker.png" alt="" />
-    //           </div>
-    //         </div>
-    //       </div>
-    //       <div className="item flipped hide">
-    //         <div className="pocker">
-    //           <div className="front">
-    //             <img src="/images/pocker/2_clubes.png" alt="" />
-    //           </div>
-    //           <div className="back">
-    //             <img src="/images/pocker.png" alt="" />
-    //           </div>
-    //         </div>
-    //       </div>
-    //       <div className="item flipped hide">
-    //         <div className="pocker">
-    //           <div className="front">
-    //             <img src="/images/pocker/2_clubes.png" alt="" />
-    //           </div>
-    //           <div className="back">
-    //             <img src="/images/pocker.png" alt="" />
-    //           </div>
-    //         </div>
-    //       </div>
-    //       <div className="item flipped hide">
-    //         <div className="pocker">
-    //           <div className="front">
-    //             <img src="/images/pocker/2_clubes.png" alt="" />
-    //           </div>
-    //           <div className="back">
-    //             <img src="/images/pocker.png" alt="" />
-    //           </div>
-    //         </div>
-    //       </div>
-    //     </div>
-    //   </div>
-    // </div>
   )
 }

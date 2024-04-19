@@ -22,6 +22,8 @@ import { LeaveTableCheckbox } from './_components/leave-table-checkbox'
 import { LeaveTable } from './_components/leave-table'
 import { InvitePlayer } from './_components/invite-player'
 import { cn } from '@/lib/utils'
+import { useIsWinner } from '@/store/use-is-winner'
+import { WinnerModal } from './_components/winner-modal'
 
 const TablePage = () => {
   const [isHandVisible, setHandVisible] = useState(false)
@@ -33,6 +35,7 @@ const TablePage = () => {
   const origin = useOrigin()
   const user = useCurrentUser()
   const { socket } = useSocket()
+  const { isWinner } = useIsWinner()
 
   const [messages, setMessages] = useState([] as string[])
   const [match, setMatch] = useState<Match | null>(null)
@@ -367,6 +370,7 @@ const TablePage = () => {
                     />
                   )
                 })}
+              <WinnerModal match={match} />
             </div>
           </div>
         </div>

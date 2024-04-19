@@ -180,10 +180,6 @@ export const OtherPlayer = ({
           )}
         </div>
       </div>
-
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2">
-        <ChipsAmountBadge value={currentBet} />
-      </div>
     </div>
   )
 }

@@ -106,13 +106,6 @@ export const CurrentPlayerAction = ({
   const canHalf = currentStack >= match?.pot! / 2
   const canFull = currentStack >= match?.pot!
 
-  const callSize =
-    currentCallAmount &&
-    currentBet < currentCallAmount &&
-    currentCallAmount <= currentStack
-      ? currentCallAmount - currentBet
-      : ''
-
   const min =
     match?.minBet && match?.minBet >= currentCallAmount
       ? match?.minBet
@@ -174,7 +167,7 @@ export const CurrentPlayerAction = ({
           disabled={!isTurn || isProcessing || !canCall}
         >
           <span className="number">7</span>
-          <div className="value">콜 {callSize}</div>
+          <div className="value">콜</div>
         </button>
         <button
           className="item disabled:pointer-events-none disabled:opacity-50"
