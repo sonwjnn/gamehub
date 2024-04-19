@@ -44,6 +44,28 @@
 ========================================== */
 /* MIXINS
 ========================================== */
+@-webkit-keyframes textColor {
+  0% {
+    color: #7e0fff;
+  }
+  50% {
+    color: #0fffc1;
+  }
+  100% {
+    color: #7e0fff;
+  }
+}
+@keyframes textColor {
+  0% {
+    color: #7e0fff;
+  }
+  50% {
+    color: #0fffc1;
+  }
+  100% {
+    color: #7e0fff;
+  }
+}
 .page-sub .block_login {
   height: 100%;
   display: -webkit-box;
@@ -123,6 +145,15 @@
     height: 60px;
   }
 }
+@media (min-width: 320px) and (orientation: portrait),
+  (max-width: 1023px) and (orientation: landscape) {
+  .page-sub .game_heading .btn_demo {
+    line-height: 18px;
+    height: 18px;
+    border-radius: 4px;
+    font-size: 9px !important;
+  }
+}
 .page-sub .game_heading .logo {
   position: relative;
   z-index: 9;
@@ -134,7 +165,7 @@
 }
 @media (max-width: 991px) {
   .page-sub .game_heading .logo img {
-    height: 24px;
+    height: 16px;
   }
 }
 .page-sub .game_heading .toolbar {

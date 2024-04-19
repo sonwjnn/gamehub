@@ -127,7 +127,9 @@ export const BuyInModal = () => {
                             max={table?.maxBuyIn}
                             disabled={isLoading}
                             {...field}
-                            onChange={e => field.onChange(+e.target.value)}
+                            onChange={e =>
+                              field.onChange(+e.target.value || ' ')
+                            }
                           />
                         </div>
                       </div>

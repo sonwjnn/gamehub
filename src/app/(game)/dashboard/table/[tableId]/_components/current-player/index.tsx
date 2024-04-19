@@ -238,9 +238,6 @@ export const CurrentPlayer = ({
               {isTurn && (
                 <div className="status">
                   <div className="wrap_status status_countdown">
-                    <span className="money">
-                      {formatChipsAmount(currentBet)} $
-                    </span>
                     <svg viewBox="0 0 200 200">
                       <circle
                         className="circle !animate-[stroke_17s_ease-out_forwards]"

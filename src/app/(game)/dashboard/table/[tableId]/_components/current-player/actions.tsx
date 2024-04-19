@@ -102,6 +102,10 @@ export const CurrentPlayerAction = ({
   const currentCallAmount = match?.callAmount ? match?.callAmount : 0
   const canCall = currentBet > 0 || currentBet < currentCallAmount
   const canNotCheck = currentCallAmount !== currentBet && currentCallAmount > 0
+  const canQuater = currentStack >= match?.pot! / 4
+  const canHalf = currentStack >= match?.pot! / 2
+  const canFull = currentStack >= match?.pot!
+
   const callSize =
     currentCallAmount &&
     currentBet < currentCallAmount &&
@@ -124,27 +128,27 @@ export const CurrentPlayerAction = ({
       <div className="toolbar">
         <button
           className="item disabled:pointer-events-none disabled:opacity-50"
-          onClick={() => raise(currentStack / 4)}
-          disabled={!isTurn || isProcessing}
+          onClick={() => raise(Math.floor(match?.pot! / 4))}
+          disabled={!isTurn || isProcessing || !canQuater}
         >
           <span className="number">1</span>
           <div className="value">쿼터</div>
         </button>
         <button
           className="item disabled:pointer-events-none disabled:opacity-50"
-          onClick={() => raise(currentStack / 2)}
-          disabled={!isTurn || isProcessing}
+          onClick={() => raise(Math.floor(match?.pot! / 2))}
+          disabled={!isTurn || isProcessing || !canHalf}
         >
           <span className="number">2</span>
           <div className="value">하프</div>
         </button>
         <button
           className="item disabled:pointer-events-none disabled:opacity-50"
-          onClick={() => raise(currentStack)}
-          disabled={!isTurn || isProcessing}
+          onClick={() => raise(match?.pot!)}
+          disabled={!isTurn || isProcessing || !canFull}
         >
           <span className="number">3</span>
-          <div className="value">올인</div>
+          <div className="value">풀</div>
         </button>
         <button
           className="item disabled:pointer-events-none disabled:opacity-50"

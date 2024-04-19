@@ -98,6 +98,15 @@
     height: 60px;
   }
 }
+@media (min-width: 320px) and (orientation: portrait),
+  (max-width: 1023px) and (orientation: landscape) {
+  .game-html .game_heading .btn_demo {
+    line-height: 18px;
+    height: 18px;
+    border-radius: 4px;
+    font-size: 9px !important;
+  }
+}
 .game-html .game_heading .logo {
   position: relative;
   z-index: 9;
@@ -109,7 +118,7 @@
 }
 @media (max-width: 991px) {
   .game-html .game_heading .logo img {
-    height: 24px;
+    height: 16px;
   }
 }
 .game-html .game_heading .toolbar {
@@ -848,7 +857,7 @@
   -ms-transform: translate(0);
   transform: translate(0);
   top: -15%;
-  left: 0;
+  left: -1%;
   width: 50.6912442396%;
 }
 .game-html .group_user .status_countdown {
@@ -1003,6 +1012,212 @@
   color: transparent;
   border-radius: 3px;
   top: -10px;
+}
+.game-html .status_win {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%) scale(0);
+  -ms-transform: translate(-50%, -50%) scale(0);
+  transform: translate(-50%, -50%) scale(0);
+  z-index: 999;
+  -webkit-animation: textColor 10s ease infinite;
+  animation: textColor 10s ease infinite;
+  opacity: 0;
+  -webkit-transition: ease-in-out 0.3s;
+  transition: ease-in-out 0.3s;
+  pointer-events: none;
+  width: 33.3333333333%;
+  font-size: 87.5%;
+  line-height: 16px;
+}
+.game-html .status_win:after {
+  position: absolute;
+  content: '';
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: -1;
+  height: 100%;
+  width: 100%;
+  margin: 0 auto;
+  -webkit-transform: scale(1.2);
+  -ms-transform: scale(1.2);
+  transform: scale(1.2);
+  -webkit-filter: blur(5vw);
+  -moz-filter: blur(5vw);
+  -ms-filter: blur(5vw);
+  filter: blur(5vw);
+  background: -webkit-gradient(
+    linear,
+    right top,
+    left top,
+    from(#ffeb0f),
+    to(#7e0fff)
+  );
+  background: linear-gradient(270deg, #ffeb0f, #7e0fff);
+  background-size: 200% 200%;
+  -webkit-animation: animateGlow 10s ease infinite;
+  animation: animateGlow 10s ease infinite;
+}
+@-webkit-keyframes animateGlow {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+@keyframes animateGlow {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+@media (min-width: 1024px), ((min-width: 768px) and (orientation: portrait)) {
+  .game-html .status_win {
+    line-height: 26px;
+    font-size: 125%;
+    width: 27.5694444444%;
+  }
+}
+.game-html .status_win .content_top {
+  position: relative;
+  width: 88.161209068%;
+  margin: 0 auto -10px;
+}
+.game-html .status_win .content_top .list {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 15.1133501259%;
+}
+.game-html .status_win .content_top .list .item {
+  width: 20%;
+}
+.game-html .status_win .content_top .list .item .wrap {
+  padding-top: 220%;
+  width: 100%;
+  position: relative;
+}
+.game-html .status_win .content_top .list .item .wrap img {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  height: 100%;
+  max-width: inherit;
+  width: auto;
+  display: inline-block;
+  -webkit-box-shadow: -2px 4px 6px 0px rgba(0, 0, 0, 0.5019607843);
+  box-shadow: -2px 4px 6px 0px rgba(0, 0, 0, 0.5019607843);
+  border-radius: 8px;
+}
+.game-html .status_win .content_top .title {
+  position: relative;
+  z-index: 1;
+  background-image: url(/images/decor_win2.svg);
+  background-size: 100%;
+  padding: 12px;
+}
+.game-html .status_win .content_top .title img {
+  display: block;
+  width: 70.2857142857%;
+  margin: auto;
+}
+.game-html .status_win .content_top .title:before {
+  position: absolute;
+  content: '';
+  top: -12px;
+  left: -12px;
+  right: -12px;
+  bottom: 0;
+  background-image: url(/images/decor_win3.svg);
+  background-size: 100%;
+}
+.game-html .status_win .content {
+  position: relative;
+  z-index: 1;
+}
+.game-html .status_win .content:before,
+.game-html .status_win .content:after {
+  position: absolute;
+  content: '';
+  top: -8px;
+  bottom: 8px;
+  width: 11.5869017632%;
+  background-image: url(/images/decor_win5.png), url(/images/decor_win1.svg);
+  background-position:
+    top right,
+    center;
+  background-repeat: no-repeat;
+  background-size:
+    30%,
+    100% 100%;
+  z-index: -1;
+}
+.game-html .status_win .content:before {
+  -webkit-transform: translateX(-100%);
+  -ms-transform: translateX(-100%);
+  transform: translateX(-100%);
+  left: 16px;
+}
+.game-html .status_win .content:after {
+  -webkit-transform: translateX(100%) rotateY(180deg);
+  transform: translateX(100%) rotateY(180deg);
+  right: 16px;
+}
+.game-html .status_win .content .wrap {
+  background: -webkit-gradient(
+    linear,
+    left top,
+    right top,
+    from(#ffecbb),
+    color-stop(11%, #d0bb83),
+    color-stop(51%, #aa9869),
+    color-stop(87.5%, #d0bb83),
+    to(#efdaa2)
+  );
+  background: linear-gradient(
+    90deg,
+    #ffecbb 0%,
+    #d0bb83 11%,
+    #aa9869 51%,
+    #d0bb83 87.5%,
+    #efdaa2 100%
+  );
+  padding: 4px;
+  color: #000;
+  text-align: center;
+}
+.game-html .status_win .content .title {
+  font-size: 87.5%;
+  padding: 4px;
+}
+.game-html .status_win .content .money {
+  background: #0e063a;
+  padding: 8px;
+}
+.game-html .status_win .content .money span {
+  font-weight: 900;
+}
+.game-html .status_win.active {
+  opacity: 1;
+  -webkit-transform: translate(-50%, -50%) scale(1);
+  -ms-transform: translate(-50%, -50%) scale(1);
+  transform: translate(-50%, -50%) scale(1);
+  pointer-events: all;
 }
 .game-html .group_chat {
   position: absolute;
@@ -1600,7 +1815,7 @@
   height: 20px;
   background-image: url(/images/deco2_sp.png);
   background-size: 100% 100%;
-  padding: 0 0 0 15%;
+  padding: 0 15% 0 10%;
 }
 @media (min-width: 320px) and (orientation: portrait),
   (max-width: 1023px) and (orientation: landscape) {
@@ -1782,6 +1997,13 @@
   transform: translateY(-50%);
   left: 100%;
   right: 0;
+}
+.game-html .group_tool .group_left .group_user .status {
+  top: 0;
+  left: 0;
+  -webkit-transform: translate(-50%, -68%);
+  -ms-transform: translate(-50%, -68%);
+  transform: translate(-50%, -68%);
 }
 .game-html .group_tool .toolbar {
   -webkit-box-flex: 1;
