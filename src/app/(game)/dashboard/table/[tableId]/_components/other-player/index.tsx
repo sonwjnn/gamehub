@@ -5,7 +5,6 @@ import Image from 'next/image'
 import { Hand } from './hand'
 import { Match, Participant, PlayerWithUser, PokerActions } from '@/types'
 import { useEffect, useState } from 'react'
-import { useSocket } from '@/providers/socket-provider'
 import { formatChipsAmount } from '@/utils/formatting'
 import { ChipsAmountBadge } from '@/components/chips-amount-badge'
 
@@ -25,10 +24,9 @@ export const OtherPlayer = ({
   participants,
   tableId,
 }: OtherPlayerProps) => {
-  const { socket } = useSocket()
   const [imageUrlFirst, setImageUrlFirst] = useState('')
   const [imageUrlSecond, setImageUrlSecond] = useState('')
-  const [counter, setCounter] = useState(10)
+  const [counter, setCounter] = useState(12)
 
   const currentParticipant = participants.find(
     item => item.playerId === player?.id
@@ -70,11 +68,11 @@ export const OtherPlayer = ({
         clearInterval(timer)
       }
     }
-  }, [counter, player, isTurn])
+  }, [counter, isTurn])
 
   useEffect(() => {
     if (isTurn) {
-      setCounter(10)
+      setCounter(12)
     }
   }, [isTurn])
 
@@ -177,7 +175,7 @@ export const OtherPlayer = ({
                     fill-opacity="0"
                   ></circle>
                 </svg>
-                <span>{counter}s</span>
+                <span>{counter - 2 >= 0 ? counter - 2 : 0}s</span>
               </div>
             </div>
           )}

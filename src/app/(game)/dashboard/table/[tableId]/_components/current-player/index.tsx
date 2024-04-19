@@ -32,7 +32,7 @@ export const CurrentPlayer = ({
   const [imageUrlFirst, setImageUrlFirst] = useState('')
   const [imageUrlSecond, setImageUrlSecond] = useState('')
   const [isAction, setIsAction] = useState(false)
-  const [counter, setCounter] = useState(10)
+  const [counter, setCounter] = useState(12)
   const [bet, setBet] = useState(0)
 
   const currentParticipant = participants.find(
@@ -80,7 +80,7 @@ export const CurrentPlayer = ({
 
   useEffect(() => {
     if (isTurn) {
-      setCounter(10)
+      setCounter(12)
     }
   }, [isTurn])
 
@@ -252,7 +252,7 @@ export const CurrentPlayer = ({
                         fill-opacity="0"
                       ></circle>
                     </svg>
-                    <span>{counter}s</span>
+                    <span>{counter - 2 >= 0 ? counter - 2 : 0}s</span>
                   </div>
                 </div>
               )}

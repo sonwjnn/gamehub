@@ -17,8 +17,20 @@ const BoardCard = ({
   imageUrl: string
   isHidden: boolean
 }) => {
+  const [hiddenClass, setHiddenClass] = useState(isHidden ? 'hide' : '')
+
+  useEffect(() => {
+    if (!isHidden) {
+      const timer = setTimeout(() => {
+        setHiddenClass('')
+      }, 2000)
+
+      return () => clearTimeout(timer)
+    }
+  }, [isHidden])
+
   return (
-    <div className={cn('item flipped ', isHidden && 'hide')}>
+    <div className={cn('item flipped ', hiddenClass)}>
       <div className="pocker">
         <Card imageUrl={imageUrl} value={10} />
       </div>
@@ -43,26 +55,24 @@ export const Board = ({ match, isHidden = false, isShuffle }: BoardProps) => {
     }
   }, [match])
 
-  if (!match) return null
-
   return (
     <div className="group_midle">
-      {isPreFlop && !isShuffle && (
-        <>
-          <div className="group_pocker">
-            <div className="list_pocker group_mask">
-              <div className="item"></div>
-              <div className="item"></div>
-              <div className="item"></div>
-              <div className="item"></div>
-              <div className="item"></div>
-            </div>
-            <div
-              className={cn(
-                'list_pocker  pocker_action',
-                !isPreFlop && 'pocker_hide'
-              )}
-            >
+      <div className="group_pocker">
+        <div className="list_pocker group_mask">
+          <div className="item"></div>
+          <div className="item"></div>
+          <div className="item"></div>
+          <div className="item"></div>
+          <div className="item"></div>
+        </div>
+        <div
+          className={cn(
+            'list_pocker  pocker_action',
+            isPreFlop && !isFlop && 'pocker_hide'
+          )}
+        >
+          {board && board?.length && (
+            <>
               {board
                 ?.slice(0, 3)
                 .map((card, index) => (
@@ -90,24 +100,85 @@ export const Board = ({ match, isHidden = false, isShuffle }: BoardProps) => {
                     isHidden={!isRiver}
                   />
                 ))}
-            </div>
-          </div>
-          <div className="group_number flex flex-midle flex-center gap-24">
-            <div className="text">
-              Pot:
-              <span className="fw-900">
-                $ {formatChipsAmount(match?.pot || 0)}
-              </span>
-            </div>
-            <div className="text">
-              Call:
-              <span className="fw-900">
-                $ {formatChipsAmount(match?.callAmount || 0)}
-              </span>
-            </div>
-          </div>
-        </>
-      )}
+            </>
+          )}
+        </div>
+      </div>
+      <div className="group_number flex flex-midle flex-center gap-24">
+        <div className="text">
+          Pot:
+          <span className="fw-900">$ {formatChipsAmount(match?.pot || 0)}</span>
+        </div>
+        <div className="text">
+          Call:
+          <span className="fw-900">
+            $ {formatChipsAmount(match?.callAmount || 0)}
+          </span>
+        </div>
+      </div>
     </div>
+    // <div className="group_midle">
+    //   <div className="group_pocker">
+    //     <div className="list_pocker group_mask">
+    //       <div className="item"></div>
+    //       <div className="item"></div>
+    //       <div className="item"></div>
+    //       <div className="item"></div>
+    //       <div className="item"></div>
+    //     </div>
+    //     <div className="list_pocker pocker_hide pocker_action">
+    //       <div className="item flipped hide">
+    //         <div className="pocker">
+    //           <div className="front">
+    //             <img src="/images/pocker/2_clubes.png" alt="" />
+    //           </div>
+    //           <div className="back">
+    //             <img src="/images/pocker.png" alt="" />
+    //           </div>
+    //         </div>
+    //       </div>
+    //       <div className="item flipped hide">
+    //         <div className="pocker">
+    //           <div className="front">
+    //             <img src="/images/pocker/2_clubes.png" alt="" />
+    //           </div>
+    //           <div className="back">
+    //             <img src="/images/pocker.png" alt="" />
+    //           </div>
+    //         </div>
+    //       </div>
+    //       <div className="item flipped hide">
+    //         <div className="pocker">
+    //           <div className="front">
+    //             <img src="/images/pocker/2_clubes.png" alt="" />
+    //           </div>
+    //           <div className="back">
+    //             <img src="/images/pocker.png" alt="" />
+    //           </div>
+    //         </div>
+    //       </div>
+    //       <div className="item flipped hide">
+    //         <div className="pocker">
+    //           <div className="front">
+    //             <img src="/images/pocker/2_clubes.png" alt="" />
+    //           </div>
+    //           <div className="back">
+    //             <img src="/images/pocker.png" alt="" />
+    //           </div>
+    //         </div>
+    //       </div>
+    //       <div className="item flipped hide">
+    //         <div className="pocker">
+    //           <div className="front">
+    //             <img src="/images/pocker/2_clubes.png" alt="" />
+    //           </div>
+    //           <div className="back">
+    //             <img src="/images/pocker.png" alt="" />
+    //           </div>
+    //         </div>
+    //       </div>
+    //     </div>
+    //   </div>
+    // </div>
   )
 }

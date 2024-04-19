@@ -196,7 +196,7 @@ export const CurrentPlayerAction = ({
         >
           {/* <span className="number number_left">4 </span> */}
           <span className="number">9</span>
-          <div className=" value">확인하다</div>
+          <div className=" value">체크</div>
         </button>
       </div>
 

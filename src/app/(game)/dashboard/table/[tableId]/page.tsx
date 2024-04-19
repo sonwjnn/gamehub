@@ -295,6 +295,15 @@ const TablePage = () => {
     getPlayers()
   }, [params?.tableId])
 
+  useEffect(() => {
+    if (players.length <= 1) {
+      setMatch(null)
+      setHandVisible(false)
+      setParticipants([])
+      setMessages([])
+    }
+  }, [players])
+
   const addMessage = (message: string) => {
     setMessages((prevMessages: string[]) => [...prevMessages, message])
   }
