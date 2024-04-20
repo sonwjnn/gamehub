@@ -58,7 +58,7 @@ const TablePage = () => {
     const cardsHand = 2
     const dealX = bounds.width / 2 - cardWidth / 2
     const dealY = bounds.height
-    const stackOffset = 15
+    const stackOffset = 20
     const offsetX = 0
     const offsetY = 0
     const positions = Array.from(players).map(playerPosition)

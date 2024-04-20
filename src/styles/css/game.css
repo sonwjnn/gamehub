@@ -9,6 +9,7 @@
   position: relative;
   height: 100%;
   top: -10%;
+  padding: 0;
 }
 .game-html .pocker_list .item {
   position: absolute;
@@ -20,8 +21,8 @@
   top: -10px;
 }
 .game-html .pocker_list .item:nth-child(2) {
-  left: 15px;
-  margin-top: 5px;
+  left: 20px;
+  margin-top: 10px;
 }
 .game-html .pocker_list .item:nth-child(3) {
   top: 20px;
@@ -459,7 +460,7 @@
   align-items: stretch;
 }
 .game-html .group_user .left {
-  width: 41.4507772021%;
+  width: 36.2694300518%;
   -ms-flex-negative: 0;
   flex-shrink: 0;
 }
@@ -476,7 +477,7 @@
   -webkit-box-flex: 1;
   -ms-flex-positive: 1;
   flex-grow: 1;
-  margin-left: 7.2538860104%;
+  margin-left: 10.3626943005%;
 }
 @media (min-width: 320px) and (orientation: portrait),
   (max-width: 1023px) and (orientation: landscape) {
@@ -489,6 +490,28 @@
     line-height: 12px;
     margin-top: 2%;
   }
+}
+.game-html .group_user .info_user .left {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  text-align: left;
+  -webkit-transform: translateY(-100%);
+  -ms-transform: translateY(-100%);
+  transform: translateY(-100%);
+}
+.game-html .group_user .info_user .left .name {
+  text-align: left !important;
+}
+.game-html .group_user .info_user .right {
+  margin-left: 0;
+  font-size: 125%;
+  line-height: 16px;
+  margin-top: 12px;
+}
+.game-html .group_user .info_user .right .money {
+  color: #ffaa00;
 }
 @media (min-width: 320px) and (orientation: portrait),
   (max-width: 1023px) and (orientation: landscape) {
@@ -1005,8 +1028,8 @@
 .game-html .player-card {
   position: absolute;
   display: block;
-  width: 4.8611111111% !important;
-  height: 15.7968970381%;
+  width: 3.9583333333% !important;
+  height: 12.976022567%;
   background-image: url(/images/pocker.png);
   background-size: 100% 100%;
   color: transparent;

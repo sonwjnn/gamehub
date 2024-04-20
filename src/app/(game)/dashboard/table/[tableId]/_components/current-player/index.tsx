@@ -9,7 +9,6 @@ import { Match, Participant, PlayerWithUser, PokerActions } from '@/types'
 import { useSocket } from '@/providers/socket-provider'
 import { cn } from '@/lib/utils'
 import { formatChipsAmount } from '@/utils/formatting'
-import { ChipsAmountBadge } from '@/components/chips-amount-badge'
 import Sound from '@/utils/contants/sound'
 import { useIsWinner } from '@/store/use-is-winner'
 
@@ -158,7 +157,7 @@ export const CurrentPlayer = ({
     <div
       className={cn(
         'group_tool flex flex-space gap-12 before:border-none',
-        isTurn && 'user_active',
+        (isTurn || isWinner) && 'user_active',
         isFolded && 'user_fold',
         !isWinner && isShowdown && 'is-lose'
       )}
@@ -221,24 +220,15 @@ export const CurrentPlayer = ({
                   {player?.user?.username}
                 </div>
               </div>
+
               <div className="right sp_full">
-                <div className="money fw-700">
+                <div className="money fw-700 flex flex-midle flex-center gap-8">
+                  <div className="icon sz-16">
+                    <i className="icon-coin"></i>
+                  </div>
                   $ {formatChipsAmount(currentStack)}
                 </div>
               </div>
-
-              {isWinner && isShowdown && (
-                <div className="status status_win !opacity-100">
-                  <Image
-                    src="/images/status_win.png"
-                    alt="pokerOnImage"
-                    width={0}
-                    height={0}
-                    sizes="100vw"
-                    className="w-auto h-full"
-                  />
-                </div>
-              )}
 
               {isFolded && (
                 <div className="status">
