@@ -30,9 +30,8 @@ export const CurrentPlayer = ({
   player,
   tableId,
 }: CurrentPlayerProps) => {
-  const { socket } = useSocket()
+  const { isConnected, socket } = useSocket()
   const router = useRouter()
-
   const { setIsWinner } = useIsWinner()
   const [imageUrlFirst, setImageUrlFirst] = useState('')
   const [imageUrlSecond, setImageUrlSecond] = useState('')
@@ -129,7 +128,7 @@ export const CurrentPlayer = ({
   useEffect(() => {
     let timeoutId: NodeJS.Timeout | null = null
 
-    if (isWinner && isShowdown) {
+    if (currentParticipant?.lastAction === PokerActions.WINNER && isShowdown) {
       setIsWinner(true)
       new Audio(Sound.soundWin).play()
 
@@ -167,7 +166,7 @@ export const CurrentPlayer = ({
   }
 
   useEffect(() => {
-    if (!player || socket.id !== player?.socketId) {
+    if (!player || socket.id !== player?.socketId || !isConnected) {
       removePlayer()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

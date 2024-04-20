@@ -2,7 +2,7 @@
 
 import { BetSlider } from '@/components/bet-slider'
 import { useSocket } from '@/providers/socket-provider'
-import { Match, Participant, Player, PokerActions } from '@/types'
+import { Match, Participant, Player, PokerActions, RaiseType } from '@/types'
 import { useState } from 'react'
 import Sound from '@/utils/contants/sound'
 
@@ -80,21 +80,47 @@ export const CurrentPlayerAction = ({
     }
   }
 
-  const raise = (amount: number) => {
+  const raise = (amount: number, type: RaiseType) => {
     setIsAction(true)
     if (socket && !isProcessing) {
-      new Audio(Sound.soundCallBoy).play()
+      new Audio(Sound.soundRaiseBoy).play()
       setIsProcessing(true)
       socket.emit(PokerActions.RAISE, {
         tableId,
         participantId: currentParticipant?.id,
         amount,
+        type,
       })
       setIsProcessing(false)
       setTimeout(() => {
         setIsAction(false)
       }, 2000)
     }
+  }
+
+  const onRaise = () => {
+    new Audio(Sound.soundRaiseBoy).play()
+    raise(bet + currentBet, RaiseType.RAISE)
+  }
+
+  const onQuater = () => {
+    new Audio(Sound.soundQuarterBoy).play()
+    raise(Math.floor(match?.pot! / 4), RaiseType.QUARTER)
+  }
+
+  const onHalf = () => {
+    new Audio(Sound.soundHalfBoy).play()
+    raise(Math.floor(match?.pot! / 2), RaiseType.HALF)
+  }
+
+  const onFull = () => {
+    new Audio(Sound.soundFullBoy).play()
+    raise(match?.pot!, RaiseType.FULL)
+  }
+
+  const onAllIn = () => {
+    new Audio(Sound.soundAllBoy).play()
+    raise(currentStack, RaiseType.ALLIN)
   }
 
   const currentStack = player?.stack || 0
@@ -127,7 +153,7 @@ export const CurrentPlayerAction = ({
       <div className="toolbar">
         <button
           className="item disabled:pointer-events-none disabled:opacity-50"
-          onClick={() => raise(Math.floor(match?.pot! / 4))}
+          onClick={onQuater}
           disabled={!isTurn || isProcessing || !canQuater}
         >
           <span className="number">1</span>
@@ -135,7 +161,7 @@ export const CurrentPlayerAction = ({
         </button>
         <button
           className="item disabled:pointer-events-none disabled:opacity-50"
-          onClick={() => raise(Math.floor(match?.pot! / 2))}
+          onClick={onHalf}
           disabled={!isTurn || isProcessing || !canHalf}
         >
           <span className="number">2</span>
@@ -143,7 +169,7 @@ export const CurrentPlayerAction = ({
         </button>
         <button
           className="item disabled:pointer-events-none disabled:opacity-50"
-          onClick={() => raise(match?.pot!)}
+          onClick={onFull}
           disabled={!isTurn || isProcessing || !canFull}
         >
           <span className="number">3</span>
@@ -161,7 +187,7 @@ export const CurrentPlayerAction = ({
         </button>
         <button
           className="item disabled:pointer-events-none disabled:opacity-50"
-          onClick={() => raise(bet + currentBet)}
+          onClick={onRaise}
           disabled={!isTurn || isProcessing}
         >
           <span className="number">5</span>
@@ -207,7 +233,7 @@ export const CurrentPlayerAction = ({
         </button>
         <button
           className="item disabled:pointer-events-none disabled:opacity-50"
-          onClick={() => raise(currentStack)}
+          onClick={onAllIn}
           disabled={!isTurn || isProcessing}
         >
           <span className="number">9</span>

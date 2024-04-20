@@ -7,6 +7,7 @@ interface HandProps {
   imageUrlFirst: string
   imageUrlSecond: string
   isHidden?: boolean
+  isWinner: boolean
 }
 
 export const Hand = ({
@@ -14,12 +15,9 @@ export const Hand = ({
   imageUrlSecond,
   isShowdown,
   isHidden = true,
+  isWinner = false,
 }: HandProps) => {
   const [isFlipped, setFlipped] = useState(false)
-
-  // const onToggle = () => {
-  //   setFlipped(!isFlipped)
-  // }
 
   useEffect(() => {
     if (isHidden) setFlipped(false)
@@ -29,8 +27,8 @@ export const Hand = ({
     <div className={cn('pocker_list', isShowdown && 'has_active')}>
       <div
         className={cn(
-          'item flipped opacity-0',
-          // isFlipped && 'status_active',
+          'item flipped opacity-0 ',
+          isWinner && 'status_active',
           !isShowdown && 'hide',
           !isHidden && 'opacity-100'
         )}
@@ -42,7 +40,7 @@ export const Hand = ({
       <div
         className={cn(
           'item flipped opacity-0',
-          // isFlipped && 'status_active',
+          isWinner && 'status_active',
           !isShowdown && 'hide',
           !isHidden && 'opacity-100'
         )}

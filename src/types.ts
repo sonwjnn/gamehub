@@ -151,6 +151,8 @@ export type Participant = {
   cardTwo?: Card
   isChecked: boolean
   isFolded: boolean
+  isAllin: boolean
+  lastAction: string
   bet: number
 }
 
@@ -197,4 +199,12 @@ export enum PokerActions {
   MATCH_STARTED = 'MATCH_STARTED',
   CHANGE_TURN = 'CHANGE_TURN',
   REBOUGHT = 'REBOUGHT',
+}
+
+export enum RaiseType {
+  RAISE = 'RAISE',
+  QUARTER = 'QUARTER',
+  HALF = 'HALF',
+  FULL = 'FULL',
+  ALLIN = 'ALLIN',
 }

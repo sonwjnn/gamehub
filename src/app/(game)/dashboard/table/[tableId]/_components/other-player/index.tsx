@@ -3,9 +3,16 @@
 import { cn } from '@/lib/utils'
 import Image from 'next/image'
 import { Hand } from './hand'
-import { Match, Participant, PlayerWithUser, PokerActions } from '@/types'
+import {
+  Match,
+  Participant,
+  PlayerWithUser,
+  PokerActions,
+  RaiseType,
+} from '@/types'
 import { useEffect, useState } from 'react'
 import { formatChipsAmount } from '@/utils/formatting'
+import sound from '@/utils/contants/sound'
 
 interface OtherPlayerProps {
   type?: 'fold' | 'active' | 'default'
@@ -34,6 +41,7 @@ export const OtherPlayer = ({
   const isWinner = !isFolded && match?.winnerId === player?.id
   const isTurn = !isFolded && player?.isTurn
   const isShowdown = match?.isShowdown
+  const isAllIn = player?.stack === 0 || !isShowdown
 
   const currentStack = player?.stack || 0
   const currentBet = currentParticipant?.bet || 0
@@ -75,13 +83,32 @@ export const OtherPlayer = ({
     }
   }, [isTurn])
 
+  useEffect(() => {
+    if (currentParticipant?.lastAction === PokerActions.CALL) {
+      new Audio(sound.soundCallBoy).play()
+    } else if (currentParticipant?.lastAction === PokerActions.RAISE) {
+      new Audio(sound.soundRaiseBoy).play()
+    } else if (currentParticipant?.lastAction === PokerActions.FOLD) {
+      new Audio(sound.soundFoldBoy).play()
+    } else if (currentParticipant?.lastAction === PokerActions.CHECK) {
+      new Audio(sound.soundCheckBoy).play()
+    } else if (currentParticipant?.lastAction === RaiseType.ALLIN) {
+      new Audio(sound.soundAllBoy).play()
+    } else if (currentParticipant?.lastAction === RaiseType.QUARTER) {
+      new Audio(sound.soundQuarterBoy).play()
+    } else if (currentParticipant?.lastAction === RaiseType.HALF) {
+      new Audio(sound.soundHalfBoy).play()
+    } else if (currentParticipant?.lastAction === RaiseType.FULL) {
+      new Audio(sound.soundFullBoy).play()
+    }
+  }, [currentParticipant?.lastAction])
+
   return (
     <div
       className={cn(
-        'group_user before:border-none',
+        'group_user before:border-none is-status',
         isTurn && 'user_active',
         isFolded && 'user_fold',
-        isTurn && 'is-status',
         isWinner && isShowdown && 'user_done',
         !isWinner && isShowdown && 'is-lose'
       )}
@@ -110,6 +137,7 @@ export const OtherPlayer = ({
                 imageUrlFirst={imageUrlFirst}
                 imageUrlSecond={imageUrlSecond}
                 isShowdown={isShowdown}
+                isWinner={isWinner}
                 isHidden={!isHandVisible}
               />
             ) : (
@@ -174,6 +202,167 @@ export const OtherPlayer = ({
                   ></circle>
                 </svg>
                 <span>{counter - 2 >= 0 ? counter - 2 : 0}s</span>
+              </div>
+            </div>
+          )}
+
+          {currentParticipant?.lastAction === PokerActions.CALL && (
+            <div className="status">
+              <div className="wrap_status status_call">
+                <span className="money">{formatChipsAmount(currentBet)} $</span>
+                <svg viewBox="0 0 200 200">
+                  <circle
+                    className="circle"
+                    cx="100"
+                    cy="100"
+                    r="95"
+                    stroke="#231f20"
+                    stroke-width="8"
+                    fill-opacity="0"
+                  ></circle>
+                </svg>
+                <span>콜</span>
+                {/* <span>CALL</span> */}
+              </div>
+            </div>
+          )}
+
+          {currentParticipant?.lastAction === PokerActions.RAISE && (
+            <div className="status">
+              <div className="wrap_status status_raise">
+                <span className="money">{formatChipsAmount(currentBet)} $</span>
+                <svg viewBox="0 0 200 200">
+                  <circle
+                    className="circle"
+                    cx="100"
+                    cy="100"
+                    r="95"
+                    stroke="#231f20"
+                    stroke-width="8"
+                    fill-opacity="0"
+                  ></circle>
+                </svg>
+                <span>라이즈</span>
+                {/* <span>RAISE</span> */}
+              </div>
+            </div>
+          )}
+
+          {currentParticipant?.lastAction === PokerActions.CHECK && (
+            <div className="status">
+              <div className="wrap_status status_call">
+                <svg viewBox="0 0 200 200">
+                  <circle
+                    className="circle"
+                    cx="100"
+                    cy="100"
+                    r="95"
+                    stroke="#231f20"
+                    stroke-width="8"
+                    fill-opacity="0"
+                  ></circle>
+                </svg>
+                <span>체크</span>
+                {/* <span>CHECK</span> */}
+              </div>
+            </div>
+          )}
+
+          {currentParticipant?.isFolded && (
+            <div className="status">
+              <div className="wrap_status status_full">
+                <svg viewBox="0 0 200 200">
+                  <circle
+                    className="circle"
+                    cx="100"
+                    cy="100"
+                    r="95"
+                    stroke="#231f20"
+                    strokeWidth="8"
+                    fillOpacity="0"
+                  />
+                </svg>
+                <span>풀</span>
+              </div>
+            </div>
+          )}
+
+          {currentParticipant?.lastAction === RaiseType.QUARTER && (
+            <div className="status">
+              <div className="wrap_status status_quarter">
+                <span className="money">{formatChipsAmount(currentBet)} $</span>
+                <svg viewBox="0 0 200 200">
+                  <circle
+                    className="circle"
+                    cx="100"
+                    cy="100"
+                    r="95"
+                    stroke="#231f20"
+                    stroke-width="8"
+                    fill-opacity="0"
+                  ></circle>
+                </svg>
+                <span>쿼터</span>
+              </div>
+            </div>
+          )}
+
+          {currentParticipant?.lastAction === RaiseType.HALF && (
+            <div className="status">
+              <div className="wrap_status status_half">
+                <span className="money">{formatChipsAmount(currentBet)} $</span>
+                <svg viewBox="0 0 200 200">
+                  <circle
+                    className="circle"
+                    cx="100"
+                    cy="100"
+                    r="95"
+                    stroke="#231f20"
+                    stroke-width="8"
+                    fill-opacity="0"
+                  ></circle>
+                </svg>
+                <span>하프</span>
+              </div>
+            </div>
+          )}
+
+          {currentParticipant?.lastAction === RaiseType.FULL && (
+            <div className="status">
+              <div className="wrap_status status_full">
+                <span className="money">{formatChipsAmount(currentBet)} $</span>
+                <svg viewBox="0 0 200 200">
+                  <circle
+                    className="circle"
+                    cx="100"
+                    cy="100"
+                    r="95"
+                    stroke="#231f20"
+                    stroke-width="8"
+                    fill-opacity="0"
+                  ></circle>
+                </svg>
+                <span>풀</span>
+              </div>
+            </div>
+          )}
+
+          {currentParticipant?.isAllin && (
+            <div className="status">
+              <div className="wrap_status status_all">
+                <span className="money">200 $</span>
+                <svg viewBox="0 0 200 200">
+                  <circle
+                    className="circle"
+                    cx="100"
+                    cy="100"
+                    r="95"
+                    stroke="#231f20"
+                    stroke-width="8"
+                    fill-opacity="0"
+                  ></circle>
+                </svg>
+                <span>올인</span>
               </div>
             </div>
           )}
