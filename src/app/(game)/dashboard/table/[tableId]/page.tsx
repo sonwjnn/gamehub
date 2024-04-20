@@ -223,6 +223,7 @@ const TablePage = () => {
               return { ...item, isTurn: false }
             })
           )
+
           if (match) {
             setMatch(match)
             setParticipants(match.participants)
@@ -302,7 +303,6 @@ const TablePage = () => {
     if (players.length <= 1) {
       setMatch(null)
       setHandVisible(false)
-      setParticipants([])
       setMessages([])
     }
   }, [players])

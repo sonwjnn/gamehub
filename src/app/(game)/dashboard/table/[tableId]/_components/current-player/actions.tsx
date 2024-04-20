@@ -97,14 +97,20 @@ export const CurrentPlayerAction = ({
     }
   }
 
-  const currentStack = currentParticipant?.player?.stack || player?.stack || 0
+  const currentStack = player?.stack || 0
   const currentBet = currentParticipant?.bet ? currentParticipant?.bet : 0
   const currentCallAmount = match?.callAmount ? match?.callAmount : 0
   const canCall = currentBet > 0 || currentBet < currentCallAmount
   const canNotCheck = currentCallAmount !== currentBet && currentCallAmount > 0
-  const canQuater = currentStack >= match?.pot! / 4
-  const canHalf = currentStack >= match?.pot! / 2
-  const canFull = currentStack >= match?.pot!
+
+  const canQuater =
+    (match?.pot ?? 0) / 4 >= currentCallAmount &&
+    currentStack >= (match?.pot ?? 0) / 4
+  const canHalf =
+    (match?.pot ?? 0) / 2 >= currentCallAmount &&
+    currentStack >= (match?.pot ?? 0) / 2
+  const canFull =
+    (match?.pot ?? 0) >= currentCallAmount && currentStack >= (match?.pot ?? 0)
 
   const min =
     match?.minBet && match?.minBet >= currentCallAmount

@@ -6,7 +6,6 @@ import { Hand } from './hand'
 import { Match, Participant, PlayerWithUser, PokerActions } from '@/types'
 import { useEffect, useState } from 'react'
 import { formatChipsAmount } from '@/utils/formatting'
-import { ChipsAmountBadge } from '@/components/chips-amount-badge'
 
 interface OtherPlayerProps {
   type?: 'fold' | 'active' | 'default'
@@ -36,7 +35,7 @@ export const OtherPlayer = ({
   const isTurn = !isFolded && player?.isTurn
   const isShowdown = match?.isShowdown
 
-  const currentStack = currentParticipant?.player?.stack || player?.stack || 0
+  const currentStack = player?.stack || 0
   const currentBet = currentParticipant?.bet || 0
 
   useEffect(() => {

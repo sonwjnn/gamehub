@@ -11,6 +11,8 @@ import { cn } from '@/lib/utils'
 import { formatChipsAmount } from '@/utils/formatting'
 import Sound from '@/utils/contants/sound'
 import { useIsWinner } from '@/store/use-is-winner'
+import playerApi from '@/services/api/modules/player-api'
+import { useRouter } from 'next/navigation'
 
 interface CurrentPlayerProps {
   isShowdown?: boolean
@@ -29,6 +31,8 @@ export const CurrentPlayer = ({
   tableId,
 }: CurrentPlayerProps) => {
   const { socket } = useSocket()
+  const router = useRouter()
+
   const { setIsWinner } = useIsWinner()
   const [imageUrlFirst, setImageUrlFirst] = useState('')
   const [imageUrlSecond, setImageUrlSecond] = useState('')
@@ -44,8 +48,8 @@ export const CurrentPlayer = ({
   const isWinner = !isFolded && match?.winnerId === player?.id
   const isTurn = !isFolded && player?.isTurn
   const isShowdown = match?.isShowdown
+  const currentStack = player?.stack || 0
 
-  const currentStack = currentParticipant?.player?.stack || player?.stack || 0
   const currentBet = currentParticipant?.bet || 0
 
   useEffect(() => {
@@ -143,6 +147,47 @@ export const CurrentPlayer = ({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isWinner])
+
+  const removePlayer = async () => {
+    try {
+      if (!player) return
+      const { response, error } = await playerApi.removePlayer({
+        playerId: player?.id,
+        tableId: tableId,
+      })
+
+      if (error) {
+        console.log(error)
+      }
+
+      router.push('/dashboard/table')
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(() => {
+    if (!player || socket.id !== player?.socketId) {
+      removePlayer()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [socket, player?.socketId])
+
+  useEffect(() => {
+    let timer: NodeJS.Timeout | null = null
+
+    if (player && player?.stack <= 0 && isShowdown) {
+      timer = setTimeout(() => {
+        removePlayer()
+      }, 5000)
+    }
+    return () => {
+      if (timer) {
+        clearTimeout(timer)
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentStack, isShowdown])
 
   const fold = () => {
     if (socket) {

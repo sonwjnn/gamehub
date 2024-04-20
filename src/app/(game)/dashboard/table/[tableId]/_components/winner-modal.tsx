@@ -2,6 +2,7 @@
 
 import { useIsWinner } from '@/store/use-is-winner'
 import { Match, Card } from '@/types'
+import { formattedCards } from '@/utils/formatting'
 import Image from 'next/image'
 
 interface WinnerModalProps {
@@ -11,7 +12,9 @@ interface WinnerModalProps {
 export const WinnerModal = ({ match }: WinnerModalProps) => {
   const { isWinner } = useIsWinner()
 
-  if (!match) return null
+  if (!match || !match.winMessages || !match.winMessages.length) return null
+
+  const lastWinMessage = match.winMessages[match.winMessages.length - 1]
 
   return (
     <>
@@ -19,7 +22,7 @@ export const WinnerModal = ({ match }: WinnerModalProps) => {
         <div className="status_win active !z-10" id="status_win">
           <div className="content_top">
             <div className="list">
-              {match?.board.map((card: Card, index) => (
+              {lastWinMessage.winnerHand.map((card: Card, index) => (
                 <div className="item" key={index}>
                   <div className="wrap">
                     <Image
@@ -48,10 +51,17 @@ export const WinnerModal = ({ match }: WinnerModalProps) => {
           <div className="content">
             <div className="wrap">
               <div className="title fw-500">
-                <span className="fw-900">[10,J,Q,K,A] </span>LOREM IPSUM DOLOR
+                <span className="fw-900">
+                  [
+                  {lastWinMessage.winnerHand
+                    .map(card => formattedCards(card.rank).rank)
+                    .join(',')}
+                  ]
+                </span>{' '}
+                {lastWinMessage.content}
               </div>
               <div className="money">
-                <span className="color-main">+20.000$</span>
+                <span className="color-main">+{lastWinMessage.amount}$</span>
               </div>
             </div>
           </div>

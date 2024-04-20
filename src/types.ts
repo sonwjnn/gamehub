@@ -75,6 +75,7 @@ export type Player = {
   table?: Table
   stack: number
   buyIn: number
+  socketId: string
 
   isTurn: boolean
   leaveNextMatch: boolean
@@ -104,6 +105,17 @@ export type Deck = {
   matches?: Match[]
 }
 
+export type WinMessages = {
+  id: string
+  amount: string
+  matchId: string
+  match?: Match
+  handName: string
+  winnerHand: Card[]
+  content: string
+  createdAt: Date
+}
+
 export type Match = {
   id: string
   tableId: string
@@ -124,6 +136,7 @@ export type Match = {
   minRaise: number
   minBet: number
   pot: number
+  winMessages?: WinMessages[]
 }
 
 export type Participant = {
