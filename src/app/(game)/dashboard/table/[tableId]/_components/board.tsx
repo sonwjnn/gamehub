@@ -26,7 +26,7 @@ const BoardCard = ({
       const timer = setTimeout(() => {
         new Audio(Sound.soundOpen).play()
         setHiddenClass('')
-      }, 2000)
+      }, 1000)
 
       return () => clearTimeout(timer)
     }

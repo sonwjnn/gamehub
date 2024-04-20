@@ -161,14 +161,36 @@ export const CurrentPlayerAction = ({
           <span className="number">5</span>
           <div className="value">라이즈</div>
         </button>
-        <button
-          className="item disabled:pointer-events-none disabled:opacity-50"
-          onClick={call}
-          disabled={!isTurn || isProcessing || !canCall}
-        >
-          <span className="number">7</span>
-          <div className="value">콜</div>
-        </button>
+        {canCall ? (
+          <button
+            className="item disabled:pointer-events-none disabled:opacity-50"
+            onClick={call}
+            disabled={!isTurn || isProcessing || !canCall}
+          >
+            <span className="number">7</span>
+            <div className="value">콜</div>
+          </button>
+        ) : !canNotCheck ? (
+          <button
+            className="item disabled:pointer-events-none disabled:opacity-50"
+            onClick={check}
+            disabled={!isTurn || isProcessing || canNotCheck}
+          >
+            {/* <span className="number number_left">4 </span> */}
+            <span className="number">7</span>
+            <div className=" value">체크</div>
+          </button>
+        ) : (
+          <button
+            className="item disabled:pointer-events-none disabled:opacity-50"
+            onClick={call}
+            disabled={!isTurn || isProcessing || !canCall}
+          >
+            <span className="number">7</span>
+            <div className="value">콜</div>
+          </button>
+        )}
+
         <button
           className="item disabled:pointer-events-none disabled:opacity-50"
           onClick={fold}
@@ -177,23 +199,13 @@ export const CurrentPlayerAction = ({
           <span className="number">8</span>
           <div className="value">다이</div>
         </button>
-        {/* <button
-          className="item disabled:pointer-events-none disabled:opacity-50"
-          onClick={() => raise(currentChipsAmount + currentBet)}
-          disabled={isProcessing}
-        >
-          <span className="number">9</span>
-          <div className="value">All in</div>
-        </button> */}
-
         <button
           className="item disabled:pointer-events-none disabled:opacity-50"
-          onClick={check}
-          disabled={!isTurn || isProcessing || canNotCheck}
+          onClick={() => raise(currentStack)}
+          disabled={!isTurn || isProcessing}
         >
-          {/* <span className="number number_left">4 </span> */}
           <span className="number">9</span>
-          <div className=" value">체크</div>
+          <div className="value">올인</div>
         </button>
       </div>
 
