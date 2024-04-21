@@ -22,7 +22,7 @@ export const WinnerModal = ({ match }: WinnerModalProps) => {
         <div className="status_win active !z-10" id="status_win">
           <div className="content_top">
             <div className="list">
-              {lastWinMessage.winnerHand.map((card: Card, index) => (
+              {lastWinMessage.bestHand.map((card: Card, index) => (
                 <div className="item" key={index}>
                   <div className="wrap">
                     <Image

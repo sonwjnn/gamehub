@@ -201,7 +201,7 @@ export const CurrentPlayer = ({
     <div
       className={cn(
         'group_tool flex flex-space gap-12 before:border-none',
-        (isTurn || isWinner) && 'user_active',
+        (isTurn || (isWinner && isShowdown)) && 'user_active',
         isFolded && 'user_fold',
         !isWinner && isShowdown && 'is-lose'
       )}

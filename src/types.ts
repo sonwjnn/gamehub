@@ -111,6 +111,7 @@ export type WinMessages = {
   matchId: string
   match?: Match
   handName: string
+  bestHand: Card[]
   winnerHand: Card[]
   content: string
   createdAt: Date

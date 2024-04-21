@@ -1,4 +1,30 @@
-const HistoryPage = () => {
+import { format } from 'date-fns'
+import { HistoriesClient } from './_components/client'
+import { currentUser } from '@/lib/auth'
+import { redirect } from 'next/navigation'
+import historyApi from '@/services/api/modules/history-api'
+import { HistoryColumn } from './_components/columns'
+import { formatChipsAmount } from '@/utils/formatting'
+
+const HistoryPage = async () => {
+  const user = await currentUser()
+
+  if (!user) {
+    redirect('/auth/login')
+  }
+
+  const { response: histories } = await historyApi.getAllByUserId({
+    userId: user.id,
+  })
+
+  const formattedHistories: HistoryColumn[] = histories.map((item: any) => ({
+    id: item.id,
+    name: item.match.table.name,
+    amount: `+$${formatChipsAmount(+item.amount)}`,
+    status: 'Win',
+    createdAt: format(item.createdAt, 'dd/MM/yyyy'),
+  }))
+
   return (
     <div className="form_custom">
       <h2 className="ttl_main fz-18">
@@ -9,7 +35,7 @@ const HistoryPage = () => {
           HISTORY
         </span>
       </h2>
-      <div className="row flex flex-center mt-16 ">
+      {/* <div className="row flex flex-center mt-16 ">
         <div className="col-12">
           <div className="filter_history flex flex-end gap-16 flex-midle">
             <div>
@@ -89,96 +115,17 @@ const HistoryPage = () => {
                 <div className="tables_td">Trạng thái</div>
               </div>
               <div className="tables_body">
-                <div className="tables_tr">
-                  <div className="tables_td">1/1/2024</div>
-                  <div className="tables_td">0001</div>
-                  <div className="tables_td">+10.000.000</div>
-                  <div className="tables_td">
-                    <span className="color-green">Thắng</span>{' '}
-                    <span className="color-red">Thua</span>
+                {Array.from({ length: 10 }).map((_, index) => (
+                  <div key={index} className="tables_tr">
+                    <div className="tables_td">1/1/2024</div>
+                    <div className="tables_td">0001</div>
+                    <div className="tables_td">+10.000.000</div>
+                    <div className="tables_td">
+                      <span className="color-green">Thắng</span>{' '}
+                      <span className="color-red">Thua</span>
+                    </div>
                   </div>
-                </div>
-                <div className="tables_tr">
-                  <div className="tables_td">1/1/2024</div>
-                  <div className="tables_td">0001</div>
-                  <div className="tables_td">+10.000.000</div>
-                  <div className="tables_td">
-                    <span className="color-green">Thắng</span>{' '}
-                    <span className="color-red">Thua</span>
-                  </div>
-                </div>
-                <div className="tables_tr">
-                  <div className="tables_td">1/1/2024</div>
-                  <div className="tables_td">0001</div>
-                  <div className="tables_td">+10.000.000</div>
-                  <div className="tables_td">
-                    <span className="color-green">Thắng</span>{' '}
-                    <span className="color-red">Thua</span>
-                  </div>
-                </div>
-                <div className="tables_tr">
-                  <div className="tables_td">1/1/2024</div>
-                  <div className="tables_td">0001</div>
-                  <div className="tables_td">+10.000.000</div>
-                  <div className="tables_td">
-                    <span className="color-green">Thắng</span>{' '}
-                    <span className="color-red">Thua</span>
-                  </div>
-                </div>
-                <div className="tables_tr">
-                  <div className="tables_td">1/1/2024</div>
-                  <div className="tables_td">0001</div>
-                  <div className="tables_td">+10.000.000</div>
-                  <div className="tables_td">
-                    <span className="color-green">Thắng</span>{' '}
-                    <span className="color-red">Thua</span>
-                  </div>
-                </div>
-                <div className="tables_tr">
-                  <div className="tables_td">1/1/2024</div>
-                  <div className="tables_td">0001</div>
-                  <div className="tables_td">+10.000.000</div>
-                  <div className="tables_td">
-                    <span className="color-green">Thắng</span>{' '}
-                    <span className="color-red">Thua</span>
-                  </div>
-                </div>
-                <div className="tables_tr">
-                  <div className="tables_td">1/1/2024</div>
-                  <div className="tables_td">0001</div>
-                  <div className="tables_td">+10.000.000</div>
-                  <div className="tables_td">
-                    <span className="color-green">Thắng</span>{' '}
-                    <span className="color-red">Thua</span>
-                  </div>
-                </div>
-                <div className="tables_tr">
-                  <div className="tables_td">1/1/2024</div>
-                  <div className="tables_td">0001</div>
-                  <div className="tables_td">+10.000.000</div>
-                  <div className="tables_td">
-                    <span className="color-green">Thắng</span>{' '}
-                    <span className="color-red">Thua</span>
-                  </div>
-                </div>
-                <div className="tables_tr">
-                  <div className="tables_td">1/1/2024</div>
-                  <div className="tables_td">0001</div>
-                  <div className="tables_td">+10.000.000</div>
-                  <div className="tables_td">
-                    <span className="color-green">Thắng</span>{' '}
-                    <span className="color-red">Thua</span>
-                  </div>
-                </div>
-                <div className="tables_tr">
-                  <div className="tables_td">1/1/2024</div>
-                  <div className="tables_td">0001</div>
-                  <div className="tables_td">+10.000.000</div>
-                  <div className="tables_td">
-                    <span className="color-green">Thắng</span>{' '}
-                    <span className="color-red">Thua</span>
-                  </div>
-                </div>
+                ))}
               </div>
             </div>
           </div>
@@ -212,9 +159,7 @@ const HistoryPage = () => {
               </li>
               <li>
                 <span className="next page-number icon-color-white">
-                  {' '}
                   <span className="icon sz-16">
-                    {' '}
                     <i className="icon-arr_right"></i>
                   </span>
                 </span>
@@ -222,7 +167,8 @@ const HistoryPage = () => {
             </ul>
           </nav>
         </div>
-      </div>
+      </div> */}
+      <HistoriesClient data={formattedHistories || []} />
     </div>
   )
 }
