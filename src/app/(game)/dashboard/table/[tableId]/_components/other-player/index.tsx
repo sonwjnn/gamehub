@@ -150,7 +150,10 @@ export const OtherPlayer = ({
             <div className="name text-center">{player.user?.username}</div>
           </div>
           <div className="right sp_full">
-            <div className="money fw-700">
+            <div className="money fw-700 flex flex-midle flex-center gap-8">
+              <div className="icon sz-16">
+                <i className="icon-coin"></i>
+              </div>
               $ {formatChipsAmount(currentStack)}
             </div>
           </div>

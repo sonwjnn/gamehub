@@ -16,6 +16,7 @@ export const WinnerModal = ({ match }: WinnerModalProps) => {
 
   const lastWinMessage = match.winMessages[match.winMessages.length - 1]
 
+
   return (
     <>
       {isWinner && (

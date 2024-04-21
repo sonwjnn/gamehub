@@ -506,7 +506,7 @@
 }
 .game-html .group_user .info_user .right {
   margin-left: 0;
-  font-size: 125%;
+  font-size: 150%;
   line-height: 16px;
   margin-top: 12px;
 }
@@ -879,9 +879,9 @@
   -webkit-transform: translate(0);
   -ms-transform: translate(0);
   transform: translate(0);
-  top: -15%;
-  left: -1%;
-  width: 50.6912442396%;
+  top: -4%;
+  left: 3.5%;
+  width: 36.866359447%;
 }
 .game-html .group_user .status_countdown {
   position: relative;
@@ -1538,6 +1538,7 @@
   border-radius: 4px;
   height: 100%;
   width: 100%;
+  max-width: 18.5007496252%;
   -webkit-transition: all 0.5s;
   transition: all 0.5s;
 }
