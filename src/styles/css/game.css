@@ -8,7 +8,6 @@
   display: flex;
   position: relative;
   height: 100%;
-  top: -10%;
   padding: 0;
 }
 .game-html .pocker_list .item {
@@ -17,24 +16,37 @@
   width: 100%;
   height: 100%;
 }
-.game-html .pocker_list .item:nth-child(1) {
-  top: -10px;
-}
 .game-html .pocker_list .item:nth-child(2) {
-  left: 20px;
-  margin-top: 10px;
+  left: 15px;
+}
+@media (min-width: 1024px), ((min-width: 768px) and (orientation: portrait)) {
+  .game-html .pocker_list .item:nth-child(2) {
+    left: 30px;
+  }
 }
 .game-html .pocker_list .item:nth-child(3) {
-  top: 20px;
   left: 30px;
 }
+@media (min-width: 1024px), ((min-width: 768px) and (orientation: portrait)) {
+  .game-html .pocker_list .item:nth-child(3) {
+    left: 60px;
+  }
+}
 .game-html .pocker_list .item:nth-child(4) {
-  top: 35px;
   left: 45px;
 }
+@media (min-width: 1024px), ((min-width: 768px) and (orientation: portrait)) {
+  .game-html .pocker_list .item:nth-child(4) {
+    left: 90px;
+  }
+}
 .game-html .pocker_list .item:nth-child(5) {
-  top: 50px;
   left: 60px;
+}
+@media (min-width: 1024px), ((min-width: 768px) and (orientation: portrait)) {
+  .game-html .pocker_list .item:nth-child(5) {
+    left: 120px;
+  }
 }
 .game-html .pocker_list .pocker {
   position: absolute;
@@ -506,12 +518,25 @@
 }
 .game-html .group_user .info_user .right {
   margin-left: 0;
-  font-size: 150%;
   line-height: 16px;
-  margin-top: 12px;
+  margin-top: 4px;
+  font-size: 100%;
+}
+@media (min-width: 1024px), ((min-width: 768px) and (orientation: portrait)) {
+  .game-html .group_user .info_user .right {
+    margin-top: 12px;
+    font-size: 150%;
+  }
 }
 .game-html .group_user .info_user .right .money {
   color: #ffaa00;
+}
+@media (min-width: 320px) and (orientation: portrait),
+  (max-width: 1023px) and (orientation: landscape) {
+  .game-html .group_user .info_user .right .money .icon {
+    width: 8px;
+    height: 8px;
+  }
 }
 @media (min-width: 320px) and (orientation: portrait),
   (max-width: 1023px) and (orientation: landscape) {
@@ -587,6 +612,14 @@
     transform: translateX(-30%);
   }
 }
+.game-html .group_user:nth-child(2) .coin_bet {
+  left: 100%;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  margin: 0;
+}
 .game-html .group_user:nth-child(3) {
   right: 0;
 }
@@ -596,6 +629,15 @@
     -ms-transform: translateX(30%);
     transform: translateX(30%);
   }
+}
+.game-html .group_user:nth-child(3) .coin_bet {
+  right: 100%;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  left: auto;
+  margin: 0;
 }
 .game-html .group_user:nth-child(4),
 .game-html .group_user:nth-child(5) {
@@ -1241,6 +1283,31 @@
   -ms-transform: translate(-50%, -50%) scale(1);
   transform: translate(-50%, -50%) scale(1);
   pointer-events: all;
+}
+.game-html .coin_bet {
+  position: absolute;
+  z-index: 999;
+  top: 100%;
+  left: 0;
+  right: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  margin: auto;
+  width: 30px;
+  height: 30px;
+}
+@media (min-width: 1024px), ((min-width: 768px) and (orientation: portrait)) {
+  .game-html .coin_bet {
+    width: 60px;
+    height: 60px;
+  }
 }
 .game-html .group_chat {
   position: absolute;
@@ -2242,6 +2309,14 @@
     #ffec42 59.09%,
     #c4ff9f 69.83%
   );
+}
+.game-html .group_tool .coin_bet {
+  top: auto;
+  bottom: -30%;
+  left: 100%;
+  -webkit-transform: translateX(-100%);
+  -ms-transform: translateX(-100%);
+  transform: translateX(-100%);
 }
 .game-html .avatar {
   background-image: url(/images/avt_bg2.png);
