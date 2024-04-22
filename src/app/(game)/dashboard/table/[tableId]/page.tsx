@@ -24,13 +24,13 @@ import { InvitePlayer } from './_components/invite-player'
 import { cn } from '@/lib/utils'
 import { useIsWinner } from '@/store/use-is-winner'
 import { WinnerModal } from './_components/winner-modal'
+import { Button } from '@/components/ui/button'
 
 const TablePage = () => {
   const [isHandVisible, setHandVisible] = useState(false)
-
   const [players, setPlayers] = useState<PlayerWithUser[]>([])
-
   const [isShuffle, setShuffle] = useState(false)
+
   const params = useParams()
   const origin = useOrigin()
   const user = useCurrentUser()
@@ -60,7 +60,7 @@ const TablePage = () => {
     const dealY = bounds.height
     const stackOffset = 20
     const offsetX = 0
-    const offsetY = 0
+    const offsetY = 10
     const positions = Array.from(players).map(playerPosition)
     const numPlayers = players.length
     const totalCards = numPlayers * cardsHand
@@ -88,7 +88,11 @@ const TablePage = () => {
       i = i % numPlayers
       if (coord === 'x' && !i) round++
 
-      return positions[i][coord] + round * stackOffset
+      if (coord === 'x') {
+        return positions[i][coord] + round * cardWidth
+      } else {
+        return positions[i][coord] + offsetY
+      }
     }
 
     if (isShuffle) {
@@ -338,6 +342,7 @@ const TablePage = () => {
               'opacity-100 pointer-events-auto'
           )}
         />
+        {/* <Button onClick={() => setShuffle(true)}>Shuffle</Button> */}
       </div>
       <div className="wrapper w-full" ref={wrapperRef}>
         <Image

@@ -16,30 +16,28 @@ export const Hand = ({
 }: HandProps) => {
   return (
     <div className="pocker_list">
-      {!isHidden && (
-        <>
-          <div
-            className={cn(
-              `item flipped opacity-0 transition`,
-              !isHidden && 'opacity-100'
-            )}
-          >
-            <div className="pocker">
-              <Card imageUrl={imageUrlFirst} value={10} />
-            </div>
-          </div>
-          <div
-            className={cn(
-              `item flipped opacity-0 transition`,
-              !isHidden && 'opacity-100'
-            )}
-          >
-            <div className="pocker">
-              <Card imageUrl={imageUrlSecond} value={10} />
-            </div>
-          </div>
-        </>
-      )}
+      <div
+        className={cn(
+          `item flipped opacity-0 transition`,
+          !imageUrlFirst && 'hide',
+          !isHidden && 'opacity-100'
+        )}
+      >
+        <div className="pocker">
+          <Card imageUrl={imageUrlFirst} value={10} />
+        </div>
+      </div>
+      <div
+        className={cn(
+          `item flipped opacity-0 transition`,
+          !imageUrlSecond && 'hide',
+          !isHidden && 'opacity-100'
+        )}
+      >
+        <div className="pocker">
+          <Card imageUrl={imageUrlSecond} value={10} />
+        </div>
+      </div>
     </div>
   )
 }

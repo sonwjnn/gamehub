@@ -1,3 +1,5 @@
+'use client'
+
 import { useEffect, useState } from 'react'
 import { Card } from './card'
 import { cn } from '@/lib/utils'
@@ -41,7 +43,7 @@ const BoardCard = ({
   )
 }
 
-export const Board = ({ match, isHidden = false, isShuffle }: BoardProps) => {
+export const Board = ({ match }: BoardProps) => {
   const [isPreFlop, setPreFlop] = useState(true)
   const [isFlop, setFlop] = useState(false)
   const [isTurn, setTurn] = useState(false)

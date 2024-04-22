@@ -10,6 +10,8 @@ import {
   getPaginationRowModel,
   useReactTable,
   PaginationState,
+  getSortedRowModel,
+  SortingState,
 } from '@tanstack/react-table'
 
 import {
@@ -21,37 +23,43 @@ import {
   TableRow,
 } from '@/components/ui/table'
 
-import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
-
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { DatePicker } from '../date-picker'
+import { DateRange } from 'react-day-picker'
+import { addDays } from 'date-fns'
+import { DateRangePicker } from '@/components/date-range-picker'
+import { dateBetweenFilterFn, statusFilterFn } from '@/utils/filters'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 
-interface DataTableProps<TData, TValue> {
+interface HistoryDataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
   searchKey: string
 }
 
-export function DataTable<TData, TValue>({
+export function HistoryDataTable<TData, TValue>({
   columns,
   data,
   searchKey,
-}: DataTableProps<TData, TValue>) {
+}: HistoryDataTableProps<TData, TValue>) {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
-  const [date, setDate] = useState<Date>()
+
+  const [date, setDate] = useState<DateRange | undefined>({
+    from: new Date(2023, 0, 20),
+    to: addDays(new Date(), 20),
+  })
+  const [status, setStatus] = useState<string | undefined>(undefined)
+  const [sorting, setSorting] = useState<SortingState>([])
 
   const [{ pageIndex, pageSize }, setPagination] = useState<PaginationState>({
     pageIndex: 0,
-    pageSize: 5,
+    pageSize: 10,
   })
 
   const pagination = useMemo(
@@ -72,28 +80,37 @@ export function DataTable<TData, TValue>({
     state: {
       columnFilters,
       pagination,
+      sorting,
     },
+    filterFns: {
+      dateBetweenFilterFn: dateBetweenFilterFn,
+      statusFilterFn: statusFilterFn,
+    },
+    onSortingChange: setSorting,
+    getSortedRowModel: getSortedRowModel(),
     onPaginationChange: setPagination,
     pageCount: Math.ceil(data.length / pageSize),
   })
 
   useEffect(() => {
-    if (date) {
-      setColumnFilters(oldFilters => [
-        ...oldFilters,
-        {
-          id: 'date', // Replace with the id of your date column
-          value: date,
-        },
-      ])
-    }
-  }, [date, setColumnFilters])
+    const dateColumn = table.getColumn('createdAt')
+    dateColumn?.setFilterValue(date)
+  }, [date, table])
+
+  useEffect(() => {
+    const statusColumn = table.getColumn('status')
+    statusColumn?.setFilterValue(status)
+  }, [status, table])
+
+  const handleSelectedStatus = (value: string) => {
+    setStatus(value)
+  }
 
   return (
     <div>
       <div className="flex justify-end items-center py-4 gap-x-2">
         <div>
-          <div className="input-group">
+          <div className="input-group pb-0">
             <div className="wrap-input">
               <Input
                 placeholder=""
@@ -111,7 +128,19 @@ export function DataTable<TData, TValue>({
         </div>
 
         <div className="max-w-sm">
-          <DatePicker date={date} setDate={setDate} />
+          <Select onValueChange={handleSelectedStatus}>
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="Status" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="win">Win</SelectItem>
+              <SelectItem value="lose">Lose</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+
+        <div className="max-w-sm">
+          <DateRangePicker date={date} setDate={setDate} />
         </div>
       </div>
       <div className="rounded-md border-none">

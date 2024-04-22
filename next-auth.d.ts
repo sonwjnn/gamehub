@@ -21,3 +21,10 @@ declare global {
     }
   }
 }
+
+declare module '@tanstack/table-core' {
+  interface FilterFns {
+    dateBetweenFilterFn: FilterFn<unknown>
+    statusFilterFn: FilterFn<unknown>
+  }
+}
