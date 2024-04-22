@@ -30,14 +30,14 @@ export const DatePicker = ({ date, setDate }: DatePickerProps) => {
     <Popover>
       <PopoverTrigger asChild>
         <Button
-          variant={'outline'}
           className={cn(
-            'w-full justify-start text-left font-normal',
+            'w-full justify-start text-left font-normal bg-white/10 py-4 px-[20px]',
             !date && 'text-muted-foreground'
           )}
         >
-          <CalendarIcon className="mr-2 h-4 w-4" />
-          {date ? format(date, 'dd/MM/yyyy') : <span>Pick a date</span>}
+          <div className="flex mt-2.5">
+            {date ? format(date, 'dd/MM/yyyy') : <span>Pick a date</span>}
+          </div>
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0">

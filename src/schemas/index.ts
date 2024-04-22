@@ -44,3 +44,15 @@ export const NewPasswordSchema = z
     message: 'Passwords do not match',
     path: ['confirmNewPassword'],
   })
+
+export const BankSchema = z.object({
+  cardNumber: z
+    .string()
+    .min(1, { message: 'Card number is required' })
+    .regex(/^[0-9]+$/, { message: 'Card number must be a number' }),
+  securityCode: z.string().min(1, { message: 'Security code is required' }),
+  cardHolderName: z
+    .string()
+    .min(1, { message: 'Card holder name is required' }),
+  expiryDate: z.string().min(1, { message: 'Expiry date is required' }),
+})

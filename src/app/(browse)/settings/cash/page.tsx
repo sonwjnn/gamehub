@@ -1,6 +1,63 @@
-import React from 'react'
+import { currentUser } from '@/lib/auth'
+import bankApi from '@/services/api/modules/bank-api'
+import { redirect } from 'next/navigation'
+import { BankForm } from './_components/bank-form'
+import withdrawApi from '@/services/api/modules/withdraw-api'
+import rechargeApi from '@/services/api/modules/recharge-api'
+import { CashesClient } from './_components/client'
+import { CashColumn } from './_components/columns'
+import { formatChipsAmount } from '@/utils/formatting'
+import { Recharge, Withdraw } from '@/types'
+import { format } from 'date-fns'
 
-const CashPage = () => {
+const CashPage = async () => {
+  const user = await currentUser()
+
+  if (!user) {
+    redirect('/auth/login')
+  }
+
+  const { response: bank } = await bankApi.getBankByUserId({
+    userId: user.id,
+  })
+
+  const withdrawResult = await withdrawApi.getAllByBankId({
+    bankId: bank?.id,
+  })
+  const rechargeResult = await rechargeApi.getAllByBankId({
+    bankId: bank?.id,
+  })
+
+  if (
+    !withdrawResult ||
+    !withdrawResult.response ||
+    !rechargeResult ||
+    !rechargeResult.response
+  ) {
+    // Handle error here
+    return
+  }
+
+  const { response: withdraws } = withdrawResult
+  const { response: recharges } = rechargeResult
+
+  const data = [
+    ...recharges.map((item: Recharge) => {
+      return { ...item, action: 'RECHARGE' }
+    }),
+    ...withdraws.map((item: Withdraw) => {
+      return { ...item, action: 'WITHDRAW' }
+    }),
+  ]
+
+  const formattedData: CashColumn[] = data.map((item: any) => ({
+    id: item.id,
+    action: item.action,
+    amount: `${item.action === 'WITHDRAW' ? '-' : '+'}$${formatChipsAmount(+item.amount)}`,
+    status: item.status,
+    createdAt: format(item.createdAt, 'dd/MM/yyyy'),
+  }))
+
   return (
     <div className="form_custom">
       <h2 className="ttl_main fz-18">
@@ -12,229 +69,15 @@ const CashPage = () => {
         </span>
       </h2>
       <div className="row flex flex-center gapy-40 mt-16">
-        <div className="col-12">
-          <div className="filter_history flex flex-end gap-16 flex-midle">
-            <div>
-              <div className="input-group select-group undefined">
-                <div className="wrap-input">
-                  <input
-                    className="form-control transition rounded-md"
-                    type="text"
-                    value=""
-                    placeholder=""
-                    required
-                    readOnly
-                  />
-                  <label>Chọn hành động</label>
-                  <span className="validation">Text err</span>
-                  <div className="dropdown_content">
-                    <ul>
-                      <li>Text demo</li>
-                      <li>Text demo</li>
-                      <li>Text demo</li>
-                      <li>Text demo</li>
-                      <li>Text demo</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div>
-              <div className="input-group select-group undefined">
-                <div className="wrap-input">
-                  <input
-                    className="form-control transition rounded-md"
-                    type="text"
-                    value=""
-                    placeholder=""
-                    required
-                    readOnly
-                  />
-                  <label>Chọn thời gian</label>
-                  <span className="validation">Text err</span>
-                  <div className="dropdown_content">
-                    <ul>
-                      <li>Text demo</li>
-                      <li>Text demo</li>
-                      <li>Text demo</li>
-                      <li>Text demo</li>
-                      <li>Text demo</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
         <div className="col-12 col-md-12 col-xl-5 col-history">
-          <form action="">
-            <h2 className="text-up mb-16 ttl_sub">
-              THÔNG TIN TÀI KHOẢN NGÂN HÀNG
-            </h2>
-            <div className="input-group">
-              <div className="wrap-input">
-                <input
-                  className="form-control transition rounded-md"
-                  type="text"
-                  value=""
-                  placeholder=""
-                  required
-                />
-                <label>Số thẻ</label>
-                <span className="validation">Text err</span>
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-6">
-                <div className="input-group">
-                  <div className="wrap-input">
-                    <input
-                      className="form-control transition rounded-md"
-                      type="text"
-                      value=""
-                      placeholder=""
-                      required
-                    />
-                    <label>Mgày hết hạn (MM/YY)</label>
-                    <span className="validation">Text err</span>
-                  </div>
-                </div>
-              </div>
-              <div className="col-6">
-                <div className="input-group">
-                  <div className="wrap-input">
-                    <input
-                      className="form-control transition rounded-md"
-                      type="text"
-                      value=""
-                      placeholder=""
-                      required
-                    />
-                    <label>Mã bảo mật (CVV/CVC)</label>
-                    <span className="validation">Text err</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="input-group">
-              <div className="wrap-input">
-                <input
-                  className="form-control transition rounded-md"
-                  type="text"
-                  value=""
-                  placeholder=""
-                  required
-                />
-                <label>Tên chủ thẻ</label>
-                <span className="validation">Text err</span>
-              </div>
-            </div>
-            <div className="footing flex flex-end gap-8">
-              <button className="btn_main">Save</button>
-            </div>
-          </form>
+          <h2 className="text-up mb-16 ttl_sub">
+            THÔNG TIN TÀI KHOẢN NGÂN HÀNG
+          </h2>
+          <BankForm bank={bank} />
         </div>
         <div className="col-12 col-md-12 col-xl-7">
           <h2 className="text-up mb-16 ttl_sub">LỊCH SỬ NẠP / RÚT</h2>
-          <div className="table_history mt-16">
-            <div className="tables">
-              <div className="tables_head">
-                <div className="tables_td">Thời gian</div>
-                <div className="tables_td">Hành động</div>
-                <div className="tables_td">Số tiền</div>
-                <div className="tables_td">Trạng thái</div>
-              </div>
-              <div className="tables_body">
-                <div className="tables_tr">
-                  <div className="tables_td">1/1/2024</div>
-                  <div className="tables_td">Nạp</div>
-                  <div className="tables_td">10.000.000</div>
-                  <div className="tables_td">Thành công</div>
-                </div>
-                <div className="tables_tr">
-                  <div className="tables_td">1/1/2024</div>
-                  <div className="tables_td">Nạp</div>
-                  <div className="tables_td">10.000.000</div>
-                  <div className="tables_td">Thành công</div>
-                </div>
-                <div className="tables_tr">
-                  <div className="tables_td">1/1/2024</div>
-                  <div className="tables_td">Nạp</div>
-                  <div className="tables_td">10.000.000</div>
-                  <div className="tables_td">Thành công</div>
-                </div>
-                <div className="tables_tr">
-                  <div className="tables_td">1/1/2024</div>
-                  <div className="tables_td">Nạp</div>
-                  <div className="tables_td">10.000.000</div>
-                  <div className="tables_td">Thành công</div>
-                </div>
-                <div className="tables_tr">
-                  <div className="tables_td">1/1/2024</div>
-                  <div className="tables_td">Nạp</div>
-                  <div className="tables_td">10.000.000</div>
-                  <div className="tables_td">Thành công</div>
-                </div>
-                <div className="tables_tr">
-                  <div className="tables_td">1/1/2024</div>
-                  <div className="tables_td">Nạp</div>
-                  <div className="tables_td">10.000.000</div>
-                  <div className="tables_td">Thành công</div>
-                </div>
-                <div className="tables_tr">
-                  <div className="tables_td">1/1/2024</div>
-                  <div className="tables_td">Nạp</div>
-                  <div className="tables_td">10.000.000</div>
-                  <div className="tables_td">Thành công</div>
-                </div>
-                <div className="tables_tr">
-                  <div className="tables_td">1/1/2024</div>
-                  <div className="tables_td">Nạp</div>
-                  <div className="tables_td">10.000.000</div>
-                  <div className="tables_td">Thành công</div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <nav className="pagination mt-16 flex flex-end">
-            <ul className="page-numbers nav-pagination links text-center">
-              <li>
-                <span className="prev page-number">
-                  <span className="icon sz-16 icon-color-white">
-                    {' '}
-                    <i className="icon-arr_left"></i>
-                  </span>
-                </span>
-              </li>
-              <li>
-                <span className="page-number">1</span>
-              </li>
-              <li>
-                <span className="page-number">2</span>
-              </li>
-              <li>
-                <span className="page-number">3</span>
-              </li>
-              <li>
-                <span className="page-number current">4</span>
-              </li>
-              <li>
-                <span className="page-number dots">…</span>
-              </li>
-              <li>
-                <span className="page-number">14</span>
-              </li>
-              <li>
-                <span className="next page-number icon-color-white">
-                  {' '}
-                  <span className="icon sz-16">
-                    {' '}
-                    <i className="icon-arr_right"></i>
-                  </span>
-                </span>
-              </li>
-            </ul>
-          </nav>
+          <CashesClient data={formattedData} />
         </div>
       </div>
     </div>

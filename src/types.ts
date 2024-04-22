@@ -157,6 +157,46 @@ export type Participant = {
   bet: number
 }
 
+enum BankActionStatus {
+  PENDING = 'PENDING',
+  SUCCESS = 'SUCCESS',
+  FAILED = 'FAILED',
+}
+
+export type Recharge = {
+  id: string
+  amount: number
+  bankId: string
+  bank?: Bank
+  status: BankActionStatus
+  createdAt: Date
+}
+
+export type Withdraw = {
+  id: string
+  amount: number
+  bankId: string
+  bank?: Bank
+  status: BankActionStatus
+  createdAt: Date
+}
+
+export type Bank = {
+  id: string
+  userId: string
+  user?: User
+  cardNumber: string
+  securityCode: string
+  cardHolderName: string
+  expiryDate: Date
+
+  recharges?: Recharge[]
+  withdraws?: Withdraw[]
+
+  createdAt: Date
+  updatedAt: Date
+}
+
 export type PlayerWithUser = Player & { user: User }
 
 export type TableWithPlayers = Table & {
