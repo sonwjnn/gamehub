@@ -11,6 +11,8 @@ const playerEndpoints = {
   }) => `players/${tableId}/${userId}`,
   getCurrentPlayerWithoutTable: ({ userId }: { userId: string }) =>
     `players/table/user/${userId}`,
+  getPlayersByTableId: ({ tableId }: { tableId: string }) =>
+    `players/table/${tableId}`,
   createPlayer: 'players/',
   removePlayer: (playerId: string) => `players/${playerId}`,
   updatePlayer: (playerId: string) => `players/${playerId}`,
@@ -32,7 +34,17 @@ const playerApi = {
       return { error }
     }
   },
-
+  getPlayersByTableId: async ({ tableId }: { tableId: string }) => {
+    try {
+      const response = await privateClient.get(
+        playerEndpoints.getPlayersByTableId({ tableId })
+      )
+      if (response && response.data) return { response: response.data }
+      return { response }
+    } catch (error) {
+      return { error }
+    }
+  },
   getCurrentPlayerWithoutTable: async (data: { userId: string }) => {
     try {
       const response = await privateClient.get(

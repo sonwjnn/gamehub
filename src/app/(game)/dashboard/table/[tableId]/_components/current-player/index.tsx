@@ -166,7 +166,7 @@ export const CurrentPlayer = ({
   }
 
   useEffect(() => {
-    if (!player || socket.id !== player?.socketId || !isConnected) {
+    if (!player || socket?.id !== player?.socketId || !isConnected) {
       removePlayer()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -190,6 +190,7 @@ export const CurrentPlayer = ({
 
   const fold = () => {
     if (socket) {
+      new Audio(Sound.soundFoldBoy).play()
       socket.emit(PokerActions.FOLD, {
         tableId,
         participantId: currentParticipant?.id,

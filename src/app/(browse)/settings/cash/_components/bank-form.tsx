@@ -118,7 +118,7 @@ export const BankForm = ({ bank }: BankFormProps) => {
                         date={new Date(field.value ? field.value : new Date())}
                         setDate={date => field.onChange(date?.toString())}
                       />
-                      <label className="absolute top-0 left-5 text-[10px] text-white/50">
+                      <label className="absolute top-1 left-5 text-[10px] text-white/50">
                         Expiry date
                       </label>
                     </div>

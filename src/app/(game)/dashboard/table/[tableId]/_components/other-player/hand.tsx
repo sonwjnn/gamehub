@@ -24,7 +24,9 @@ export const Hand = ({
   }, [isHidden])
 
   return (
-    <div className={cn('pocker_list', isShowdown && 'has_active')}>
+    <div
+      className={cn('pocker_list other_poker_list', isShowdown && 'has_active')}
+    >
       <div
         className={cn(
           'item flipped opacity-0 ',

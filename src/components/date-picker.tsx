@@ -31,7 +31,7 @@ export const DatePicker = ({ date, setDate }: DatePickerProps) => {
       <PopoverTrigger asChild>
         <Button
           className={cn(
-            'w-full justify-start text-left font-normal bg-white/10 py-4 px-[20px]',
+            'w-full justify-start text-left font-normal mt-0.5 bg-white/10 py-[24px] px-[20px]',
             !date && 'text-muted-foreground'
           )}
         >

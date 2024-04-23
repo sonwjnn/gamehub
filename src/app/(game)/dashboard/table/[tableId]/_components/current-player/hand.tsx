@@ -15,7 +15,7 @@ export const Hand = ({
   isHidden = true,
 }: HandProps) => {
   return (
-    <div className="pocker_list">
+    <div className="pocker_list current_poker_list">
       <div
         className={cn(
           `item flipped opacity-0 transition`,
