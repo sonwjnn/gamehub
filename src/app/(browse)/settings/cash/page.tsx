@@ -37,15 +37,13 @@ const CashPage = async () => {
     }),
   ]
 
-  const formattedData: CashColumn[] = data.length
-    ? data.map((item: any) => ({
-        id: item.id,
-        action: item.action,
-        amount: `${item.action === 'WITHDRAW' ? '-' : '+'}$${formatChipsAmount(+item.amount)}`,
-        status: item.status,
-        createdAt: format(item.createdAt, 'dd/MM/yyyy'),
-      }))
-    : []
+  const formattedData: CashColumn[] = data.map((item: any) => ({
+    id: item.id,
+    action: item.action,
+    amount: `${item.action === 'WITHDRAW' ? '-' : '+'}$${formatChipsAmount(+item.amount)}`,
+    status: item.status,
+    createdAt: format(item.createdAt, 'dd/MM/yyyy'),
+  }))
 
   return (
     <div className="form_custom">

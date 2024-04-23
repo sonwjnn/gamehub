@@ -7,7 +7,7 @@ const rechargeEndpoints = {
 const rechargeApi = {
   getAllByBankId: async ({ bankId }: { bankId: string | undefined }) => {
     try {
-      if (!bankId) return { error: 'Bank ID is required' }
+      if (!bankId) return { response: [] }
 
       const response = await publicClient.get(
         rechargeEndpoints.getAllByBankId(bankId)

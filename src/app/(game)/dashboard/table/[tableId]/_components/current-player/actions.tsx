@@ -83,7 +83,6 @@ export const CurrentPlayerAction = ({
   const raise = (amount: number, type: RaiseType) => {
     setIsAction(true)
     if (socket && !isProcessing) {
-      new Audio(Sound.soundRaiseBoy).play()
       setIsProcessing(true)
       socket.emit(PokerActions.RAISE, {
         tableId,
