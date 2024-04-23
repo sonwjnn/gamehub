@@ -21,25 +21,12 @@ const CashPage = async () => {
     userId: user.id,
   })
 
-  const withdrawResult = await withdrawApi.getAllByBankId({
+  const { response: withdraws } = await withdrawApi.getAllByBankId({
     bankId: bank?.id,
   })
-  const rechargeResult = await rechargeApi.getAllByBankId({
+  const { response: recharges } = await rechargeApi.getAllByBankId({
     bankId: bank?.id,
   })
-
-  if (
-    !withdrawResult ||
-    !withdrawResult.response ||
-    !rechargeResult ||
-    !rechargeResult.response
-  ) {
-    // Handle error here
-    return
-  }
-
-  const { response: withdraws } = withdrawResult
-  const { response: recharges } = rechargeResult
 
   const data = [
     ...recharges.map((item: Recharge) => {
@@ -50,13 +37,15 @@ const CashPage = async () => {
     }),
   ]
 
-  const formattedData: CashColumn[] = data.map((item: any) => ({
-    id: item.id,
-    action: item.action,
-    amount: `${item.action === 'WITHDRAW' ? '-' : '+'}$${formatChipsAmount(+item.amount)}`,
-    status: item.status,
-    createdAt: format(item.createdAt, 'dd/MM/yyyy'),
-  }))
+  const formattedData: CashColumn[] = data.length
+    ? data.map((item: any) => ({
+        id: item.id,
+        action: item.action,
+        amount: `${item.action === 'WITHDRAW' ? '-' : '+'}$${formatChipsAmount(+item.amount)}`,
+        status: item.status,
+        createdAt: format(item.createdAt, 'dd/MM/yyyy'),
+      }))
+    : []
 
   return (
     <div className="form_custom">
