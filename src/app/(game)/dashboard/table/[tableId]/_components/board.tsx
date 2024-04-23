@@ -9,7 +9,6 @@ import Sound from '@/utils/contants/sound'
 
 interface BoardProps {
   match: Match | null
-
   isHidden?: boolean
   isShuffle?: boolean
 }
@@ -57,6 +56,12 @@ export const Board = ({ match }: BoardProps) => {
       setTurn(match.isTurn)
       setRiver(match.isRiver)
       setBoard(match.board)
+    } else {
+      setPreFlop(true)
+      setFlop(false)
+      setTurn(false)
+      setRiver(false)
+      setBoard(null)
     }
   }, [match])
 

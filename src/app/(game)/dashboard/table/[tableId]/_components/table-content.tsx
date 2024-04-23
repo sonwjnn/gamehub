@@ -50,9 +50,7 @@ export const TableContent = ({ tableId }: TableContentProps) => {
 
     const bounds = table.getBoundingClientRect()
 
-    const currentPlayerIndex = Array.from(players).findIndex(
-      (player: Element) => player.classList.contains('current_poker_list')
-    )
+    const currentPlayerIndex = 0
     const cardWidth = 50
     const cardsHand = 2
     const dealX = bounds.width / 2 - cardWidth / 2
@@ -76,10 +74,10 @@ export const TableContent = ({ tableId }: TableContentProps) => {
     function createCard(i: number) {
       const card = table?.ownerDocument.createElement('div')
       if (card) {
-        const isCurrentPlayer =
-          i % (numPlayers * cardsHand) < cardsHand &&
-          Math.floor(i / cardsHand) === currentPlayerIndex
-        card.className = 'player-card'
+        const isCurrentPlayer = i % numPlayers === currentPlayerIndex
+        card.className = isCurrentPlayer
+          ? 'player-card current-player-card'
+          : 'player-card'
         card.textContent = i.toString()
         table?.appendChild(card)
       }
@@ -99,8 +97,6 @@ export const TableContent = ({ tableId }: TableContentProps) => {
     function dealCard(i: number) {
       createCard(i + 1)
 
-      new Audio(SoundUrls.soundShufle).play()
-
       gsap.set('.player-card', {
         x: dealX,
         y: dealY,
@@ -118,10 +114,9 @@ export const TableContent = ({ tableId }: TableContentProps) => {
         y: (i: number) => cyclePosition('y', i),
         zIndex: (i: number) => zIndex++,
         onComplete: () => {
-          setHandVisible(true)
-          setShuffle(false)
-
           timerId = setTimeout(() => {
+            setHandVisible(true)
+            setShuffle(false)
             const elements = document.querySelectorAll('.player-card')
             elements.forEach(element => {
               element?.parentNode?.removeChild(element)
@@ -132,6 +127,8 @@ export const TableContent = ({ tableId }: TableContentProps) => {
     }
 
     if (isShuffle) {
+      new Audio(SoundUrls.soundShufle).play()
+
       let i = 0
       const dealInterval = setInterval(() => {
         dealCard(i)
@@ -164,6 +161,7 @@ export const TableContent = ({ tableId }: TableContentProps) => {
           match: Match
           playerId: string
         }) => {
+          setMatch(null)
           setParticipants([])
           setHandVisible(false)
 
