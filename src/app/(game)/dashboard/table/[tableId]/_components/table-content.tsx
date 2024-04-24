@@ -108,7 +108,7 @@ export const TableContent = ({ tableId }: TableContentProps) => {
       })
 
       gsap.to('.player-card', {
-        duration: 1,
+        duration: 0.5,
         rotation: 360,
         x: (i: number) => cyclePosition('x', i),
         y: (i: number) => cyclePosition('y', i),
@@ -171,7 +171,6 @@ export const TableContent = ({ tableId }: TableContentProps) => {
             timerMatchId = setTimeout(() => {
               setMatch(match)
               setParticipants(match.participants)
-
               setPlayers(prev =>
                 prev.map(item => {
                   if (item.id === playerId) {
