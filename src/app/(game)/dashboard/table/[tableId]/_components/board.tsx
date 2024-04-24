@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import { Card } from './card'
 import { cn } from '@/lib/utils'
-import { Card as CardType, Match } from '@/types'
+import { Match } from '@/types'
 import { formatChipsAmount } from '@/utils/formatting'
 import Sound from '@/utils/contants/sound'
 
@@ -34,7 +34,7 @@ const BoardCard = ({
   }, [isHidden])
 
   return (
-    <div className={cn('item flipped ', hiddenClass)}>
+    <div className={cn('item flipped', hiddenClass)}>
       <div className="pocker">
         <Card imageUrl={imageUrl} value={10} />
       </div>
@@ -43,34 +43,17 @@ const BoardCard = ({
 }
 
 export const Board = ({ match }: BoardProps) => {
-  const [isPreFlop, setPreFlop] = useState(true)
-  const [isFlop, setFlop] = useState(false)
-  const [isTurn, setTurn] = useState(false)
-  const [isRiver, setRiver] = useState(false)
-  const [board, setBoard] = useState<CardType[] | null>(null)
-
-  useEffect(() => {
-    if (match) {
-      setPreFlop(match.isPreFlop)
-      setFlop(match.isFlop)
-      setTurn(match.isTurn)
-      setRiver(match.isRiver)
-      setBoard(match.board)
-    } else {
-      setPreFlop(true)
-      setFlop(false)
-      setTurn(false)
-      setRiver(false)
-      setBoard(null)
-    }
-  }, [match])
+  const isPreFlop = match?.isPreFlop
+  const isFlop = match?.isFlop
+  const isTurn = match?.isTurn
+  const isRiver = match?.isRiver
+  const board = match?.board
 
   useEffect(() => {
     if (isFlop) {
       new Audio(Sound.soundShare).play()
     }
   }, [isFlop])
-
   return (
     <div className="group_midle">
       <div className="group_pocker">
