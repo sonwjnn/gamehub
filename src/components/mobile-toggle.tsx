@@ -8,6 +8,8 @@ import { LogoutButton } from './auth/logout-button'
 import Link from 'next/link'
 import '@/styles/css/styles.css'
 import { UserBoard } from './user-board'
+import { RotateCcw } from 'lucide-react'
+import { BsCashCoin } from 'react-icons/bs'
 
 export const MobileToggle = () => {
   const [isOpen, setIsOpen] = useState(false)
@@ -52,6 +54,20 @@ export const MobileToggle = () => {
                   <span>Cash Games</span>
                 </Link>
               </li>
+
+              <li>
+                <Link
+                  href="/settings/cash-action"
+                  onClick={() => setIsOpen(false)}
+                >
+                  <BsCashCoin
+                    size={20}
+                    className="group-hover:text-white transition"
+                  />
+                  <span>Cash Actions</span>
+                </Link>
+              </li>
+
               <li>
                 <Link href="/settings/cash" onClick={() => setIsOpen(false)}>
                   <span className="icon sz-20 icon-color-white">
@@ -67,6 +83,18 @@ export const MobileToggle = () => {
                     <i className="icon-history"></i>
                   </span>
                   <span>History</span>
+                </Link>
+              </li>
+
+              <li>
+                <Link
+                  href="/settings/new-password"
+                  onClick={() => setIsOpen(false)}
+                >
+                  <span className="icon sz-20 icon-color-white">
+                    <RotateCcw size={20} />
+                  </span>
+                  <span>New Password</span>
                 </Link>
               </li>
               <li>

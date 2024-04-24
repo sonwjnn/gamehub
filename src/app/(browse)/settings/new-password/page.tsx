@@ -1,3 +1,4 @@
+import { RotateCcw } from 'lucide-react'
 import { NewPasswordContent } from './_components/new-password-content'
 
 const NewPasswordPage = () => {
@@ -5,9 +6,7 @@ const NewPasswordPage = () => {
     <div className="form_custom">
       <h2 className="ttl_main fz-18">
         <span>
-          <strong className="icon sz-24 icon-color-white flex-shrink">
-            <i className="icon-user"></i>
-          </strong>
+          <RotateCcw size={24} />
           NEW PASSWORD
         </span>
       </h2>

@@ -1,11 +1,13 @@
 'use client'
 
 import { useCurrentUser } from '@/hooks/use-current-user'
+import { cn } from '@/lib/utils'
 import { formatChipsAmount } from '@/utils/formatting'
 import { RotateCcw } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
+import { BsCashCoin } from 'react-icons/bs'
 
 interface UserBoardProps {
   hasMenu?: boolean
@@ -19,7 +21,7 @@ export const UserBoard = ({ hasMenu = false }: UserBoardProps) => {
 
   if (!user) {
     router.push('/auth/login')
-    return null
+    return
   }
 
   return (
@@ -120,6 +122,20 @@ export const UserBoard = ({ hasMenu = false }: UserBoardProps) => {
                   <i className="icon-cash"></i>
                 </span>
                 <span>Cash Games</span>
+              </Link>
+            </li>
+            <li
+              className={cn(
+                'group',
+                pathname === '/settings/cash-action' ? 'active' : ''
+              )}
+            >
+              <Link href="/settings/cash-action">
+                <BsCashCoin
+                  size={20}
+                  className="group-hover:text-white transition"
+                />
+                <span>Cash Actions</span>
               </Link>
             </li>
             <li className={pathname === '/settings/point' ? 'active' : ''}>

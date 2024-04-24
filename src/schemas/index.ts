@@ -24,10 +24,6 @@ export const UserSchema = z.object({
   image: z.string().min(1, { message: 'User image is required' }),
 })
 
-// export const ResetSchema = z.object({
-// 	email: z.string().email({ message: 'Email is required' }),
-// })
-
 export const NewPasswordSchema = z
   .object({
     password: z.string().min(6, {
@@ -44,6 +40,11 @@ export const NewPasswordSchema = z
     message: 'Passwords do not match',
     path: ['confirmNewPassword'],
   })
+
+export const CardActionSchema = z.object({
+  amount: z.number().min(1, { message: 'Amount is required' }),
+  type: z.string().min(1, { message: 'Type is required' }),
+})
 
 export const BankSchema = z.object({
   cardNumber: z
