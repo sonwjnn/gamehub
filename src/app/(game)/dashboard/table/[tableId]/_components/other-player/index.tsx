@@ -41,6 +41,7 @@ export const OtherPlayer = ({
   const isWinner = !isFolded && match?.winnerId === player?.id
   const isTurn = !isFolded && player?.isTurn
   const isShowdown = match?.isShowdown
+  const isHaveWinner = match?.winnerId
   const isAllIn = player?.stack === 0 || !isShowdown
 
   const currentStack = player?.stack || 0
@@ -109,8 +110,8 @@ export const OtherPlayer = ({
         'group_user before:border-none is-status',
         isTurn && 'user_active',
         isFolded && 'user_fold',
-        isWinner && isShowdown && 'user_done',
-        !isWinner && isShowdown && 'is-lose'
+        isWinner && isHaveWinner && 'user_done',
+        !isWinner && isHaveWinner && 'is-lose'
       )}
     >
       <div className="wrap">

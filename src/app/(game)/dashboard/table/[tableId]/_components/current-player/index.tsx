@@ -44,6 +44,7 @@ export const CurrentPlayer = ({
   )
 
   const isFolded = currentParticipant?.isFolded
+  const isHaveWinner = match?.winnerId
   const isWinner = !isFolded && match?.winnerId === player?.id
   const isTurn = !isFolded && player?.isTurn
   const isShowdown = match?.isShowdown
@@ -119,16 +120,16 @@ export const CurrentPlayer = ({
   }, [match])
 
   useEffect(() => {
-    if (!isWinner && isShowdown) {
+    if (isHaveWinner && !isWinner) {
       const audio = new Audio(Sound.soundLose)
       audio.play()
     }
-  }, [isWinner, isShowdown])
+  }, [isWinner, isHaveWinner])
 
   useEffect(() => {
     let timeoutId: NodeJS.Timeout | null = null
 
-    if (currentParticipant?.lastAction === PokerActions.WINNER && isShowdown) {
+    if (currentParticipant?.lastAction === PokerActions.WINNER && isWinner) {
       setIsWinner(true)
       new Audio(Sound.soundWin).play()
 
@@ -175,7 +176,7 @@ export const CurrentPlayer = ({
   useEffect(() => {
     let timer: NodeJS.Timeout | null = null
 
-    if (player && player?.stack <= 0 && isShowdown) {
+    if (player && player?.stack <= 0 && isHaveWinner) {
       timer = setTimeout(() => {
         removePlayer()
       }, 5000)
@@ -186,7 +187,7 @@ export const CurrentPlayer = ({
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentStack, isShowdown])
+  }, [currentStack, isHaveWinner])
 
   const fold = () => {
     if (socket) {
@@ -202,9 +203,9 @@ export const CurrentPlayer = ({
     <div
       className={cn(
         'group_tool flex flex-space gap-12 before:border-none',
-        (isTurn || (isWinner && isShowdown)) && 'user_active',
+        (isTurn || (isWinner && isHaveWinner)) && 'user_active',
         isFolded && 'user_fold',
-        !isWinner && isShowdown && 'is-lose'
+        !isWinner && isHaveWinner && 'is-lose'
       )}
     >
       <div className="group_flush">

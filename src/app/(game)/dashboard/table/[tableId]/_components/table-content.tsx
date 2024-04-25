@@ -320,10 +320,10 @@ export const TableContent = ({ tableId }: TableContentProps) => {
           tableId={tableId}
           className={cn(
             'hidden',
-            !(match && players.length > 1 && !match.isShowdown) && 'block'
+            !(match && players.length > 1 && !match.winnerId) && 'block'
           )}
         />
-        <LeaveTableCheckbox
+        {/* <LeaveTableCheckbox
           tableId={tableId}
           player={players.find(p => p.userId === user?.id)}
           match={match}
@@ -334,7 +334,7 @@ export const TableContent = ({ tableId }: TableContentProps) => {
               !match.isShowdown &&
               'opacity-100 pointer-events-auto'
           )}
-        />
+        /> */}
         {/* <Button onClick={() => setShuffle(true)}>Shuffle</Button> */}
       </div>
       <div className="wrapper w-full" ref={wrapperRef}>
