@@ -191,25 +191,6 @@ export const OtherPlayer = ({
             </div>
           )}
 
-          {isTurn && (
-            <div className="status">
-              <div className="wrap_status status_countdown">
-                <svg viewBox="0 0 200 200">
-                  <circle
-                    className="circle !animate-[stroke_17s_ease-out_forwards]"
-                    cx="100"
-                    cy="100"
-                    r="95"
-                    stroke="#231f20"
-                    stroke-width="8"
-                    fill-opacity="0"
-                  ></circle>
-                </svg>
-                <span>{counter - 2 >= 0 ? counter - 2 : 0}s</span>
-              </div>
-            </div>
-          )}
-
           {currentParticipant?.lastAction === PokerActions.CALL && (
             <div className="status">
               <div className="wrap_status status_call">
@@ -367,6 +348,25 @@ export const OtherPlayer = ({
                   ></circle>
                 </svg>
                 <span>올인</span>
+              </div>
+            </div>
+          )}
+
+          {isTurn && (
+            <div className="status">
+              <div className="wrap_status status_countdown">
+                <svg viewBox="0 0 200 200">
+                  <circle
+                    className="circle !animate-[stroke_17s_ease-out_forwards]"
+                    cx="100"
+                    cy="100"
+                    r="95"
+                    stroke="#231f20"
+                    stroke-width="8"
+                    fill-opacity="0"
+                  ></circle>
+                </svg>
+                <span>{counter - 2 >= 0 ? counter - 2 : 0}s</span>
               </div>
             </div>
           )}

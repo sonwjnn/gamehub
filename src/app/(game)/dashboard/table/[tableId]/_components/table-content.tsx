@@ -34,6 +34,7 @@ export const TableContent = ({ tableId }: TableContentProps) => {
   const { socket } = useSocket()
 
   const [messages, setMessages] = useState([] as string[])
+  const [waitingMessage, setWaitingMessage] = useState(false)
   const [match, setMatch] = useState<Match | null>(null)
   const [participants, setParticipants] = useState<Participant[]>([])
 
@@ -289,6 +290,7 @@ export const TableContent = ({ tableId }: TableContentProps) => {
       setMatch(null)
       setHandVisible(false)
       setMessages([])
+      addMessage('Waiting for players to join the table')
     }
   }, [players])
 
