@@ -5,6 +5,7 @@ import { useSocket } from '@/providers/socket-provider'
 import { Match, Participant, Player, PokerActions, RaiseType } from '@/types'
 import { useState } from 'react'
 import Sound from '@/utils/contants/sound'
+import { formatChipsAmount } from '@/utils/formatting'
 
 interface CurrentPlayerActionProps {
   tableId: string
@@ -104,38 +105,41 @@ export const CurrentPlayerAction = ({
 
   const onQuater = () => {
     new Audio(Sound.soundQuarterBoy).play()
-    raise(Math.floor(match?.pot! / 4), RaiseType.QUARTER)
+    raise(quarter + currentBet, RaiseType.QUARTER)
   }
 
   const onHalf = () => {
     new Audio(Sound.soundHalfBoy).play()
-    raise(Math.floor(match?.pot! / 2), RaiseType.HALF)
+    raise(half + currentBet, RaiseType.HALF)
   }
 
   const onFull = () => {
     new Audio(Sound.soundFullBoy).play()
-    raise(match?.pot!, RaiseType.FULL)
+    raise(currentPot + currentBet, RaiseType.FULL)
   }
 
   const onAllIn = () => {
     new Audio(Sound.soundAllBoy).play()
-    raise(currentStack, RaiseType.ALLIN)
+    raise(currentStack + currentBet, RaiseType.ALLIN)
   }
 
+  const currentPot = match?.pot || 0
   const currentStack = player?.stack || 0
-  const currentBet = currentParticipant?.bet ? currentParticipant?.bet : 0
-  const currentCallAmount = match?.callAmount ? match?.callAmount : 0
-  const canCall = currentBet > 0 || currentBet < currentCallAmount
+  const currentBet = currentParticipant?.bet || 0
+  const currentCallAmount = match?.callAmount || 0
+  const canNotCall = currentCallAmount === 0 || currentBet >= currentCallAmount
   const canNotCheck = currentCallAmount !== currentBet && currentCallAmount > 0
 
-  const canQuater =
-    (match?.pot ?? 0) / 4 >= currentCallAmount &&
-    currentStack >= (match?.pot ?? 0) / 4
-  const canHalf =
-    (match?.pot ?? 0) / 2 >= currentCallAmount &&
-    currentStack >= (match?.pot ?? 0) / 2
-  const canFull =
-    (match?.pot ?? 0) >= currentCallAmount && currentStack >= (match?.pot ?? 0)
+  const quarter = Math.floor(currentPot / 4)
+  const half = Math.floor(currentPot / 2)
+  const callSize =
+    currentBet < currentCallAmount && currentCallAmount <= currentStack
+      ? currentCallAmount - currentBet
+      : 0
+
+  const canQuater = quarter >= currentCallAmount && currentStack >= quarter
+  const canHalf = half >= currentCallAmount && currentStack >= half
+  const canFull = currentPot >= currentCallAmount && currentStack >= currentPot
 
   const min =
     match?.minBet && match?.minBet >= currentCallAmount
@@ -155,7 +159,7 @@ export const CurrentPlayerAction = ({
           onClick={onQuater}
           disabled={!isTurn || isProcessing || !canQuater}
         >
-          <span className="number">1</span>
+          <span className="number">{formatChipsAmount(quarter)}</span>
           <div className="value">쿼터</div>
         </button>
         <button
@@ -163,7 +167,7 @@ export const CurrentPlayerAction = ({
           onClick={onHalf}
           disabled={!isTurn || isProcessing || !canHalf}
         >
-          <span className="number">2</span>
+          <span className="number">{formatChipsAmount(half)}</span>
           <div className="value">하프</div>
         </button>
         <button
@@ -171,7 +175,7 @@ export const CurrentPlayerAction = ({
           onClick={onFull}
           disabled={!isTurn || isProcessing || !canFull}
         >
-          <span className="number">3</span>
+          <span className="number">{formatChipsAmount(currentPot)}</span>
           <div className="value">풀</div>
         </button>
         <button
@@ -189,16 +193,16 @@ export const CurrentPlayerAction = ({
           onClick={onRaise}
           disabled={!isTurn || isProcessing}
         >
-          <span className="number">5</span>
+          <span className="number">{formatChipsAmount(bet)}</span>
           <div className="value">라이즈</div>
         </button>
-        {canCall ? (
+        {!canNotCall ? (
           <button
             className="item disabled:pointer-events-none disabled:opacity-50"
             onClick={call}
-            disabled={!isTurn || isProcessing || !canCall}
+            disabled={!isTurn || isProcessing || canNotCall}
           >
-            <span className="number">7</span>
+            <span className="number">{formatChipsAmount(callSize)}</span>
             <div className="value">콜</div>
           </button>
         ) : !canNotCheck ? (
@@ -208,16 +212,16 @@ export const CurrentPlayerAction = ({
             disabled={!isTurn || isProcessing || canNotCheck}
           >
             {/* <span className="number number_left">4 </span> */}
-            <span className="number">7</span>
+            <span className="number"></span>
             <div className=" value">체크</div>
           </button>
         ) : (
           <button
             className="item disabled:pointer-events-none disabled:opacity-50"
             onClick={call}
-            disabled={!isTurn || isProcessing || !canCall}
+            disabled={!isTurn || isProcessing || canNotCall}
           >
-            <span className="number">7</span>
+            <span className="number">{formatChipsAmount(callSize)}</span>
             <div className="value">콜</div>
           </button>
         )}
@@ -227,7 +231,7 @@ export const CurrentPlayerAction = ({
           onClick={fold}
           disabled={!isTurn || isProcessing}
         >
-          <span className="number">8</span>
+          <span className="number"></span>
           <div className="value">다이</div>
         </button>
         <button
@@ -235,7 +239,7 @@ export const CurrentPlayerAction = ({
           onClick={onAllIn}
           disabled={!isTurn || isProcessing}
         >
-          <span className="number">9</span>
+          <span className="number">{formatChipsAmount(currentStack)}</span>
           <div className="value">올인</div>
         </button>
       </div>

@@ -29,10 +29,10 @@ export const Hand = ({
     >
       <div
         className={cn(
-          'item flipped opacity-0 ',
+          'item flipped opacity-0  pointer-events-none',
           isWinner && 'status_active',
           !isShowdown && 'hide',
-          !isHidden && 'opacity-100'
+          !isHidden && 'opacity-100 pointer-events-auto'
         )}
       >
         <div className="pocker">
@@ -41,10 +41,10 @@ export const Hand = ({
       </div>
       <div
         className={cn(
-          'item flipped opacity-0',
+          'item flipped opacity-0  pointer-events-none',
           isWinner && 'status_active',
           !isShowdown && 'hide',
-          !isHidden && 'opacity-100'
+          !isHidden && 'opacity-100 pointer-events-auto'
         )}
       >
         <div className="pocker">

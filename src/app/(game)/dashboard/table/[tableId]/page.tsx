@@ -1,5 +1,4 @@
 import { TableContent } from './_components/table-content'
-import playerApi from '@/services/api/modules/player-api'
 
 interface TableIdPageProps {
   params: {

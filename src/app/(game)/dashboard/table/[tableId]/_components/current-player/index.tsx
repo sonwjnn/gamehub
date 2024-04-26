@@ -167,13 +167,6 @@ export const CurrentPlayer = ({
   }
 
   useEffect(() => {
-    if (!player || socket?.id !== player?.socketId || !isConnected) {
-      removePlayer()
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [socket, player?.socketId])
-
-  useEffect(() => {
     let timer: NodeJS.Timeout | null = null
 
     if (player && player?.stack <= 0 && isHaveWinner) {
@@ -268,8 +261,8 @@ export const CurrentPlayer = ({
               </div>
 
               <div className="right sp_full">
-                <div className="money fw-700 flex flex-midle flex-center gap-8">
-                  <div className="icon sz-16">
+                <div className="money fw-700 flex flex-midle flex-center">
+                  <div className="icon sz-12 mr-4">
                     <i className="icon-coin"></i>
                   </div>
                   $ {formatChipsAmount(currentStack)}

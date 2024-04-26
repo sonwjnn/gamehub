@@ -107,10 +107,11 @@ export const OtherPlayer = ({
   return (
     <div
       className={cn(
-        'group_user before:border-none is-status',
+        'group_user before:border-none',
+        !isFolded && 'is-status',
         isTurn && 'user_active',
-        isFolded && 'user_fold',
         isWinner && isHaveWinner && 'user_done',
+        isFolded && 'user_fold',
         !isWinner && isHaveWinner && 'is-lose'
       )}
     >
@@ -151,8 +152,8 @@ export const OtherPlayer = ({
             <div className="name text-center">{player.user?.username}</div>
           </div>
           <div className="right sp_full">
-            <div className="money fw-700 flex flex-midle flex-center gap-8">
-              <div className="icon sz-16">
+            <div className="money fw-700 flex flex-midle flex-center">
+              <div className="icon sz-12 mr-4">
                 <i className="icon-coin"></i>
               </div>
               $ {formatChipsAmount(currentStack)}
@@ -335,7 +336,7 @@ export const OtherPlayer = ({
           {currentParticipant?.isAllin && (
             <div className="status">
               <div className="wrap_status status_all">
-                <span className="money">200 $</span>
+                <span className="money">{formatChipsAmount(currentBet)} $</span>
                 <svg viewBox="0 0 200 200">
                   <circle
                     className="circle"

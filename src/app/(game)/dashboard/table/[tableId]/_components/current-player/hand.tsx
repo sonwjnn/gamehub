@@ -18,9 +18,9 @@ export const Hand = ({
     <div className="pocker_list current_poker_list">
       <div
         className={cn(
-          `item flipped opacity-0 transition -translate-x-1 -translate-y-1`,
+          `item flipped opacity-0 pointer-events-none transition -translate-x-1 -translate-y-1`,
           !imageUrlFirst && 'hide',
-          !isHidden && 'opacity-100'
+          !isHidden && 'opacity-100 pointer-events-auto'
         )}
       >
         <div className="pocker ">
@@ -29,9 +29,9 @@ export const Hand = ({
       </div>
       <div
         className={cn(
-          `item flipped opacity-0 transition -translate-x-1 -translate-y-1`,
+          `item flipped opacity-0 pointer-events-none transition -translate-x-1 -translate-y-1`,
           !imageUrlSecond && 'hide',
-          !isHidden && 'opacity-100'
+          !isHidden && 'opacity-100 pointer-events-auto'
         )}
       >
         <div className="pocker ">

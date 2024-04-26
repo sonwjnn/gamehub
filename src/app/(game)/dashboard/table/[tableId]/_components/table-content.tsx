@@ -20,6 +20,7 @@ import { cn } from '@/lib/utils'
 import { WinnerModal } from './winner-modal'
 import { Button } from '@/components/ui/button'
 import playerApi from '@/services/api/modules/player-api'
+import { useRouter } from 'next/navigation'
 
 interface TableContentProps {
   tableId: string
@@ -31,10 +32,11 @@ export const TableContent = ({ tableId }: TableContentProps) => {
   const [isShuffle, setShuffle] = useState(false)
 
   const user = useCurrentUser()
+  const router = useRouter()
   const { socket } = useSocket()
 
   const [messages, setMessages] = useState([] as string[])
-  const [waitingMessage, setWaitingMessage] = useState(false)
+  const [isWaiting, setIsWaiting] = useState(false)
   const [match, setMatch] = useState<Match | null>(null)
   const [participants, setParticipants] = useState<Participant[]>([])
 
@@ -151,6 +153,9 @@ export const TableContent = ({ tableId }: TableContentProps) => {
     if (socket) {
       let timerMatchId: NodeJS.Timeout | null = null
 
+      window.addEventListener('unload', removePlayer)
+      window.addEventListener('close', removePlayer)
+
       socket.on(
         PokerActions.MATCH_STARTED,
         ({
@@ -197,10 +202,10 @@ export const TableContent = ({ tableId }: TableContentProps) => {
         ({ tableId, player }: { tableId: string; player: PlayerWithUser }) => {
           setPlayers(prev => [...prev, player])
 
-          socket.emit(PokerActions.TABLE_JOINED, {
-            tableId,
-            player,
-          })
+          // socket.emit(PokerActions.TABLE_JOINED, {
+          //   tableId,
+          //   player,
+          // })
         }
       )
 
@@ -268,6 +273,8 @@ export const TableContent = ({ tableId }: TableContentProps) => {
           socket.off(PokerActions.MATCH_STARTED)
           socket.off(PokerActions.CHANGE_TURN)
 
+          removePlayer()
+
           if (timerMatchId) {
             clearTimeout(timerMatchId)
           }
@@ -308,6 +315,26 @@ export const TableContent = ({ tableId }: TableContentProps) => {
     getPlayers()
   }, [tableId])
 
+  const removePlayer = async () => {
+    try {
+      const currentPlayer = players.find(p => p.userId === user?.id)
+      if (!currentPlayer) return
+      const { response, error } = await playerApi.removePlayer({
+        playerId: currentPlayer?.id,
+        tableId: tableId,
+      })
+
+      if (error) {
+        console.log(error)
+        return
+      }
+
+      router.push('/dashboard/table')
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   const addMessage = (message: string) => {
     setMessages((prevMessages: string[]) => [...prevMessages, message])
   }
@@ -315,7 +342,7 @@ export const TableContent = ({ tableId }: TableContentProps) => {
   return (
     <>
       <div className="absolute left-0 top-0 z-10 p-[12px] flex gap-x-4">
-        <InvitePlayer tableId={tableId} />
+        {/* <InvitePlayer tableId={tableId} /> */}
         <LeaveTable
           tableId={tableId}
           className={cn(

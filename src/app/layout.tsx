@@ -13,8 +13,6 @@ import '@/styles/bootstrap.css'
 import { SessionProvider } from 'next-auth/react'
 import { auth } from '@/auth'
 
-const font = Open_Sans({ subsets: ['latin'] })
-
 export const metadata: Metadata = {
   title: 'Poker',
   description: 'A Poker Game built with Next.js and Tailwind CSS.',
@@ -30,9 +28,7 @@ export default async function RootLayout({
   return (
     <SessionProvider session={session}>
       <html className="h-full" lang="en" suppressHydrationWarning>
-        <body
-          className={cn(font.className, 'bg-white dark:bg-[#213338] h-full')}
-        >
+        <body className={cn('bg-white dark:bg-[#213338] h-full')}>
           <Toaster />
           <ThemeProvider
             attribute="class"

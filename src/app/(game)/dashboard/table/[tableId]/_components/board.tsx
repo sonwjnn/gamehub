@@ -113,7 +113,7 @@ export const Board = ({ match }: BoardProps) => {
       </div>
       <div className="group_number flex flex-midle flex-center gap-24">
         <div className="text">
-          Pot:
+          Total:
           <span className="fw-900">$ {formatChipsAmount(match?.pot || 0)}</span>
         </div>
         <div className="text">
