@@ -40,8 +40,8 @@ export const CurrentPlayerAction = ({
         tableId,
         participantId: currentParticipant?.id,
       })
-      setIsProcessing(false)
       setTimeout(() => {
+        setIsProcessing(false)
         setIsAction(false)
       }, 2000)
     }
@@ -56,8 +56,8 @@ export const CurrentPlayerAction = ({
         tableId,
         participantId: currentParticipant?.id,
       })
-      setIsProcessing(false)
       setTimeout(() => {
+        setIsProcessing(false)
         setIsAction(false)
       }, 2000)
     }
@@ -73,8 +73,8 @@ export const CurrentPlayerAction = ({
         tableId,
         participantId: currentParticipant?.id,
       })
-      setIsProcessing(false)
       setTimeout(() => {
+        setIsProcessing(false)
         setIsAction(false)
       }, 2000)
     }
@@ -90,8 +90,8 @@ export const CurrentPlayerAction = ({
         amount,
         type,
       })
-      setIsProcessing(false)
       setTimeout(() => {
+        setIsProcessing(false)
         setIsAction(false)
       }, 2000)
     }

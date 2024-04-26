@@ -218,9 +218,7 @@ export const TableContent = ({ tableId }: TableContentProps) => {
 
       socket.on(
         PokerActions.CHANGE_TURN,
-        ({ match, playerId }: { match: Match | null; playerId: string }) => {
-          if (match?.tableId !== tableId) return
-
+        ({ match, playerId }: { match: Match; playerId: string }) => {
           setPlayers(prev =>
             prev.map(item => {
               if (item.id === playerId) {
