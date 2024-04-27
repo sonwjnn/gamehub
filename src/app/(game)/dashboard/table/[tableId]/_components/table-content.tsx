@@ -8,17 +8,14 @@ import { useState, useEffect, useRef } from 'react'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 
-import SoundUrls from '@/utils/contants/sound'
+import Sound from '@/utils/contants/sound'
 import { Match, Participant, PlayerWithUser, PokerActions } from '@/types'
 import { useCurrentUser } from '@/hooks/use-current-user'
 import { useSocket } from '@/providers/socket-provider'
 
-import { LeaveTableCheckbox } from './leave-table-checkbox'
 import { LeaveTable } from './leave-table'
-import { InvitePlayer } from './invite-player'
 import { cn } from '@/lib/utils'
 import { WinnerModal } from './winner-modal'
-import { Button } from '@/components/ui/button'
 import playerApi from '@/services/api/modules/player-api'
 import { useRouter } from 'next/navigation'
 
@@ -130,7 +127,7 @@ export const TableContent = ({ tableId }: TableContentProps) => {
     }
 
     if (isShuffle) {
-      new Audio(SoundUrls.soundShufle).play()
+      new Audio(Sound.soundShufle).play()
 
       let i = 0
       const dealInterval = setInterval(() => {
@@ -408,7 +405,7 @@ export const TableContent = ({ tableId }: TableContentProps) => {
         <Board match={match} isShuffle={isShuffle} />
 
         {messages && messages.length > 0 && (
-          <div className="absolute  font-semibold top-[60%] text-lime-500 text-xs md:text-xl left-1/2 translate-y-[-50%] translate-x-[-50%]">
+          <div className="absolute font-semibold top-[60%] text-lime-500 text-xs md:text-xl left-1/2 -translate-y-1/2 -translate-x-1/2">
             {messages[messages.length - 1]}
           </div>
         )}

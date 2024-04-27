@@ -30,7 +30,7 @@ export const CurrentPlayer = ({
   player,
   tableId,
 }: CurrentPlayerProps) => {
-  const { isConnected, socket } = useSocket()
+  const { socket } = useSocket()
   const router = useRouter()
   const { setIsWinner } = useIsWinner()
   const [imageUrlFirst, setImageUrlFirst] = useState('')
@@ -48,6 +48,9 @@ export const CurrentPlayer = ({
   const isWinner = !isFolded && match?.winnerId === player?.id
   const isTurn = !isFolded && player?.isTurn
   const isShowdown = match?.isShowdown
+
+  const isWaiting = match && !match?.table.isHandOver && !currentParticipant
+
   const currentStack = player?.stack || 0
 
   const currentBet = currentParticipant?.bet || 0
@@ -120,11 +123,11 @@ export const CurrentPlayer = ({
   }, [match])
 
   useEffect(() => {
-    if (isHaveWinner && !isWinner) {
+    if (isHaveWinner && !isWinner && currentParticipant) {
       const audio = new Audio(Sound.soundLose)
       audio.play()
     }
-  }, [isWinner, isHaveWinner])
+  }, [isWinner, isHaveWinner, currentParticipant])
 
   useEffect(() => {
     let timeoutId: NodeJS.Timeout | null = null
@@ -198,7 +201,7 @@ export const CurrentPlayer = ({
         'group_tool flex flex-space gap-12 before:border-none',
         (isTurn || (isWinner && isHaveWinner)) && 'user_active',
         isFolded && 'user_fold',
-        !isWinner && isHaveWinner && 'is-lose'
+        !isWinner && isHaveWinner && currentParticipant && 'is-lose'
       )}
     >
       <div className="group_flush">
@@ -221,7 +224,11 @@ export const CurrentPlayer = ({
       </div>
       <div className="group_left">
         <div
-          className={cn('group_user before:border-none', isTurn && 'is-status')}
+          className={cn(
+            'group_user before:border-none',
+            isTurn && 'is-status',
+            isWaiting && 'user_waitting'
+          )}
         >
           <div className="wrap">
             <div className="flex flex-midle">
@@ -242,14 +249,27 @@ export const CurrentPlayer = ({
                 </div>
               </div>
               <div className="right">
-                {!isFolded ? (
+                {!isWaiting && !isFolded && (
                   <Hand
                     imageUrlFirst={imageUrlFirst}
                     imageUrlSecond={imageUrlSecond}
                     isHidden={!isHandVisible}
                   />
-                ) : (
+                )}
+                {!isWaiting && isFolded && (
                   <div className="text_fold fw-900">FOLD</div>
+                )}
+                {isWaiting && (
+                  <div className="text_waiting fw-700 text-up">
+                    waiting...
+                    <div className="spinner space-x-0.5">
+                      <div className="rect1"></div>
+                      <div className="rect2"></div>
+                      <div className="rect3"></div>
+                      <div className="rect4"></div>
+                      <div className="rect5"></div>
+                    </div>
+                  </div>
                 )}
               </div>
             </div>

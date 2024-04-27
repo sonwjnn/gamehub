@@ -44,6 +44,8 @@ export const OtherPlayer = ({
   const isHaveWinner = match?.winnerId
   const isAllIn = player?.stack === 0 || !isShowdown
 
+  const isWaiting = match && !match?.table.isHandOver && !currentParticipant
+
   const currentStack = player?.stack || 0
   const currentBet = currentParticipant?.bet || 0
 
@@ -108,11 +110,12 @@ export const OtherPlayer = ({
     <div
       className={cn(
         'group_user before:border-none',
-        !isFolded && 'is-status',
+        !isFolded && !isWaiting && 'is-status',
         isTurn && 'user_active',
         isWinner && isHaveWinner && 'user_done',
         isFolded && 'user_fold',
-        !isWinner && isHaveWinner && 'is-lose'
+        !isWinner && currentParticipant && isHaveWinner && 'is-lose',
+        isWaiting && 'user_waitting'
       )}
     >
       <div className="wrap">
@@ -134,7 +137,7 @@ export const OtherPlayer = ({
             </div>
           </div>
           <div className="right">
-            {!isFolded ? (
+            {!isWaiting && !isFolded && (
               <Hand
                 imageUrlFirst={imageUrlFirst}
                 imageUrlSecond={imageUrlSecond}
@@ -142,8 +145,21 @@ export const OtherPlayer = ({
                 isWinner={isWinner}
                 isHidden={!isHandVisible}
               />
-            ) : (
+            )}
+            {!isWaiting && isFolded && (
               <div className="text_fold fw-900">FOLD</div>
+            )}
+            {isWaiting && (
+              <div className="text_waiting fw-700 text-up">
+                waiting...
+                <div className="spinner space-x-0.5">
+                  <div className="rect1"></div>
+                  <div className="rect2"></div>
+                  <div className="rect3"></div>
+                  <div className="rect4"></div>
+                  <div className="rect5"></div>
+                </div>
+              </div>
             )}
           </div>
         </div>
