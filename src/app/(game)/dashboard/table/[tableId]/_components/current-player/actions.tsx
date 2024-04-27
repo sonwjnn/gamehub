@@ -159,24 +159,45 @@ export const CurrentPlayerAction = ({
           onClick={onQuater}
           disabled={!isTurn || isProcessing || !canQuater}
         >
-          <span className="number">{formatChipsAmount(quarter)}</span>
-          <div className="value">쿼터</div>
+          <span className="number">{1}</span>
+          <div className="value md:space-y-1.5">
+            {quarter ? (
+              <div className="text-xs leading-3 md:text-xl action_amount">
+                {formatChipsAmount(quarter)}
+              </div>
+            ) : null}
+            <div>쿼터</div>
+          </div>
         </button>
         <button
           className="item disabled:pointer-events-none disabled:opacity-50"
           onClick={onHalf}
           disabled={!isTurn || isProcessing || !canHalf}
         >
-          <span className="number">{formatChipsAmount(half)}</span>
-          <div className="value">하프</div>
+          <span className="number">{2}</span>
+          <div className="value md:space-y-1.5">
+            {half ? (
+              <div className="text-xs leading-3 md:text-xl action_amount">
+                {formatChipsAmount(half)}
+              </div>
+            ) : null}
+            <div>하프</div>
+          </div>
         </button>
         <button
           className="item disabled:pointer-events-none disabled:opacity-50"
           onClick={onFull}
           disabled={!isTurn || isProcessing || !canFull}
         >
-          <span className="number">{formatChipsAmount(currentPot)}</span>
-          <div className="value">풀</div>
+          <span className="number">{3}</span>
+          <div className="value md:space-y-1.5">
+            {currentPot ? (
+              <div className="text-xs leading-3 md:text-xl action_amount">
+                {formatChipsAmount(currentPot)}
+              </div>
+            ) : null}
+            <div>풀</div>
+          </div>
         </button>
         <button
           className="item disabled:pointer-events-none disabled:opacity-50"
@@ -184,7 +205,12 @@ export const CurrentPlayerAction = ({
         >
           {/* <span className="number number_left">4 </span> */}
           <span className="number">4</span>
-          <div className=" !text-white text-[32px] font-bold value">
+          <div className=" text-white font-bold">
+            {bet ? (
+              <div className="text-xs leading-3 md:text-xl action_amount">
+                {formatChipsAmount(bet)}
+              </div>
+            ) : null}
             <BetSlider min={min} bet={bet} setBet={setBet} max={max!} />
           </div>
         </button>
@@ -193,7 +219,7 @@ export const CurrentPlayerAction = ({
           onClick={onRaise}
           disabled={!isTurn || isProcessing}
         >
-          <span className="number">{formatChipsAmount(bet)}</span>
+          <span className="number">{5}</span>
           <div className="value">라이즈</div>
         </button>
         {!canNotCall ? (
@@ -202,8 +228,15 @@ export const CurrentPlayerAction = ({
             onClick={call}
             disabled={!isTurn || isProcessing || canNotCall}
           >
-            <span className="number">{formatChipsAmount(callSize)}</span>
-            <div className="value">콜</div>
+            <span className="number">{6}</span>
+            <div className="value md:space-y-1.5">
+              {callSize ? (
+                <div className="text-xs leading-3 md:text-xl action_amount">
+                  {formatChipsAmount(callSize)}
+                </div>
+              ) : null}
+              <div>콜</div>
+            </div>
           </button>
         ) : !canNotCheck ? (
           <button
@@ -212,7 +245,7 @@ export const CurrentPlayerAction = ({
             disabled={!isTurn || isProcessing || canNotCheck}
           >
             {/* <span className="number number_left">4 </span> */}
-            <span className="number"></span>
+            <span className="number">6</span>
             <div className=" value">체크</div>
           </button>
         ) : (
@@ -221,8 +254,15 @@ export const CurrentPlayerAction = ({
             onClick={call}
             disabled={!isTurn || isProcessing || canNotCall}
           >
-            <span className="number">{formatChipsAmount(callSize)}</span>
-            <div className="value">콜</div>
+            <span className="number">{6}</span>
+            <div className="value md:space-y-1.5">
+              {callSize ? (
+                <div className="text-xs leading-3 md:text-xl action_amount">
+                  {formatChipsAmount(callSize)}
+                </div>
+              ) : null}
+              <div>콜</div>
+            </div>
           </button>
         )}
 
@@ -231,7 +271,7 @@ export const CurrentPlayerAction = ({
           onClick={fold}
           disabled={!isTurn || isProcessing}
         >
-          <span className="number"></span>
+          <span className="number">7</span>
           <div className="value">다이</div>
         </button>
         <button
@@ -239,7 +279,7 @@ export const CurrentPlayerAction = ({
           onClick={onAllIn}
           disabled={!isTurn || isProcessing}
         >
-          <span className="number">{formatChipsAmount(currentStack)}</span>
+          <span className="number">{8}</span>
           <div className="value">올인</div>
         </button>
       </div>

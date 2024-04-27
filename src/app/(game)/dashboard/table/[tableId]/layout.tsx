@@ -1,5 +1,6 @@
 import { Chat } from './_components/chat'
 import { currentUser } from '@/lib/auth'
+import '@/styles/css/game.css'
 
 const TableIdLayout = async ({
   children,

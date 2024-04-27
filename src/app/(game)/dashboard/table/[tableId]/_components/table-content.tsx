@@ -339,6 +339,13 @@ export const TableContent = ({ tableId }: TableContentProps) => {
     setMessages((prevMessages: string[]) => [...prevMessages, message])
   }
 
+  const currentPlayerIndex = players.findIndex(p => p.userId === user?.id)
+
+  const sortedPlayers = [
+    ...players.slice(currentPlayerIndex + 1),
+    ...players.slice(0, currentPlayerIndex + 1),
+  ]
+
   return (
     <>
       <div className="absolute left-0 top-0 z-10 p-[12px] flex gap-x-4">
@@ -378,23 +385,22 @@ export const TableContent = ({ tableId }: TableContentProps) => {
             <div className="dealer" ref={dealerRef}></div>
 
             <div className="wrap_list">
-              {Array.isArray(players) &&
-                players.map((player, index) => {
-                  if (player.userId === user?.id) {
-                    return
-                  }
+              {sortedPlayers.map((player, index) => {
+                if (player.userId === user?.id) {
+                  return
+                }
 
-                  return (
-                    <OtherPlayer
-                      match={match}
-                      key={index}
-                      player={player}
-                      participants={participants}
-                      isHandVisible={isHandVisible}
-                      tableId={tableId}
-                    />
-                  )
-                })}
+                return (
+                  <OtherPlayer
+                    match={match}
+                    key={index}
+                    player={player}
+                    participants={participants}
+                    isHandVisible={isHandVisible}
+                    tableId={tableId}
+                  />
+                )
+              })}
               <WinnerModal match={match} />
             </div>
           </div>
@@ -402,7 +408,7 @@ export const TableContent = ({ tableId }: TableContentProps) => {
         <Board match={match} isShuffle={isShuffle} />
 
         {messages && messages.length > 0 && (
-          <div className="absolute  font-bold top-[60%] text-lime-500 text-xl left-1/2 translate-y-[-50%] translate-x-[-50%]">
+          <div className="absolute  font-semibold top-[60%] text-lime-500 text-xs md:text-xl left-1/2 translate-y-[-50%] translate-x-[-50%]">
             {messages[messages.length - 1]}
           </div>
         )}

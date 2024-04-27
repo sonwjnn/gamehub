@@ -9,8 +9,6 @@ import '@/styles/css/game.css'
 import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
 
-import '@/styles/css/game.css'
-
 interface GameLayoutProps {
   children: React.ReactNode
 }
