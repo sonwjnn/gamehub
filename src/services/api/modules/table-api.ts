@@ -2,7 +2,7 @@ import publicClient from '@/services/api/client/private-client'
 
 const tableEndpoints = {
   getTableById: ({ tableId }: { tableId: string }) => `tables/${tableId}`,
-  getTables: 'tables/',
+  getTables: ({ page }: { page: string }) => `tables?page=${page}`,
 }
 
 const tableApi = {
@@ -15,9 +15,12 @@ const tableApi = {
       return { error }
     }
   },
-  getTables: async () => {
+  getTables: async ({ page }: { page: string }) => {
     try {
-      const response = await publicClient.get(tableEndpoints.getTables)
+      console.log(page)
+      const response = await publicClient.get(
+        tableEndpoints.getTables({ page })
+      )
       if (response && response.data) return { response: response.data }
       return { response }
     } catch (error) {

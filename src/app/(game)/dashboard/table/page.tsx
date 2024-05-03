@@ -3,15 +3,23 @@ import tableApi from '@/services/api/modules/table-api'
 import { TableContent } from './_components/table-content'
 import { UserBoard } from '@/components/user-board'
 
-const TablePage = async () => {
-  const { response: tables } = await tableApi.getTables()
+type Props = {
+  searchParams: {
+    page: string
+  }
+}
+
+const TablePage = async ({ searchParams }: Props) => {
+  const { response } = await tableApi.getTables({
+    page: searchParams.page || '1',
+  })
 
   return (
     <div className="boding_main">
       <div className="sidebar_left ">
         <UserBoard />
       </div>
-      <TableContent tables={tables} />
+      <TableContent tables={response.tables} pageCount={response.pageCount} />
     </div>
   )
 }
