@@ -12,7 +12,7 @@ export const Logo = ({}: LogoProps) => {
         width={0}
         height={0}
         sizes="100vw"
-        className="h-auto max-w-full"
+        className="logo"
       />
     </Link>
   )

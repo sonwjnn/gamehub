@@ -6358,6 +6358,9 @@ form {
 html {
   background: #000;
 }
+.hidden {
+  display: none;
+}
 body {
   font-family: 'Inter';
   font-style: normal;

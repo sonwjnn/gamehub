@@ -12,7 +12,8 @@ import {
 } from '@/types'
 import { useEffect, useState } from 'react'
 import { formatChipsAmount } from '@/utils/formatting'
-import sound from '@/utils/contants/sound'
+import { CoinBet } from '@/components/coin-bet'
+import { getGenderFromImageUrl, playSound } from '@/utils/sound'
 
 interface OtherPlayerProps {
   type?: 'fold' | 'active' | 'default'
@@ -34,6 +35,7 @@ export const OtherPlayer = ({
   const [imageUrlSecond, setImageUrlSecond] = useState('')
   const [counter, setCounter] = useState(12)
 
+  const gender = getGenderFromImageUrl(player?.user?.image || '')
   const currentParticipant = participants.find(
     item => item.playerId === player?.id
   )
@@ -88,22 +90,23 @@ export const OtherPlayer = ({
 
   useEffect(() => {
     if (currentParticipant?.lastAction === PokerActions.CALL) {
-      new Audio(sound.soundCallBoy).play()
+      playSound(PokerActions.CALL, gender)
     } else if (currentParticipant?.lastAction === PokerActions.RAISE) {
-      new Audio(sound.soundRaiseBoy).play()
+      playSound(PokerActions.RAISE, gender)
     } else if (currentParticipant?.lastAction === PokerActions.FOLD) {
-      new Audio(sound.soundFoldBoy).play()
+      playSound(PokerActions.FOLD, gender)
     } else if (currentParticipant?.lastAction === PokerActions.CHECK) {
-      new Audio(sound.soundCheckBoy).play()
-    } else if (currentParticipant?.lastAction === RaiseType.ALLIN) {
-      new Audio(sound.soundAllBoy).play()
-    } else if (currentParticipant?.lastAction === RaiseType.QUARTER) {
-      new Audio(sound.soundQuarterBoy).play()
-    } else if (currentParticipant?.lastAction === RaiseType.HALF) {
-      new Audio(sound.soundHalfBoy).play()
-    } else if (currentParticipant?.lastAction === RaiseType.FULL) {
-      new Audio(sound.soundFullBoy).play()
+      playSound(PokerActions.CHECK, gender)
+    } else if (currentParticipant?.lastAction === PokerActions.ALLIN) {
+      playSound(PokerActions.ALLIN, gender)
+    } else if (currentParticipant?.lastAction === PokerActions.QUARTER) {
+      playSound(PokerActions.QUARTER, gender)
+    } else if (currentParticipant?.lastAction === PokerActions.HALF) {
+      playSound(PokerActions.HALF, gender)
+    } else if (currentParticipant?.lastAction === PokerActions.FULL) {
+      playSound(PokerActions.FULL, gender)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentParticipant?.lastAction])
 
   return (
@@ -118,6 +121,7 @@ export const OtherPlayer = ({
         isWaiting && 'user_waitting'
       )}
     >
+      {currentBet > 0 && <CoinBet bet={currentBet} />}
       <div className="wrap">
         <div className="flex flex-midle">
           <div className="left">

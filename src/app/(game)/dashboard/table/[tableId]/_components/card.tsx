@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import Sound from '@/utils/contants/sound'
+import sounds from '@/utils/contants/sound'
 
 interface CardProps {
   imageUrl: string
@@ -10,7 +10,7 @@ interface CardProps {
 
 export const Card = ({ imageUrl, className, isShowdown }: CardProps) => {
   const onClick = () => {
-    new Audio(Sound.soundOpen).play()
+    new Audio(sounds.soundOpen).play()
   }
 
   return (

@@ -8,9 +8,9 @@ interface ActionsProps {}
 export const Actions = ({}: ActionsProps) => {
   return (
     <div className="toolbar flex flex-midle">
-      <div className="mr-[24px]">
+      {/* <div className="mr-[24px]">
         <SocketIndicator />
-      </div>
+      </div> */}
       <Link
         href="/dashboard/table"
         className="item btn_play flex flex-midle gap-8"
@@ -25,7 +25,6 @@ export const Actions = ({}: ActionsProps) => {
           <i className="icon-rule" />
         </div>
       </div>
-      {/* <ChipsAmount /> */}
       <UserButton />
       <MobileToggle />
     </div>

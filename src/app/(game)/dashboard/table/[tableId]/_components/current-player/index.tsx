@@ -9,10 +9,12 @@ import { Match, Participant, PlayerWithUser, PokerActions } from '@/types'
 import { useSocket } from '@/providers/socket-provider'
 import { cn } from '@/lib/utils'
 import { formatChipsAmount } from '@/utils/formatting'
-import Sound from '@/utils/contants/sound'
+import sounds from '@/utils/contants/sound'
 import { useIsWinner } from '@/store/use-is-winner'
 import playerApi from '@/services/api/modules/player-api'
 import { useRouter } from 'next/navigation'
+import { CoinBet } from '@/components/coin-bet'
+import { getGenderFromImageUrl, playSound } from '@/utils/sound'
 
 interface CurrentPlayerProps {
   isShowdown?: boolean
@@ -39,6 +41,7 @@ export const CurrentPlayer = ({
   const [counter, setCounter] = useState(12)
   const [bet, setBet] = useState(0)
 
+  const gender = getGenderFromImageUrl(player?.user?.image || '')
   const currentParticipant = participants.find(
     item => item.playerId === player?.id
   )
@@ -124,8 +127,7 @@ export const CurrentPlayer = ({
 
   useEffect(() => {
     if (isHaveWinner && !isWinner && currentParticipant) {
-      const audio = new Audio(Sound.soundLose)
-      audio.play()
+      new Audio(sounds.soundLose).play()
     }
   }, [isWinner, isHaveWinner, currentParticipant])
 
@@ -133,8 +135,8 @@ export const CurrentPlayer = ({
     let timeoutId: NodeJS.Timeout | null = null
 
     if (currentParticipant?.lastAction === PokerActions.WINNER && isWinner) {
+      new Audio(sounds.soundWin).play()
       setIsWinner(true)
-      new Audio(Sound.soundWin).play()
 
       timeoutId = setTimeout(() => {
         setIsWinner(false)
@@ -187,7 +189,7 @@ export const CurrentPlayer = ({
 
   const fold = () => {
     if (socket) {
-      new Audio(Sound.soundFoldBoy).play()
+      playSound(PokerActions.FOLD, gender)
       socket.emit(PokerActions.FOLD, {
         tableId,
         participantId: currentParticipant?.id,
@@ -230,6 +232,8 @@ export const CurrentPlayer = ({
             isWaiting && 'user_waitting'
           )}
         >
+          <CoinBet bet={currentBet} />
+
           <div className="wrap">
             <div className="flex flex-midle">
               <div className="left">

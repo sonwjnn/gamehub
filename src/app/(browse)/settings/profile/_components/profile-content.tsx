@@ -159,7 +159,7 @@ export const ProfileContent = ({}: ProfileContentProps) => {
             <div className="group_select_avater">
               <label className="label_select_avt">Change Profile Avatar</label>
               <div className="select_avt mt-8 flex flex-wrap flex-grow">
-                {Array.from({ length: 10 }).map((_, index) => (
+                {Array.from({ length: 11 }).map((_, index) => (
                   <ImageOption
                     key={index}
                     index={index}

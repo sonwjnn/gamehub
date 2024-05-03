@@ -16,6 +16,7 @@ export const WinnerModal = ({ match }: WinnerModalProps) => {
 
   const lastWinMessage = match.winMessages[match.winMessages.length - 1]
 
+  const isShowdown = match?.isShowdown
 
   return (
     <>
@@ -23,20 +24,21 @@ export const WinnerModal = ({ match }: WinnerModalProps) => {
         <div className="status_win active !z-10" id="status_win">
           <div className="content_top">
             <div className="list">
-              {lastWinMessage.bestHand.map((card: Card, index) => (
-                <div className="item" key={index}>
-                  <div className="wrap">
-                    <Image
-                      src={`/images/pocker/${card.rank.toLowerCase()}_${card.suit.toLowerCase()}.png`}
-                      alt="pokerOnImage"
-                      width={0}
-                      height={0}
-                      sizes="100vw"
-                      className="w-auto h-full"
-                    />
+              {isShowdown &&
+                lastWinMessage.bestHand.map((card: Card, index) => (
+                  <div className="item" key={index}>
+                    <div className="wrap">
+                      <Image
+                        src={`/images/pocker/${card.rank.toLowerCase()}_${card.suit.toLowerCase()}.png`}
+                        alt="pokerOnImage"
+                        width={0}
+                        height={0}
+                        sizes="100vw"
+                        className="w-auto h-full"
+                      />
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
             </div>
             <div className="title">
               <Image
@@ -59,7 +61,9 @@ export const WinnerModal = ({ match }: WinnerModalProps) => {
                     .join(',')}
                   ]
                 </span>{' '}
-                {lastWinMessage.content}
+                {isShowdown
+                  ? lastWinMessage.content
+                  : `You win ${lastWinMessage.amount}$ without showdown!`}
               </div>
               <div className="money">
                 <span className="color-main">+{lastWinMessage.amount}$</span>

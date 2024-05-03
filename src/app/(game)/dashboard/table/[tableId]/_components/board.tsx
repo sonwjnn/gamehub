@@ -5,7 +5,7 @@ import { Card } from './card'
 import { cn } from '@/lib/utils'
 import { Match } from '@/types'
 import { formatChipsAmount } from '@/utils/formatting'
-import Sound from '@/utils/contants/sound'
+import sounds from '@/utils/contants/sound'
 
 interface BoardProps {
   match: Match | null
@@ -25,7 +25,7 @@ const BoardCard = ({
   useEffect(() => {
     if (!isHidden) {
       const timer = setTimeout(() => {
-        new Audio(Sound.soundOpen).play()
+        new Audio(sounds.soundOpen).play()
         setHiddenClass('')
       }, 1000)
 
@@ -51,7 +51,7 @@ export const Board = ({ match }: BoardProps) => {
 
   useEffect(() => {
     if (isFlop) {
-      new Audio(Sound.soundShare).play()
+      new Audio(sounds.soundShare).play()
     }
   }, [isFlop])
   return (

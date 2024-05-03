@@ -4,8 +4,9 @@ import { BetSlider } from '@/components/bet-slider'
 import { useSocket } from '@/providers/socket-provider'
 import { Match, Participant, Player, PokerActions, RaiseType } from '@/types'
 import { useState } from 'react'
-import Sound from '@/utils/contants/sound'
+import sounds from '@/utils/contants/sound'
 import { formatChipsAmount } from '@/utils/formatting'
+import { getGenderFromImageUrl, playSound } from '@/utils/sound'
 
 interface CurrentPlayerActionProps {
   tableId: string
@@ -32,10 +33,12 @@ export const CurrentPlayerAction = ({
 
   const [isProcessing, setIsProcessing] = useState(false)
 
+  const gender = getGenderFromImageUrl(player?.user?.image || '')
+
   const fold = async () => {
     setIsAction(true)
     if (socket && !isProcessing) {
-      new Audio(Sound.soundFoldBoy).play()
+      playSound(PokerActions.FOLD, gender)
       setIsProcessing(true)
       socket.emit(PokerActions.FOLD, {
         tableId,
@@ -51,7 +54,7 @@ export const CurrentPlayerAction = ({
   const check = () => {
     setIsAction(true)
     if (socket && !isProcessing) {
-      new Audio(Sound.soundCheckBoy).play()
+      playSound(PokerActions.CHECK, gender)
       setIsProcessing(true)
       socket.emit(PokerActions.CHECK, {
         tableId,
@@ -67,7 +70,7 @@ export const CurrentPlayerAction = ({
   const call = () => {
     setIsAction(true)
     if (socket && !isProcessing) {
-      new Audio(Sound.soundCallBoy).play()
+      playSound(PokerActions.CALL, gender)
 
       setIsProcessing(true)
       socket.emit(PokerActions.CALL, {
@@ -81,7 +84,7 @@ export const CurrentPlayerAction = ({
     }
   }
 
-  const raise = (amount: number, type: RaiseType) => {
+  const raise = (amount: number, type: PokerActions) => {
     setIsAction(true)
     if (socket && !isProcessing) {
       setIsProcessing(true)
@@ -99,28 +102,28 @@ export const CurrentPlayerAction = ({
   }
 
   const onRaise = () => {
-    new Audio(Sound.soundRaiseBoy).play()
-    raise(bet + currentBet, RaiseType.RAISE)
+    playSound(PokerActions.RAISE, gender)
+    raise(bet + currentBet, PokerActions.RAISE)
   }
 
   const onQuater = () => {
-    new Audio(Sound.soundQuarterBoy).play()
-    raise(quarter + currentBet, RaiseType.QUARTER)
+    playSound(PokerActions.QUARTER, gender)
+    raise(quarter + currentBet, PokerActions.QUARTER)
   }
 
   const onHalf = () => {
-    new Audio(Sound.soundHalfBoy).play()
-    raise(half + currentBet, RaiseType.HALF)
+    playSound(PokerActions.HALF, gender)
+    raise(half + currentBet, PokerActions.HALF)
   }
 
   const onFull = () => {
-    new Audio(Sound.soundFullBoy).play()
-    raise(currentPot + currentBet, RaiseType.FULL)
+    playSound(PokerActions.FULL, gender)
+    raise(currentPot + currentBet, PokerActions.FULL)
   }
 
   const onAllIn = () => {
-    new Audio(Sound.soundAllBoy).play()
-    raise(currentStack + currentBet, RaiseType.ALLIN)
+    playSound(PokerActions.ALLIN, gender)
+    raise(currentStack + currentBet, PokerActions.ALLIN)
   }
 
   const currentPot = match?.pot || 0
@@ -160,14 +163,8 @@ export const CurrentPlayerAction = ({
           disabled={!isTurn || isProcessing || !canQuater}
         >
           <span className="number">{1}</span>
-          <div className="value md:space-y-1.5">
-            {quarter ? (
-              <div className="text-xs leading-3 md:text-xl action_amount">
-                {formatChipsAmount(quarter)}
-              </div>
-            ) : null}
-            <div>쿼터</div>
-          </div>
+          <div className="value">쿼터x</div>
+          <div className="view_money">~ {formatChipsAmount(quarter)}$</div>
         </button>
         <button
           className="item disabled:pointer-events-none disabled:opacity-50"
@@ -175,14 +172,8 @@ export const CurrentPlayerAction = ({
           disabled={!isTurn || isProcessing || !canHalf}
         >
           <span className="number">{2}</span>
-          <div className="value md:space-y-1.5">
-            {half ? (
-              <div className="text-xs leading-3 md:text-xl action_amount">
-                {formatChipsAmount(half)}
-              </div>
-            ) : null}
-            <div>하프</div>
-          </div>
+          <div className="value">하프</div>
+          <div className="view_money">~ {formatChipsAmount(half)}$</div>
         </button>
         <button
           className="item disabled:pointer-events-none disabled:opacity-50"
@@ -190,14 +181,8 @@ export const CurrentPlayerAction = ({
           disabled={!isTurn || isProcessing || !canFull}
         >
           <span className="number">{3}</span>
-          <div className="value md:space-y-1.5">
-            {currentPot ? (
-              <div className="text-xs leading-3 md:text-xl action_amount">
-                {formatChipsAmount(currentPot)}
-              </div>
-            ) : null}
-            <div>풀</div>
-          </div>
+          <div className="value">풀</div>
+          <div className="view_money">~ {formatChipsAmount(currentPot)}$</div>
         </button>
         <button
           className="item disabled:pointer-events-none disabled:opacity-50"
@@ -229,14 +214,8 @@ export const CurrentPlayerAction = ({
             disabled={!isTurn || isProcessing || canNotCall}
           >
             <span className="number">{6}</span>
-            <div className="value md:space-y-1.5">
-              {callSize ? (
-                <div className="text-xs leading-3 md:text-xl action_amount">
-                  {formatChipsAmount(callSize)}
-                </div>
-              ) : null}
-              <div>콜</div>
-            </div>
+            <div className="value">콜</div>
+            <div className="view_money">~ {formatChipsAmount(callSize)}$</div>
           </button>
         ) : !canNotCheck ? (
           <button
@@ -255,14 +234,8 @@ export const CurrentPlayerAction = ({
             disabled={!isTurn || isProcessing || canNotCall}
           >
             <span className="number">{6}</span>
-            <div className="value md:space-y-1.5">
-              {callSize ? (
-                <div className="text-xs leading-3 md:text-xl action_amount">
-                  {formatChipsAmount(callSize)}
-                </div>
-              ) : null}
-              <div>콜</div>
-            </div>
+            <div className="value">콜</div>
+            <div className="view_money">~ {formatChipsAmount(callSize)}$</div>
           </button>
         )}
 

@@ -8,7 +8,7 @@ import { useState, useEffect, useRef } from 'react'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 
-import Sound from '@/utils/contants/sound'
+import sounds from '@/utils/contants/sound'
 import { Match, Participant, PlayerWithUser, PokerActions } from '@/types'
 import { useCurrentUser } from '@/hooks/use-current-user'
 import { useSocket } from '@/providers/socket-provider'
@@ -33,7 +33,6 @@ export const TableContent = ({ tableId }: TableContentProps) => {
   const { socket } = useSocket()
 
   const [messages, setMessages] = useState([] as string[])
-  const [isWaiting, setIsWaiting] = useState(false)
   const [match, setMatch] = useState<Match | null>(null)
   const [participants, setParticipants] = useState<Participant[]>([])
 
@@ -127,7 +126,7 @@ export const TableContent = ({ tableId }: TableContentProps) => {
     }
 
     if (isShuffle) {
-      new Audio(Sound.soundShufle).play()
+      new Audio(sounds.soundShufle).play()
 
       let i = 0
       const dealInterval = setInterval(() => {
@@ -199,10 +198,10 @@ export const TableContent = ({ tableId }: TableContentProps) => {
         ({ tableId, player }: { tableId: string; player: PlayerWithUser }) => {
           setPlayers(prev => [...prev, player])
 
-          socket.emit(PokerActions.TABLE_JOINED, {
-            tableId,
-            player,
-          })
+          // socket.emit(PokerActions.TABLE_JOINED, {
+          //   tableId,
+          //   player,
+          // })
         }
       )
 
@@ -313,23 +312,19 @@ export const TableContent = ({ tableId }: TableContentProps) => {
   }, [tableId])
 
   const removePlayer = async () => {
-    try {
-      const currentPlayer = players.find(p => p.userId === user?.id)
-      if (!currentPlayer) return
-      const { response, error } = await playerApi.removePlayer({
-        playerId: currentPlayer?.id,
-        tableId: tableId,
-      })
+    const currentPlayer = players.find(p => p.userId === user?.id)
+    if (!currentPlayer) return
+    const { response, error } = await playerApi.removePlayer({
+      playerId: currentPlayer?.id,
+      tableId: tableId,
+    })
 
-      if (error) {
-        console.log(error)
-        return
-      }
-
-      router.push('/dashboard/table')
-    } catch (error) {
+    if (error) {
       console.log(error)
+      return
     }
+
+    router.push('/dashboard/table')
   }
 
   const addMessage = (message: string) => {
