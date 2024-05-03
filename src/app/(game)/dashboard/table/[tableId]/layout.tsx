@@ -21,7 +21,7 @@ const TableIdLayout = async ({
   return (
     <>
       <Navbar />
-      <div className="game_body">
+      <div className="game_body relative">
         {children}
         <Chat tableId={tableId} />
       </div>
