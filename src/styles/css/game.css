@@ -5,6 +5,22 @@
 .game-html {
   height: 100%;
   width: 100%;
+  font-size: 14px;
+}
+@media (min-width: 1241px) {
+  .game-html {
+    font-size: 16px;
+  }
+}
+@media (min-width: 1367px) {
+  .game-html {
+    font-size: 17px;
+  }
+}
+@media (min-width: 1801px) {
+  .game-html {
+    font-size: 18px;
+  }
 }
 .game-html .pocker_list {
   display: -webkit-box;
@@ -1769,8 +1785,8 @@
   -webkit-box-pack: center;
   -ms-flex-pack: center;
   justify-content: center;
-  height: 19.8871650212%;
-  width: 46.3194444444%;
+  height: 18.3356840621%;
+  width: 43.75%;
 }
 @media (min-width: 320px) and (orientation: portrait),
   (max-width: 1023px) and (orientation: landscape) {
@@ -2538,12 +2554,10 @@
 }
 .game-html .group_tool .coin_bet {
   top: auto;
-  bottom: -30%;
-  left: 0%;
-  -webkit-transform: translateX(-170%);
-  -ms-transform: translateX(-170%);
-  transform: translateX(-170%);
-  display: none;
+  bottom: 100%;
+  -webkit-transform: translate(115%, -50%);
+  -ms-transform: translate(115%, -50%);
+  transform: translate(115%, -50%);
 }
 .game-html .avatar {
   background-image: url(/images/avt_bg2.png);
@@ -2631,24 +2645,6 @@
     top: 100%;
     left: 0;
     overflow: hidden;
-  }
-}
-.game-html body {
-  font-size: 14px;
-}
-@media (min-width: 1241px) {
-  .game-html body {
-    font-size: 16px;
-  }
-}
-@media (min-width: 1367px) {
-  .game-html body {
-    font-size: 17px;
-  }
-}
-@media (min-width: 1801px) {
-  .game-html body {
-    font-size: 18px;
   }
 }
 .game-html .game {

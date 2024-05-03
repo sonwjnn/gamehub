@@ -1,6 +1,7 @@
 import { Chat } from './_components/chat'
 import { currentUser } from '@/lib/auth'
 import '@/styles/css/game.css'
+import { Navbar } from './_components/navbar'
 
 const TableIdLayout = async ({
   children,
@@ -18,10 +19,13 @@ const TableIdLayout = async ({
   const { tableId } = params
 
   return (
-    <div className="game_body">
-      {children}
-      <Chat tableId={tableId} />
-    </div>
+    <>
+      <Navbar />
+      <div className="game_body">
+        {children}
+        <Chat tableId={tableId} />
+      </div>
+    </>
   )
 }
 
