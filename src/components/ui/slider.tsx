@@ -33,7 +33,7 @@ export const Slider: React.FC<SliderProps> = ({
   return (
     <SliderPrimitive.Root
       className={twMerge(
-        'group  relative flex items-center select-none cursor-pointer touch-none w-full h-[40px]',
+        'group  relative flex items-center select-none cursor-pointer touch-none w-full h-[30px]',
         className
       )}
       defaultValue={[0]}
@@ -44,22 +44,11 @@ export const Slider: React.FC<SliderProps> = ({
       min={minValue}
       step={step}
     >
-      <SliderPrimitive.Track className="relative  h-[8px] grow rounded-full bg-neutral-600">
-        <SliderPrimitive.Range className="absolute h-full  rounded-full bg-white group-hover:bg-lime-500"></SliderPrimitive.Range>
+      <SliderPrimitive.Track className="relative  h-[3px] grow rounded-full bg-neutral-600">
+        <SliderPrimitive.Range className="absolute h-[6px] -top-1/2  rounded-full bg-yellow-linear "></SliderPrimitive.Range>
       </SliderPrimitive.Track>
       <Fragment>
-        <div
-          className="absolute text-center scale-0 transition group-hover:scale-100"
-          style={{
-            left: `calc(${(value / maxValue) * 100}% - 24px)`,
-            top: `-30px`,
-          }}
-        >
-          <span className="text-[24px] font-bold text-lime-500 px-[24px] py-[4px] bg-neutral-900 rounded-md">
-            {value}
-          </span>
-        </div>
-        <SliderPrimitive.Thumb className="block size-[16px] scale-0 rounded-full bg-white  transition focus:outline-none group-hover:scale-100 " />
+        <SliderPrimitive.Thumb className="block size-[12px] scale-0 rounded-full bg-yellow-linear  transition focus:outline-none group-hover:scale-100 " />
       </Fragment>
     </SliderPrimitive.Root>
   )

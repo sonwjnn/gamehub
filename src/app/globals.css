@@ -67,4 +67,15 @@
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
   }
+
+  .bg-yellow-linear {
+    background: linear-gradient(
+      236.68deg,
+      #ceb900 13.29%,
+      #fafbc0 30.82%,
+      #feffdc 43.82%,
+      #ffec42 59.09%,
+      #c4ff9f 69.83%
+    );
+  }
 }

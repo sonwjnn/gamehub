@@ -3,7 +3,7 @@
 import { BetSlider } from '@/components/bet-slider'
 import { useSocket } from '@/providers/socket-provider'
 import { Match, Participant, Player, PokerActions, RaiseType } from '@/types'
-import { useState } from 'react'
+import React, { useState } from 'react'
 import sounds from '@/utils/contants/sound'
 import { formatChipsAmount } from '@/utils/formatting'
 import { getGenderFromImageUrl, playSound } from '@/utils/sound'
@@ -13,7 +13,7 @@ interface CurrentPlayerActionProps {
   currentParticipant: Participant | undefined
   match: Match | null
   bet: number
-  setBet: (bet: number) => void
+  setBet: React.Dispatch<React.SetStateAction<number>>
   player: Player | undefined
   isTurn: boolean | undefined
   setIsAction: (isAction: boolean) => void
@@ -190,14 +190,7 @@ export const CurrentPlayerAction = ({
         >
           {/* <span className="number number_left">4 </span> */}
           <span className="number">4</span>
-          <div className=" text-white font-bold">
-            {bet ? (
-              <div className="text-xs leading-3 md:text-xl action_amount">
-                {formatChipsAmount(bet)}
-              </div>
-            ) : null}
-            <BetSlider min={min} bet={bet} setBet={setBet} max={max!} />
-          </div>
+          <BetSlider min={min} bet={bet} setBet={setBet} max={max!} />
         </button>
         <button
           className="item disabled:pointer-events-none disabled:opacity-50"
