@@ -5,7 +5,6 @@ import { QueryProvider } from '@/providers/query-provider'
 import { SocketProvider } from '@/providers/socket-provider'
 import { ThemeProvider } from '@/providers/theme-provider'
 import type { Metadata } from 'next'
-import { Open_Sans } from 'next/font/google'
 
 import './globals.css'
 import '@/styles/bootstrap.css'
