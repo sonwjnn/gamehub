@@ -21,6 +21,7 @@ const soundCheckBoy = '/sound/check_boy.mp3'
 const soundCheckGirl = '/sound/check_girl.mp3'
 const soundWin = '/sound/sound_win.mp3'
 const soundCoin = '/sound/sound_coin.mp3'
+const soundCountdown = '/sound/sound_countdown.mp3'
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
@@ -46,4 +47,5 @@ export default {
   soundCheckGirl,
   soundWin,
   soundCoin,
+  soundCountdown,
 }

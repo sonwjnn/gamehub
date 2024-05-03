@@ -50,14 +50,14 @@ export const CoinBet = ({ bet }: CoinBetProps) => {
     })
     gsap.from('.coins3', {
       y: -100,
-      delay: 0.6,
+      delay: 0,
       ease: 'bounce.out',
       opacity: 0,
       stagger: 0.2,
     })
     gsap.from('.coins4', {
       y: -100,
-      delay: 0.8,
+      delay: 0.1,
       ease: 'bounce.out',
       opacity: 0,
       stagger: 0.1,

@@ -15,6 +15,7 @@ import playerApi from '@/services/api/modules/player-api'
 import { useRouter } from 'next/navigation'
 import { CoinBet } from '@/components/coin-bet'
 import { getGenderFromImageUrl, playSound } from '@/utils/sound'
+import { useAudio } from 'react-use'
 
 interface CurrentPlayerProps {
   isShowdown?: boolean
@@ -40,6 +41,10 @@ export const CurrentPlayer = ({
   const [isAction, setIsAction] = useState(false)
   const [counter, setCounter] = useState(12)
   const [bet, setBet] = useState(0)
+  const [countdownSrcAudio, _, controls, ref] = useAudio({
+    src: sounds.soundCountdown,
+    autoPlay: false,
+  })
 
   const gender = getGenderFromImageUrl(player?.user?.image || '')
   const currentParticipant = participants.find(
@@ -82,6 +87,7 @@ export const CurrentPlayer = ({
         setCounter(counter - 1)
       }, 1000)
     }
+
     return () => {
       if (timer) {
         clearInterval(timer)
@@ -94,6 +100,21 @@ export const CurrentPlayer = ({
       setCounter(12)
     }
   }, [isTurn])
+
+  useEffect(() => {
+    if (isTurn && counter === 7) {
+      controls.play()
+    }
+  }, [isTurn, counter, controls])
+
+  useEffect(() => {
+    if (isAction) {
+      controls.pause()
+      if (ref.current) {
+        ref.current.currentTime = 0
+      }
+    }
+  }, [isAction, controls, ref])
 
   useEffect(() => {
     const handleBeforeUnload = (event: any) => {
@@ -206,6 +227,7 @@ export const CurrentPlayer = ({
         !isWinner && isHaveWinner && currentParticipant && 'is-lose'
       )}
     >
+      {countdownSrcAudio}
       <div className="group_flush">
         <div className="ttl">
           <span>ROYAL FLUSH</span>
