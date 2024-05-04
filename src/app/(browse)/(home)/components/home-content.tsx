@@ -65,33 +65,24 @@ export const HomeContent = ({ }: HomeContentProps) => {
 
 
   useEffect(() => {
-    const textWrapper = textWrapperRef.current;
-    if (textWrapper && textWrapper.childNodes.length > 0) {
-      const lines = textWrapper.textContent.split('\n');
+    const textWrapper = textWrapperRef.current?.querySelector('.letters');
+    if (textWrapper) {
+      textWrapper.innerHTML = textWrapper.textContent.replace(/\S/g, "<span class='letter'>$&</span>");
 
-      textWrapper.innerHTML = ''; // Clear the text wrapper
-
-      lines.forEach((line, index) => {
-        const lineElement = document.createElement('div');
-        lineElement.textContent = line;
-        textWrapper.appendChild(lineElement);
-
-        const letters = line.split('');
-        lineElement.innerHTML = letters
-          .map(
-            (letter, i) =>
-              `<span class='letter' style="display:inline-block;opacity:0;">${letter}</span>`
-          )
-          .join('');
-
-        anime.timeline({ loop: true }).add({
-          targets: lineElement.querySelectorAll('.letter'),
-          opacity: [0, 1],
-          easing: 'easeInOutQuad',
-          duration: 800,
-          delay: (el, i) => 50 * i,
+      anime.timeline({ loop: true })
+        .add({
+          targets: '.text_box .letter',
+          scale: [0, 1],
+          duration: 1500,
+          elasticity: 600,
+          delay: (el, i) => 45 * (i + 1)
+        }).add({
+          targets: '.text_box',
+          opacity: 0,
+          duration: 1000,
+          easing: "easeOutExpo",
+          delay: 1000
         });
-      });
     }
   }, []);
 
