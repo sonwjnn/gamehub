@@ -18,6 +18,7 @@ import { cn } from '@/lib/utils'
 import { WinnerModal } from './winner-modal'
 import playerApi from '@/services/api/modules/player-api'
 import { useRouter } from 'next/navigation'
+import { ShowdownModal } from './showdown-modal'
 
 interface TableContentProps {
   tableId: string
@@ -148,6 +149,7 @@ export const TableContent = ({ tableId }: TableContentProps) => {
   useEffect(() => {
     if (socket) {
       let timerMatchId: NodeJS.Timeout | null = null
+      let timerShowdownId: NodeJS.Timeout | null = null
 
       window.addEventListener('unload', removePlayer)
       window.addEventListener('close', removePlayer)
@@ -230,8 +232,22 @@ export const TableContent = ({ tableId }: TableContentProps) => {
           )
 
           if (match) {
-            setMatch(match)
-            setParticipants(match.participants)
+            if (match.isShowdown) {
+              setMatch({
+                ...match,
+                isShowdown: true,
+                winnerId: '',
+                winMessages: [],
+              })
+
+              setTimeout(() => {
+                setMatch(match)
+                setParticipants(match.participants)
+              }, 3000)
+            } else {
+              setMatch(match)
+              setParticipants(match.participants)
+            }
           }
         }
       )
@@ -393,6 +409,7 @@ export const TableContent = ({ tableId }: TableContentProps) => {
                   />
                 )
               })}
+              <ShowdownModal match={match} />
               <WinnerModal match={match} />
             </div>
           </div>

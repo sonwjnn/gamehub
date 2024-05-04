@@ -6,6 +6,7 @@ import { cn } from '@/lib/utils'
 import { Match } from '@/types'
 import { formatChipsAmount } from '@/utils/formatting'
 import sounds from '@/utils/contants/sound'
+import { useAudio } from 'react-use'
 
 interface BoardProps {
   match: Match | null
@@ -21,20 +22,24 @@ const BoardCard = ({
   isHidden: boolean
 }) => {
   const [hiddenClass, setHiddenClass] = useState(isHidden ? 'hide' : '')
+  const [audio, _, controls] = useAudio({ src: sounds.soundOpen })
 
   useEffect(() => {
     if (!isHidden) {
       const timer = setTimeout(() => {
-        new Audio(sounds.soundOpen).play()
+        controls.volume(0.5)
+        controls.play()
         setHiddenClass('')
       }, 1000)
 
       return () => clearTimeout(timer)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isHidden])
 
   return (
     <div className={cn('item flipped', hiddenClass)}>
+      {audio}
       <div className="pocker">
         <Card imageUrl={imageUrl} value={10} />
       </div>
@@ -81,32 +86,25 @@ export const Board = ({ match }: BoardProps) => {
                     isHidden={!isFlop}
                   />
                 ))}
-              {isTurn && (
-                <>
-                  {board
-                    ?.slice(3, 4)
-                    .map((card, index) => (
-                      <BoardCard
-                        key={card.id}
-                        imageUrl={`/images/pocker/${card.rank.toLowerCase()}_${card.suit.toLowerCase()}.png`}
-                        isHidden={!isTurn}
-                      />
-                    ))}
-                </>
-              )}
-              {isRiver && (
-                <>
-                  {board
-                    ?.slice(4, 5)
-                    .map((card, index) => (
-                      <BoardCard
-                        key={card.id}
-                        imageUrl={`/images/pocker/${card.rank.toLowerCase()}_${card.suit.toLowerCase()}.png`}
-                        isHidden={!isRiver}
-                      />
-                    ))}
-                </>
-              )}
+
+              {board
+                ?.slice(3, 4)
+                .map((card, index) => (
+                  <BoardCard
+                    key={card.id}
+                    imageUrl={`/images/pocker/${card.rank.toLowerCase()}_${card.suit.toLowerCase()}.png`}
+                    isHidden={!isTurn}
+                  />
+                ))}
+              {board
+                ?.slice(4, 5)
+                .map((card, index) => (
+                  <BoardCard
+                    key={card.id}
+                    imageUrl={`/images/pocker/${card.rank.toLowerCase()}_${card.suit.toLowerCase()}.png`}
+                    isHidden={!isRiver}
+                  />
+                ))}
             </>
           )}
         </div>

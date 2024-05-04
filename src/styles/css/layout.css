@@ -41,6 +41,10 @@ img {
   height: 100%;
   display: block;
 }
+.icon.sz-8 {
+  width: 8px;
+  height: 8px;
+}
 .icon.sz-12 {
   width: 12px;
   height: 12px;

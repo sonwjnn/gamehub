@@ -4,7 +4,6 @@ import { BetSlider } from '@/components/bet-slider'
 import { useSocket } from '@/providers/socket-provider'
 import { Match, Participant, Player, PokerActions, RaiseType } from '@/types'
 import React, { useState } from 'react'
-import sounds from '@/utils/contants/sound'
 import { formatChipsAmount } from '@/utils/formatting'
 import { getGenderFromImageUrl, playSound } from '@/utils/sound'
 
@@ -164,7 +163,7 @@ export const CurrentPlayerAction = ({
         >
           <span className="number">{1}</span>
           <div className="value">쿼터x</div>
-          <div className="view_money">~ {formatChipsAmount(quarter)}$</div>
+          <div className="view_money">{formatChipsAmount(quarter)}$</div>
         </button>
         <button
           className="item disabled:pointer-events-none disabled:opacity-50"
@@ -173,7 +172,7 @@ export const CurrentPlayerAction = ({
         >
           <span className="number">{2}</span>
           <div className="value">하프</div>
-          <div className="view_money">~ {formatChipsAmount(half)}$</div>
+          <div className="view_money">{formatChipsAmount(half)}$</div>
         </button>
         <button
           className="item disabled:pointer-events-none disabled:opacity-50"
@@ -182,7 +181,7 @@ export const CurrentPlayerAction = ({
         >
           <span className="number">{3}</span>
           <div className="value">풀</div>
-          <div className="view_money">~ {formatChipsAmount(currentPot)}$</div>
+          <div className="view_money">{formatChipsAmount(currentPot)}$</div>
         </button>
         <button
           className="item disabled:pointer-events-none disabled:opacity-50"
@@ -208,7 +207,7 @@ export const CurrentPlayerAction = ({
           >
             <span className="number">{6}</span>
             <div className="value">콜</div>
-            <div className="view_money">~ {formatChipsAmount(callSize)}$</div>
+            <div className="view_money">{formatChipsAmount(callSize)}$</div>
           </button>
         ) : !canNotCheck ? (
           <button
@@ -228,7 +227,7 @@ export const CurrentPlayerAction = ({
           >
             <span className="number">{6}</span>
             <div className="value">콜</div>
-            <div className="view_money">~ {formatChipsAmount(callSize)}$</div>
+            <div className="view_money">{formatChipsAmount(callSize)}$</div>
           </button>
         )}
 

@@ -17,7 +17,6 @@ const tableApi = {
   },
   getTables: async ({ page }: { page: string }) => {
     try {
-      console.log(page)
       const response = await publicClient.get(
         tableEndpoints.getTables({ page })
       )

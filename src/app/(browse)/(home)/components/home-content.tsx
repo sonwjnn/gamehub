@@ -18,7 +18,7 @@ const textArray = [
 
 export const HomeContent = ({}: HomeContentProps) => {
   const [audio, _] = useAudio({
-    src: '/sound/sound_home.mp3',
+    src: '/sounds/sound_home.mp3',
     autoPlay: true,
     loop: true,
   })
