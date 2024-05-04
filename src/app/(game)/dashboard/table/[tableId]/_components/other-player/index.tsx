@@ -45,7 +45,7 @@ export const OtherPlayer = ({
   const isShowdown = match?.isShowdown
   const isHaveWinner = match?.winnerId
   const isAllIn = player?.stack === 0 || !isShowdown
-  const isHaveParticipant = currentParticipant?.isFolded ? false : true
+  const isUnfoldedParticipant = currentParticipant?.isFolded ? false : true
 
   const isWaiting = match && !match?.table.isHandOver && !currentParticipant
 
@@ -120,7 +120,7 @@ export const OtherPlayer = ({
         isFolded && 'user_fold',
         !isWinner && currentParticipant && isHaveWinner && 'is-lose',
         isWaiting && 'user_waitting',
-        isShowdown && isHaveParticipant && 'target_showdown'
+        isShowdown && isUnfoldedParticipant && 'target_showdown'
       )}
     >
       {currentBet > 0 && <CoinBet bet={currentBet} />}

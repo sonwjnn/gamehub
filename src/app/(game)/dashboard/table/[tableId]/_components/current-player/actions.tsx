@@ -105,7 +105,7 @@ export const CurrentPlayerAction = ({
     raise(bet + currentBet, PokerActions.RAISE)
   }
 
-  const onQuater = () => {
+  const onQuarter = () => {
     playSound(PokerActions.QUARTER, gender)
     raise(quarter + currentBet, PokerActions.QUARTER)
   }
@@ -139,7 +139,7 @@ export const CurrentPlayerAction = ({
       ? currentCallAmount - currentBet
       : 0
 
-  const canQuater = quarter >= currentCallAmount && currentStack >= quarter
+  const canQuarter = quarter >= currentCallAmount && currentStack >= quarter
   const canHalf = half >= currentCallAmount && currentStack >= half
   const canFull = currentPot >= currentCallAmount && currentStack >= currentPot
 
@@ -158,11 +158,11 @@ export const CurrentPlayerAction = ({
       <div className="toolbar">
         <button
           className="item disabled:pointer-events-none disabled:opacity-50"
-          onClick={onQuater}
-          disabled={!isTurn || isProcessing || !canQuater}
+          onClick={onQuarter}
+          disabled={!isTurn || isProcessing || !canQuarter}
         >
           <span className="number">{1}</span>
-          <div className="value">쿼터x</div>
+          <div className="value">쿼터</div>
           <div className="view_money">{formatChipsAmount(quarter)}$</div>
         </button>
         <button

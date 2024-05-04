@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from 'react'
 import anime from 'animejs'
 import Link from 'next/link'
 import { useAudio } from 'react-use'
+import { useOrigin } from '@/hooks/use-origin'
 
 interface HomeContentProps {}
 

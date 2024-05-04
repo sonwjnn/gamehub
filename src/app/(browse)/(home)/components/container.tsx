@@ -9,7 +9,13 @@ interface ContainerProps {
 export const Container = ({ children }: ContainerProps) => {
   const origin = useOrigin()
 
-  if (!origin) return null
+  if (!origin) {
+    return (
+      <div className="absolute inset-0 bg-zinc-900 z-50 flex items-center justify-center text-3xl font-bold">
+        Loading...
+      </div>
+    )
+  }
 
   return (
     <div className="inner_page">
