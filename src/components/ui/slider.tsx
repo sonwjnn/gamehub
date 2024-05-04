@@ -45,10 +45,10 @@ export const Slider: React.FC<SliderProps> = ({
       step={step}
     >
       <SliderPrimitive.Track className="relative  h-[3px] grow rounded-full bg-neutral-600">
-        <SliderPrimitive.Range className="absolute h-[6px] -top-1/2  rounded-full bg-yellow-linear "></SliderPrimitive.Range>
+        <SliderPrimitive.Range className="absolute h-[4px] -top-1/2  rounded-full bg-yellow-linear "></SliderPrimitive.Range>
       </SliderPrimitive.Track>
       <Fragment>
-        <SliderPrimitive.Thumb className="block size-[12px] scale-0 rounded-full bg-yellow-linear  transition focus:outline-none group-hover:scale-100 " />
+        <SliderPrimitive.Thumb className="block size-[10px] rounded-full bg-yellow-linear  transition focus:outline-none " />
       </Fragment>
     </SliderPrimitive.Root>
   )

@@ -149,7 +149,6 @@ export const TableContent = ({ tableId }: TableContentProps) => {
   useEffect(() => {
     if (socket) {
       let timerMatchId: NodeJS.Timeout | null = null
-      let timerShowdownId: NodeJS.Timeout | null = null
 
       window.addEventListener('unload', removePlayer)
       window.addEventListener('close', removePlayer)

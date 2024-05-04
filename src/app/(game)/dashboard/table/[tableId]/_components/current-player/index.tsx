@@ -54,7 +54,7 @@ export const CurrentPlayer = ({
   const isFolded = currentParticipant?.isFolded
   const isHaveWinner = match?.winnerId
   const isWinner = !isFolded && match?.winnerId === player?.id
-  const isTurn = !isFolded && player?.isTurn
+  const isTurn = true || (!isFolded && player?.isTurn)
   const isShowdown = match?.isShowdown
   const isUnfoldedParticipant = currentParticipant?.isFolded ? false : true
 

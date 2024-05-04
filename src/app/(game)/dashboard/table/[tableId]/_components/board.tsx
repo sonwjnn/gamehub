@@ -87,24 +87,32 @@ export const Board = ({ match }: BoardProps) => {
                   />
                 ))}
 
-              {board
-                ?.slice(3, 4)
-                .map((card, index) => (
-                  <BoardCard
-                    key={card.id}
-                    imageUrl={`/images/pocker/${card.rank.toLowerCase()}_${card.suit.toLowerCase()}.png`}
-                    isHidden={!isTurn}
-                  />
-                ))}
-              {board
-                ?.slice(4, 5)
-                .map((card, index) => (
-                  <BoardCard
-                    key={card.id}
-                    imageUrl={`/images/pocker/${card.rank.toLowerCase()}_${card.suit.toLowerCase()}.png`}
-                    isHidden={!isRiver}
-                  />
-                ))}
+              {isTurn && (
+                <>
+                  {board
+                    ?.slice(3, 4)
+                    .map((card, index) => (
+                      <BoardCard
+                        key={card.id}
+                        imageUrl={`/images/pocker/${card.rank.toLowerCase()}_${card.suit.toLowerCase()}.png`}
+                        isHidden={!isTurn}
+                      />
+                    ))}
+                </>
+              )}
+              {isRiver && (
+                <>
+                  {board
+                    ?.slice(4, 5)
+                    .map((card, index) => (
+                      <BoardCard
+                        key={card.id}
+                        imageUrl={`/images/pocker/${card.rank.toLowerCase()}_${card.suit.toLowerCase()}.png`}
+                        isHidden={!isRiver}
+                      />
+                    ))}
+                </>
+              )}
             </>
           )}
         </div>
