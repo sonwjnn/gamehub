@@ -8,7 +8,7 @@ import Link from 'next/link'
 import { useAudio } from 'react-use'
 import { useOrigin } from '@/hooks/use-origin'
 
-interface HomeContentProps {}
+interface HomeContentProps { }
 
 const textArray = [
   'Lorem Ipsum',
@@ -17,7 +17,7 @@ const textArray = [
   'Finibus Bonorum',
 ]
 
-export const HomeContent = ({}: HomeContentProps) => {
+export const HomeContent = ({ }: HomeContentProps) => {
   const [audio, _] = useAudio({
     src: '/sounds/sound_home.mp3',
     autoPlay: true,
@@ -28,35 +28,73 @@ export const HomeContent = ({}: HomeContentProps) => {
   const [charIndex, setCharIndex] = useState(0)
 
   const textWrapperRef = useRef<HTMLDivElement>(null)
-  const typedTextRef = useRef<HTMLSpanElement>(null)
-  const cursorRef = useRef<HTMLSpanElement>(null)
+  // const typedTextRef = useRef<HTMLSpanElement>(null)
+  // const cursorRef = useRef<HTMLSpanElement>(null)
+  const typedTextRef = useRef();
+  const cursorRef = useRef();
 
   useEffect(() => {
-    if (textWrapperRef.current && textWrapperRef.current.textContent) {
-      textWrapperRef.current.innerHTML =
-        textWrapperRef.current.textContent.replace(
-          /\S/g,
-          "<span className='letter'>$&</span>"
-        )
+    const texts = ["hello", "goodbye", "welcome", "farewell"];
+    let currentTextIndex = 0;
+    let typingTimeout;
 
-      anime
-        .timeline({ loop: true })
-        .add({
-          targets: '.text_box .letter',
-          scale: [0, 1],
-          duration: 1500,
-          elasticity: 600,
-          delay: (el, i) => 45 * (i + 1),
-        })
-        .add({
-          targets: '.text_box',
-          opacity: 0,
-          duration: 1000,
-          easing: 'easeOutExpo',
-          delay: 1000,
-        })
+    const typeText = (text, index) => {
+      if (index < text.length) {
+        typedTextRef.current.textContent += text.charAt(index);
+        typingTimeout = setTimeout(() => typeText(text, index + 1), 100);
+      } else {
+        setTimeout(eraseText, 1000);
+      }
+    };
+
+    const eraseText = () => {
+      const text = typedTextRef.current.textContent;
+      if (text.length > 0) {
+        typedTextRef.current.textContent = text.slice(0, -1);
+        setTimeout(eraseText, 50);
+      } else {
+        currentTextIndex = (currentTextIndex + 1) % texts.length;
+        typeText(texts[currentTextIndex], 0);
+      }
+    };
+
+    typeText(texts[currentTextIndex], 0);
+
+    return () => clearTimeout(typingTimeout);
+  }, []);
+
+
+  useEffect(() => {
+    const textWrapper = textWrapperRef.current;
+    if (textWrapper && textWrapper.childNodes.length > 0) {
+      const lines = textWrapper.textContent.split('\n');
+
+      textWrapper.innerHTML = ''; // Clear the text wrapper
+
+      lines.forEach((line, index) => {
+        const lineElement = document.createElement('div');
+        lineElement.textContent = line;
+        textWrapper.appendChild(lineElement);
+
+        const letters = line.split('');
+        lineElement.innerHTML = letters
+          .map(
+            (letter, i) =>
+              `<span class='letter' style="display:inline-block;opacity:0;">${letter}</span>`
+          )
+          .join('');
+
+        anime.timeline({ loop: true }).add({
+          targets: lineElement.querySelectorAll('.letter'),
+          opacity: [0, 1],
+          easing: 'easeInOutQuad',
+          duration: 800,
+          delay: (el, i) => 50 * i,
+        });
+      });
     }
-  }, [])
+  }, []);
+
 
   const type = () => {
     if (charIndex < textArray[textArrayIndex].length) {
