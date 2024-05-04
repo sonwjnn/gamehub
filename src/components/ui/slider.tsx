@@ -44,8 +44,8 @@ export const Slider: React.FC<SliderProps> = ({
       min={minValue}
       step={step}
     >
-      <SliderPrimitive.Track className="relative  h-[3px] grow rounded-full bg-neutral-600">
-        <SliderPrimitive.Range className="absolute h-[4px] -top-1/2  rounded-full bg-yellow-linear "></SliderPrimitive.Range>
+      <SliderPrimitive.Track className="relative  h-[1px] grow rounded-full bg-neutral-600">
+        <SliderPrimitive.Range className="absolute h-[3px] -top-1/2  rounded-full bg-yellow-linear "></SliderPrimitive.Range>
       </SliderPrimitive.Track>
       <Fragment>
         <SliderPrimitive.Thumb className="block size-[10px] rounded-full bg-yellow-linear  transition focus:outline-none " />
