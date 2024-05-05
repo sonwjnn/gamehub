@@ -1,3 +1,197 @@
+.trim {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+}
+.trim-1 {
+  -webkit-line-clamp: 1;
+}
+.trim-2 {
+  -webkit-line-clamp: 2;
+}
+.trim-3 {
+  -webkit-line-clamp: 3;
+}
+.trim-4 {
+  -webkit-line-clamp: 4;
+}
+.trim-10 {
+  -webkit-line-clamp: 10;
+}
+
+.color-primary {
+  color: primary;
+}
+
+.bg-primary {
+  background-color: primary;
+}
+
+.color-secon {
+  color: secon;
+}
+
+.bg-secon {
+  background-color: secon;
+}
+
+.color-white {
+  color: white;
+}
+
+.bg-white {
+  background-color: white;
+}
+
+.color-text {
+  color: text;
+}
+
+.bg-text {
+  background-color: text;
+}
+
+.bdrs-4 {
+  border-radius: 4px;
+}
+
+.bdrs-8 {
+  border-radius: 8px;
+}
+
+.bdrs-12 {
+  border-radius: 12px;
+}
+
+.bdrs-16 {
+  border-radius: 16px;
+}
+
+.bdrs-20 {
+  border-radius: 20px;
+}
+
+.bdrs-24 {
+  border-radius: 24px;
+}
+
+.bdrs-32 {
+  border-radius: 32px;
+}
+
+.bdrs-36 {
+  border-radius: 36px;
+}
+
+.bdrs-40 {
+  border-radius: 40px;
+}
+
+.bdrs-44 {
+  border-radius: 44px;
+}
+
+.bdrs-48 {
+  border-radius: 48px;
+}
+
+.bdrs-60 {
+  border-radius: 60px;
+}
+
+.color-main {
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-image: linear-gradient(
+    222.46deg,
+    #feffe1 0.98%,
+    #fcff74 52.73%,
+    #758319 103.46%
+  );
+  font-weight: 600;
+}
+
+.color-green {
+  color: rgb(3, 245, 3);
+}
+
+.color-red {
+  color: rgb(255, 0, 0);
+}
+
+.text-limit {
+  display: block;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  word-wrap: break-word;
+  overflow: hidden;
+}
+.text-up {
+  text-transform: uppercase;
+}
+.text-center {
+  text-align: center;
+}
+.text-right {
+  text-align: right;
+}
+.text-left {
+  text-align: left;
+}
+.text-unline {
+  text-decoration: none;
+}
+.text-link {
+  cursor: pointer;
+}
+.text-gold {
+  background: linear-gradient(
+    236.68deg,
+    #ceb900 13.29%,
+    #fafbc0 30.82%,
+    #feffdc 43.82%,
+    #ffec42 59.09%,
+    #c4ff9f 69.83%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.text p {
+  margin-bottom: 0;
+}
+.text p + p {
+  margin-top: 4px;
+}
+@media (min-width: 992px) {
+  .text p + p {
+    margin-top: 8px;
+  }
+}
+
+.fw-300 {
+  font-weight: 300;
+}
+.fw-400 {
+  font-weight: 400;
+}
+.fw-500,
+.fw strong {
+  font-weight: 500;
+}
+.fw-600 {
+  font-weight: 600;
+}
+.fw-700 {
+  font-weight: 700;
+}
+.fw-900 {
+  font-weight: 900;
+}
+.fw-bold {
+  font-weight: bold;
+}
+
 .hidden {
   display: none;
 }
@@ -2187,7 +2381,7 @@
   background-size: 100% 100%;
   font-weight: 900;
   text-align: center;
-  font-size: 75%;
+  font-size: 81.25%;
   margin-left: 4%;
 }
 @media (min-width: 320px) and (orientation: portrait),
@@ -2203,19 +2397,9 @@
     display: none;
   }
 }
-@media (min-width: 1024px), ((min-width: 768px) and (orientation: portrait)) {
-  .game-html .group_tool .group_flush .ttl {
-    font-size: 87.5%;
-  }
-}
-@media (min-width: 1241px) {
-  .game-html .group_tool .group_flush .ttl {
-    font-size: 93.75%;
-  }
-}
 @media (min-width: 1801px) {
   .game-html .group_tool .group_flush .ttl {
-    font-size: 106.25%;
+    font-size: 100%;
   }
 }
 .game-html .group_tool .group_flush .ttl span {
@@ -2745,6 +2929,133 @@
 }
 .game-html .avatar.sz-36 .imgDrop {
   border-width: 1px;
+}
+.game-html .loading {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  background: -webkit-gradient(
+    linear,
+    left top,
+    right top,
+    from(hsl(210, 30%, 20%)),
+    to(rgb(38, 30, 62))
+  );
+  background: linear-gradient(to right, hsl(210, 30%, 20%), rgb(38, 30, 62));
+  z-index: 9999;
+  opacity: 0;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  pointer-events: none;
+}
+.game-html .loading.show {
+  opacity: 1;
+  pointer-events: all;
+}
+.game-html .loading .wrap {
+  width: 15%;
+  margin: auto;
+  text-align: center;
+  min-width: 100px;
+}
+.game-html .loading-text {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  font-weight: 500;
+  font-size: 112.5%;
+}
+.game-html .loading-content {
+  width: 100%;
+  padding-top: 100%;
+  border: 3px solid #f00;
+  border: 3px solid transparent;
+  border-top-color: #4d658d;
+  border-bottom-color: #4d658d;
+  border-radius: 50%;
+  -webkit-animation: loader 2s linear infinite;
+  animation: loader 2s linear infinite;
+}
+.game-html .loading-content:after {
+  content: '';
+  position: absolute;
+  border: 3px solid #0f0;
+  left: 15px;
+  right: 15px;
+  top: 15px;
+  bottom: 15px;
+  border: 3px solid transparent;
+  border-top-color: #84417c;
+  border-bottom-color: #84417c;
+  border-radius: 50%;
+  -webkit-animation: loader 1.5s linear infinite;
+  animation: loader 1.5s linear infinite;
+}
+.game-html .loading-content:before {
+  content: '';
+  position: absolute;
+  border: 3px solid rgb(9, 9, 148);
+  left: 5px;
+  right: 5px;
+  top: 5px;
+  bottom: 5px;
+  border: 3px solid transparent;
+  border-top-color: #d4cc6a;
+  border-bottom-color: #d4cc6a;
+  border-radius: 50%;
+  -webkit-animation: loader 3s linear infinite;
+  animation: loader 3s linear infinite;
+}
+@-webkit-keyframes loaders {
+  0% {
+    -webkit-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes loader {
+  0% {
+    -webkit-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@keyframes loader {
+  0% {
+    -webkit-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
 }
 @media (min-width: 320px) and (max-width: 1024px) and (orientation: portrait) {
   .game-html {

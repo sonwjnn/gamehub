@@ -84,6 +84,9 @@ const config = {
       content: {
         none: 'none',
       },
+      fontFamily: {
+        inter: ['var(--font-inter)'],
+      },
     },
   },
   plugins: [require('tailwindcss-animate')],

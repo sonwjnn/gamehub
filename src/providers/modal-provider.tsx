@@ -6,6 +6,7 @@ import { InviteModal } from '@/components/modals/invite-modal'
 import { JoinTableModal } from '@/components/modals/join-table-modal'
 import { LeaveTableModal } from '@/components/modals/leave-table-modal'
 import { RebuyModal } from '@/components/modals/rebuy-modal'
+import { RuleModal } from '@/components/modals/rule-modal'
 import { useOrigin } from '@/hooks/use-origin'
 
 export const ModalProvider = () => {
@@ -17,6 +18,7 @@ export const ModalProvider = () => {
 
   return (
     <>
+      <RuleModal />
       <RebuyModal />
       <BuyInModal />
       <BuyChipsModal />

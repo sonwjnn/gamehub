@@ -8,6 +8,7 @@ export type ModalType =
   | 'buyChips'
   | 'buyIn'
   | 'rebuy'
+  | 'rule'
 
 interface ModalData {
   tableId?: string
