@@ -11,6 +11,8 @@
     "prettier:fix": "prettier --write \"src/**/(*tsx|*.ts|*.css|*.scss)\""
   },
   "dependencies": {
+    "@emoji-mart/data": "^1.2.1",
+    "@emoji-mart/react": "^1.1.1",
     "@gsap/react": "^2.1.0",
     "@hookform/resolvers": "^3.3.4",
     "@radix-ui/react-avatar": "^1.0.4",

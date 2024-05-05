@@ -1,3 +1,5 @@
+'use client'
+
 import { UserButton } from '@/components/auth/user-button'
 import { MobileToggle } from '@/components/mobile-toggle'
 import { SocketIndicator } from '@/components/socket-indicator'
