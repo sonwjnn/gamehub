@@ -41,5 +41,7 @@ export const playSound = (action: PokerActions, gender: string) => {
     default:
       soundUrl = ''
   }
-  new Audio(soundUrl).play()
+  const audio = new Audio(soundUrl)
+  audio.playbackRate = 1.5
+  audio.play()
 }

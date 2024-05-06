@@ -19,7 +19,10 @@ const TablePage = async ({ searchParams }: Props) => {
       <div className="sidebar_left ">
         <UserBoard />
       </div>
-      <TableContent tables={response.tables} pageCount={response.pageCount} />
+      <TableContent
+        tables={response?.tables || []}
+        pageCount={response?.pageCount || 1}
+      />
     </div>
   )
 }
