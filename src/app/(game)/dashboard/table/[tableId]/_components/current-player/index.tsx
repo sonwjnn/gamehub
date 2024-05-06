@@ -103,19 +103,20 @@ export const CurrentPlayer = ({
   }, [isTurn])
 
   useEffect(() => {
-    if (isTurn && counter === 7) {
+    if (isTurn && counter === 5) {
       controls.play()
     }
   }, [isTurn, counter, controls])
 
   useEffect(() => {
-    if (isAction) {
+    if (isAction || counter === 2) {
       controls.pause()
       if (ref.current) {
         ref.current.currentTime = 0
       }
     }
-  }, [isAction, controls, ref])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isAction, counter, ref])
 
   useEffect(() => {
     const handleBeforeUnload = (event: any) => {

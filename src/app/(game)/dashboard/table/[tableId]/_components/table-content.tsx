@@ -19,6 +19,7 @@ import { WinnerModal } from './winner-modal'
 import playerApi from '@/services/api/modules/player-api'
 import { useRouter } from 'next/navigation'
 import { ShowdownModal } from './showdown-modal'
+import { Button } from '@/components/ui/button'
 
 interface TableContentProps {
   tableId: string
@@ -103,7 +104,7 @@ export const TableContent = ({ tableId }: TableContentProps) => {
       })
 
       gsap.to('.current-player-card', {
-        scale: 1.1,
+        scale: 1.2,
         zIndex: 100,
       })
 
@@ -145,6 +146,70 @@ export const TableContent = ({ tableId }: TableContentProps) => {
       }
     }
   }, [isShuffle])
+
+  // useGSAP(() => {
+  //   const table = tableRef.current
+  //   const chips = wrapperRef.current?.getElementsByClassName('coin_bet')
+  //   const coins = [] as HTMLDivElement[]
+
+  //   if (!table || !chips) return
+
+  //   const bounds = table.getBoundingClientRect()
+
+  //   const offsetX = 0
+  //   const offsetY = 0
+  //   const positions = Array.from(chips).map(playerPosition)
+  //   const originalPositions = [] as { left: number; top: number }[]
+
+  //   function playerPosition(element: Element) {
+  //     const rect = element.getBoundingClientRect()
+  //     return {
+  //       x: rect.left - bounds.left + offsetX,
+  //       y: rect.top - bounds.top + offsetY,
+  //     }
+  //   }
+
+  //   Array.from(chips).forEach(el => {
+  //     const wrapper = document.createElement('div')
+  //     const img = document.createElement('img')
+  //     img.src = 'images/avt/1.jpg'
+  //     img.width = 50
+  //     img.height = 50
+  //     wrapper.appendChild(img)
+  //     wrapper.className = 'coin_wrapper'
+  //     wrapper.style.position = 'fixed'
+  //     wrapper.style.top = `${el.getBoundingClientRect().top}px`
+  //     wrapper.style.left = `${el.getBoundingClientRect().left}px`
+  //     wrapper.style.zIndex = '2'
+  //     document.body.appendChild(wrapper)
+  //     coins.push(wrapper)
+  //   })
+
+  //   coins.forEach(function (c: HTMLDivElement) {
+  //     const originalLeft = c.offsetLeft - window.scrollX
+  //     const originalTop = c.offsetTop - window.scrollY
+
+  //     originalPositions.push({
+  //       left: originalLeft,
+  //       top: originalTop,
+  //     })
+  //   })
+
+  //   gsap.to('.coin_wrapper', {
+  //     duration: 0.01,
+  //     left: (window.innerWidth - 25) / 2,
+  //     top: (window.innerHeight - 25) / 2,
+  //     startAt: function (index: number) {
+  //       return originalPositions[index]
+  //     },
+  //     onComplete() {
+  //       const elements = document.querySelectorAll('.coin_wrapper')
+  //       elements.forEach(element => {
+  //         element?.parentNode?.removeChild(element)
+  //       })
+  //     },
+  //   })
+  // }, [])
 
   useEffect(() => {
     if (socket) {
@@ -284,8 +349,6 @@ export const TableContent = ({ tableId }: TableContentProps) => {
           socket.off(PokerActions.MATCH_STARTED)
           socket.off(PokerActions.CHANGE_TURN)
 
-          removePlayer()
-
           if (timerMatchId) {
             clearTimeout(timerMatchId)
           }
@@ -408,7 +471,7 @@ export const TableContent = ({ tableId }: TableContentProps) => {
                   />
                 )
               })}
-              <ShowdownModal match={match} />
+              <ShowdownModal match={match} participants={participants} />
               <WinnerModal match={match} />
             </div>
           </div>

@@ -1,30 +1,34 @@
 'use client'
 
 import { cn } from '@/lib/utils'
-import { Match } from '@/types'
+import { Match, Participant } from '@/types'
 import { useEffect, useState } from 'react'
 import { useAudio } from 'react-use'
 import sounds from '@/utils/contants/sound'
+import { useCurrentUser } from '@/hooks/use-current-user'
 
 interface ShowdownModalProps {
   match: Match | null
+  participants: Participant[] | null
 }
 
-export const ShowdownModal = ({ match }: ShowdownModalProps) => {
+export const ShowdownModal = ({ match, participants }: ShowdownModalProps) => {
+  const user = useCurrentUser()
+
+  const isHaveParticipant = participants?.some(
+    participant => participant.player?.userId === user?.id
+  )
+
   const [isShowdown, setIsShowdown] = useState(false)
-  const [audio, _, controls, ref] = useAudio({ src: sounds.showdown })
+  const [audio, _, controls] = useAudio({ src: sounds.showdown })
 
   useEffect(() => {
     let timerId: NodeJS.Timeout | null = null
-    if (match?.isShowdown) {
+    if (match?.isShowdown && isHaveParticipant) {
       setIsShowdown(true)
       controls.play()
       timerId = setTimeout(() => {
         setIsShowdown(false)
-        controls.pause()
-        if (ref.current) {
-          ref.current.currentTime = 0
-        }
       }, 2000)
     } else {
       setIsShowdown(false)
