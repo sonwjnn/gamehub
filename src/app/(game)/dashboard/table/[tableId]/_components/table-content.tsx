@@ -26,10 +26,6 @@ interface TableContentProps {
 }
 
 export const TableContent = ({ tableId }: TableContentProps) => {
-  const [isHandVisible, setHandVisible] = useState(false)
-  const [players, setPlayers] = useState<PlayerWithUser[]>([])
-  const [isShuffle, setShuffle] = useState(false)
-
   const user = useCurrentUser()
   const router = useRouter()
   const { socket } = useSocket()
@@ -37,6 +33,10 @@ export const TableContent = ({ tableId }: TableContentProps) => {
   const [messages, setMessages] = useState([] as string[])
   const [match, setMatch] = useState<Match | null>(null)
   const [participants, setParticipants] = useState<Participant[]>([])
+  const [isHandVisible, setHandVisible] = useState(false)
+  const [players, setPlayers] = useState<PlayerWithUser[]>([])
+  const [isShuffle, setShuffle] = useState(false)
+  const [isChipsAnimation, setChipsAnimation] = useState(false)
 
   const tableRef = useRef<HTMLDivElement | null>(null)
   const wrapperRef = useRef<HTMLDivElement | null>(null)
@@ -440,6 +440,7 @@ export const TableContent = ({ tableId }: TableContentProps) => {
           )}
         /> */}
         {/* <Button onClick={() => setShuffle(true)}>Shuffle</Button> */}
+        <Button onClick={() => setChipsAnimation(true)}>Shuffle</Button>
       </div>
       <div className="wrapper w-full" ref={wrapperRef}>
         <Image

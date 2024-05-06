@@ -16,7 +16,8 @@ export const ShowdownModal = ({ match, participants }: ShowdownModalProps) => {
   const user = useCurrentUser()
 
   const isHaveParticipant = participants?.some(
-    participant => participant.player?.userId === user?.id
+    participant =>
+      participant.player?.userId === user?.id && !participant.isFolded
   )
 
   const [isShowdown, setIsShowdown] = useState(false)
