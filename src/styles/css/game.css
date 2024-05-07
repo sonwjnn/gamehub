@@ -607,7 +607,7 @@
 @media (min-width: 320px) and (orientation: portrait),
   (max-width: 1023px) and (orientation: landscape) {
   .game-html .group_user {
-    width: 14.3830431491%;
+    width: 16.6540499621%;
   }
 }
 .game-html .group_user .money_bet {
@@ -696,6 +696,12 @@
 @media (min-width: 320px) and (orientation: portrait),
   (max-width: 1023px) and (orientation: landscape) {
   .game-html .group_user .info_user {
+    line-height: 126%;
+  }
+}
+@media (min-width: 320px) and (orientation: portrait),
+  (max-width: 1023px) and (orientation: landscape) {
+  .game-html .group_user .info_user {
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
     -ms-flex-direction: column;
@@ -705,13 +711,16 @@
 }
 @media (min-width: 1367px) {
   .game-html .group_user .info_user {
-    font-size: 112.5%;
+    font-size: 125%;
   }
 }
 @media (min-width: 1801px) {
   .game-html .group_user .info_user {
     font-size: 137.5%;
   }
+}
+.game-html .group_user .info_user .left {
+  font-size: 87.5%;
 }
 .game-html .group_user .info_user .right {
   line-height: 16px;
@@ -1065,11 +1074,11 @@
   position: absolute;
   width: 32.2580645161%;
   right: 0;
-  bottom: 0;
-  -webkit-transform: translate(33%, 25%);
-  -ms-transform: translate(33%, 25%);
-  transform: translate(33%, 25%);
-  z-index: 9;
+  top: 0;
+  -webkit-transform: translate(50%, -25%);
+  -ms-transform: translate(50%, -25%);
+  transform: translate(50%, -25%);
+  z-index: 999;
   pointer-events: none;
 }
 .game-html .group_user .status .wrap_status {
@@ -2001,14 +2010,14 @@
   border-radius: 4px;
   display: block;
   max-height: 80px;
-  font-family: 'Inter' !important;
+  font-family: 'Noto Sans' !important;
   font-size: 12px !important;
   line-height: 18px !important;
   white-space: wrap !important;
   color: #fff;
 }
 .game-html .group_chat .chat_box .footer .textarea_custom * {
-  font-family: 'Inter' !important;
+  font-family: 'Noto Sans' !important;
   font-size: 12px !important;
   line-height: 18px !important;
   color: #fff !important;
@@ -2106,8 +2115,8 @@
     -webkit-transform: translateY(-50%);
     -ms-transform: translateY(-50%);
     transform: translateY(-50%);
-    width: 40.2777777778%;
-    height: 16.9252468265%;
+    width: 34.7222222222%;
+    height: 12.6939351199%;
   }
 }
 .game-html .group_midle .group_pocker {
@@ -2233,12 +2242,12 @@
 }
 @media (min-width: 1241px) {
   .game-html .group_midle .group_number {
-    font-size: 150%;
+    font-size: 137.5%;
   }
 }
 @media (min-width: 1367px) {
   .game-html .group_midle .group_number {
-    font-size: 175%;
+    font-size: 150%;
   }
 }
 .game-html .group_midle .group_number span {
@@ -2344,7 +2353,7 @@
 @media (min-width: 1024px), ((min-width: 768px) and (orientation: portrait)) {
   .game-html .group_tool {
     width: 51.0416666667%;
-    padding: 1.3623978202%;
+    padding: 0.6811989101%;
     border-radius: 16px;
     bottom: 0;
     height: 31.25%;
@@ -2509,13 +2518,6 @@
   -ms-transform: translate(0);
   transform: translate(0);
 }
-@media (min-width: 320px) and (orientation: portrait),
-  (max-width: 1023px) and (orientation: landscape) {
-  .game-html .group_tool .group_left .group_user {
-    width: 60%;
-    margin: auto;
-  }
-}
 .game-html .group_tool .group_left .group_user .wrap {
   padding: 0;
   position: relative;
@@ -2563,35 +2565,10 @@
   -ms-flex-align: center;
   align-items: center;
 }
-@media (min-width: 320px) and (orientation: portrait),
-  (max-width: 1023px) and (orientation: landscape) {
-  .game-html .group_tool .group_left .group_user .right {
-    position: relative;
-  }
-  .game-html .group_tool .group_left .group_user .right.sp_full {
-    -webkit-box-pack: center;
-    -ms-flex-pack: center;
-    justify-content: center;
-  }
-}
-@media (min-width: 320px) and (orientation: portrait),
-  (max-width: 1023px) and (orientation: landscape) {
-  .game-html .group_tool .group_left .group_user .left:not(.sp_full) {
-    margin-left: 30%;
-  }
-}
 .game-html .group_tool .group_left .group_user .pocker_list {
   width: 50%;
   height: 74%;
   top: 0;
-}
-@media (min-width: 320px) and (orientation: portrait),
-  (max-width: 1023px) and (orientation: landscape) {
-  .game-html .group_tool .group_left .group_user .pocker_list {
-    position: absolute;
-    left: 100%;
-    top: 65%;
-  }
 }
 .game-html .group_tool .group_left .group_user .money_bet {
   bottom: auto;
@@ -2652,10 +2629,6 @@
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -ms-flex-direction: column;
-  flex-direction: column;
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
@@ -2673,6 +2646,10 @@
 }
 @media (min-width: 1024px), ((min-width: 768px) and (orientation: portrait)) {
   .game-html .group_tool .toolbar .item {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
     height: calc(33.33% - 1.3333333333px);
     width: calc(33.33% - 1.3333333333px);
   }
@@ -2760,7 +2737,8 @@
 }
 @media (min-width: 1024px), ((min-width: 768px) and (orientation: portrait)) {
   .game-html .group_tool .toolbar .item .value {
-    font-size: 150%;
+    font-size: 175%;
+    line-height: 100%;
   }
 }
 .game-html .group_tool .toolbar .item .view_money {
@@ -3080,12 +3058,7 @@
   background-size: 100% 100%;
   overflow: hidden;
   height: 100%;
-  font-size: 14px;
-}
-@media (min-width: 1241px) {
-  .game-html .game {
-    font-size: 16px;
-  }
+  font-size: 16px;
 }
 @media (min-width: 1367px) {
   .game-html .game {
@@ -3242,6 +3215,15 @@
   font-size: 62.5%;
   line-height: 12px;
 }
+@media (min-width: 320px) and (orientation: portrait),
+  (max-width: 1023px) and (orientation: landscape) {
+  .table_statistical {
+    font-size: 59.375%;
+    min-width: auto;
+    bottom: 46px;
+    width: 110px;
+  }
+}
 @media (min-width: 1801px) {
   .table_statistical {
     min-width: 250px;
@@ -3252,8 +3234,19 @@
 .table_statistical .ttl {
   border-bottom: 1px solid #2d2d2d;
   padding-bottom: 4px;
-  padding: 8px 16px;
   color: #fff;
+  padding: 8px 4px;
+}
+@media (min-width: 320px) and (orientation: portrait),
+  (max-width: 1023px) and (orientation: landscape) {
+  .table_statistical .ttl {
+    display: none;
+  }
+}
+@media (min-width: 1024px), ((min-width: 768px) and (orientation: portrait)) {
+  .table_statistical .ttl {
+    padding: 8px 16px;
+  }
 }
 @media (min-width: 1801px) {
   .table_statistical .ttl {
@@ -3261,14 +3254,41 @@
   }
 }
 .table_statistical .content {
-  padding: 8px 16px;
+  padding: 8px 4px;
+}
+@media (min-width: 1024px), ((min-width: 768px) and (orientation: portrait)) {
+  .table_statistical .content {
+    padding: 8px 16px;
+  }
 }
 .table_statistical dl {
   margin-bottom: 0;
 }
+@media (min-width: 320px) and (orientation: portrait),
+  (max-width: 1023px) and (orientation: landscape) {
+  .table_statistical dl {
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    gap: 0px 12px;
+  }
+}
 .table_statistical dl > * {
   width: 33.33%;
   margin-bottom: 0;
+}
+@media (min-width: 320px) and (orientation: portrait),
+  (max-width: 1023px) and (orientation: landscape) {
+  .table_statistical dl dt {
+    width: 100%;
+    margin-bottom: 4px;
+  }
+}
+@media (min-width: 320px) and (orientation: portrait),
+  (max-width: 1023px) and (orientation: landscape) {
+  .table_statistical dl dd {
+    width: auto;
+    gap: 4px;
+  }
 }
 .table_statistical dl + dl {
   margin-top: 8px;

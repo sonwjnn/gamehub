@@ -97,7 +97,7 @@ export const CurrentPlayer = ({
   }, [counter, isTurn, isAction])
 
   useEffect(() => {
-    if (isTurn) {
+    if (!isTurn) {
       setCounter(12)
     }
   }, [isTurn])
@@ -106,7 +106,8 @@ export const CurrentPlayer = ({
     if (isTurn && counter === 5) {
       controls.play()
     }
-  }, [isTurn, counter, controls])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isTurn, counter])
 
   useEffect(() => {
     if (isAction || counter === 2) {

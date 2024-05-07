@@ -440,7 +440,7 @@ export const TableContent = ({ tableId }: TableContentProps) => {
           )}
         /> */}
         {/* <Button onClick={() => setShuffle(true)}>Shuffle</Button> */}
-        <Button onClick={() => setChipsAnimation(true)}>Shuffle</Button>
+        {/* <Button onClick={() => setChipsAnimation(true)}>Shuffle</Button> */}
       </div>
       <div className="wrapper w-full" ref={wrapperRef}>
         <Image
