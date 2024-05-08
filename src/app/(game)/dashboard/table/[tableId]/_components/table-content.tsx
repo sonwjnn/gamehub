@@ -300,7 +300,7 @@ export const TableContent = ({ tableId }: TableContentProps) => {
               setMatch({
                 ...match,
                 isShowdown: true,
-                winnerId: '',
+                winners: [],
                 winMessages: [],
               })
 
@@ -424,7 +424,7 @@ export const TableContent = ({ tableId }: TableContentProps) => {
           tableId={tableId}
           className={cn(
             'hidden',
-            !(match && players.length > 1 && !match.winnerId) && 'block'
+            !(match && players.length > 1 && !match.winners?.length) && 'block'
           )}
         />
         {/* <LeaveTableCheckbox

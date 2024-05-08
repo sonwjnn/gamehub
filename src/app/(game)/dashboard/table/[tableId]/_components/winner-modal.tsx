@@ -2,8 +2,8 @@
 
 import { cn } from '@/lib/utils'
 import { useIsWinner } from '@/store/use-is-winner'
-import { Match, Card } from '@/types'
-import { formattedCards } from '@/utils/formatting'
+import { Match } from '@/types'
+import { formattedStringToCards } from '@/utils/formatting'
 import Image from 'next/image'
 
 interface WinnerModalProps {
@@ -19,12 +19,15 @@ export const WinnerModal = ({ match }: WinnerModalProps) => {
 
   const isShowdown = match?.isShowdown
 
+  const bestHandCards = formattedStringToCards(lastWinMessage.bestHand || `[]`)
+
   return (
     <div className={cn('status_win !z-10', isWinner && 'active')}>
       <div className="content_top">
         <div className="list">
           {isShowdown &&
-            lastWinMessage.bestHand.map((card: Card, index) => (
+            bestHandCards.length &&
+            bestHandCards.map((card: any, index) => (
               <div className="item" key={index}>
                 <div className="wrap">
                   <Image
@@ -53,16 +56,8 @@ export const WinnerModal = ({ match }: WinnerModalProps) => {
       <div className="content">
         <div className="wrap">
           <div className="title fw-500">
-            <span className="fw-900">
-              [
-              {lastWinMessage.winnerHand
-                .map(card => formattedCards(card.rank).rank)
-                .join(',')}
-              ]
-            </span>{' '}
-            {isShowdown
-              ? lastWinMessage.content
-              : `You win ${lastWinMessage.amount}$ without showdown!`}
+            <span className="fw-900">{lastWinMessage.winnerHand}</span>
+            {lastWinMessage.content}
           </div>
           <div className="money">
             <span className="color-main">+{lastWinMessage.amount}$</span>

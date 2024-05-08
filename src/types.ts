@@ -111,8 +111,8 @@ export type WinMessages = {
   matchId: string
   match?: Match
   handName: string
-  bestHand: Card[]
-  winnerHand: Card[]
+  bestHand?: string
+  winnerHand?: string
   content: string
   createdAt: Date
 }
@@ -131,8 +131,7 @@ export type Match = {
   isTurn: boolean
   isRiver: boolean
   isShowdown: boolean
-  winnerId?: string
-  winner?: Player
+  winners?: Player[]
   bigBlindId?: string
   bigBlind?: Player
   smallBlindId?: string

@@ -40,10 +40,11 @@ export const OtherPlayer = ({
     item => item.playerId === player?.id
   )
   const isFolded = currentParticipant?.isFolded
-  const isWinner = !isFolded && match?.winnerId === player?.id
+  const isWinner =
+    (!isFolded && match?.winners?.some(w => w.id === player?.id)) || false
   const isTurn = !isFolded && player?.isTurn
   const isShowdown = match?.isShowdown
-  const isHaveWinner = match?.winnerId
+  const isHaveWinner = (match?.winners?.length ?? 0) > 0
   const isAllIn = player?.stack === 0 || !isShowdown
   const isUnfoldedParticipant = currentParticipant?.isFolded ? false : true
 

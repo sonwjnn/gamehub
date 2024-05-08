@@ -23,3 +23,37 @@ export const formattedCards = (rank: string) => {
     rank: rankMap[rank],
   }
 }
+
+const rankMap = {
+  A: 'A',
+  '2': 'TWO',
+  '3': 'THREE',
+  '4': 'FOUR',
+  '5': 'FIVE',
+  '6': 'SIX',
+  '7': 'SEVEN',
+  '8': 'EIGHT',
+  '9': 'NINE',
+  T: 'TEN',
+  J: 'J',
+  Q: 'Q',
+  K: 'K',
+}
+
+const suitMap = {
+  H: 'HEARTS',
+  D: 'DIAMONDS',
+  C: 'CLUBS',
+  S: 'SPADES',
+}
+
+export const formattedStringToCards = (value: string) => {
+  let cards = value.replace(/[\[\] ']/g, '').split(',')
+
+  return cards.map(card => {
+    return {
+      rank: rankMap[card[0] as keyof typeof rankMap],
+      suit: suitMap[card[1] as keyof typeof suitMap],
+    }
+  })
+}

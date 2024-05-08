@@ -52,8 +52,9 @@ export const CurrentPlayer = ({
   )
 
   const isFolded = currentParticipant?.isFolded
-  const isHaveWinner = match?.winnerId
-  const isWinner = !isFolded && match?.winnerId === player?.id
+  const isHaveWinner = (match?.winners?.length ?? 0) > 0
+  const isWinner = !isFolded && match?.winners?.some(w => w.id === player?.id)
+  const isOverOneWinner = (match?.winners?.length ?? 0) > 1
   const isTurn = !isFolded && player?.isTurn
   const isShowdown = match?.isShowdown
   const isUnfoldedParticipant = currentParticipant?.isFolded ? false : true
