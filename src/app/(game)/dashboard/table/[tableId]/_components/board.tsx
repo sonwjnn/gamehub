@@ -27,16 +27,9 @@ export const Board = ({ match }: BoardProps) => {
   const isRiver = match?.isRiver
   const board = match?.board
 
-  useEffect(() => {
-    if (isFlop) {
-      new Audio(sounds.soundShare).play()
-    }
-  }, [isFlop])
-
   const turnCardRef = useRef(null)
   const riverCardRef = useRef(null)
 
-  // Theo dõi sự thay đổi của isTurn và isRiver
   useEffect(() => {
     if (isTurn && turnCardRef.current) {
       gsap.from(turnCardRef.current, {
@@ -81,16 +74,26 @@ export const Board = ({ match }: BoardProps) => {
 
   useEffect(() => {
     if (isFlop) {
+      new Audio(sounds.soundShare).play()
+
       const timer = setTimeout(() => {
         controls.volume(0.5)
         controls.play()
         setHiddenClass('')
-      }, 500)
+      }, 700)
 
       return () => clearTimeout(timer)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isFlop])
+
+  useEffect(() => {
+    if (!isPreFlop) {
+      setHiddenClass('hide')
+      setTurnHiddenClass('hide')
+      setRiverHiddenClass('hide')
+    }
+  }, [isPreFlop])
 
   return (
     <div className="group_midle">
@@ -106,7 +109,7 @@ export const Board = ({ match }: BoardProps) => {
         <div
           className={cn(
             'list_pocker  pocker_action',
-            isPreFlop && !isFlop && 'pocker_hide'
+            isPreFlop && !isFlop && 'pocker_hide '
           )}
         >
           {board && board?.length && (
