@@ -133,6 +133,10 @@ export type Match = {
   isShowdown: boolean
   winnerId?: string
   winner?: Player
+  bigBlindId?: string
+  bigBlind?: Player
+  smallBlindId?: string
+  smallBlind?: Player
   callAmount: number
   minRaise: number
   minBet: number
@@ -235,6 +239,7 @@ export enum PokerActions {
   TABLES_UPDATED = 'TABLES_UPDATED',
   TABLE_UPDATED = 'TABLE_UPDATED',
   TABLE_MESSAGE = 'TABLE_MESSAGE',
+  UPDATE_STATISTICAL = 'UPDATE_STATISTICAL',
   REBUY = 'REBUY',
   SIT_DOWN = 'SIT_DOWN',
   STAND_UP = 'STAND_UP',

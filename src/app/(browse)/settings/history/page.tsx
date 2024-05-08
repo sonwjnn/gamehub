@@ -19,9 +19,9 @@ const HistoryPage = async () => {
 
   const formattedHistories: HistoryColumn[] = histories.map((item: any) => ({
     id: item.id,
-    name: item.match.table.name,
-    amount: `+$${formatChipsAmount(+item.amount)}`,
-    status: 'win',
+    name: item.match?.table?.name,
+    amount: `${item.type === 'win' ? '+' : '-'}$${formatChipsAmount(+item.amount)}`,
+    status: item.type,
     createdAt: format(item.createdAt, 'dd/MM/yyyy'),
   }))
 

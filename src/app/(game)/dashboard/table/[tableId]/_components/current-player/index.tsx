@@ -260,6 +260,18 @@ export const CurrentPlayer = ({
         >
           <CoinBet bet={currentBet} />
 
+          {match?.smallBlindId === player?.id && (
+            <div className="slind slind_small">
+              <span>SB</span>
+            </div>
+          )}
+
+          {match?.bigBlindId === player?.id && (
+            <div className="slind slind_big">
+              <span>BB</span>
+            </div>
+          )}
+
           <div className="wrap">
             <div className="flex flex-midle">
               <div className="left">

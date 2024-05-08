@@ -25,7 +25,7 @@ const TableIdLayout = async ({
       <div className="game_body relative">
         {children}
         <Chat tableId={tableId} />
-        <Statistical />
+        <Statistical tableId={tableId} />
       </div>
     </>
   )

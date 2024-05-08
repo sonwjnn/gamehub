@@ -19,7 +19,7 @@ interface OtherPlayerProps {
   type?: 'fold' | 'active' | 'default'
   isHandVisible?: boolean
   match: Match | null
-  player: PlayerWithUser
+  player: PlayerWithUser | undefined
   participants: Participant[]
   tableId: string
 }
@@ -123,7 +123,20 @@ export const OtherPlayer = ({
         isShowdown && isUnfoldedParticipant && 'target_showdown'
       )}
     >
-      {currentBet > 0 && <CoinBet bet={currentBet} />}
+      <CoinBet bet={currentBet} />
+
+      {match?.smallBlindId === player?.id && (
+        <div className="slind slind_small">
+          <span>SB</span>
+        </div>
+      )}
+
+      {match?.bigBlindId === player?.id && (
+        <div className="slind slind_big">
+          <span>BB</span>
+        </div>
+      )}
+
       <div className="wrap">
         <div className="flex flex-midle">
           <div className="left">
@@ -171,7 +184,7 @@ export const OtherPlayer = ({
         </div>
         <div className="flex info_user">
           <div className="left sp_full">
-            <div className="name text-center">{player.user?.username}</div>
+            <div className="name text-center">{player?.user?.username}</div>
           </div>
           <div className="right sp_full">
             <div className="money fw-700 flex flex-midle flex-center">
@@ -181,220 +194,220 @@ export const OtherPlayer = ({
               $ {formatChipsAmount(currentStack)}
             </div>
           </div>
-
-          {isWinner && (
-            <div className="status status_win !opacity-100">
-              <Image
-                src="/images/status_win.png"
-                alt="pokerOnImage"
-                width={0}
-                height={0}
-                sizes="100vw"
-                className="w-auto h-full"
-              />
-            </div>
-          )}
-
-          {isFolded && (
-            <div className="status">
-              <div className="wrap_status status_full">
-                <svg viewBox="0 0 200 200">
-                  <circle
-                    className="circle"
-                    cx="100"
-                    cy="100"
-                    r="95"
-                    stroke="#231f20"
-                    strokeWidth="8"
-                    fillOpacity="0"
-                  />
-                </svg>
-                <span>풀</span>
-              </div>
-            </div>
-          )}
-
-          {currentParticipant?.lastAction === PokerActions.CALL && (
-            <div className="status">
-              <div className="wrap_status status_call">
-                <span className="money">{formatChipsAmount(currentBet)} $</span>
-                <svg viewBox="0 0 200 200">
-                  <circle
-                    className="circle"
-                    cx="100"
-                    cy="100"
-                    r="95"
-                    stroke="#231f20"
-                    stroke-width="8"
-                    fill-opacity="0"
-                  ></circle>
-                </svg>
-                <span>콜</span>
-                {/* <span>CALL</span> */}
-              </div>
-            </div>
-          )}
-
-          {currentParticipant?.lastAction === PokerActions.RAISE && (
-            <div className="status">
-              <div className="wrap_status status_raise">
-                <span className="money">{formatChipsAmount(currentBet)} $</span>
-                <svg viewBox="0 0 200 200">
-                  <circle
-                    className="circle"
-                    cx="100"
-                    cy="100"
-                    r="95"
-                    stroke="#231f20"
-                    stroke-width="8"
-                    fill-opacity="0"
-                  ></circle>
-                </svg>
-                <span>라이즈</span>
-                {/* <span>RAISE</span> */}
-              </div>
-            </div>
-          )}
-
-          {currentParticipant?.lastAction === PokerActions.CHECK && (
-            <div className="status">
-              <div className="wrap_status status_call">
-                <svg viewBox="0 0 200 200">
-                  <circle
-                    className="circle"
-                    cx="100"
-                    cy="100"
-                    r="95"
-                    stroke="#231f20"
-                    stroke-width="8"
-                    fill-opacity="0"
-                  ></circle>
-                </svg>
-                <span>체크</span>
-                {/* <span>CHECK</span> */}
-              </div>
-            </div>
-          )}
-
-          {currentParticipant?.isFolded && (
-            <div className="status">
-              <div className="wrap_status status_full">
-                <svg viewBox="0 0 200 200">
-                  <circle
-                    className="circle"
-                    cx="100"
-                    cy="100"
-                    r="95"
-                    stroke="#231f20"
-                    strokeWidth="8"
-                    fillOpacity="0"
-                  />
-                </svg>
-                <span>풀</span>
-              </div>
-            </div>
-          )}
-
-          {currentParticipant?.lastAction === RaiseType.QUARTER && (
-            <div className="status">
-              <div className="wrap_status status_quarter">
-                <span className="money">{formatChipsAmount(currentBet)} $</span>
-                <svg viewBox="0 0 200 200">
-                  <circle
-                    className="circle"
-                    cx="100"
-                    cy="100"
-                    r="95"
-                    stroke="#231f20"
-                    stroke-width="8"
-                    fill-opacity="0"
-                  ></circle>
-                </svg>
-                <span>쿼터</span>
-              </div>
-            </div>
-          )}
-
-          {currentParticipant?.lastAction === RaiseType.HALF && (
-            <div className="status">
-              <div className="wrap_status status_half">
-                <span className="money">{formatChipsAmount(currentBet)} $</span>
-                <svg viewBox="0 0 200 200">
-                  <circle
-                    className="circle"
-                    cx="100"
-                    cy="100"
-                    r="95"
-                    stroke="#231f20"
-                    stroke-width="8"
-                    fill-opacity="0"
-                  ></circle>
-                </svg>
-                <span>하프</span>
-              </div>
-            </div>
-          )}
-
-          {currentParticipant?.lastAction === RaiseType.FULL && (
-            <div className="status">
-              <div className="wrap_status status_full">
-                <span className="money">{formatChipsAmount(currentBet)} $</span>
-                <svg viewBox="0 0 200 200">
-                  <circle
-                    className="circle"
-                    cx="100"
-                    cy="100"
-                    r="95"
-                    stroke="#231f20"
-                    stroke-width="8"
-                    fill-opacity="0"
-                  ></circle>
-                </svg>
-                <span>풀</span>
-              </div>
-            </div>
-          )}
-
-          {currentParticipant?.isAllin && (
-            <div className="status">
-              <div className="wrap_status status_all">
-                <span className="money">{formatChipsAmount(currentBet)} $</span>
-                <svg viewBox="0 0 200 200">
-                  <circle
-                    className="circle"
-                    cx="100"
-                    cy="100"
-                    r="95"
-                    stroke="#231f20"
-                    stroke-width="8"
-                    fill-opacity="0"
-                  ></circle>
-                </svg>
-                <span>올인</span>
-              </div>
-            </div>
-          )}
-
-          {isTurn && (
-            <div className="status">
-              <div className="wrap_status status_countdown">
-                <svg viewBox="0 0 200 200">
-                  <circle
-                    className="circle !animate-[stroke_17s_ease-out_forwards]"
-                    cx="100"
-                    cy="100"
-                    r="95"
-                    stroke="#231f20"
-                    stroke-width="8"
-                    fill-opacity="0"
-                  ></circle>
-                </svg>
-                <span>{counter - 2 >= 0 ? counter - 2 : 0}s</span>
-              </div>
-            </div>
-          )}
         </div>
       </div>
+
+      {isWinner && (
+        <div className="status status_win !opacity-100">
+          <Image
+            src="/images/status_win.png"
+            alt="pokerOnImage"
+            width={0}
+            height={0}
+            sizes="100vw"
+            className="w-auto h-full"
+          />
+        </div>
+      )}
+
+      {isFolded && (
+        <div className="status">
+          <div className="wrap_status status_full">
+            <svg viewBox="0 0 200 200">
+              <circle
+                className="circle"
+                cx="100"
+                cy="100"
+                r="95"
+                stroke="#231f20"
+                strokeWidth="8"
+                fillOpacity="0"
+              />
+            </svg>
+            <span>풀</span>
+          </div>
+        </div>
+      )}
+
+      {currentParticipant?.lastAction === PokerActions.CALL && (
+        <div className="status">
+          <div className="wrap_status status_call">
+            <span className="money">{formatChipsAmount(currentBet)} $</span>
+            <svg viewBox="0 0 200 200">
+              <circle
+                className="circle"
+                cx="100"
+                cy="100"
+                r="95"
+                stroke="#231f20"
+                stroke-width="8"
+                fill-opacity="0"
+              ></circle>
+            </svg>
+            <span>콜</span>
+            {/* <span>CALL</span> */}
+          </div>
+        </div>
+      )}
+
+      {currentParticipant?.lastAction === PokerActions.RAISE && (
+        <div className="status">
+          <div className="wrap_status status_raise">
+            <span className="money">{formatChipsAmount(currentBet)} $</span>
+            <svg viewBox="0 0 200 200">
+              <circle
+                className="circle"
+                cx="100"
+                cy="100"
+                r="95"
+                stroke="#231f20"
+                stroke-width="8"
+                fill-opacity="0"
+              ></circle>
+            </svg>
+            <span>라이즈</span>
+            {/* <span>RAISE</span> */}
+          </div>
+        </div>
+      )}
+
+      {currentParticipant?.lastAction === PokerActions.CHECK && (
+        <div className="status">
+          <div className="wrap_status status_call">
+            <svg viewBox="0 0 200 200">
+              <circle
+                className="circle"
+                cx="100"
+                cy="100"
+                r="95"
+                stroke="#231f20"
+                stroke-width="8"
+                fill-opacity="0"
+              ></circle>
+            </svg>
+            <span>체크</span>
+            {/* <span>CHECK</span> */}
+          </div>
+        </div>
+      )}
+
+      {currentParticipant?.isFolded && (
+        <div className="status">
+          <div className="wrap_status status_full">
+            <svg viewBox="0 0 200 200">
+              <circle
+                className="circle"
+                cx="100"
+                cy="100"
+                r="95"
+                stroke="#231f20"
+                strokeWidth="8"
+                fillOpacity="0"
+              />
+            </svg>
+            <span>풀</span>
+          </div>
+        </div>
+      )}
+
+      {currentParticipant?.lastAction === RaiseType.QUARTER && (
+        <div className="status">
+          <div className="wrap_status status_quarter">
+            <span className="money">{formatChipsAmount(currentBet)} $</span>
+            <svg viewBox="0 0 200 200">
+              <circle
+                className="circle"
+                cx="100"
+                cy="100"
+                r="95"
+                stroke="#231f20"
+                stroke-width="8"
+                fill-opacity="0"
+              ></circle>
+            </svg>
+            <span>쿼터</span>
+          </div>
+        </div>
+      )}
+
+      {currentParticipant?.lastAction === RaiseType.HALF && (
+        <div className="status">
+          <div className="wrap_status status_half">
+            <span className="money">{formatChipsAmount(currentBet)} $</span>
+            <svg viewBox="0 0 200 200">
+              <circle
+                className="circle"
+                cx="100"
+                cy="100"
+                r="95"
+                stroke="#231f20"
+                stroke-width="8"
+                fill-opacity="0"
+              ></circle>
+            </svg>
+            <span>하프</span>
+          </div>
+        </div>
+      )}
+
+      {currentParticipant?.lastAction === RaiseType.FULL && (
+        <div className="status">
+          <div className="wrap_status status_full">
+            <span className="money">{formatChipsAmount(currentBet)} $</span>
+            <svg viewBox="0 0 200 200">
+              <circle
+                className="circle"
+                cx="100"
+                cy="100"
+                r="95"
+                stroke="#231f20"
+                stroke-width="8"
+                fill-opacity="0"
+              ></circle>
+            </svg>
+            <span>풀</span>
+          </div>
+        </div>
+      )}
+
+      {currentParticipant?.isAllin && (
+        <div className="status">
+          <div className="wrap_status status_all">
+            <span className="money">{formatChipsAmount(currentBet)} $</span>
+            <svg viewBox="0 0 200 200">
+              <circle
+                className="circle"
+                cx="100"
+                cy="100"
+                r="95"
+                stroke="#231f20"
+                stroke-width="8"
+                fill-opacity="0"
+              ></circle>
+            </svg>
+            <span>올인</span>
+          </div>
+        </div>
+      )}
+
+      {isTurn && (
+        <div className="status">
+          <div className="wrap_status status_countdown">
+            <svg viewBox="0 0 200 200">
+              <circle
+                className="circle !animate-[stroke_17s_ease-out_forwards]"
+                cx="100"
+                cy="100"
+                r="95"
+                stroke="#231f20"
+                stroke-width="8"
+                fill-opacity="0"
+              ></circle>
+            </svg>
+            <span>{counter - 2 >= 0 ? counter - 2 : 0}s</span>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

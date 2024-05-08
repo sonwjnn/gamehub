@@ -16,6 +16,23 @@ const historyApi = {
       return { error }
     }
   },
+  getStatisticalByTableId: async ({
+    userId,
+    tableId,
+  }: {
+    userId: string
+    tableId: string
+  }) => {
+    try {
+      const response = await publicClient.get(
+        `histories/statistical/${userId}/${tableId}`
+      )
+      if (response && response.data) return { response: response.data }
+      return { response }
+    } catch (error) {
+      return { error }
+    }
+  },
 }
 
 export default historyApi

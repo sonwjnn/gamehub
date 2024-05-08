@@ -1,12 +1,13 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Card } from './card'
 import { cn } from '@/lib/utils'
 import { Match } from '@/types'
 import { formatChipsAmount } from '@/utils/formatting'
 import sounds from '@/utils/contants/sound'
 import { useAudio } from 'react-use'
+import gsap from 'gsap'
 
 interface BoardProps {
   match: Match | null
@@ -14,40 +15,12 @@ interface BoardProps {
   isShuffle?: boolean
 }
 
-const BoardCard = ({
-  imageUrl,
-  isHidden = true,
-}: {
-  imageUrl: string
-  isHidden: boolean
-}) => {
-  const [hiddenClass, setHiddenClass] = useState(isHidden ? 'hide' : '')
-  const [audio, _, controls] = useAudio({ src: sounds.soundOpen })
-
-  useEffect(() => {
-    if (!isHidden) {
-      const timer = setTimeout(() => {
-        controls.volume(0.5)
-        controls.play()
-        setHiddenClass('')
-      }, 1000)
-
-      return () => clearTimeout(timer)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isHidden])
-
-  return (
-    <div className={cn('item flipped', hiddenClass)}>
-      {audio}
-      <div className="pocker">
-        <Card imageUrl={imageUrl} value={10} />
-      </div>
-    </div>
-  )
-}
-
 export const Board = ({ match }: BoardProps) => {
+  const [audio, _, controls] = useAudio({ src: sounds.soundOpen })
+  const [hiddenClass, setHiddenClass] = useState('hide')
+  const [turnHiddenClass, setTurnHiddenClass] = useState('hide')
+  const [riverHiddenClass, setRiverHiddenClass] = useState('hide')
+
   const isPreFlop = match?.isPreFlop
   const isFlop = match?.isFlop
   const isTurn = match?.isTurn
@@ -59,8 +32,69 @@ export const Board = ({ match }: BoardProps) => {
       new Audio(sounds.soundShare).play()
     }
   }, [isFlop])
+
+  const turnCardRef = useRef(null)
+  const riverCardRef = useRef(null)
+
+  // Theo dõi sự thay đổi của isTurn và isRiver
+  useEffect(() => {
+    if (isTurn && turnCardRef.current) {
+      gsap.from(turnCardRef.current, {
+        duration: 0.5,
+        x: '-100vw',
+        y: '-100vh',
+        opacity: 0,
+        ease: 'power3.out',
+      })
+
+      const timer = setTimeout(() => {
+        controls.volume(0.5)
+        controls.play()
+        setTurnHiddenClass('')
+      }, 500)
+
+      return () => clearTimeout(timer)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isTurn])
+
+  useEffect(() => {
+    if (isRiver && riverCardRef.current) {
+      gsap.from(riverCardRef.current, {
+        duration: 0.5,
+        x: '-100vw',
+        y: '-100vh',
+        opacity: 0,
+        ease: 'power3.out',
+      })
+
+      const timer = setTimeout(() => {
+        controls.volume(0.5)
+        controls.play()
+        setRiverHiddenClass('')
+      }, 500)
+
+      return () => clearTimeout(timer)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isRiver])
+
+  useEffect(() => {
+    if (isFlop) {
+      const timer = setTimeout(() => {
+        controls.volume(0.5)
+        controls.play()
+        setHiddenClass('')
+      }, 500)
+
+      return () => clearTimeout(timer)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isFlop])
+
   return (
     <div className="group_midle">
+      {audio}
       <div className="group_pocker">
         <div className="list_pocker group_mask">
           <div className="item"></div>
@@ -77,41 +111,40 @@ export const Board = ({ match }: BoardProps) => {
         >
           {board && board?.length && (
             <>
-              {board
-                ?.slice(0, 3)
-                .map((card, index) => (
-                  <BoardCard
-                    key={card.id}
-                    imageUrl={`/images/pocker/${card.rank.toLowerCase()}_${card.suit.toLowerCase()}.png`}
-                    isHidden={!isFlop}
-                  />
-                ))}
+              {board?.slice(0, 3).map((card, index) => (
+                <div key={card.id} className={cn('item flipped', hiddenClass)}>
+                  <div className="pocker">
+                    <Card
+                      imageUrl={`/images/pocker/${card.rank.toLowerCase()}_${card.suit.toLowerCase()}.png`}
+                      value={10}
+                    />
+                  </div>
+                </div>
+              ))}
 
               {isTurn && (
-                <>
-                  {board
-                    ?.slice(3, 4)
-                    .map((card, index) => (
-                      <BoardCard
-                        key={card.id}
-                        imageUrl={`/images/pocker/${card.rank.toLowerCase()}_${card.suit.toLowerCase()}.png`}
-                        isHidden={!isTurn}
+                <div ref={turnCardRef} className="py-[0.9%] px-[1.75%]">
+                  <div className={cn('item flipped', turnHiddenClass)}>
+                    <div className="pocker">
+                      <Card
+                        imageUrl={`/images/pocker/${board[3].rank.toLowerCase()}_${board[3].suit.toLowerCase()}.png`}
+                        value={10}
                       />
-                    ))}
-                </>
+                    </div>
+                  </div>
+                </div>
               )}
               {isRiver && (
-                <>
-                  {board
-                    ?.slice(4, 5)
-                    .map((card, index) => (
-                      <BoardCard
-                        key={card.id}
-                        imageUrl={`/images/pocker/${card.rank.toLowerCase()}_${card.suit.toLowerCase()}.png`}
-                        isHidden={!isRiver}
+                <div ref={riverCardRef} className="py-[0.9%] px-[1.75%]">
+                  <div className={cn('item flipped', riverHiddenClass)}>
+                    <div className="pocker">
+                      <Card
+                        imageUrl={`/images/pocker/${board[4].rank.toLowerCase()}_${board[4].suit.toLowerCase()}.png`}
+                        value={10}
                       />
-                    ))}
-                </>
+                    </div>
+                  </div>
+                </div>
               )}
             </>
           )}

@@ -731,6 +731,9 @@
 }
 @media (min-width: 320px) and (orientation: portrait),
   (max-width: 1023px) and (orientation: landscape) {
+  .game-html .group_user .info_user .right .money {
+    line-height: 2px;
+  }
   .game-html .group_user .info_user .right .money .icon {
     width: 8px;
     height: 8px;
@@ -799,7 +802,7 @@
   justify-content: center;
 }
 .game-html .group_user.user_waitting:not(.is-status) .text_waiting {
-  font-size: 100%;
+  font-size: 75%;
   color: #fff;
 }
 @media (min-width: 992px) {
@@ -809,7 +812,7 @@
 }
 @media (min-width: 1024px), ((min-width: 768px) and (orientation: portrait)) {
   .game-html .group_user.user_waitting:not(.is-status) .text_waiting {
-    font-size: 125%;
+    font-size: 112.5%;
   }
 }
 @media (min-width: 1367px) {
@@ -818,18 +821,35 @@
   }
 }
 .game-html .group_user.user_waitting:not(.is-status) .spinner {
-  width: 40px;
-  height: 24px;
   text-align: center;
   font-size: 10px;
+  width: 22px;
+  height: 18px;
+}
+@media (min-width: 320px) and (orientation: portrait),
+  (max-width: 1023px) and (orientation: landscape) {
+  .game-html .group_user.user_waitting:not(.is-status) .spinner {
+    margin-top: -10px;
+  }
+}
+@media (min-width: 1024px), ((min-width: 768px) and (orientation: portrait)) {
+  .game-html .group_user.user_waitting:not(.is-status) .spinner {
+    width: 40px;
+    height: 24px;
+  }
 }
 .game-html .group_user.user_waitting:not(.is-status) .spinner > div {
   background-color: rgb(255, 255, 255);
   height: 100%;
-  width: 4px;
   display: inline-block;
   -webkit-animation: sk-stretchdelay 1.2s infinite ease-in-out;
+  width: 2px;
   animation: sk-stretchdelay 1.2s infinite ease-in-out;
+}
+@media (min-width: 1024px), ((min-width: 768px) and (orientation: portrait)) {
+  .game-html .group_user.user_waitting:not(.is-status) .spinner > div {
+    width: 4px;
+  }
 }
 .game-html .group_user.user_waitting:not(.is-status) .spinner .rect2 {
   -webkit-animation-delay: -1.1s;
@@ -882,6 +902,15 @@
 .game-html .group_user:nth-child(4) {
   top: 50%;
 }
+@media (min-width: 320px) and (orientation: portrait),
+  (max-width: 1023px) and (orientation: landscape) {
+  .game-html .group_user:nth-child(7),
+  .game-html .group_user:nth-child(4) {
+    -webkit-transform: translateY(10%);
+    -ms-transform: translateY(10%);
+    transform: translateY(10%);
+  }
+}
 .game-html .group_user:nth-child(7) {
   left: 0;
 }
@@ -901,11 +930,16 @@
   margin: 0 0 0 4px;
 }
 .game-html .group_user:nth-child(7) .coin_bet .number {
-  top: 10%;
   left: 4px;
+  top: 0;
   -webkit-transform: translateX(0);
   -ms-transform: translateX(0);
   transform: translateX(0);
+}
+@media (min-width: 1024px), ((min-width: 768px) and (orientation: portrait)) {
+  .game-html .group_user:nth-child(7) .coin_bet .number {
+    top: 10%;
+  }
 }
 .game-html .group_user:nth-child(4) {
   right: 0;
@@ -994,9 +1028,9 @@
 @media (min-width: 320px) and (orientation: portrait),
   (max-width: 1023px) and (orientation: landscape) {
   .game-html .group_user:nth-child(5) {
-    -webkit-transform: translate(-80%, 50%);
-    -ms-transform: translate(-80%, 50%);
-    transform: translate(-80%, 50%);
+    -webkit-transform: translate(-55%, 50%);
+    -ms-transform: translate(-55%, 50%);
+    transform: translate(-55%, 50%);
   }
 }
 .game-html .group_user:nth-child(5) .coin_bet {
@@ -1014,11 +1048,16 @@
   transform: rotateY(180deg);
 }
 .game-html .group_user:nth-child(5) .coin_bet .number {
-  top: 10%;
   right: 0;
   -webkit-transform: translateX(0);
   -ms-transform: translateX(0);
   transform: translateX(0);
+  top: 0;
+}
+@media (min-width: 1024px), ((min-width: 768px) and (orientation: portrait)) {
+  .game-html .group_user:nth-child(5) .coin_bet .number {
+    top: 10%;
+  }
 }
 .game-html .group_user:nth-child(6) {
   left: 0;
@@ -1026,9 +1065,9 @@
 @media (min-width: 320px) and (orientation: portrait),
   (max-width: 1023px) and (orientation: landscape) {
   .game-html .group_user:nth-child(6) {
-    -webkit-transform: translate(80%, 50%);
-    -ms-transform: translate(80%, 50%);
-    transform: translate(80%, 50%);
+    -webkit-transform: translate(55%, 50%);
+    -ms-transform: translate(55%, 50%);
+    transform: translate(55%, 50%);
   }
 }
 .game-html .group_user:nth-child(6) .coin_bet {
@@ -1043,11 +1082,16 @@
   left: auto;
 }
 .game-html .group_user:nth-child(6) .coin_bet .number {
-  top: 10%;
   left: 4px;
+  top: 0;
   -webkit-transform: translateX(0);
   -ms-transform: translateX(0);
   transform: translateX(0);
+}
+@media (min-width: 1024px), ((min-width: 768px) and (orientation: portrait)) {
+  .game-html .group_user:nth-child(6) .coin_bet .number {
+    top: 10%;
+  }
 }
 .game-html .group_user {
   -webkit-transition: all 0.3s;
@@ -1069,6 +1113,105 @@
   .game-html .group_user:before {
     border-radius: 5px;
   }
+}
+.game-html .group_user .slind {
+  position: absolute;
+  top: -10px;
+  left: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  left: 0;
+  -webkit-transform: translateX(-90%);
+  -ms-transform: translateX(-90%);
+  transform: translateX(-90%);
+  z-index: 99;
+  width: 35px;
+  height: 35px;
+}
+@media (min-width: 1024px), ((min-width: 768px) and (orientation: portrait)) {
+  .game-html .group_user .slind {
+    width: 55px;
+    height: 55px;
+  }
+}
+.game-html .group_user .slind:before {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  content: '';
+  border-radius: 50%;
+  -webkit-filter: blur(1px);
+  filter: blur(1px);
+}
+.game-html .group_user .slind span {
+  position: absolute;
+  z-index: 9;
+  font-weight: bold;
+  font-family: 'passionone';
+  text-shadow: 1px 1px 9px rgba(0, 0, 0, 0.5);
+  font-size: 156.25%;
+}
+@media (min-width: 1024px), ((min-width: 768px) and (orientation: portrait)) {
+  .game-html .group_user .slind span {
+    font-size: 200%;
+  }
+}
+.game-html .group_user .slind_small {
+  color: #ffff00;
+}
+.game-html .group_user .slind_small:before {
+  border: 1px solid #ffff00;
+  background-image: -webkit-gradient(
+    linear,
+    left top,
+    left bottom,
+    from(#9baaf2),
+    to(#221fc0)
+  );
+  background-image: linear-gradient(-180deg, #9baaf2 0%, #221fc0 100%);
+  -webkit-box-shadow:
+    0 0.8rem 1.25rem 0 rgba(108, 142, 222, 0.852),
+    0 -0.25rem 1.5rem rgb(50, 15, 155) inset,
+    0 0.75rem 0.5rem rgba(255, 255, 255, 0.4) inset,
+    0 0.25rem 0.5rem 0 rgb(70, 84, 207) inset;
+  box-shadow:
+    0 0.8rem 1.25rem 0 rgba(108, 142, 222, 0.852),
+    0 -0.25rem 1.5rem rgb(50, 15, 155) inset,
+    0 0.75rem 0.5rem rgba(255, 255, 255, 0.4) inset,
+    0 0.25rem 0.5rem 0 rgb(70, 84, 207) inset;
+}
+.game-html .group_user .slind_big {
+  color: #221fc0;
+}
+.game-html .group_user .slind_big:before {
+  border: 1px solid #221fc0;
+  background-image: -webkit-gradient(
+    linear,
+    left top,
+    left bottom,
+    from(#fff389),
+    to(#b8c01f)
+  );
+  background-image: linear-gradient(-180deg, #fff389 0%, #b8c01f 100%);
+  -webkit-box-shadow:
+    0 0.5rem 1.25rem rgba(237, 240, 8, 0.876),
+    0 -0.25rem 1.5rem rgb(204, 214, 5) inset,
+    0 0.75rem 0.5rem rgba(255, 255, 255, 0.4) inset,
+    0 0.25rem 0.5rem 0 rgb(205, 207, 70) inset;
+  box-shadow:
+    0 0.5rem 1.25rem rgba(237, 240, 8, 0.876),
+    0 -0.25rem 1.5rem rgb(204, 214, 5) inset,
+    0 0.75rem 0.5rem rgba(255, 255, 255, 0.4) inset,
+    0 0.25rem 0.5rem 0 rgb(205, 207, 70) inset;
 }
 .game-html .group_user .status {
   position: absolute;
@@ -1814,6 +1957,12 @@
   font-weight: 500;
   color: #05ff26;
 }
+@media (min-width: 320px) and (orientation: portrait),
+  (max-width: 1023px) and (orientation: landscape) {
+  .game-html .coin_bet .number {
+    font-size: 100%;
+  }
+}
 .game-html .coin {
   position: absolute;
   width: 20px;
@@ -2111,7 +2260,7 @@
 @media (min-width: 320px) and (orientation: portrait),
   (max-width: 1023px) and (orientation: landscape) {
   .game-html .group_midle {
-    top: 36%;
+    top: 41%;
     -webkit-transform: translateY(-50%);
     -ms-transform: translateY(-50%);
     transform: translateY(-50%);
@@ -2345,10 +2494,10 @@
   background-image: url(/images/bg_tool.png);
   background-size: 100% 100%;
   border-radius: 8px;
-  padding: 0.8174386921%;
+  padding: 0.5449591281% 0.8174386921%;
   width: 24.2240726722%;
   bottom: 40px;
-  height: 22.7848101266%;
+  height: 25.3164556962%;
 }
 @media (min-width: 1024px), ((min-width: 768px) and (orientation: portrait)) {
   .game-html .group_tool {
@@ -2518,6 +2667,12 @@
   -ms-transform: translate(0);
   transform: translate(0);
 }
+@media (min-width: 320px) and (orientation: portrait),
+  (max-width: 1023px) and (orientation: landscape) {
+  .game-html .group_tool .group_left .group_user {
+    height: 100%;
+  }
+}
 .game-html .group_tool .group_left .group_user .wrap {
   padding: 0;
   position: relative;
@@ -2533,6 +2688,12 @@
     -webkit-box-pack: center;
     -ms-flex-pack: center;
     justify-content: center;
+  }
+}
+@media (min-width: 320px) and (orientation: portrait),
+  (max-width: 1023px) and (orientation: landscape) {
+  .game-html .group_tool .group_left .group_user .wrap .info_user {
+    margin-top: 0;
   }
 }
 @media (min-width: 320px) and (orientation: portrait),
@@ -2564,6 +2725,19 @@
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
+}
+@media (min-width: 320px) and (orientation: portrait),
+  (max-width: 1023px) and (orientation: landscape) {
+  .game-html .group_tool .group_left .group_user .right {
+    position: relative;
+  }
+  .game-html .group_tool .group_left .group_user .right.sp_full {
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    line-height: 8px;
+    margin-top: 0;
+  }
 }
 .game-html .group_tool .group_left .group_user .pocker_list {
   width: 50%;
@@ -2837,6 +3011,18 @@
   -webkit-transform: translate(115%, -50%);
   -ms-transform: translate(115%, -50%);
   transform: translate(115%, -50%);
+}
+@media (min-width: 320px) and (orientation: portrait),
+  (max-width: 1023px) and (orientation: landscape) {
+  .game-html .group_tool .coin_bet {
+    width: 30%;
+    bottom: 0;
+    left: 0;
+    right: auto;
+    -webkit-transform: translate(-64%, 4%);
+    -ms-transform: translate(-64%, 4%);
+    transform: translate(-64%, 4%);
+  }
 }
 .game-html .avatar {
   background-image: url(/images/avt_bg2.png);
@@ -3166,7 +3352,7 @@
 .game-html .game_body .list_user {
   width: 100%;
   position: relative;
-  padding-top: 39.3641180924%;
+  padding-top: 43.9061317184%;
 }
 @media (min-width: 1024px), ((min-width: 768px) and (orientation: portrait)) {
   .game-html .game_body .list_user {
@@ -3218,10 +3404,10 @@
 @media (min-width: 320px) and (orientation: portrait),
   (max-width: 1023px) and (orientation: landscape) {
   .table_statistical {
-    font-size: 59.375%;
+    font-size: 56.25%;
     min-width: auto;
     bottom: 46px;
-    width: 110px;
+    width: 80px;
   }
 }
 @media (min-width: 1801px) {
@@ -3235,7 +3421,7 @@
   border-bottom: 1px solid #2d2d2d;
   padding-bottom: 4px;
   color: #fff;
-  padding: 8px 4px;
+  padding: 8px;
 }
 @media (min-width: 320px) and (orientation: portrait),
   (max-width: 1023px) and (orientation: landscape) {
@@ -3254,7 +3440,7 @@
   }
 }
 .table_statistical .content {
-  padding: 8px 4px;
+  padding: 8px;
 }
 @media (min-width: 1024px), ((min-width: 768px) and (orientation: portrait)) {
   .table_statistical .content {
