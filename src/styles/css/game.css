@@ -1128,15 +1128,18 @@
   -ms-flex-pack: center;
   justify-content: center;
   left: 0;
-  -webkit-transform: translateX(-90%);
-  -ms-transform: translateX(-90%);
-  transform: translateX(-90%);
+  -webkit-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+  transform: translateX(-50%);
   z-index: 99;
   width: 35px;
   height: 35px;
 }
 @media (min-width: 1024px), ((min-width: 768px) and (orientation: portrait)) {
   .game-html .group_user .slind {
+    -webkit-transform: translateX(-90%);
+    -ms-transform: translateX(-90%);
+    transform: translateX(-90%);
     width: 55px;
     height: 55px;
   }
@@ -2498,6 +2501,9 @@
   width: 24.2240726722%;
   bottom: 40px;
   height: 25.3164556962%;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
 }
 @media (min-width: 1024px), ((min-width: 768px) and (orientation: portrait)) {
   .game-html .group_tool {
@@ -2598,6 +2604,14 @@
   -ms-flex-positive: 1;
   flex-grow: 1;
 }
+.game-html .group_tool .group_flush .content .star * {
+  font-size: 16px;
+}
+@media (min-width: 1024px), ((min-width: 768px) and (orientation: portrait)) {
+  .game-html .group_tool .group_flush .content .star * {
+    font-size: 22px;
+  }
+}
 .game-html .group_tool .group_flush .content .btn_detail {
   -ms-flex-negative: 0;
   flex-shrink: 0;
@@ -2652,6 +2666,12 @@
   -ms-flex-align: center;
   align-items: center;
   width: 100%;
+}
+@media (min-width: 320px) and (orientation: portrait),
+  (max-width: 1023px) and (orientation: landscape) {
+  .game-html .group_tool .group_left {
+    height: 100%;
+  }
 }
 @media (min-width: 1024px), ((min-width: 768px) and (orientation: portrait)) {
   .game-html .group_tool .group_left {
@@ -2760,6 +2780,22 @@
   -ms-transform: translate(-50%, -68%);
   transform: translate(-50%, -68%);
 }
+.game-html .group_tool .slind {
+  top: auto;
+  bottom: 100%;
+  left: 100%;
+  z-index: 99999999;
+  -webkit-transform: translate(-50%, 30%);
+  -ms-transform: translate(-50%, 30%);
+  transform: translate(-50%, 30%);
+}
+@media (min-width: 1024px), ((min-width: 768px) and (orientation: portrait)) {
+  .game-html .group_tool .slind {
+    -webkit-transform: translate(-220%, -90%);
+    -ms-transform: translate(-220%, -90%);
+    transform: translate(-220%, -90%);
+  }
+}
 .game-html .group_tool .toolbar {
   -webkit-box-flex: 1;
   -ms-flex-positive: 1;
@@ -2774,7 +2810,11 @@
   align-items: stretch;
   height: 100%;
   gap: 2px;
-  margin-left: -5%;
+}
+@media (min-width: 1024px), ((min-width: 768px) and (orientation: portrait)) {
+  .game-html .group_tool .toolbar {
+    margin-left: -5%;
+  }
 }
 @media (min-width: 1024px), ((min-width: 768px) and (orientation: portrait)) {
   .game-html .group_tool .toolbar.toolbar_sp {
@@ -2901,7 +2941,7 @@
   font-weight: 700;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  font-size: 100%;
+  font-size: 112.5%;
   -webkit-box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.2509803922);
   box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.2509803922);
   text-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
@@ -3008,9 +3048,9 @@
 .game-html .group_tool .coin_bet {
   top: auto;
   bottom: 100%;
-  -webkit-transform: translate(115%, -50%);
-  -ms-transform: translate(115%, -50%);
-  transform: translate(115%, -50%);
+  -webkit-transform: translate(150%, -50%);
+  -ms-transform: translate(150%, -50%);
+  transform: translate(150%, -50%);
 }
 @media (min-width: 320px) and (orientation: portrait),
   (max-width: 1023px) and (orientation: landscape) {

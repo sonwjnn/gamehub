@@ -17,10 +17,6 @@ export const RuleModal = () => {
           <div className="modal_head">
             LUẬT CHƠI
             <div className="btn_close modal_close" onClick={onClose}>
-              {/* <span className="icon sz-24">
-                {' '}
-                <i className="icon_close"></i>
-              </span> */}
               <X className="mt-3" size={24} />
             </div>
           </div>
@@ -45,7 +41,6 @@ export const RuleModal = () => {
               </div>
               <br />
               <h3 className="ttl color-primary text-up">
-                {' '}
                 <span>Tổng quan một ván Poker</span>
               </h3>
               <div className="text">

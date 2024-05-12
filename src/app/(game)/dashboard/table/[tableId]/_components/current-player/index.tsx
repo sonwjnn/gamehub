@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react'
 import { Match, Participant, PlayerWithUser, PokerActions } from '@/types'
 import { useSocket } from '@/providers/socket-provider'
 import { cn } from '@/lib/utils'
-import { formatChipsAmount } from '@/utils/formatting'
+import { formatChipsAmount, getStarRating } from '@/utils/formatting'
 import sounds from '@/utils/contants/sound'
 import { useIsWinner } from '@/store/use-is-winner'
 import playerApi from '@/services/api/modules/player-api'
@@ -16,6 +16,8 @@ import { useRouter } from 'next/navigation'
 import { CoinBet } from '@/components/coin-bet'
 import { getGenderFromImageUrl, playSound } from '@/utils/sound'
 import { useAudio } from 'react-use'
+import { useModal } from '@/store/use-modal-store'
+import { ReviewStars } from './review-stars'
 
 interface CurrentPlayerProps {
   isShowdown?: boolean
@@ -34,6 +36,7 @@ export const CurrentPlayer = ({
   tableId,
 }: CurrentPlayerProps) => {
   const { socket } = useSocket()
+  const { onOpen } = useModal()
   const router = useRouter()
   const { setIsWinner } = useIsWinner()
   const [imageUrlFirst, setImageUrlFirst] = useState('')
@@ -41,6 +44,7 @@ export const CurrentPlayer = ({
   const [isAction, setIsAction] = useState(false)
   const [counter, setCounter] = useState(12)
   const [bet, setBet] = useState(0)
+  const [stars, setStars] = useState(0)
   const [countdownSrcAudio, _, controls, ref] = useAudio({
     src: sounds.soundCountdown,
     autoPlay: false,
@@ -76,9 +80,16 @@ export const CurrentPlayer = ({
 
       setImageUrlFirst(imageUrlFirst)
       setImageUrlSecond(imageUrlSecond)
+      const stars = getStarRating(
+        `${currentParticipant?.cardOne?.rank}_${currentParticipant?.cardOne?.suit}`,
+        `${currentParticipant?.cardTwo?.rank}_${currentParticipant?.cardTwo?.suit}`
+      )
+
+      setStars(stars)
     } else {
       setImageUrlFirst('')
       setImageUrlSecond('')
+      setStars
     }
   }, [participants, player, currentParticipant])
 
@@ -237,17 +248,12 @@ export const CurrentPlayer = ({
           <span>ROYAL FLUSH</span>
         </div>
         <div className="content flex flex-midle gap-8 flex-center">
-          <div className="star">
-            <Image
-              src="/images/star.png"
-              alt="starImage"
-              width={0}
-              height={0}
-              sizes="100vw"
-              className="w-full h-auto"
-            />
+          <div className="star" onClick={() => onOpen('feeling')}>
+            <ReviewStars stars={stars} />
           </div>
-          <div className="btn_detail">Detail</div>
+          <div className="btn_detail" onClick={() => onOpen('quality')}>
+            Detail
+          </div>
         </div>
       </div>
       <div className="group_left">
