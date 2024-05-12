@@ -30,6 +30,8 @@ import { useSocket } from '@/providers/socket-provider'
 import playerApi from '@/services/api/modules/player-api'
 import { toast } from 'sonner'
 import { useSession } from 'next-auth/react'
+import { X } from 'lucide-react'
+import { cn } from '@/lib/utils'
 
 const formSchema = z.object({
   buyIn: z.number().min(0, {
@@ -92,54 +94,55 @@ export const BuyInModal = () => {
   }
 
   return (
-    <Dialog open={isModalOpen} onOpenChange={handleClose}>
-      <DialogContent className="overflow-hidden  p-0 ">
-        <DialogHeader className="px-[24px] pt-[32px]">
-          <DialogTitle className="text-center text-2xl font-bold">
-            Buy In
-          </DialogTitle>
-        </DialogHeader>
-        <div className="p-6 w-full">
-          <div className="mt-2 gap-x-2 text-center  text-zinc-300">
-            You have to buy in to play. Please buy in to join this table.
+    <div className={cn('modal', isModalOpen && 'show')}>
+      <div className="modal_dark modal_close" onClick={handleClose}></div>
+      <div className="modal_dialog sz-lg">
+        <div className="modal_content  max-w-[700px] flex-grow-0">
+          <div className="modal_head">
+            BUY IN
+            <div className="btn_close modal_close" onClick={handleClose}>
+              <X className="mt-3" size={24} />
+            </div>
           </div>
+          <div className="modal_body">
+            <div className="mt-4 gap-x-2 text-center  text  mb-3 ">
+              Min : {table?.minBuyIn}
+              <br />
+              Max : {table?.maxBuyIn}
+            </div>
 
-          <div className="mt-4 gap-x-2 text-center  text-zinc-300 font-bold text-xl mb-3 ">
-            Min : {table?.minBuyIn}
-            <br />
-            Max : {table?.maxBuyIn}
-          </div>
-
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-              <FormField
-                control={form.control}
-                name="buyIn"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormControl>
-                      <div className="input-group">
-                        <div className="wrap-input flex justify-center">
-                          <Input
-                            className="w-auto py-0 "
-                            type="number"
-                            min={table?.minBuyIn}
-                            max={table?.maxBuyIn}
-                            disabled={isLoading}
-                            {...field}
-                            onChange={e =>
-                              field.onChange(+e.target.value || ' ')
-                            }
-                          />
+            <Form {...form}>
+              <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="space-y-8"
+              >
+                <FormField
+                  control={form.control}
+                  name="buyIn"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <div className="input-group">
+                          <div className="wrap-input flex justify-center">
+                            <Input
+                              className="w-auto py-0 "
+                              type="number"
+                              min={table?.minBuyIn}
+                              max={table?.maxBuyIn}
+                              disabled={isLoading}
+                              {...field}
+                              onChange={e =>
+                                field.onChange(+e.target.value || ' ')
+                              }
+                            />
+                          </div>
                         </div>
-                      </div>
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
-              <DialogFooter className="px-[24px] py-[16px] ">
                 <Button
                   variant="primary"
                   className="mx-auto"
@@ -147,11 +150,11 @@ export const BuyInModal = () => {
                 >
                   Buy into game
                 </Button>
-              </DialogFooter>
-            </form>
-          </Form>
+              </form>
+            </Form>
+          </div>
         </div>
-      </DialogContent>
-    </Dialog>
+      </div>
+    </div>
   )
 }
