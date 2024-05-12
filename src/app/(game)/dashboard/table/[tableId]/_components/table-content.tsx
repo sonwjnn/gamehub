@@ -9,7 +9,13 @@ import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 
 import sounds from '@/utils/contants/sound'
-import { Match, Participant, PlayerWithUser, PokerActions } from '@/types'
+import {
+  HighlightCard,
+  Match,
+  Participant,
+  PlayerWithUser,
+  PokerActions,
+} from '@/types'
 import { useCurrentUser } from '@/hooks/use-current-user'
 import { useSocket } from '@/providers/socket-provider'
 
@@ -19,7 +25,6 @@ import { WinnerModal } from './winner-modal'
 import playerApi from '@/services/api/modules/player-api'
 import { useRouter } from 'next/navigation'
 import { ShowdownModal } from './showdown-modal'
-import { Button } from '@/components/ui/button'
 
 interface TableContentProps {
   tableId: string
@@ -37,6 +42,7 @@ export const TableContent = ({ tableId }: TableContentProps) => {
   const [players, setPlayers] = useState<PlayerWithUser[]>([])
   const [isShuffle, setShuffle] = useState(false)
   const [isChipsAnimation, setChipsAnimation] = useState(false)
+  const [highlightCards, setHighlightCards] = useState<HighlightCard>()
 
   const tableRef = useRef<HTMLDivElement | null>(null)
   const wrapperRef = useRef<HTMLDivElement | null>(null)
@@ -231,6 +237,7 @@ export const TableContent = ({ tableId }: TableContentProps) => {
         }) => {
           setMatch(null)
           setParticipants([])
+          setHighlightCards(undefined)
           setHandVisible(false)
 
           if (match) {
@@ -341,6 +348,13 @@ export const TableContent = ({ tableId }: TableContentProps) => {
         }
       )
 
+      socket.on(
+        PokerActions.HIGHLIGHT_CARDS,
+        (highlightCards: HighlightCard) => {
+          setHighlightCards(highlightCards)
+        }
+      )
+
       return () => {
         if (socket) {
           socket.off(PokerActions.JOIN_TABLE)
@@ -348,6 +362,7 @@ export const TableContent = ({ tableId }: TableContentProps) => {
           socket.off(PokerActions.LEAVE_TABLE)
           socket.off(PokerActions.MATCH_STARTED)
           socket.off(PokerActions.CHANGE_TURN)
+          socket.off(PokerActions.HIGHLIGHT_CARDS)
 
           if (timerMatchId) {
             clearTimeout(timerMatchId)
@@ -477,7 +492,11 @@ export const TableContent = ({ tableId }: TableContentProps) => {
             </div>
           </div>
         </div>
-        <Board match={match} isShuffle={isShuffle} />
+        <Board
+          match={match}
+          isShuffle={isShuffle}
+          highlightCards={highlightCards}
+        />
 
         {messages && messages.length > 0 && (
           <div className="absolute font-semibold top-[60%] text-lime-500 text-xs md:text-xl left-1/2 -translate-y-1/2 -translate-x-1/2">
@@ -490,6 +509,7 @@ export const TableContent = ({ tableId }: TableContentProps) => {
           participants={participants}
           isHandVisible={isHandVisible}
           tableId={tableId}
+          highlightCards={highlightCards}
         />
       </div>
     </>

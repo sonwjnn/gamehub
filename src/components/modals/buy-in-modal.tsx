@@ -2,19 +2,10 @@
 
 import { Button } from '@/components/ui/button'
 import {
-  Dialog,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog'
-
-import {
   Form,
   FormControl,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from '@/components/ui/form'
 import { useModal } from '@/store/use-modal-store'
@@ -97,7 +88,7 @@ export const BuyInModal = () => {
     <div className={cn('modal', isModalOpen && 'show')}>
       <div className="modal_dark modal_close" onClick={handleClose}></div>
       <div className="modal_dialog sz-lg">
-        <div className="modal_content  max-w-[700px] flex-grow-0">
+        <div className="modal_content  max-w-[500px] flex-grow-0">
           <div className="modal_head">
             BUY IN
             <div className="btn_close modal_close" onClick={handleClose}>

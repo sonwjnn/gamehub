@@ -1,10 +1,10 @@
 import { Star, StarHalf } from 'lucide-react'
+
 type Props = {
   stars: number
 }
 
-export const ReviewStars = ({}: Props) => {
-  const stars = 1
+export const ReviewStars = ({ stars }: Props) => {
   const ratingStar = Array.from({ length: 5 }, (_, index) => {
     let number = index + 0.5
     return (

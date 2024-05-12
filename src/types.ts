@@ -218,6 +218,17 @@ export type NextApiResponseServerIo = NextApiResponse & {
   }
 }
 
+type CustomCard = {
+  id: string
+  rank: string
+  suit: string
+}
+
+export type HighlightCard = {
+  cards: CustomCard[]
+  name: string
+}
+
 export enum PokerActions {
   FOLD = 'FOLD',
   CHECK = 'CHECK',
@@ -239,6 +250,7 @@ export enum PokerActions {
   TABLE_UPDATED = 'TABLE_UPDATED',
   TABLE_MESSAGE = 'TABLE_MESSAGE',
   UPDATE_STATISTICAL = 'UPDATE_STATISTICAL',
+  HIGHLIGHT_CARDS = 'HIGHLIGHT_CARDS',
   REBUY = 'REBUY',
   SIT_DOWN = 'SIT_DOWN',
   STAND_UP = 'STAND_UP',

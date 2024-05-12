@@ -5,7 +5,13 @@ import { Hand } from './hand'
 import { CurrentPlayerAction } from './actions'
 
 import { useEffect, useState } from 'react'
-import { Match, Participant, PlayerWithUser, PokerActions } from '@/types'
+import {
+  HighlightCard,
+  Match,
+  Participant,
+  PlayerWithUser,
+  PokerActions,
+} from '@/types'
 import { useSocket } from '@/providers/socket-provider'
 import { cn } from '@/lib/utils'
 import { formatChipsAmount, getStarRating } from '@/utils/formatting'
@@ -26,6 +32,7 @@ interface CurrentPlayerProps {
   isHandVisible: boolean
   player: PlayerWithUser | undefined
   tableId: string
+  highlightCards?: HighlightCard
 }
 
 export const CurrentPlayer = ({
@@ -34,6 +41,7 @@ export const CurrentPlayer = ({
   isHandVisible,
   player,
   tableId,
+  highlightCards,
 }: CurrentPlayerProps) => {
   const { socket } = useSocket()
   const { onOpen } = useModal()
@@ -233,6 +241,22 @@ export const CurrentPlayer = ({
     }
   }
 
+  const hasFirstHighlight = highlightCards?.cards.some(item => {
+    if (!item) return false
+    return (
+      item.rank === currentParticipant?.cardOne?.rank &&
+      item.suit === currentParticipant?.cardOne?.suit
+    )
+  })
+
+  const hasSecondHighlight = highlightCards?.cards.some(item => {
+    if (!item) return false
+    return (
+      item.rank === currentParticipant?.cardTwo?.rank &&
+      item.suit === currentParticipant?.cardTwo?.suit
+    )
+  })
+
   return (
     <div
       className={cn(
@@ -244,9 +268,12 @@ export const CurrentPlayer = ({
     >
       {countdownSrcAudio}
       <div className="group_flush">
-        <div className="ttl">
-          <span>ROYAL FLUSH</span>
-        </div>
+        {highlightCards?.name && (
+          <div className="ttl">
+            <span>{highlightCards?.name}</span>
+          </div>
+        )}
+
         <div className="content flex flex-midle gap-8 flex-center">
           <div className="star" onClick={() => onOpen('feeling')}>
             <ReviewStars stars={stars} />
@@ -303,6 +330,8 @@ export const CurrentPlayer = ({
                     imageUrlFirst={imageUrlFirst}
                     imageUrlSecond={imageUrlSecond}
                     isHidden={!isHandVisible}
+                    hasFirstHighlight={hasFirstHighlight}
+                    hasSecondHighlight={hasSecondHighlight}
                   />
                 )}
                 {!isWaiting && isFolded && (

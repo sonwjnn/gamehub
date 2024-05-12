@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { Card } from './card'
 import { cn } from '@/lib/utils'
-import { Match } from '@/types'
+import { HighlightCard, Match, PokerActions } from '@/types'
 import { formatChipsAmount } from '@/utils/formatting'
 import sounds from '@/utils/contants/sound'
 import { useAudio } from 'react-use'
@@ -13,9 +13,10 @@ interface BoardProps {
   match: Match | null
   isHidden?: boolean
   isShuffle?: boolean
+  highlightCards?: HighlightCard
 }
 
-export const Board = ({ match }: BoardProps) => {
+export const Board = ({ match, highlightCards }: BoardProps) => {
   const [audio, _, controls] = useAudio({ src: sounds.soundOpen })
   const [hiddenClass, setHiddenClass] = useState('hide')
   const [turnHiddenClass, setTurnHiddenClass] = useState('hide')
@@ -95,6 +96,21 @@ export const Board = ({ match }: BoardProps) => {
     }
   }, [isPreFlop])
 
+  const hasTurnHighlight = highlightCards?.cards.some(highlightCard => {
+    if (!board || !highlightCard) return false
+    return (
+      highlightCard.rank === board[3].rank &&
+      highlightCard.suit === board[3].suit
+    )
+  })
+  const hasRiverHighlight = highlightCards?.cards.some(highlightCard => {
+    if (!board) return false
+    return (
+      highlightCard.rank === board[4].rank &&
+      highlightCard.suit === board[4].suit
+    )
+  })
+
   return (
     <div className="group_midle">
       {audio}
@@ -114,20 +130,40 @@ export const Board = ({ match }: BoardProps) => {
         >
           {board && board?.length && (
             <>
-              {board?.slice(0, 3).map((card, index) => (
-                <div key={card.id} className={cn('item flipped', hiddenClass)}>
-                  <div className="pocker">
-                    <Card
-                      imageUrl={`/images/pocker/${card.rank.toLowerCase()}_${card.suit.toLowerCase()}.png`}
-                      value={10}
-                    />
+              {board?.slice(0, 3).map((card, index) => {
+                const hasHighlight = highlightCards?.cards.find(
+                  highlightCard =>
+                    highlightCard.rank === card.rank &&
+                    highlightCard.suit === card.suit
+                )
+                return (
+                  <div
+                    key={card.id}
+                    className={cn(
+                      'item flipped',
+                      hiddenClass,
+                      hasHighlight && 'status_active'
+                    )}
+                  >
+                    <div className="pocker">
+                      <Card
+                        imageUrl={`/images/pocker/${card.rank.toLowerCase()}_${card.suit.toLowerCase()}.png`}
+                        value={10}
+                      />
+                    </div>
                   </div>
-                </div>
-              ))}
+                )
+              })}
 
               {isTurn && (
                 <div ref={turnCardRef} className="py-[0.9%] px-[1.75%]">
-                  <div className={cn('item flipped', turnHiddenClass)}>
+                  <div
+                    className={cn(
+                      'item flipped',
+                      turnHiddenClass,
+                      hasTurnHighlight && 'status_active'
+                    )}
+                  >
                     <div className="pocker">
                       <Card
                         imageUrl={`/images/pocker/${board[3].rank.toLowerCase()}_${board[3].suit.toLowerCase()}.png`}
@@ -139,7 +175,13 @@ export const Board = ({ match }: BoardProps) => {
               )}
               {isRiver && (
                 <div ref={riverCardRef} className="py-[0.9%] px-[1.75%]">
-                  <div className={cn('item flipped', riverHiddenClass)}>
+                  <div
+                    className={cn(
+                      'item flipped',
+                      riverHiddenClass,
+                      hasRiverHighlight && 'status_active'
+                    )}
+                  >
                     <div className="pocker">
                       <Card
                         imageUrl={`/images/pocker/${board[4].rank.toLowerCase()}_${board[4].suit.toLowerCase()}.png`}

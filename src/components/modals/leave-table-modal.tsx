@@ -1,15 +1,7 @@
 'use client'
 
-import { Spinner } from '@/components/spinner'
 import { Button } from '@/components/ui/button'
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog'
+
 import { useCurrentUser } from '@/hooks/use-current-user'
 import { cn } from '@/lib/utils'
 import playerApi from '@/services/api/modules/player-api'
@@ -84,7 +76,7 @@ export const LeaveTableModal = () => {
     <div className={cn('modal', isModalOpen && 'show')}>
       <div className="modal_dark modal_close" onClick={onClose}></div>
       <div className="modal_dialog sz-lg">
-        <div className="modal_content  max-w-[700px] flex-grow-0">
+        <div className="modal_content  max-w-[500px] flex-grow-0">
           <div className="modal_head">
             LEAVE TABLE
             <div className="btn_close modal_close" onClick={onClose}>

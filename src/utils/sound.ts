@@ -10,8 +10,10 @@ export const getGenderFromImageUrl = (imageUrl: string) => {
 
 export const playSound = (action: PokerActions, gender: string) => {
   let soundUrl
+  let canNotPlaybackRate = 0
   switch (action) {
     case PokerActions.FOLD:
+      canNotPlaybackRate = 1
       soundUrl = gender === 'male' ? sounds.soundFoldBoy : sounds.soundFoldGirl
       break
     case PokerActions.CHECK:
@@ -19,6 +21,7 @@ export const playSound = (action: PokerActions, gender: string) => {
         gender === 'male' ? sounds.soundCheckBoy : sounds.soundCheckGirl
       break
     case PokerActions.CALL:
+      canNotPlaybackRate = 1
       soundUrl = gender === 'male' ? sounds.soundCallBoy : sounds.soundCallGirl
       break
     case PokerActions.RAISE:
@@ -33,6 +36,7 @@ export const playSound = (action: PokerActions, gender: string) => {
       soundUrl = gender === 'male' ? sounds.soundHalfBoy : sounds.soundHalfGirl
       break
     case PokerActions.FULL:
+      canNotPlaybackRate = 1
       soundUrl = gender === 'male' ? sounds.soundFullBoy : sounds.soundFullGirl
       break
     case PokerActions.ALLIN:
@@ -41,7 +45,10 @@ export const playSound = (action: PokerActions, gender: string) => {
     default:
       soundUrl = ''
   }
+
   const audio = new Audio(soundUrl)
-  audio.playbackRate = 1.5
+  if (!canNotPlaybackRate) {
+    audio.playbackRate = 1.5
+  }
   audio.play()
 }
