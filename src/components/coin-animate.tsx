@@ -11,7 +11,8 @@ export const CoinAnimate = ({}: CoinAnimateProps) => {
 
   useEffect(() => {
     controls.play()
-  }, [controls])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <div className="wallet">
