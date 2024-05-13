@@ -673,6 +673,7 @@
   width: 36.2694300518%;
   -ms-flex-negative: 0;
   flex-shrink: 0;
+  position: relative;
 }
 .game-html .group_user .left .avatar {
   cursor: pointer;
@@ -921,26 +922,6 @@
     transform: translateX(-30%);
   }
 }
-.game-html .group_user:nth-child(7) .coin_bet {
-  left: 100%;
-  top: 70%;
-  -webkit-transform: translateY(-50%);
-  -ms-transform: translateY(-50%);
-  transform: translateY(-50%);
-  margin: 0 0 0 4px;
-}
-.game-html .group_user:nth-child(7) .coin_bet .number {
-  left: 4px;
-  top: 0;
-  -webkit-transform: translateX(0);
-  -ms-transform: translateX(0);
-  transform: translateX(0);
-}
-@media (min-width: 1024px), ((min-width: 768px) and (orientation: portrait)) {
-  .game-html .group_user:nth-child(7) .coin_bet .number {
-    top: 10%;
-  }
-}
 .game-html .group_user:nth-child(4) {
   right: 0;
 }
@@ -951,25 +932,12 @@
     transform: translateX(30%);
   }
 }
-.game-html .group_user:nth-child(4) .coin_bet {
-  right: 100%;
-  top: 70%;
-  -webkit-transform: translateY(-50%);
-  -ms-transform: translateY(-50%);
-  transform: translateY(-50%);
+.game-html .group_user:nth-child(6) .coin_bet,
+.game-html .group_user:nth-child(7) .coin_bet,
+.game-html .group_user:nth-child(8) .coin_bet,
+.game-html .group_user:nth-child(9) .coin_bet {
+  margin-left: auto;
   left: auto;
-  margin: 0;
-}
-.game-html .group_user:nth-child(4) .coin_bet svg {
-  -webkit-transform: rotateY(180deg);
-  transform: rotateY(180deg);
-}
-.game-html .group_user:nth-child(4) .coin_bet .number {
-  top: 10%;
-  right: 4px;
-  -webkit-transform: translateX(0);
-  -ms-transform: translateX(0);
-  transform: translateX(0);
 }
 .game-html .group_user:nth-child(9),
 .game-html .group_user:nth-child(2) {
@@ -988,32 +956,8 @@
 .game-html .group_user:nth-child(8) {
   left: 0%;
 }
-.game-html .group_user:nth-child(8) .coin_bet {
-  -webkit-box-pack: end;
-  -ms-flex-pack: end;
-  justify-content: flex-end;
-  margin-left: auto;
-  left: auto;
-  -webkit-transform: translate(31%, -44%);
-  -ms-transform: translate(31%, -44%);
-  transform: translate(31%, -44%);
-  margin-top: 2%;
-}
 .game-html .group_user:nth-child(3) {
   right: 0%;
-}
-.game-html .group_user:nth-child(3) .coin_bet {
-  -webkit-box-pack: start;
-  -ms-flex-pack: start;
-  justify-content: flex-start;
-  margin-left: 0;
-  -webkit-transform: translate(-31%, -44%) rotateY(180deg);
-  transform: translate(-31%, -44%) rotateY(180deg);
-  margin-top: 2%;
-}
-.game-html .group_user:nth-child(3) .coin_bet .number {
-  -webkit-transform: rotateY(180deg) translateX(100%);
-  transform: rotateY(180deg) translateX(100%);
 }
 .game-html .group_user:nth-child(6),
 .game-html .group_user:nth-child(5) {
@@ -1033,32 +977,6 @@
     transform: translate(-55%, 50%);
   }
 }
-.game-html .group_user:nth-child(5) .coin_bet {
-  -webkit-box-pack: start;
-  -ms-flex-pack: start;
-  justify-content: flex-start;
-  margin-left: 0;
-  -webkit-transform: translate(-104%, 15%);
-  -ms-transform: translate(-104%, 15%);
-  transform: translate(-104%, 15%);
-  top: 0;
-}
-.game-html .group_user:nth-child(5) .coin_bet svg {
-  -webkit-transform: rotateY(180deg);
-  transform: rotateY(180deg);
-}
-.game-html .group_user:nth-child(5) .coin_bet .number {
-  right: 0;
-  -webkit-transform: translateX(0);
-  -ms-transform: translateX(0);
-  transform: translateX(0);
-  top: 0;
-}
-@media (min-width: 1024px), ((min-width: 768px) and (orientation: portrait)) {
-  .game-html .group_user:nth-child(5) .coin_bet .number {
-    top: 10%;
-  }
-}
 .game-html .group_user:nth-child(6) {
   left: 0;
 }
@@ -1068,29 +986,6 @@
     -webkit-transform: translate(55%, 50%);
     -ms-transform: translate(55%, 50%);
     transform: translate(55%, 50%);
-  }
-}
-.game-html .group_user:nth-child(6) .coin_bet {
-  -webkit-box-pack: end;
-  -ms-flex-pack: end;
-  justify-content: flex-end;
-  margin-left: auto;
-  -webkit-transform: translate(104%, 15%);
-  -ms-transform: translate(104%, 15%);
-  transform: translate(104%, 15%);
-  top: 0;
-  left: auto;
-}
-.game-html .group_user:nth-child(6) .coin_bet .number {
-  left: 4px;
-  top: 0;
-  -webkit-transform: translateX(0);
-  -ms-transform: translateX(0);
-  transform: translateX(0);
-}
-@media (min-width: 1024px), ((min-width: 768px) and (orientation: portrait)) {
-  .game-html .group_user:nth-child(6) .coin_bet .number {
-    top: 10%;
   }
 }
 .game-html .group_user {
@@ -1235,7 +1130,7 @@
   -webkit-box-shadow: 0px 1px 80px 14px rgba(0, 0, 0, 0.8);
   box-shadow: 0px 1px 80px 14px rgba(0, 0, 0, 0.8);
 }
-.game-html .group_user .status .wrap_status svg {
+.game-html .group_user .status .wrap_status .chip {
   position: absolute;
   top: 0;
   bottom: 0;
@@ -1244,7 +1139,7 @@
   width: 100%;
   border-radius: 50%;
 }
-.game-html .group_user .status .wrap_status svg .circle {
+.game-html .group_user .status .wrap_status .chip .circle {
   stroke-dasharray: 600;
   stroke-dashoffset: 600;
 }
@@ -1307,7 +1202,7 @@
     #17aaff 130.8%
   );
 }
-.game-html .group_user .status_quarter svg {
+.game-html .group_user .status_quarter .chip {
   -webkit-box-shadow: 0px 1px 15px 3px rgba(6, 187, 207, 0.3058823529);
   box-shadow: 0px 1px 15px 3px rgba(6, 187, 207, 0.3058823529);
 }
@@ -1325,7 +1220,7 @@
     #540023 130.8%
   );
 }
-.game-html .group_user .status_half svg {
+.game-html .group_user .status_half .chip {
   -webkit-box-shadow: 0px 1px 15px 3px rgba(240, 94, 199, 0.4117647059);
   box-shadow: 0px 1px 15px 3px rgba(240, 94, 199, 0.4117647059);
 }
@@ -1340,7 +1235,7 @@
     #025400 130.8%
   );
 }
-.game-html .group_user .status_full svg {
+.game-html .group_user .status_full .chip {
   -webkit-box-shadow: 0px 1px 15px 3px rgba(165, 255, 164, 0.3882352941);
   box-shadow: 0px 1px 15px 3px rgba(165, 255, 164, 0.3882352941);
 }
@@ -1366,7 +1261,7 @@
   top: 30% !important;
   left: 100% !important;
 }
-.game-html .group_user .status_raise svg {
+.game-html .group_user .status_raise .chip {
   -webkit-box-shadow: 0px 1px 15px 3px rgba(116, 94, 240, 0.3529411765);
   box-shadow: 0px 1px 15px 3px rgba(116, 94, 240, 0.3529411765);
 }
@@ -1381,7 +1276,7 @@
     #5e65ff 130.8%
   );
 }
-.game-html .group_user .status_call svg {
+.game-html .group_user .status_call .chip {
   -webkit-box-shadow: 0px 1px 15px 3px rgba(177, 180, 255, 0.3333333333);
   box-shadow: 0px 1px 15px 3px rgba(177, 180, 255, 0.3333333333);
 }
@@ -1398,7 +1293,7 @@
     #540000 130.8%
   );
 }
-.game-html .group_user .status_fold svg {
+.game-html .group_user .status_fold .chip {
   -webkit-box-shadow: 0px 1px 15px 3px rgba(252, 131, 9, 0.2823529412);
   box-shadow: 0px 1px 15px 3px rgba(252, 131, 9, 0.2823529412);
 }
@@ -1415,7 +1310,7 @@
     #c4ff9f 69.83%
   );
 }
-.game-html .group_user .status_all svg {
+.game-html .group_user .status_all .chip {
   -webkit-box-shadow: 0px 1px 15px 3px rgba(255, 236, 66, 0.3019607843);
   box-shadow: 0px 1px 15px 3px rgba(255, 236, 66, 0.3019607843);
 }
@@ -1449,7 +1344,7 @@
     #ff9f9f 69.83%
   );
 }
-.game-html .group_user .status_countdown svg {
+.game-html .group_user .status_countdown .chip {
   -webkit-box-shadow: 0px 1px 15px 3px rgba(255, 66, 72, 0.3019607843);
   box-shadow: 0px 1px 15px 3px rgba(255, 66, 72, 0.3019607843);
 }
@@ -1704,7 +1599,7 @@
 .game-html .status_win .content_top .title {
   position: relative;
   z-index: 1;
-  background-image: url(/images/decor_win2.svg);
+  background-image: url(/images/decor_win2..chip);
   background-size: 100%;
   padding: 12px;
 }
@@ -1720,7 +1615,7 @@
   left: -12px;
   right: -12px;
   bottom: 0;
-  background-image: url(/images/decor_win3.svg);
+  background-image: url(/images/decor_win3..chip);
   background-size: 100%;
 }
 .game-html .status_win .content {
@@ -1734,7 +1629,7 @@
   top: -8px;
   bottom: 8px;
   width: 11.5869017632%;
-  background-image: url(/images/decor_win5.png), url(/images/decor_win1.svg);
+  background-image: url(/images/decor_win5.png), url(/images/decor_win1..chip);
   background-position:
     top right,
     center;
@@ -1944,36 +1839,134 @@
   width: 40%;
   margin-top: -12%;
 }
-@media (min-width: 1801px) {
+@media (min-width: 320px) and (orientation: portrait),
+  (max-width: 1023px) and (orientation: landscape) {
   .game-html .coin_bet {
-    width: 45%;
+    -webkit-transform: scale(0.6);
+    -ms-transform: scale(0.6);
+    transform: scale(0.6);
   }
 }
 .game-html .coin_bet .number {
   position: absolute;
-  top: 74%;
-  left: 18%;
-  -webkit-transform: translateX(-100%);
-  -ms-transform: translateX(-100%);
-  transform: translateX(-100%);
-  font-size: 125%;
+  padding: 8px 4px;
+  color: #09fe05;
   font-weight: 500;
-  color: #05ff26;
+  font-size: 125%;
 }
 @media (min-width: 320px) and (orientation: portrait),
   (max-width: 1023px) and (orientation: landscape) {
   .game-html .coin_bet .number {
-    font-size: 100%;
+    left: 30%;
   }
 }
-.game-html .coin {
+.game-html .coin_bet .chip {
+  padding-top: 80%;
+  display: block;
+}
+.game-html .coin_bet li {
   position: absolute;
-  width: 20px;
-  height: 20px;
+  width: 16px;
+  height: 16px;
+}
+.game-html .coin_bet li span,
+.game-html .coin_bet li:before,
+.game-html .coin_bet li:after {
+  position: absolute;
+  display: block;
+  background-size: 100%;
   border-radius: 50%;
-  background-color: yellow;
-  border: 1px dotted #333;
-  -webkit-animation: 1s animateOpacity;
+  color: transparent;
+  width: 100%;
+  height: 100%;
+  -webkit-box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.3);
+}
+.game-html .coin_bet li:before,
+.game-html .coin_bet li:after {
+  content: '';
+}
+.game-html .coin_bet li span {
+  background-image: url(/images/chip1.png);
+}
+.game-html .coin_bet li:before {
+  top: 0;
+  left: 0;
+  -webkit-transform: translate(-50%, 50%);
+  -ms-transform: translate(-50%, 50%);
+  transform: translate(-50%, 50%);
+  background-image: url(/images/chip2.png);
+}
+.game-html .coin_bet li:after {
+  top: 0;
+  right: 0;
+  -webkit-transform: translate(50%, 30%);
+  -ms-transform: translate(50%, 30%);
+  transform: translate(50%, 30%);
+  background-image: url(/images/chip3.png);
+}
+.game-html .coin_bet li:nth-child(1) {
+  top: 50%;
+  left: 0;
+  -webkit-transform: translate(-100%, -50%);
+  -ms-transform: translate(-100%, -50%);
+  transform: translate(-100%, -50%);
+}
+.game-html .coin_bet li:nth-child(2) {
+  top: 53%;
+  left: -16px;
+  -webkit-transform: translate(-100%, -50%) rotate(46deg);
+  -ms-transform: translate(-100%, -50%) rotate(46deg);
+  transform: translate(-100%, -50%) rotate(46deg);
+}
+.game-html .coin_bet li:nth-child(3) {
+  top: 45%;
+  left: -40px;
+  -webkit-transform: translate(-100%, -50%) rotate(-46deg);
+  -ms-transform: translate(-100%, -50%) rotate(-46deg);
+  transform: translate(-100%, -50%) rotate(-46deg);
+}
+.game-html .coin_bet li:nth-child(4) {
+  top: 66%;
+  left: -55px;
+  -webkit-transform: translate(-100%, -50%) rotate(-180deg);
+  -ms-transform: translate(-100%, -50%) rotate(-180deg);
+  transform: translate(-100%, -50%) rotate(-180deg);
+}
+.game-html .coin_bet li:nth-child(5) {
+  top: 66%;
+  left: -36px;
+  -webkit-transform: translate(-100%, -50%) rotate(-90deg);
+  -ms-transform: translate(-100%, -50%) rotate(-90deg);
+  transform: translate(-100%, -50%) rotate(-90deg);
+}
+.game-html .coin_bet li:nth-child(6) {
+  left: -85px;
+  -webkit-transform: translate(-100%, -50%) rotate(5deg);
+  -ms-transform: translate(-100%, -50%) rotate(5deg);
+  transform: translate(100%, -50%) rotate(11deg);
+  top: 69%;
+}
+.game-html .coin_bet li:nth-child(7) {
+  top: 88%;
+  left: 0;
+  -webkit-transform: translate(-100%, -50%) rotate(-180deg);
+  -ms-transform: translate(-100%, -50%) rotate(-180deg);
+  transform: translate(-100%, -50%) rotate(-180deg);
+}
+.game-html .coin_bet li:nth-child(8) {
+  top: 36%;
+  left: -3px;
+  -webkit-transform: translate(-100%, -50%) rotate(46deg);
+  -ms-transform: translate(-100%, -50%) rotate(46deg);
+  transform: translate(-100%, -50%) rotate(46deg);
+}
+.game-html .coin_bet li:nth-child(9) {
+  top: 21px;
+  left: -58px;
+  -webkit-transform: translate(-100%, -50%);
+  -ms-transform: translate(-100%, -50%);
+  transform: translate(-100%, -50%);
 }
 @-webkit-keyframes animateOpacity {
   from {
@@ -1990,6 +1983,140 @@
   }
   to {
     opacity: 0;
+  }
+}
+.game-html .wallet {
+  position: absolute;
+  width: 100%;
+  top: 0;
+  -webkit-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  transform: rotate(180deg);
+  height: 10px;
+}
+@media (min-width: 320px) and (orientation: portrait),
+  (max-width: 1023px) and (orientation: landscape) {
+  .game-html .wallet {
+    -webkit-transform: scale(0.5) rotate(180deg);
+    -ms-transform: scale(0.5) rotate(180deg);
+    transform: scale(0.5) rotate(180deg);
+  }
+}
+@media (min-width: 1024px), ((min-width: 768px) and (orientation: portrait)) {
+  .game-html .wallet {
+    height: 40px;
+  }
+}
+.game-html .wallet .icon {
+  width: 100%;
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #0066ff;
+  color: #fff;
+  position: relative;
+  z-index: 101;
+}
+.game-html .wallet .coin {
+  position: absolute;
+  top: var(--coin-from-x, 24px);
+  left: var(--coin-from-y, 24px);
+  z-index: 100;
+  opacity: 0;
+}
+.game-html .wallet .coin::after {
+  content: '';
+  display: block;
+  background-image: url(/images/chip1.png);
+  background-size: 100%;
+  border-radius: 50%;
+  opacity: 0;
+  width: 16px;
+  height: 16px;
+}
+.game-html .wallet .coin--animated,
+.game-html .wallet .coin--animated::after {
+  -webkit-animation-delay: var(--coin-delay, 0s);
+  animation-delay: var(--coin-delay, 0s);
+  -webkit-animation-duration: var(--coin-duration, 1.5s);
+  animation-duration: var(--coin-duration, 1.5s);
+  -webkit-animation-direction: normal;
+  animation-direction: normal;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+  -webkit-animation-play-state: running;
+  animation-play-state: running;
+  /* -webkit-animation-iteration-count: infinite;
+  animation-iteration-count: infinite; */
+}
+.game-html .wallet .coin--animated {
+  -webkit-animation-name: coin-x-axis;
+  animation-name: coin-x-axis;
+  -webkit-animation-timing-function: ease-in;
+  animation-timing-function: ease-in;
+}
+.game-html .wallet .coin--animated::after {
+  -webkit-animation-name: coin-y-axis-and-flip;
+  animation-name: coin-y-axis-and-flip;
+  -webkit-animation-timing-function: ease-out;
+  animation-timing-function: ease-out;
+}
+@-webkit-keyframes coin-x-axis {
+  30% {
+    opacity: 1;
+  }
+  70% {
+    opacity: 1;
+  }
+  to {
+    left: calc(var(--coin-to-x) * 1.5);
+  }
+}
+@keyframes coin-x-axis {
+  30% {
+    opacity: 1;
+  }
+  70% {
+    opacity: 1;
+  }
+  to {
+    left: calc(var(--coin-to-x) * 1.5);
+  }
+}
+@-webkit-keyframes coin-y-axis-and-flip {
+  30% {
+    opacity: 1;
+  }
+  70% {
+    opacity: 1;
+  }
+  to {
+    -webkit-transform: translateY(calc(var(--coin-to-y) * 1.5))
+      rotate3d(1, 1, 1, 1080deg);
+    transform: translateY(calc(var(--coin-to-y) * 1.5))
+      rotate3d(1, 1, 1, 1080deg);
+  }
+}
+@keyframes coin-y-axis-and-flip {
+  30% {
+    opacity: 1;
+  }
+  70% {
+    opacity: 1;
+  }
+  to {
+    -webkit-transform: translateY(calc(var(--coin-to-y) * 1.5))
+      rotate3d(1, 1, 1, 1080deg);
+    transform: translateY(calc(var(--coin-to-y) * 1.5))
+      rotate3d(1, 1, 1, 1080deg);
   }
 }
 .game-html .group_chat {
@@ -2714,6 +2841,7 @@
   (max-width: 1023px) and (orientation: landscape) {
   .game-html .group_tool .group_left .group_user .wrap .info_user {
     margin-top: 0;
+    padding-left: 60px;
   }
 }
 @media (min-width: 320px) and (orientation: portrait),
@@ -3048,9 +3176,9 @@
 .game-html .group_tool .coin_bet {
   top: auto;
   bottom: 100%;
-  -webkit-transform: translate(150%, -50%);
-  -ms-transform: translate(150%, -50%);
-  transform: translate(150%, -50%);
+  -webkit-transform: translate(215%, -50%);
+  -ms-transform: translate(215%, -50%);
+  transform: translate(215%, -50%);
 }
 @media (min-width: 320px) and (orientation: portrait),
   (max-width: 1023px) and (orientation: landscape) {
@@ -3059,9 +3187,26 @@
     bottom: 0;
     left: 0;
     right: auto;
-    -webkit-transform: translate(-64%, 4%);
-    -ms-transform: translate(-64%, 4%);
-    transform: translate(-64%, 4%);
+    -webkit-transform: translate(0%, 4%) scale(0.6);
+    -ms-transform: translate(0%, 4%) scale(0.6);
+    transform: translate(0%, 4%) scale(0.6);
+  }
+}
+@media (min-width: 1024px), ((min-width: 768px) and (orientation: portrait)) {
+  .game-html .group_tool .wallet {
+    -webkit-transform: rotate(57deg);
+    -ms-transform: rotate(57deg);
+    transform: rotate(57deg);
+    height: 150px;
+    top: -41%;
+  }
+}
+@media (min-width: 320px) and (orientation: portrait),
+  (max-width: 1023px) and (orientation: landscape) {
+  .game-html .group_tool .wallet .chip {
+    -webkit-transform: translate(40px, 100%);
+    -ms-transform: translate(40px, 100%);
+    transform: translate(40px, 100%);
   }
 }
 .game-html .avatar {
@@ -3364,7 +3509,7 @@
     background-position: center;
     background-repeat: no-repeat;
     padding: 1.1111111111% 6.25% 0 6.25%;
-    background-size: auto 85%;
+    background-size: auto 100%;
     background-position: top center;
     bottom: 0;
   }

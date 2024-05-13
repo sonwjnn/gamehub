@@ -7,6 +7,7 @@ import { ThemeProvider } from '@/providers/theme-provider'
 import type { Metadata } from 'next'
 
 import './globals.css'
+import '@/styles/custom.css'
 import '@/styles/bootstrap.css'
 
 import { SessionProvider } from 'next-auth/react'

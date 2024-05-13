@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { Card } from './card'
 import { cn } from '@/lib/utils'
-import { HighlightCard, Match, PokerActions } from '@/types'
+import { HighlightCard, Match } from '@/types'
 import { formatChipsAmount } from '@/utils/formatting'
 import sounds from '@/utils/contants/sound'
 import { useAudio } from 'react-use'
@@ -156,7 +156,7 @@ export const Board = ({ match, highlightCards }: BoardProps) => {
               })}
 
               {isTurn && (
-                <div ref={turnCardRef} className="py-[0.9%] px-[1.75%]">
+                <div ref={turnCardRef} className="py-[0.9%] px-[1.75%] grow-0">
                   <div
                     className={cn(
                       'item flipped',
@@ -164,7 +164,13 @@ export const Board = ({ match, highlightCards }: BoardProps) => {
                       hasTurnHighlight && 'status_active'
                     )}
                   >
-                    <div className="pocker">
+                    <div
+                      className={cn(
+                        'pocker',
+                        hasTurnHighlight &&
+                          'before:!-top-[6%] before:!-bottom-[6%] before:!-left-[12%] before:!-right-[12%] before:!bg-transparent'
+                      )}
+                    >
                       <Card
                         imageUrl={`/images/pocker/${board[3].rank.toLowerCase()}_${board[3].suit.toLowerCase()}.png`}
                         value={10}
@@ -174,7 +180,7 @@ export const Board = ({ match, highlightCards }: BoardProps) => {
                 </div>
               )}
               {isRiver && (
-                <div ref={riverCardRef} className="py-[0.9%] px-[1.75%]">
+                <div ref={riverCardRef} className="py-[0.9%] px-[1.75%] grow-0">
                   <div
                     className={cn(
                       'item flipped',
@@ -182,7 +188,13 @@ export const Board = ({ match, highlightCards }: BoardProps) => {
                       hasRiverHighlight && 'status_active'
                     )}
                   >
-                    <div className="pocker">
+                    <div
+                      className={cn(
+                        'pocker',
+                        hasRiverHighlight &&
+                          'before:!-top-[6%] before:!-bottom-[6%] before:!-left-[12%] before:!-right-[12%] before:!bg-transparent'
+                      )}
+                    >
                       <Card
                         imageUrl={`/images/pocker/${board[4].rank.toLowerCase()}_${board[4].suit.toLowerCase()}.png`}
                         value={10}

@@ -2,11 +2,8 @@
 
 import { EmojiPicker } from '@/components/emoji-picker'
 import { Form, FormControl, FormField, FormItem } from '@/components/ui/form'
-import { Input } from '@/components/ui/input'
-// import { useModal } from "@/store/use-modal-store";
 import { zodResolver } from '@hookform/resolvers/zod'
 import axios from 'axios'
-import { Plus } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import qs from 'query-string'
 import { useForm } from 'react-hook-form'
@@ -28,7 +25,6 @@ const formSchema = z.object({
 })
 
 export const ChatInput = ({ apiUrl, query, name, type }: ChatInputProps) => {
-  // const { onOpen } = useModal();
   const user = useCurrentUser()
 
   const router = useRouter()
@@ -39,9 +35,6 @@ export const ChatInput = ({ apiUrl, query, name, type }: ChatInputProps) => {
       content: '',
     },
   })
-  // if (!currentUser) {
-  //   return null;
-  // }
 
   const isLoading = form.formState.isSubmitting
 
@@ -99,7 +92,7 @@ export const ChatInput = ({ apiUrl, query, name, type }: ChatInputProps) => {
 
                   <div
                     className="absolute right-0 inset-y-0 w-[60px] flex items-center justify-center hover:bg-black/50 rounded-br-md"
-                    onClick={() => form.handleSubmit(onSubmit)()}
+                    onClick={() => form.handleSubmit(onSubmit)}
                   >
                     <span className="icon sz-24">
                       <i className="icon-send"></i>

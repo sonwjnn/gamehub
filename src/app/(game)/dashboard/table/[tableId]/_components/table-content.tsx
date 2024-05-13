@@ -42,7 +42,10 @@ export const TableContent = ({ tableId }: TableContentProps) => {
   const [players, setPlayers] = useState<PlayerWithUser[]>([])
   const [isShuffle, setShuffle] = useState(false)
   const [isChipsAnimation, setChipsAnimation] = useState(false)
-  const [highlightCards, setHighlightCards] = useState<HighlightCard>()
+  const [highlightCards, setHighlightCards] = useState<HighlightCard>({
+    name: '',
+    cards: [],
+  })
 
   const tableRef = useRef<HTMLDivElement | null>(null)
   const wrapperRef = useRef<HTMLDivElement | null>(null)
@@ -220,6 +223,7 @@ export const TableContent = ({ tableId }: TableContentProps) => {
   useEffect(() => {
     if (socket) {
       let timerMatchId: NodeJS.Timeout | null = null
+      let timerHighlightId: NodeJS.Timeout | null = null
 
       window.addEventListener('unload', removePlayer)
       window.addEventListener('close', removePlayer)
@@ -237,7 +241,7 @@ export const TableContent = ({ tableId }: TableContentProps) => {
         }) => {
           setMatch(null)
           setParticipants([])
-          setHighlightCards(undefined)
+          setHighlightCards({ name: '', cards: [] })
           setHandVisible(false)
 
           if (match) {
@@ -350,8 +354,14 @@ export const TableContent = ({ tableId }: TableContentProps) => {
 
       socket.on(
         PokerActions.HIGHLIGHT_CARDS,
-        (highlightCards: HighlightCard) => {
-          setHighlightCards(highlightCards)
+        (highlightCardsData: HighlightCard) => {
+          if (highlightCardsData) {
+            if (highlightCardsData.name !== highlightCards.name) {
+              timerHighlightId = setTimeout(() => {
+                setHighlightCards(highlightCardsData)
+              }, 1500)
+            }
+          }
         }
       )
 
@@ -366,6 +376,10 @@ export const TableContent = ({ tableId }: TableContentProps) => {
 
           if (timerMatchId) {
             clearTimeout(timerMatchId)
+          }
+
+          if (timerHighlightId) {
+            clearTimeout(timerHighlightId)
           }
         }
       }

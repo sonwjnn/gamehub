@@ -14,6 +14,7 @@ import { useEffect, useState } from 'react'
 import { formatChipsAmount } from '@/utils/formatting'
 import { CoinBet } from '@/components/coin-bet'
 import { getGenderFromImageUrl, playSound } from '@/utils/sound'
+import { CoinAnimate } from '@/components/coin-animate'
 
 interface OtherPlayerProps {
   type?: 'fold' | 'active' | 'default'
@@ -34,6 +35,7 @@ export const OtherPlayer = ({
   const [imageUrlFirst, setImageUrlFirst] = useState('')
   const [imageUrlSecond, setImageUrlSecond] = useState('')
   const [counter, setCounter] = useState(12)
+  const [isBet, setIsBet] = useState(false)
 
   const gender = getGenderFromImageUrl(player?.user?.image || '')
   const currentParticipant = participants.find(
@@ -111,6 +113,22 @@ export const OtherPlayer = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentParticipant?.lastAction])
 
+  useEffect(() => {
+    let timer: NodeJS.Timeout | null = null
+    if (currentBet) {
+      setIsBet(true)
+      timer = setTimeout(() => {
+        setIsBet(false)
+      }, 2000)
+    }
+
+    return () => {
+      if (timer) {
+        clearTimeout(timer)
+      }
+    }
+  }, [currentBet])
+
   return (
     <div
       className={cn(
@@ -141,6 +159,8 @@ export const OtherPlayer = ({
       <div className="wrap">
         <div className="flex flex-midle">
           <div className="left">
+            {isBet && <CoinAnimate />}
+
             <div className="avatar sz-36">
               <div className="images">
                 <div className="imgDrop ratio_1_1">

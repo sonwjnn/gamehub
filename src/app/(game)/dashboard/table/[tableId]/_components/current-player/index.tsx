@@ -24,6 +24,7 @@ import { getGenderFromImageUrl, playSound } from '@/utils/sound'
 import { useAudio } from 'react-use'
 import { useModal } from '@/store/use-modal-store'
 import { ReviewStars } from './review-stars'
+import { CoinAnimate } from '@/components/coin-animate'
 
 interface CurrentPlayerProps {
   isShowdown?: boolean
@@ -57,6 +58,7 @@ export const CurrentPlayer = ({
     src: sounds.soundCountdown,
     autoPlay: false,
   })
+  const [isBet, setIsBet] = useState(false)
 
   const gender = getGenderFromImageUrl(player?.user?.image || '')
   const currentParticipant = participants.find(
@@ -70,6 +72,13 @@ export const CurrentPlayer = ({
   const isTurn = !isFolded && player?.isTurn
   const isShowdown = match?.isShowdown
   const isUnfoldedParticipant = currentParticipant?.isFolded ? false : true
+
+  const canKick =
+    (player && player?.stack <= 0 && isHaveWinner) ||
+    (player &&
+      match?.minBet &&
+      player?.stack + match?.minBet - match.table.ante < 0 &&
+      isHaveWinner)
 
   const isWaiting = match && !match?.table.isHandOver && !currentParticipant
 
@@ -218,7 +227,7 @@ export const CurrentPlayer = ({
   useEffect(() => {
     let timer: NodeJS.Timeout | null = null
 
-    if (player && player?.stack <= 0 && isHaveWinner) {
+    if (canKick) {
       timer = setTimeout(() => {
         removePlayer()
       }, 5000)
@@ -229,7 +238,23 @@ export const CurrentPlayer = ({
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentStack, isHaveWinner])
+  }, [canKick])
+
+  useEffect(() => {
+    let timer: NodeJS.Timeout | null = null
+    if (currentBet) {
+      setIsBet(true)
+      timer = setTimeout(() => {
+        setIsBet(false)
+      }, 2000)
+    }
+
+    return () => {
+      if (timer) {
+        clearTimeout(timer)
+      }
+    }
+  }, [currentBet])
 
   const fold = () => {
     if (socket) {
@@ -242,7 +267,6 @@ export const CurrentPlayer = ({
   }
 
   const hasFirstHighlight = highlightCards?.cards.some(item => {
-    if (!item) return false
     return (
       item.rank === currentParticipant?.cardOne?.rank &&
       item.suit === currentParticipant?.cardOne?.suit
@@ -250,7 +274,6 @@ export const CurrentPlayer = ({
   })
 
   const hasSecondHighlight = highlightCards?.cards.some(item => {
-    if (!item) return false
     return (
       item.rank === currentParticipant?.cardTwo?.rank &&
       item.suit === currentParticipant?.cardTwo?.suit
@@ -309,6 +332,7 @@ export const CurrentPlayer = ({
           <div className="wrap">
             <div className="flex flex-midle">
               <div className="left">
+                {isBet && <CoinAnimate />}
                 <div className="avatar sz-36">
                   <div className="images">
                     <div className="imgDrop ratio_1_1">
