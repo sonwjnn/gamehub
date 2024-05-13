@@ -1,8 +1,21 @@
+'use client'
+
+import sound from '@/utils/contants/sound'
+import { useEffect } from 'react'
+import { useAudio } from 'react-use'
+
 type CoinAnimateProps = {}
 
 export const CoinAnimate = ({}: CoinAnimateProps) => {
+  const [audio, _, controls] = useAudio({ src: sound.soundCoin })
+
+  useEffect(() => {
+    controls.play()
+  }, [controls])
+
   return (
     <div className="wallet">
+      {audio}
       <div
         className="coin coin--animated"
         style={
