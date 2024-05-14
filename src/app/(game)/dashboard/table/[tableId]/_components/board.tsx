@@ -111,6 +111,9 @@ export const Board = ({ match, highlightCards }: BoardProps) => {
     )
   })
 
+  const hasHighLight =
+    highlightCards && highlightCards.name && highlightCards.cards.length > 0
+
   return (
     <div className="group_midle">
       {audio}
@@ -131,7 +134,7 @@ export const Board = ({ match, highlightCards }: BoardProps) => {
           {board && board?.length && (
             <>
               {board?.slice(0, 3).map((card, index) => {
-                const hasHighlight = highlightCards?.cards.find(
+                const hasFlopHighlight = highlightCards?.cards.some(
                   highlightCard =>
                     highlightCard.rank === card.rank &&
                     highlightCard.suit === card.suit
@@ -142,10 +145,17 @@ export const Board = ({ match, highlightCards }: BoardProps) => {
                     className={cn(
                       'item flipped',
                       hiddenClass,
-                      hasHighlight && 'status_active'
+                      hasFlopHighlight && 'status_active'
                     )}
                   >
-                    <div className="pocker">
+                    <div
+                      className={cn(
+                        'pocker',
+                        hasHighLight &&
+                          !hasFlopHighlight &&
+                          'relative before:!inset-0 before:!bg-black/60'
+                      )}
+                    >
                       <Card
                         imageUrl={`/images/pocker/${card.rank.toLowerCase()}_${card.suit.toLowerCase()}.png`}
                         value={10}
@@ -167,6 +177,9 @@ export const Board = ({ match, highlightCards }: BoardProps) => {
                     <div
                       className={cn(
                         'pocker',
+                        hasHighLight &&
+                          !hasTurnHighlight &&
+                          'before:!inset-0 before:!bg-black/60',
                         hasTurnHighlight &&
                           'before:!-top-[6%] before:!-bottom-[6%] before:!-left-[12%] before:!-right-[12%] before:!bg-transparent'
                       )}
@@ -191,6 +204,9 @@ export const Board = ({ match, highlightCards }: BoardProps) => {
                     <div
                       className={cn(
                         'pocker',
+                        hasHighLight &&
+                          !hasRiverHighlight &&
+                          'before:!inset-0 before:!bg-black/60',
                         hasRiverHighlight &&
                           'before:!-top-[6%] before:!-bottom-[6%] before:!-left-[12%] before:!-right-[12%] before:!bg-transparent'
                       )}

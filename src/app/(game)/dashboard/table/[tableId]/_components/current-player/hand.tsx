@@ -20,6 +20,8 @@ export const Hand = ({
   hasFirstHighlight,
   hasSecondHighlight,
 }: HandProps) => {
+  const hasHighlight = hasFirstHighlight || hasSecondHighlight
+
   return (
     <div className="pocker_list current_poker_list">
       <div
@@ -30,7 +32,14 @@ export const Hand = ({
           hasFirstHighlight && 'status_active'
         )}
       >
-        <div className="pocker ">
+        <div
+          className={cn(
+            'pocker ',
+            hasHighlight &&
+              !hasFirstHighlight &&
+              'before:!inset-0 before:!bg-black/60'
+          )}
+        >
           <Card imageUrl={imageUrlFirst} value={10} />
         </div>
       </div>
@@ -42,7 +51,14 @@ export const Hand = ({
           hasSecondHighlight && 'status_active'
         )}
       >
-        <div className="pocker ">
+        <div
+          className={cn(
+            'pocker ',
+            hasHighlight &&
+              !hasSecondHighlight &&
+              'before:!inset-0 before:!bg-black/60'
+          )}
+        >
           <Card imageUrl={imageUrlSecond} value={10} />
         </div>
       </div>

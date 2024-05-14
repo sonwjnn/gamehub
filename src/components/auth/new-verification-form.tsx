@@ -58,7 +58,6 @@ export const NewVerificationForm = ({}: NewVerificationFormProps) => {
       type="verify-email"
     >
       <div className="flex w-full items-center justify-center">
-        {!success && !error && <Spinner size="icon" />}
         <FormSuccess message={success} />
         {!success && <FormError message={error} />}
       </div>
