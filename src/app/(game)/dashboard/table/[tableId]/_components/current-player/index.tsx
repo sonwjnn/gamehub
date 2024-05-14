@@ -81,10 +81,9 @@ export const CurrentPlayer = ({
       isHaveWinner)
 
   const isWaiting = match && !match?.table.isHandOver && !currentParticipant
-
   const currentStack = player?.stack || 0
-
   const currentBet = currentParticipant?.bet || 0
+  const currentPot = match?.pot || 0
 
   useEffect(() => {
     if (
@@ -315,7 +314,7 @@ export const CurrentPlayer = ({
             isShowdown && isUnfoldedParticipant && 'target_showdown'
           )}
         >
-          <CoinBet bet={currentBet} />
+          <CoinBet bet={currentBet} pot={currentPot} />
 
           {match?.smallBlindId === player?.id && (
             <div className="slind slind_small">

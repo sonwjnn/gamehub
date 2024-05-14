@@ -23,6 +23,7 @@ import { toast } from 'sonner'
 import { useSession } from 'next-auth/react'
 import { X } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { formatChipsAmount } from '@/utils/formatting'
 
 const formSchema = z.object({
   buyIn: z.number().min(0, {
@@ -97,9 +98,11 @@ export const BuyInModal = () => {
           </div>
           <div className="modal_body">
             <div className="mt-4 gap-x-2 text-center  text  mb-3 ">
-              Min : {table?.minBuyIn}
+              Min : {formatChipsAmount(table?.minBuyIn || 0)}
               <br />
-              Max : {table?.maxBuyIn}
+              Max : {formatChipsAmount(table?.maxBuyIn || 0)}
+              <br />
+              Ante: {formatChipsAmount(table?.ante || 0)}
             </div>
 
             <Form {...form}>

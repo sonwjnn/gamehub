@@ -1,9 +1,7 @@
 'use client'
 
 import { useCurrentUser } from '@/hooks/use-current-user'
-import { cn } from '@/lib/utils'
 import { useSocket } from '@/providers/socket-provider'
-import playerApi from '@/services/api/modules/player-api'
 import { useModal } from '@/store/use-modal-store'
 import { Table } from '@/types'
 import { formatChipsAmount } from '@/utils/formatting'
@@ -82,6 +80,15 @@ export const Item = ({ table }: ItemProps) => {
             Buy-in:
           </dt>
           <dd>{formatChipsAmount(table.minBuyIn)}$</dd>
+        </dl>
+        <dl>
+          <dt className="flex flex-midle gap-8">
+            <span className="icon sz-12 icon-color-white">
+              <i className="icon-dolar"></i>
+            </span>
+            Ante:
+          </dt>
+          <dd>{formatChipsAmount(table.ante)}$</dd>
         </dl>
         <dl>
           <dt className="flex flex-midle gap-8">
