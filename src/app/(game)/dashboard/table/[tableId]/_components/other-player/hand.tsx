@@ -17,38 +17,57 @@ export const Hand = ({
   isHidden = true,
   isWinner = false,
 }: HandProps) => {
-  const [isFlipped, setFlipped] = useState(false)
+  const [showdownDelay, setShowdownDelay] = useState(false)
 
   useEffect(() => {
-    if (isHidden) setFlipped(false)
-  }, [isHidden])
+    if (isShowdown) {
+      const timeoutId = setTimeout(() => {
+        setShowdownDelay(true)
+      }, 1000)
+
+      return () => clearTimeout(timeoutId)
+    } else {
+      setShowdownDelay(false)
+    }
+  }, [isShowdown])
 
   return (
     <div
-      className={cn('pocker_list other_poker_list', isShowdown && 'has_active')}
+      className={cn(
+        'pocker_list other_poker_list',
+        showdownDelay && 'has_active'
+      )}
     >
       <div
         className={cn(
           'item flipped opacity-0  pointer-events-none',
           isWinner && 'status_active',
-          !isShowdown && 'hide',
+          !showdownDelay && 'hide',
           !isHidden && 'opacity-100 pointer-events-auto'
         )}
       >
         <div className="pocker">
-          <Card imageUrl={imageUrlFirst} isShowdown={isShowdown} value={10} />
+          <Card
+            imageUrl={imageUrlFirst}
+            isShowdown={showdownDelay}
+            value={10}
+          />
         </div>
       </div>
       <div
         className={cn(
           'item flipped opacity-0  pointer-events-none',
           isWinner && 'status_active',
-          !isShowdown && 'hide',
+          !showdownDelay && 'hide',
           !isHidden && 'opacity-100 pointer-events-auto'
         )}
       >
         <div className="pocker">
-          <Card imageUrl={imageUrlSecond} isShowdown={isShowdown} value={10} />
+          <Card
+            imageUrl={imageUrlSecond}
+            isShowdown={showdownDelay}
+            value={10}
+          />
         </div>
       </div>
     </div>

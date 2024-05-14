@@ -5,13 +5,30 @@ import { useIsWinner } from '@/store/use-is-winner'
 import { Match } from '@/types'
 import { formattedStringToCards } from '@/utils/formatting'
 import Image from 'next/image'
+import { useEffect } from 'react'
 
 interface WinnerModalProps {
   match: Match | null
 }
 
 export const WinnerModal = ({ match }: WinnerModalProps) => {
-  const { isWinner } = useIsWinner()
+  const { isWinner, setIsWinner } = useIsWinner()
+
+  useEffect(() => {
+    let timeoutId: NodeJS.Timeout | null = null
+
+    if (isWinner) {
+      timeoutId = setTimeout(() => {
+        setIsWinner(false)
+      }, 5000)
+    }
+
+    return () => {
+      if (timeoutId) {
+        clearTimeout(timeoutId)
+      }
+    }
+  }, [isWinner, setIsWinner])
 
   if (!match || !match.winMessages || !match.winMessages.length) return null
 

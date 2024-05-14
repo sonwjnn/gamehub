@@ -59,6 +59,7 @@ export const CurrentPlayer = ({
     autoPlay: false,
   })
   const [isBet, setIsBet] = useState(false)
+  const [winnerDelay, setWinnerDelay] = useState(false)
 
   const gender = getGenderFromImageUrl(player?.user?.image || '')
   const currentParticipant = participants.find(
@@ -169,43 +170,67 @@ export const CurrentPlayer = ({
 
   useEffect(() => {
     if (match) {
-      match.callAmount > match.minBet
-        ? setBet(match.callAmount)
-        : match.pot > 0
-          ? setBet(match.minRaise)
-          : setBet(match.minBet)
+      if (match.callAmount > match.minBet) {
+        setBet(match.callAmount)
+      } else if (match.pot > 0) {
+        setBet(match.minRaise)
+      } else {
+        setBet(match.minBet)
+      }
     }
   }, [match])
 
   useEffect(() => {
-    if (isHaveWinner && !isWinner && currentParticipant) {
-      new Audio(sounds.soundLose).play()
+    if (isWinner) {
+      const timeoutId = setTimeout(() => {
+        setWinnerDelay(true)
+      }, 2000)
+
+      return () => clearTimeout(timeoutId)
+    } else {
+      setWinnerDelay(false)
     }
-  }, [isWinner, isHaveWinner, currentParticipant])
+  }, [isWinner])
 
   useEffect(() => {
-    let timeoutId: NodeJS.Timeout | null = null
+    if (currentParticipant && !currentParticipant.isFolded && isHaveWinner) {
+      const timeoutId = setTimeout(() => {
+        if (isWinner) {
+          new Audio(sounds.soundWin).play()
+        } else {
+          new Audio(sounds.soundLose).play()
+        }
+        setIsWinner(true)
+      }, 2000)
 
-    if (isUnfoldedParticipant) {
-      if (isWinner) {
-        new Audio(sounds.soundWin).play()
-      }
-      setIsWinner(true)
-
-      timeoutId = setTimeout(() => {
-        setIsWinner(false)
-      }, 5000)
-    } else {
-      setIsWinner(false)
-    }
-
-    return () => {
-      if (timeoutId) {
-        clearTimeout(timeoutId)
-      }
+      return () => clearTimeout(timeoutId)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isWinner])
+  }, [isHaveWinner])
+
+  useEffect(() => {
+    if (canKick) {
+      const timer = setTimeout(() => {
+        removePlayer()
+      }, 4000)
+
+      return () => clearTimeout(timer)
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [canKick])
+
+  useEffect(() => {
+    if (currentBet) {
+      setIsBet(true)
+      const timer = setTimeout(() => {
+        setIsBet(false)
+      }, 2000)
+      return () => clearTimeout(timer)
+    } else {
+      setIsBet(false)
+    }
+  }, [currentBet])
 
   const removePlayer = async () => {
     try {
@@ -224,38 +249,6 @@ export const CurrentPlayer = ({
       console.log(error)
     }
   }
-
-  useEffect(() => {
-    let timer: NodeJS.Timeout | null = null
-
-    if (canKick) {
-      timer = setTimeout(() => {
-        removePlayer()
-      }, 5000)
-    }
-    return () => {
-      if (timer) {
-        clearTimeout(timer)
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [canKick])
-
-  useEffect(() => {
-    let timer: NodeJS.Timeout | null = null
-    if (currentBet) {
-      setIsBet(true)
-      timer = setTimeout(() => {
-        setIsBet(false)
-      }, 2000)
-    }
-
-    return () => {
-      if (timer) {
-        clearTimeout(timer)
-      }
-    }
-  }, [currentBet])
 
   const fold = () => {
     if (socket) {
@@ -285,9 +278,9 @@ export const CurrentPlayer = ({
     <div
       className={cn(
         'group_tool flex flex-space gap-12 before:border-none',
-        (isTurn || (isWinner && isHaveWinner)) && 'user_active',
+        (isTurn || (winnerDelay && isHaveWinner)) && 'user_active',
         isFolded && 'user_fold',
-        !isWinner && isHaveWinner && currentParticipant && 'is-lose'
+        !winnerDelay && isHaveWinner && currentParticipant && 'is-lose'
       )}
     >
       {countdownSrcAudio}
