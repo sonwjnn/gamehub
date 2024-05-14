@@ -153,7 +153,7 @@ export const Board = ({ match, highlightCards }: BoardProps) => {
                         'pocker',
                         hasHighLight &&
                           !hasFlopHighlight &&
-                          'relative before:!inset-0 before:!bg-black/60'
+                          'before:!inset-0 before:!bg-black/30'
                       )}
                     >
                       <Card
@@ -179,7 +179,7 @@ export const Board = ({ match, highlightCards }: BoardProps) => {
                         'pocker',
                         hasHighLight &&
                           !hasTurnHighlight &&
-                          'before:!inset-0 before:!bg-black/60',
+                          'before:!inset-0 before:!bg-black/30',
                         hasTurnHighlight &&
                           'before:!-top-[6%] before:!-bottom-[6%] before:!-left-[12%] before:!-right-[12%] before:!bg-transparent'
                       )}
@@ -206,7 +206,7 @@ export const Board = ({ match, highlightCards }: BoardProps) => {
                         'pocker',
                         hasHighLight &&
                           !hasRiverHighlight &&
-                          'before:!inset-0 before:!bg-black/60',
+                          'before:!inset-0 before:!bg-black/30',
                         hasRiverHighlight &&
                           'before:!-top-[6%] before:!-bottom-[6%] before:!-left-[12%] before:!-right-[12%] before:!bg-transparent'
                       )}

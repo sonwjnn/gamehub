@@ -143,15 +143,11 @@ export const CurrentPlayerAction = ({
   const canHalf = half >= currentCallAmount && currentStack >= half
   const canFull = currentPot >= currentCallAmount && currentStack >= currentPot
 
-  const min =
-    match?.minBet && match?.minBet >= currentCallAmount
-      ? match?.minBet
-      : currentCallAmount
+  const min = match?.minBet ? Math.max(match?.minBet, currentCallAmount) : 0
 
-  const max =
-    match?.table?.maxBuyIn && currentStack < match?.table?.maxBuyIn
-      ? currentStack
-      : match?.table?.maxBuyIn
+  const max = match?.table?.maxBuyIn
+    ? Math.min(match?.table?.maxBuyIn, currentStack)
+    : 0
 
   return (
     <>
@@ -189,7 +185,7 @@ export const CurrentPlayerAction = ({
         >
           {/* <span className="number number_left">4 </span> */}
           <span className="number">4</span>
-          <BetSlider min={min} bet={bet} setBet={setBet} max={max!} />
+          <BetSlider bet={bet} setBet={setBet} min={min} max={max} />
         </button>
         <button
           className="item disabled:pointer-events-none disabled:opacity-50"

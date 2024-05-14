@@ -186,8 +186,10 @@ export const CurrentPlayer = ({
   useEffect(() => {
     let timeoutId: NodeJS.Timeout | null = null
 
-    if (currentParticipant?.lastAction === PokerActions.WINNER && isWinner) {
-      new Audio(sounds.soundWin).play()
+    if (isUnfoldedParticipant) {
+      if (isWinner) {
+        new Audio(sounds.soundWin).play()
+      }
       setIsWinner(true)
 
       timeoutId = setTimeout(() => {

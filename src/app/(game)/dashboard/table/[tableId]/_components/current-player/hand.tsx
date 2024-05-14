@@ -37,7 +37,7 @@ export const Hand = ({
             'pocker ',
             hasHighlight &&
               !hasFirstHighlight &&
-              'before:!inset-0 before:!bg-black/60'
+              'before:!inset-0 before:!bg-black/30'
           )}
         >
           <Card imageUrl={imageUrlFirst} value={10} />
@@ -56,7 +56,7 @@ export const Hand = ({
             'pocker ',
             hasHighlight &&
               !hasSecondHighlight &&
-              'before:!inset-0 before:!bg-black/60'
+              'before:!inset-0 before:!bg-black/30'
           )}
         >
           <Card imageUrl={imageUrlSecond} value={10} />
