@@ -22,6 +22,8 @@ export const BetSlider = ({ bet, setBet, min, max }: BetSliderProps) => {
   const plusValue = (prev: number) =>
     prev + max * 0.2 <= max ? prev + max * 0.2 : max
 
+  const trueBet = bet > max ? max : bet < min ? min : bet
+
   return (
     <div className="flex items-center flex-col gap-x-4 w-full px-3 mt-auto">
       <div className="flex justify-between items-center w-[80%] ">
@@ -31,7 +33,7 @@ export const BetSlider = ({ bet, setBet, min, max }: BetSliderProps) => {
           onClick={() => setBet(minusValue)}
         />
         <div className="font-semibold text-xl">
-          {formatChipsAmount(bet || 0)}
+          {formatChipsAmount(trueBet || 0)}
         </div>
         <Plus
           className="text-yellow-400"
@@ -42,7 +44,7 @@ export const BetSlider = ({ bet, setBet, min, max }: BetSliderProps) => {
       <div className="flex w-full min-w-[200px] items-center">
         <Slider
           minValue={min}
-          value={bet > max ? max : bet < min ? min : bet}
+          value={trueBet}
           step={max * 0.01}
           maxValue={max}
           onChange={handleBetChange}
