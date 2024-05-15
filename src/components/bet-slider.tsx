@@ -13,12 +13,6 @@ interface BetSliderProps {
 }
 
 export const BetSlider = ({ bet, setBet, min, max }: BetSliderProps) => {
-  useEffect(() => {
-    if (bet < min) setBet(min)
-    else if (bet > max) setBet(max)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [bet, min, max])
-
   const handleBetChange = (bet: number): void => {
     setBet(bet)
   }
@@ -48,7 +42,7 @@ export const BetSlider = ({ bet, setBet, min, max }: BetSliderProps) => {
       <div className="flex w-full min-w-[200px] items-center">
         <Slider
           minValue={min}
-          value={bet}
+          value={bet > max ? max : bet < min ? min : bet}
           step={max * 0.01}
           maxValue={max}
           onChange={handleBetChange}

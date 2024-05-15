@@ -102,7 +102,8 @@ export const CurrentPlayerAction = ({
 
   const onRaise = () => {
     playSound(PokerActions.RAISE, gender)
-    raise(bet + currentBet, PokerActions.RAISE)
+    const trueBetValue = bet > max ? max : bet < min ? min : bet
+    raise(trueBetValue + currentBet, PokerActions.RAISE)
   }
 
   const onQuarter = () => {
