@@ -1,9 +1,9 @@
 'use client'
 
 import { Slider } from '@/components/ui/slider'
-import { Match } from '@/types'
 import { formatChipsAmount } from '@/utils/formatting'
 import { Minus, Plus } from 'lucide-react'
+import { useEffect } from 'react'
 
 interface BetSliderProps {
   bet: number
@@ -13,6 +13,12 @@ interface BetSliderProps {
 }
 
 export const BetSlider = ({ bet, setBet, min, max }: BetSliderProps) => {
+  useEffect(() => {
+    if (bet < min) setBet(min)
+    if (bet > max) setBet(max)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [bet])
+
   const handleBetChange = (bet: number): void => {
     setBet(bet)
   }
