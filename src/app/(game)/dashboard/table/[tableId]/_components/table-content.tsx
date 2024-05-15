@@ -25,6 +25,7 @@ import { WinnerModal } from './winner-modal'
 import playerApi from '@/services/api/modules/player-api'
 import { useRouter } from 'next/navigation'
 import { ShowdownModal } from './showdown-modal'
+import { Button } from '@/components/ui/button'
 
 interface TableContentProps {
   tableId: string
@@ -159,66 +160,43 @@ export const TableContent = ({ tableId }: TableContentProps) => {
   // useGSAP(() => {
   //   const table = tableRef.current
   //   const chips = wrapperRef.current?.getElementsByClassName('coin_bet')
-  //   const coins = [] as HTMLDivElement[]
+  //   const groupNumber = document.querySelector('.group_number')
 
-  //   if (!table || !chips) return
+  //   if (!table || !chips || !groupNumber) return
 
-  //   const bounds = table.getBoundingClientRect()
+  //   const bounds = groupNumber.getBoundingClientRect()
 
-  //   const offsetX = 0
-  //   const offsetY = 0
-  //   const positions = Array.from(chips).map(playerPosition)
-  //   const originalPositions = [] as { left: number; top: number }[]
+  //   const targetX = bounds.left + bounds.width / 2
+  //   const targetY = bounds.top + bounds.height / 2
 
-  //   function playerPosition(element: Element) {
-  //     const rect = element.getBoundingClientRect()
+  //   const originalPositions = Array.from(chips).map(c => {
+  //     const originalLeft = c.getBoundingClientRect().left - window.scrollX
+  //     const originalTop = c.getBoundingClientRect().top - window.scrollY
+
   //     return {
-  //       x: rect.left - bounds.left + offsetX,
-  //       y: rect.top - bounds.top + offsetY,
-  //     }
-  //   }
-
-  //   Array.from(chips).forEach(el => {
-  //     const wrapper = document.createElement('div')
-  //     const img = document.createElement('img')
-  //     img.src = 'images/avt/1.jpg'
-  //     img.width = 50
-  //     img.height = 50
-  //     wrapper.appendChild(img)
-  //     wrapper.className = 'coin_wrapper'
-  //     wrapper.style.position = 'fixed'
-  //     wrapper.style.top = `${el.getBoundingClientRect().top}px`
-  //     wrapper.style.left = `${el.getBoundingClientRect().left}px`
-  //     wrapper.style.zIndex = '2'
-  //     document.body.appendChild(wrapper)
-  //     coins.push(wrapper)
-  //   })
-
-  //   coins.forEach(function (c: HTMLDivElement) {
-  //     const originalLeft = c.offsetLeft - window.scrollX
-  //     const originalTop = c.offsetTop - window.scrollY
-
-  //     originalPositions.push({
   //       left: originalLeft,
   //       top: originalTop,
-  //     })
+  //     }
   //   })
 
-  //   gsap.to('.coin_wrapper', {
-  //     duration: 0.01,
-  //     left: (window.innerWidth - 25) / 2,
-  //     top: (window.innerHeight - 25) / 2,
-  //     startAt: function (index: number) {
-  //       return originalPositions[index]
-  //     },
-  //     onComplete() {
-  //       const elements = document.querySelectorAll('.coin_wrapper')
-  //       elements.forEach(element => {
-  //         element?.parentNode?.removeChild(element)
+  //   if (isChipsAnimation) {
+  //     Array.from(chips).forEach((chip, index) => {
+  //       const originalPosition = originalPositions[index]
+  //       const deltaX = targetX - originalPosition.left
+  //       const deltaY = targetY - originalPosition.top
+
+  //       gsap.to(chip, {
+  //         duration: 0.5,
+  //         x: deltaX,
+  //         y: deltaY,
+  //         ease: 'power3.out',
+  //         onComplete() {
+  //           // Hoàn tất hoạt ảnh
+  //         },
   //       })
-  //     },
-  //   })
-  // }, [])
+  //     })
+  //   }
+  // }, [isChipsAnimation])
 
   useEffect(() => {
     if (socket) {
@@ -469,7 +447,7 @@ export const TableContent = ({ tableId }: TableContentProps) => {
           )}
         /> */}
         {/* <Button onClick={() => setShuffle(true)}>Shuffle</Button> */}
-        {/* <Button onClick={() => setChipsAnimation(true)}>Shuffle</Button> */}
+        {/* <Button onClick={() => setChipsAnimation(true)}>chips</Button> */}
       </div>
       <div className="wrapper w-full" ref={wrapperRef}>
         <Image
