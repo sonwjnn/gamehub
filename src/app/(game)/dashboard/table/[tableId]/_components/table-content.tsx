@@ -225,6 +225,9 @@ export const TableContent = ({ tableId }: TableContentProps) => {
           if (match) {
             setShuffle(true)
 
+            const delay =
+              players.length <= 2 ? 3000 : players.length * 1000 + 1000
+
             timerMatchId = setTimeout(() => {
               setMatch(match)
               setParticipants(match.participants)
@@ -236,7 +239,7 @@ export const TableContent = ({ tableId }: TableContentProps) => {
                   return { ...item, isTurn: false }
                 })
               )
-            }, 2000)
+            }, delay)
           }
         }
       )
