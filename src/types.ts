@@ -132,6 +132,7 @@ export type Match = {
   isTurn: boolean
   isRiver: boolean
   isShowdown: boolean
+  isAllAllIn: boolean
   winners?: Player[]
   bigBlindId?: string
   bigBlind?: Player

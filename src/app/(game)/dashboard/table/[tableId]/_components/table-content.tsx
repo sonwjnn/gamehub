@@ -48,6 +48,7 @@ export const TableContent = ({ tableId }: TableContentProps) => {
     cards: [],
   })
 
+  const matchRef = useRef<Match | null>(null)
   const tableRef = useRef<HTMLDivElement | null>(null)
   const wrapperRef = useRef<HTMLDivElement | null>(null)
   const dealerRef = useRef<HTMLDivElement | null>(null)
@@ -157,46 +158,50 @@ export const TableContent = ({ tableId }: TableContentProps) => {
     }
   }, [isShuffle])
 
-  // useGSAP(() => {
-  //   const table = tableRef.current
-  //   const chips = wrapperRef.current?.getElementsByClassName('coin_bet')
-  //   const groupNumber = document.querySelector('.group_number')
+  useGSAP(() => {
+    const table = tableRef.current
+    const chips = wrapperRef.current?.getElementsByClassName('coin_bet')
+    const groupNumber = document.querySelector('.group_number')
 
-  //   if (!table || !chips || !groupNumber) return
+    if (!table || !chips || !groupNumber) return
 
-  //   const bounds = groupNumber.getBoundingClientRect()
+    const bounds = groupNumber.getBoundingClientRect()
 
-  //   const targetX = bounds.left + bounds.width / 2
-  //   const targetY = bounds.top + bounds.height / 2
+    const targetX = bounds.left + bounds.width / 2
+    const targetY = bounds.top + bounds.height / 2
 
-  //   const originalPositions = Array.from(chips).map(c => {
-  //     const originalLeft = c.getBoundingClientRect().left - window.scrollX
-  //     const originalTop = c.getBoundingClientRect().top - window.scrollY
+    const originalPositions = Array.from(chips).map(c => {
+      const originalLeft = c.getBoundingClientRect().left - window.scrollX
+      const originalTop = c.getBoundingClientRect().top - window.scrollY
 
-  //     return {
-  //       left: originalLeft,
-  //       top: originalTop,
-  //     }
-  //   })
+      return {
+        left: originalLeft,
+        top: originalTop,
+      }
+    })
 
-  //   if (isChipsAnimation) {
-  //     Array.from(chips).forEach((chip, index) => {
-  //       const originalPosition = originalPositions[index]
-  //       const deltaX = targetX - originalPosition.left
-  //       const deltaY = targetY - originalPosition.top
+    if (isChipsAnimation) {
+      Array.from(chips).forEach((chip, index) => {
+        const originalPosition = originalPositions[index]
+        const deltaX = targetX - originalPosition.left
+        const deltaY = targetY - originalPosition.top
 
-  //       gsap.to(chip, {
-  //         duration: 0.5,
-  //         x: deltaX,
-  //         y: deltaY,
-  //         ease: 'power3.out',
-  //         onComplete() {
-  //           // Hoàn tất hoạt ảnh
-  //         },
-  //       })
-  //     })
-  //   }
-  // }, [isChipsAnimation])
+        gsap.to(chip, {
+          duration: 0.5,
+          x: deltaX,
+          y: deltaY,
+          ease: 'power3.out',
+          onComplete() {
+            // Hoàn tất hoạt ảnh
+          },
+        })
+      })
+    }
+  }, [isChipsAnimation])
+
+  useEffect(() => {
+    matchRef.current = match
+  }, [match])
 
   useEffect(() => {
     if (socket) {
@@ -253,10 +258,16 @@ export const TableContent = ({ tableId }: TableContentProps) => {
 
       socket.on(
         PokerActions.JOIN_TABLE,
-        ({ tableId, player }: { tableId: string; player: PlayerWithUser }) => {
+        async ({
+          tableId,
+          player,
+        }: {
+          tableId: string
+          player: PlayerWithUser
+        }) => {
           setPlayers(prev => [...prev, player])
 
-          socket.emit(PokerActions.TABLE_JOINED, {
+          await socket.emit(PokerActions.TABLE_JOINED, {
             tableId,
             player,
           })
@@ -277,7 +288,7 @@ export const TableContent = ({ tableId }: TableContentProps) => {
 
       socket.on(
         PokerActions.CHANGE_TURN,
-        ({ match, playerId }: { match: Match; playerId: string }) => {
+        ({ matchData, playerId }: { matchData: Match; playerId: string }) => {
           setPlayers(prev =>
             prev.map(item => {
               if (item.id === playerId) {
@@ -287,22 +298,138 @@ export const TableContent = ({ tableId }: TableContentProps) => {
             })
           )
 
-          if (match) {
-            if (match.isShowdown) {
+          if (matchData) {
+            if (matchData.isShowdown && !matchData.isAllAllIn) {
               setMatch({
-                ...match,
+                ...matchData,
                 isShowdown: true,
                 winners: [],
                 winMessages: [],
               })
 
               setTimeout(() => {
-                setMatch(match)
-                setParticipants(match.participants)
+                setMatch(matchData)
+                setParticipants(matchData.participants)
               }, 3000)
-            } else {
-              setMatch(match)
-              setParticipants(match.participants)
+            }
+
+            if (matchData.isShowdown && matchData.isAllAllIn) {
+              const isFlop = matchRef.current?.isFlop
+              const isTurn = matchRef.current?.isTurn
+              const isRiver = matchRef.current?.isRiver
+
+              if (!isFlop && !isTurn && !isRiver) {
+                setMatch({
+                  ...matchData,
+                  isShowdown: true,
+                  winners: [],
+                  winMessages: [],
+                  isFlop: false,
+                  isTurn: false,
+                  isRiver: false,
+                })
+
+                setTimeout(() => {
+                  setMatch({
+                    ...matchData,
+                    winners: [],
+                    winMessages: [],
+                    isFlop: true,
+                    isTurn: false,
+                    isRiver: false,
+                  })
+                }, 3000)
+
+                setTimeout(() => {
+                  setMatch({
+                    ...matchData,
+                    winners: [],
+                    winMessages: [],
+                    isTurn: true,
+                    isRiver: false,
+                  })
+                }, 5000)
+
+                setTimeout(() => {
+                  setMatch({
+                    ...matchData,
+                    winners: [],
+                    winMessages: [],
+                    isRiver: true,
+                  })
+                }, 6000)
+
+                setTimeout(() => {
+                  setMatch(matchData)
+                }, 8000)
+              }
+
+              if (isFlop && !isTurn && !isRiver) {
+                setMatch({
+                  ...matchData,
+                  isShowdown: true,
+                  winners: [],
+                  winMessages: [],
+                  isFlop: true,
+                  isTurn: false,
+                  isRiver: false,
+                })
+
+                setTimeout(() => {
+                  setMatch({
+                    ...matchData,
+                    winners: [],
+                    winMessages: [],
+                    isTurn: true,
+                    isRiver: false,
+                  })
+                }, 3000)
+
+                setTimeout(() => {
+                  setMatch({
+                    ...matchData,
+                    winners: [],
+                    winMessages: [],
+                    isRiver: true,
+                  })
+                }, 4000)
+
+                setTimeout(() => {
+                  setMatch(matchData)
+                }, 5000)
+              }
+
+              if (isFlop && isTurn && !isRiver) {
+                setMatch({
+                  ...matchData,
+                  isShowdown: true,
+                  winners: [],
+                  winMessages: [],
+                  isRiver: false,
+                })
+
+                setTimeout(() => {
+                  setMatch({
+                    ...matchData,
+                    winners: [],
+                    winMessages: [],
+                    isRiver: true,
+                  })
+                }, 3000)
+
+                setTimeout(() => {
+                  setMatch(matchData)
+                }, 4000)
+              }
+
+              if (isFlop && isTurn && isRiver) {
+                setMatch(matchData)
+              }
+            }
+
+            if (!matchData.isShowdown && !matchData.isAllAllIn) {
+              setMatch(matchData)
+              setParticipants(matchData.participants)
             }
           }
         }
@@ -337,11 +464,9 @@ export const TableContent = ({ tableId }: TableContentProps) => {
         PokerActions.HIGHLIGHT_CARDS,
         (highlightCardsData: HighlightCard) => {
           if (highlightCardsData) {
-            if (highlightCardsData.name !== highlightCards.name) {
-              timerHighlightId = setTimeout(() => {
-                setHighlightCards(highlightCardsData)
-              }, 1500)
-            }
+            timerHighlightId = setTimeout(() => {
+              setHighlightCards(highlightCardsData)
+            }, 1500)
           }
         }
       )
