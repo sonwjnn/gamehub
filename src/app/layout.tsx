@@ -37,7 +37,6 @@ export default async function RootLayout({
             storageKey="game-theme"
           >
             <SocketProvider>
-              <ModalProvider />
               <QueryProvider>{children}</QueryProvider>
             </SocketProvider>
           </ThemeProvider>

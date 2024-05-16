@@ -528,6 +528,14 @@
   text-align: center;
   min-width: 100px;
 }
+@media (min-width: 320px) and (orientation: portrait),
+  (max-width: 1023px) and (orientation: landscape) {
+  .page-sub .loading .wrap {
+    -webkit-transform: scale(0.5);
+    -ms-transform: scale(0.5);
+    transform: scale(0.5);
+  }
+}
 .page-sub .loading-text {
   position: absolute;
   top: 50%;
@@ -538,6 +546,12 @@
   transform: translateY(-50%);
   font-weight: 500;
   font-size: 112.5%;
+}
+@media (min-width: 320px) and (orientation: portrait),
+  (max-width: 1023px) and (orientation: landscape) {
+  .page-sub .loading-text {
+    font-size: 100%;
+  }
 }
 .page-sub .loading-content {
   width: 100%;

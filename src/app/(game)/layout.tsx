@@ -8,6 +8,7 @@ import '@/styles/css/game.css'
 
 import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
+import { ModalProvider } from '@/providers/modal-provider'
 
 interface GameLayoutProps {
   children: React.ReactNode
@@ -28,6 +29,7 @@ const GameLayout = ({ children }: GameLayoutProps) => {
           </main>
         </div>
       </div>
+      <ModalProvider />
     </div>
   )
 }

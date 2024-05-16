@@ -309,17 +309,25 @@ export const CurrentPlayer = ({
             isShowdown && isUnfoldedParticipant && 'target_showdown'
           )}
         >
-          <CoinBet bet={currentBet} pot={currentPot} />
+          <CoinBet
+            className="coin_bet_current"
+            bet={currentBet}
+            pot={currentPot}
+          />
 
           {match?.smallBlindId === player?.id && (
             <div className="slind slind_small">
-              <span>SB</span>
+              <div className="box">
+                <span>SB</span>
+              </div>
             </div>
           )}
 
           {match?.bigBlindId === player?.id && (
             <div className="slind slind_big">
-              <span>BB</span>
+              <div className="box">
+                <span>BB</span>
+              </div>
             </div>
           )}
 
@@ -399,7 +407,7 @@ export const CurrentPlayer = ({
                         fillOpacity="0"
                       />
                     </svg>
-                    <span>풀</span>
+                    <span className="sub">풀</span>
                   </div>
                 </div>
               )}
@@ -418,7 +426,9 @@ export const CurrentPlayer = ({
                         fill-opacity="0"
                       ></circle>
                     </svg>
-                    <span>{counter - 2 >= 0 ? counter - 2 : 0}s</span>
+                    <span className="sub">
+                      {counter - 2 >= 0 ? counter - 2 : 0}s
+                    </span>
                   </div>
                 </div>
               )}

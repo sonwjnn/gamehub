@@ -26,6 +26,7 @@ import playerApi from '@/services/api/modules/player-api'
 import { useRouter } from 'next/navigation'
 import { ShowdownModal } from './showdown-modal'
 import { Button } from '@/components/ui/button'
+import { useModal } from '@/store/use-modal-store'
 
 interface TableContentProps {
   tableId: string
@@ -35,6 +36,7 @@ export const TableContent = ({ tableId }: TableContentProps) => {
   const user = useCurrentUser()
   const router = useRouter()
   const { socket } = useSocket()
+  const { onClose } = useModal()
 
   const [messages, setMessages] = useState([] as string[])
   const [match, setMatch] = useState<Match | null>(null)
@@ -160,17 +162,29 @@ export const TableContent = ({ tableId }: TableContentProps) => {
 
   useGSAP(() => {
     const table = tableRef.current
-    const chips = wrapperRef.current?.getElementsByClassName('coin_bet')
+    const chips = wrapperRef.current?.getElementsByClassName('coin_bet_current')
+    const other_chips =
+      wrapperRef.current?.getElementsByClassName('coin_bet_other')
     const groupNumber = document.querySelector('.group_number')
 
-    if (!table || !chips || !groupNumber) return
+    if (!table || !chips || !groupNumber || !other_chips) return
 
     const bounds = groupNumber.getBoundingClientRect()
 
-    const targetX = bounds.left + bounds.width / 2
-    const targetY = bounds.top + bounds.height / 2
+    const targetX = bounds.left + bounds.width
+    const targetY = bounds.top - bounds.height * 3
 
     const originalPositions = Array.from(chips).map(c => {
+      const originalLeft = c.getBoundingClientRect().left - window.scrollX
+      const originalTop = c.getBoundingClientRect().top - window.scrollY
+
+      return {
+        left: originalLeft,
+        top: originalTop,
+      }
+    })
+
+    const other_originalPositions = Array.from(other_chips).map(c => {
       const originalLeft = c.getBoundingClientRect().left - window.scrollX
       const originalTop = c.getBoundingClientRect().top - window.scrollY
 
@@ -183,10 +197,26 @@ export const TableContent = ({ tableId }: TableContentProps) => {
     if (isChipsAnimation) {
       Array.from(chips).forEach((chip, index) => {
         const originalPosition = originalPositions[index]
-        const deltaX = targetX - originalPosition.left
+        const deltaX = originalPosition.left / 2.5
         const deltaY = targetY - originalPosition.top
 
         gsap.to(chip, {
+          duration: 0.5,
+          x: deltaX,
+          y: deltaY,
+          ease: 'power3.out',
+          onComplete() {
+            // Hoàn tất hoạt ảnh
+          },
+        })
+      })
+
+      Array.from(other_chips).forEach((other_chips, index) => {
+        const other_originalPosition = other_originalPositions[index]
+        const deltaX = targetX - other_originalPosition.left
+        const deltaY = targetY - other_originalPosition.top
+
+        gsap.to(other_chips, {
           duration: 0.5,
           x: deltaX,
           y: deltaY,
@@ -226,6 +256,7 @@ export const TableContent = ({ tableId }: TableContentProps) => {
           setParticipants([])
           setHighlightCards({ name: '', cards: [] })
           setHandVisible(false)
+          onClose()
 
           if (match) {
             setShuffle(true)
@@ -428,8 +459,27 @@ export const TableContent = ({ tableId }: TableContentProps) => {
             }
 
             if (!matchData.isShowdown && !matchData.isAllAllIn) {
-              setMatch(matchData)
-              setParticipants(matchData.participants)
+              const isFlop = matchRef.current?.isFlop
+              const isTurn = matchRef.current?.isTurn
+              const isRiver = matchRef.current?.isRiver
+
+              const isNextRound =
+                isFlop !== matchData.isFlop ||
+                isTurn !== matchData.isTurn ||
+                isRiver !== matchData.isRiver
+
+              if (isNextRound) {
+                setChipsAnimation(true)
+
+                setTimeout(() => {
+                  setChipsAnimation(false)
+                  setMatch(matchData)
+                  setParticipants(matchData.participants)
+                }, 1000)
+              } else {
+                setMatch(matchData)
+                setParticipants(matchData.participants)
+              }
             }
           }
         }
@@ -577,9 +627,9 @@ export const TableContent = ({ tableId }: TableContentProps) => {
         {/* <Button onClick={() => setShuffle(true)}>Shuffle</Button> */}
         {/* <Button onClick={() => setChipsAnimation(true)}>chips</Button> */}
       </div>
-      <div className="wrapper w-full" ref={wrapperRef}>
+      <div className="wrapper md:w-full w-[86%] h-full" ref={wrapperRef}>
         <Image
-          src="/images/table_v2.png"
+          src="/images/table_v3.png"
           alt="tableImage"
           width={0}
           height={0}

@@ -1,11 +1,13 @@
+import { cn } from '@/lib/utils'
 import { formatChipsAmount } from '@/utils/formatting'
 
 type CoinBetProps = {
   pot: number
   bet: number
+  className?: string
 }
 
-export const CoinBet = ({ bet, pot }: CoinBetProps) => {
+export const CoinBet = ({ bet, pot, className }: CoinBetProps) => {
   if (!bet) return null
 
   const getNumberToRender = (): number => {
@@ -23,7 +25,7 @@ export const CoinBet = ({ bet, pot }: CoinBetProps) => {
   const numberToRender = getNumberToRender()
 
   return (
-    <div className="coin_bet">
+    <div className={cn('coin_bet', className)}>
       <span className="number">{formatChipsAmount(bet)}$</span>
       <ul className="chip">
         {Array.from({ length: numberToRender }).map((_, index) => (

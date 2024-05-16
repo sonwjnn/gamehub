@@ -6686,7 +6686,7 @@ a[href='none'] {
 }
 .modal_dialog {
   margin: auto;
-  height: calc(100% - 60px);
+  height: calc(100% - 24px);
   width: 100%;
   padding: 0 16px;
   display: -webkit-box;
@@ -6843,7 +6843,7 @@ a[href='none'] {
 }
 .viewed_stars {
   color: #555;
-  font-size: 24px;
+  font-size: 18px;
 }
 @media ((min-width: 768px) and (orientation:portrait)), (min-width: 1024px) {
   .viewed_stars {
