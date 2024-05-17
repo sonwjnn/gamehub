@@ -11,7 +11,7 @@ import {
 import { useModal } from '@/store/use-modal-store'
 import { useRouter } from 'next/navigation'
 import { Input } from '@/components/ui/input'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useCurrentUser } from '@/hooks/use-current-user'
 
 import * as z from 'zod'
@@ -46,9 +46,15 @@ export const BuyInModal = () => {
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      buyIn: table?.minBuyIn || 1000,
+      buyIn: 1000,
     },
   })
+
+  useEffect(() => {
+    if (table) {
+      form.setValue('buyIn', table.minBuyIn)
+    }
+  }, [form, table])
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {

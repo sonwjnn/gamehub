@@ -285,11 +285,9 @@ export const CurrentPlayer = ({
     >
       {countdownSrcAudio}
       <div className="group_flush">
-        {highlightCards?.name && (
-          <div className="ttl">
-            <span>{highlightCards?.name}</span>
-          </div>
-        )}
+        <div className="ttl">
+          <span>{highlightCards?.name || ''}</span>
+        </div>
 
         <div className="content flex flex-midle gap-8 flex-center">
           <div className="star" onClick={() => onOpen('feeling')}>
