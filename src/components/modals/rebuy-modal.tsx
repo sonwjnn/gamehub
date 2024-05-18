@@ -32,6 +32,9 @@ import { toast } from 'sonner'
 import { useSession } from 'next-auth/react'
 import tableApi from '@/services/api/modules/table-api'
 import { Table } from '@/types'
+import { X } from 'lucide-react'
+import { cn } from '@/lib/utils'
+import { formatChipsAmount } from '@/utils/formatting'
 
 const formSchema = z.object({
   buyIn: z.number().min(0, {
@@ -55,9 +58,15 @@ export const RebuyModal = () => {
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      buyIn: table?.minBuyIn || 0,
+      buyIn: 1000,
     },
   })
+
+  useEffect(() => {
+    if (table) {
+      form.setValue('buyIn', table.minBuyIn)
+    }
+  }, [form, table])
 
   useEffect(() => {
     const getTableById = async () => {
@@ -98,6 +107,7 @@ export const RebuyModal = () => {
         id: currentPlayer.id,
         tableId: tableData.id,
         buyIn: values.buyIn,
+        userId: user.id,
       })
 
       if (error) {
@@ -108,110 +118,110 @@ export const RebuyModal = () => {
 
       onClose()
       update()
-      router.push(`/dashboard/table/${tableData.id}`)
     } catch {
     } finally {
       setIsLoading(false)
     }
   }
 
-  const onCancel = async () => {
-    try {
-      if (!user || !tableData) return
+  // const onCancel = async () => {
+  //   try {
+  //     if (!user || !tableData) return
 
-      const currentPlayerOfTable = tableData.players.find(
-        item => item.userId === user.id
-      )
+  //     const currentPlayerOfTable = tableData.players.find(
+  //       item => item.userId === user.id
+  //     )
 
-      if (!currentPlayerOfTable) return
+  //     if (!currentPlayerOfTable) return
 
-      setIsLoading(true)
+  //     setIsLoading(true)
 
-      const { response, error } = await playerApi.removePlayer({
-        tableId: tableData.id,
-        playerId: currentPlayerOfTable.id,
-      })
+  //     const { response, error } = await playerApi.removePlayer({
+  //       tableId: tableData.id,
+  //       playerId: currentPlayerOfTable.id,
+  //     })
 
-      if (error) {
-        toast.error('Error when leaving table')
-        return
-      }
+  //     if (error) {
+  //       toast.error('Error when leaving table')
+  //       return
+  //     }
 
-      onClose()
-      update()
-      router.push('/dashboard/table')
-    } catch {
-    } finally {
-      setIsLoading(false)
-    }
-  }
+  //     onClose()
+  //     update()
+  //   } catch {
+  //   } finally {
+  //     setIsLoading(false)
+  //   }
+  // }
 
   const handleClose = async () => {
     form.reset()
-    await onCancel()
   }
 
   return (
-    <Dialog open={isModalOpen} onOpenChange={handleClose}>
-      <DialogContent className="overflow-hidden  p-0 ">
-        <DialogHeader className="px-[24px] pt-[32px]">
-          <DialogTitle className="text-center text-2xl font-bold">
-            Buy In
-          </DialogTitle>
-        </DialogHeader>
-        <div className="p-6 w-full">
-          <div className="mt-2 gap-x-2 text-center  text-zinc-300">
-            You have to buy in to play. Please buy in to join this table.
+    <div className={cn('modal', isModalOpen && 'show')}>
+      <div className="modal_dark modal_close" onClick={handleClose}></div>
+      <div className="modal_dialog sz-lg">
+        <div className="modal_content  max-w-[500px] flex-grow-0">
+          <div className="modal_head">
+            REBUY
+            <div className="btn_close modal_close" onClick={handleClose}>
+              <X className="mt-3" size={24} />
+            </div>
           </div>
+          <div className="modal_body">
+            <div className="mt-4 gap-x-2 text-center  text  mb-3 ">
+              Min : {formatChipsAmount(table?.minBuyIn || 0)}
+              <br />
+              Max : {formatChipsAmount(table?.maxBuyIn || 0)}
+              <br />
+              Ante: {formatChipsAmount(table?.ante || 0)}
+            </div>
 
-          <div className="mt-4 gap-x-2 text-center  text-zinc-300 font-bold text-xl mb-3">
-            Min buy in: {table?.minBuyIn}
-            <br />
-            Max buy in: {table?.maxBuyIn}
-          </div>
+            <Form {...form}>
+              <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="space-y-8"
+              >
+                <FormField
+                  control={form.control}
+                  name="buyIn"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <div className="input-group">
+                          <div className="wrap-input flex justify-center">
+                            <Input
+                              className="w-auto py-0 "
+                              type="number"
+                              min={table?.minBuyIn}
+                              max={table?.maxBuyIn}
+                              disabled={isLoading}
+                              {...field}
+                              onChange={e =>
+                                field.onChange(+e.target.value || ' ')
+                              }
+                            />
+                          </div>
+                        </div>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-              <FormField
-                control={form.control}
-                name="buyIn"
-                render={({ field }) => (
-                  <FormItem>
-                    {/* <FormLabel className="uppercase text-xs font-bold text-zinc-500">
-                    Invite code
-                  </FormLabel> */}
-                    <FormControl>
-                      <Input
-                        className="text-center text-base text-white font-semibold"
-                        type="number"
-                        min={table?.minBuyIn}
-                        max={table?.maxBuyIn}
-                        disabled={isLoading}
-                        {...field}
-                        onChange={e => field.onChange(+e.target.value)}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <DialogFooter className="px-[24px] py-[16px] ">
-                <Button variant="ghost" onClick={onCancel}>
-                  Cancel
-                </Button>
                 <Button
                   variant="primary"
                   className="mx-auto"
                   disabled={isLoading}
                 >
-                  Rebuy into game
+                  Rebuy
                 </Button>
-              </DialogFooter>
-            </form>
-          </Form>
+              </form>
+            </Form>
+          </div>
         </div>
-      </DialogContent>
-    </Dialog>
+      </div>
+    </div>
   )
 }

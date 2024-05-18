@@ -70,16 +70,14 @@ export const BuyInModal = () => {
         buyIn: values.buyIn,
       })
 
-      if (error) {
-        console.log(error)
-        toast.error('Error joining table')
+      if (error instanceof Error) {
+        toast.error(error.message)
         return
       }
 
-      router.push(`/dashboard/table/${table.id}`)
-
       update()
       onClose()
+      router.refresh()
     } catch {
     } finally {
       setIsLoading(false)

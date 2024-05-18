@@ -6,6 +6,7 @@ import { Match, Participant, Player, PokerActions, RaiseType } from '@/types'
 import React, { useState } from 'react'
 import { formatChipsAmount } from '@/utils/formatting'
 import { getGenderFromImageUrl, playSound } from '@/utils/sound'
+import { useIsFolded } from '@/store/use-is-folded'
 
 interface CurrentPlayerActionProps {
   tableId: string
@@ -29,6 +30,7 @@ export const CurrentPlayerAction = ({
   setIsAction,
 }: CurrentPlayerActionProps) => {
   const { socket } = useSocket()
+  const { setIsFolded } = useIsFolded()
 
   const [isProcessing, setIsProcessing] = useState(false)
 
@@ -43,6 +45,7 @@ export const CurrentPlayerAction = ({
         tableId,
         participantId: currentParticipant?.id,
       })
+      setIsFolded(true)
       setTimeout(() => {
         setIsProcessing(false)
         setIsAction(false)

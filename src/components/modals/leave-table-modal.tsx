@@ -68,7 +68,7 @@ export const LeaveTableModal = () => {
 
       onClose()
       update()
-      router.push('/dashboard/table')
+      router.refresh()
     })
   }
 
@@ -78,14 +78,14 @@ export const LeaveTableModal = () => {
       <div className="modal_dialog sz-lg">
         <div className="modal_content  max-w-[500px] flex-grow-0">
           <div className="modal_head">
-            LEAVE TABLE
+            GO TO VIEWER
             <div className="btn_close modal_close" onClick={onClose}>
               <X className="mt-3" size={24} />
             </div>
           </div>
           <div className="modal_body space-y-6">
             <div className="text text-center">
-              Are you sure you want to leave{' '}
+              Are you sure you want to be viewer at{' '}
               <span className="color-main">Table {table?.name}</span>?
             </div>
 

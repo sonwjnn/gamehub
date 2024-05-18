@@ -5,6 +5,8 @@ import { MobileToggle } from '@/components/mobile-toggle'
 import { SocketIndicator } from '@/components/socket-indicator'
 import { useModal } from '@/store/use-modal-store'
 import Link from 'next/link'
+import { ToggleBrightness } from '@/components/toggle-brightness'
+import { ToggleSound } from '@/components/toggle-sound'
 
 interface ActionsProps {}
 
@@ -16,6 +18,8 @@ export const Actions = ({}: ActionsProps) => {
       {/* <div className="mr-[24px]">
         <SocketIndicator />
       </div> */}
+      <ToggleSound />
+      <ToggleBrightness />
       <Link
         href="/dashboard/table"
         className="item btn_play flex flex-midle gap-8"

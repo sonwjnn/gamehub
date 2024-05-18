@@ -109,7 +109,12 @@ const playerApi = {
     }
   },
 
-  rebuy: async (data: { id: string; tableId: string; buyIn: number }) => {
+  rebuy: async (data: {
+    id: string
+    tableId: string
+    buyIn: number
+    userId: string
+  }) => {
     try {
       const response = await privateClient.post(
         playerEndpoints.rebuy(data.id),

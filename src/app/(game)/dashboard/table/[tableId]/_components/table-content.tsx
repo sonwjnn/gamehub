@@ -4,7 +4,7 @@ import Image from 'next/image'
 import { OtherPlayer } from './other-player'
 import { CurrentPlayer } from './current-player'
 import { Board } from './board'
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useMemo } from 'react'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 
@@ -19,7 +19,7 @@ import {
 import { useCurrentUser } from '@/hooks/use-current-user'
 import { useSocket } from '@/providers/socket-provider'
 
-import { LeaveTable } from './leave-table'
+import { LeaveButton } from './leave-button'
 import { cn } from '@/lib/utils'
 import { WinnerModal } from './winner-modal'
 import playerApi from '@/services/api/modules/player-api'
@@ -27,6 +27,7 @@ import { useRouter } from 'next/navigation'
 import { ShowdownModal } from './showdown-modal'
 import { Button } from '@/components/ui/button'
 import { useModal } from '@/store/use-modal-store'
+import { useIsFolded } from '@/store/use-is-folded'
 
 interface TableContentProps {
   tableId: string
@@ -37,6 +38,7 @@ export const TableContent = ({ tableId }: TableContentProps) => {
   const router = useRouter()
   const { socket } = useSocket()
   const { onClose } = useModal()
+  const { setIsFolded } = useIsFolded()
 
   const [messages, setMessages] = useState([] as string[])
   const [match, setMatch] = useState<Match | null>(null)
@@ -256,6 +258,7 @@ export const TableContent = ({ tableId }: TableContentProps) => {
           setParticipants([])
           setHighlightCards({ name: '', cards: [] })
           setHandVisible(false)
+          setIsFolded(false)
           onClose()
 
           if (match) {
@@ -501,7 +504,16 @@ export const TableContent = ({ tableId }: TableContentProps) => {
       socket.on(
         PokerActions.REBUY,
         ({ tableId, player }: { tableId: string; player: PlayerWithUser }) => {
-          setPlayers(prev => [...prev, player])
+          setPlayers(prev => {
+            const updatedPlayers = prev.map(item => {
+              if (item.id === player.id) {
+                return player
+              }
+              return item
+            })
+
+            return updatedPlayers
+          })
 
           socket.emit(PokerActions.REBOUGHT, {
             tableId,
@@ -529,6 +541,7 @@ export const TableContent = ({ tableId }: TableContentProps) => {
           socket.off(PokerActions.MATCH_STARTED)
           socket.off(PokerActions.CHANGE_TURN)
           socket.off(PokerActions.HIGHLIGHT_CARDS)
+          socket.off(PokerActions.REBUY)
 
           if (timerMatchId) {
             clearTimeout(timerMatchId)
@@ -601,31 +614,21 @@ export const TableContent = ({ tableId }: TableContentProps) => {
     ...players.slice(0, currentPlayerIndex + 1),
   ]
 
+  const currentPlayer = players.find(p => p.userId === user?.id)
+
   return (
     <>
       <div className="absolute left-0 top-0 z-10 p-[12px] flex gap-x-4">
-        {/* <InvitePlayer tableId={tableId} /> */}
-        <LeaveTable
-          tableId={tableId}
-          className={cn(
-            'hidden',
-            !(match && players.length > 1 && !match.winners?.length) && 'block'
-          )}
-        />
-        {/* <LeaveTableCheckbox
-          tableId={tableId}
-          player={players.find(p => p.userId === user?.id)}
-          match={match}
-          className={cn(
-            'opacity-0 pointer-events-none',
-            match &&
-              players.length > 1 &&
-              !match.isShowdown &&
-              'opacity-100 pointer-events-auto'
-          )}
-        /> */}
-        {/* <Button onClick={() => setShuffle(true)}>Shuffle</Button> */}
-        {/* <Button onClick={() => setChipsAnimation(true)}>chips</Button> */}
+        {!currentPlayer && (
+          <LeaveButton
+            tableId={tableId}
+            className={cn(
+              'hidden',
+              !(match && players.length > 1 && !match.winners?.length) &&
+                'block'
+            )}
+          />
+        )}
       </div>
       <div className="wrapper md:w-full w-[86%] h-full" ref={wrapperRef}>
         <Image
@@ -673,14 +676,16 @@ export const TableContent = ({ tableId }: TableContentProps) => {
             {messages[messages.length - 1]}
           </div>
         )}
-        <CurrentPlayer
-          match={match}
-          player={players.find(p => p.userId === user?.id)}
-          participants={participants}
-          isHandVisible={isHandVisible}
-          tableId={tableId}
-          highlightCards={highlightCards}
-        />
+        {currentPlayer && (
+          <CurrentPlayer
+            match={match}
+            player={currentPlayer}
+            participants={participants}
+            isHandVisible={isHandVisible}
+            tableId={tableId}
+            highlightCards={highlightCards}
+          />
+        )}
       </div>
     </>
   )

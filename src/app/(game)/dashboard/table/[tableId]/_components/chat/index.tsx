@@ -5,12 +5,14 @@ import playerApi from '@/services/api/modules/player-api'
 import tableApi from '@/services/api/modules/table-api'
 import { redirect } from 'next/navigation'
 import { Wrapper } from './wrapper'
+import { Player } from '@/types'
 
 interface ChatProps {
   tableId: string
+  player: Player
 }
 
-export const Chat = async ({ tableId }: ChatProps) => {
+export const Chat = async ({ tableId, player }: ChatProps) => {
   const user = await currentUser()
 
   if (!user) {
@@ -20,12 +22,7 @@ export const Chat = async ({ tableId }: ChatProps) => {
   // const tableId = 'clubenabu0001v38ym2r1vmm0'
   const { response: table } = await tableApi.getTableById({ tableId })
 
-  const { response: player } = await playerApi.getCurrentPlayerOfTable({
-    tableId,
-    userId: user.id,
-  })
-
-  if (!table || !player) {
+  if (!table) {
     redirect('/dashboard/table')
   }
 

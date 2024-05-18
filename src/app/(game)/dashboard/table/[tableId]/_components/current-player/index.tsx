@@ -25,6 +25,7 @@ import { useAudio } from 'react-use'
 import { useModal } from '@/store/use-modal-store'
 import { ReviewStars } from './review-stars'
 import { CoinAnimate } from '@/components/coin-animate'
+import { useIsFolded } from '@/store/use-is-folded'
 
 interface CurrentPlayerProps {
   isShowdown?: boolean
@@ -44,8 +45,11 @@ export const CurrentPlayer = ({
   tableId,
   highlightCards,
 }: CurrentPlayerProps) => {
+  console.log(player)
   const { socket } = useSocket()
   const { onOpen } = useModal()
+  const { setIsFolded } = useIsFolded()
+
   const router = useRouter()
   const { setIsWinner } = useIsWinner()
   const [imageUrlFirst, setImageUrlFirst] = useState('')
@@ -164,6 +168,7 @@ export const CurrentPlayer = ({
   useEffect(() => {
     if (counter === 0 && isTurn) {
       fold()
+      setIsFolded(true)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [counter])
