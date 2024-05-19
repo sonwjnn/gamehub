@@ -69,7 +69,7 @@ const userApi = {
       if (response && response.data) return { response: response.data }
       return { response }
     } catch (error) {
-      return { error: 'Something went wrong' }
+      return { error }
     }
   },
   newPassword: async (data: any, userId: string) => {

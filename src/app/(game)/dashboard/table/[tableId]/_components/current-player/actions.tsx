@@ -7,6 +7,8 @@ import React, { useState } from 'react'
 import { formatChipsAmount } from '@/utils/formatting'
 import { getGenderFromImageUrl, playSound } from '@/utils/sound'
 import { useIsFolded } from '@/store/use-is-folded'
+import { ActionItem } from './action-item'
+import { useKey } from 'react-use'
 
 interface CurrentPlayerActionProps {
   tableId: string
@@ -153,100 +155,114 @@ export const CurrentPlayerAction = ({
     ? Math.min(match?.table?.maxBuyIn, currentStack)
     : 0
 
+  const onFourKeyPress = () => {
+    const value = Math.min(bet + 0.25 * max, max)
+
+    setBet(value)
+  }
+
+  const onFiveKeyPress = () => {
+    const value = Math.max(bet - 0.25 * max, min)
+
+    setBet(value)
+  }
+
+  //prettier-ignore
+  useKey('4', () => {
+    if(!isTurn || isProcessing) return 
+    
+    onFourKeyPress()
+  }, {}, [onFourKeyPress])
+
+  //prettier-ignore
+  useKey('5', () => {
+    if(!isTurn || isProcessing) return 
+
+    onFiveKeyPress()
+  }, {}, [onFiveKeyPress])
+
   return (
     <>
       <div className="toolbar">
-        <button
-          className="item disabled:pointer-events-none disabled:opacity-50"
+        <ActionItem
+          shortcut="1"
+          label="쿼터"
           onClick={onQuarter}
           disabled={!isTurn || isProcessing || !canQuarter}
-        >
-          <span className="number">{1}</span>
-          <div className="value">쿼터</div>
-          <div className="view_money">{formatChipsAmount(quarter)}$</div>
-        </button>
-        <button
-          className="item disabled:pointer-events-none disabled:opacity-50"
+          amount={quarter}
+        />
+
+        <ActionItem
+          shortcut="2"
+          label="하프"
           onClick={onHalf}
           disabled={!isTurn || isProcessing || !canHalf}
-        >
-          <span className="number">{2}</span>
-          <div className="value">하프</div>
-          <div className="view_money">{formatChipsAmount(half)}$</div>
-        </button>
-        <button
-          className="item disabled:pointer-events-none disabled:opacity-50"
+          amount={half}
+        />
+
+        <ActionItem
+          shortcut="3"
+          label="풀"
           onClick={onFull}
           disabled={!isTurn || isProcessing || !canFull}
-        >
-          <span className="number">{3}</span>
-          <div className="value">풀</div>
-          <div className="view_money">{formatChipsAmount(currentPot)}$</div>
-        </button>
+          amount={currentPot}
+        />
+
         <button
           className="item disabled:pointer-events-none disabled:opacity-50"
           disabled={!isTurn || isProcessing}
         >
           {/* <span className="number number_left">4 </span> */}
-          <span className="number">4</span>
+          <span className="number number_left">4</span>
+          <span className="number">5</span>
           <BetSlider bet={bet} setBet={setBet} min={min} max={max} />
         </button>
-        <button
-          className="item disabled:pointer-events-none disabled:opacity-50"
+
+        <ActionItem
+          shortcut="6"
+          label="라이즈"
           onClick={onRaise}
           disabled={!isTurn || isProcessing}
-        >
-          <span className="number">{5}</span>
-          <div className="value">라이즈</div>
-        </button>
+        />
+
         {!canNotCall ? (
-          <button
-            className="item disabled:pointer-events-none disabled:opacity-50"
+          <ActionItem
+            shortcut="7"
+            label="콜"
             onClick={call}
             disabled={!isTurn || isProcessing || canNotCall}
-          >
-            <span className="number">{6}</span>
-            <div className="value">콜</div>
-            <div className="view_money">{formatChipsAmount(callSize)}$</div>
-          </button>
+            amount={callSize}
+          />
         ) : !canNotCheck ? (
-          <button
-            className="item disabled:pointer-events-none disabled:opacity-50"
+          <ActionItem
+            shortcut="7"
+            label="체크"
             onClick={check}
             disabled={!isTurn || isProcessing || canNotCheck}
-          >
-            {/* <span className="number number_left">4 </span> */}
-            <span className="number">6</span>
-            <div className=" value">체크</div>
-          </button>
+          />
         ) : (
-          <button
-            className="item disabled:pointer-events-none disabled:opacity-50"
+          <ActionItem
+            shortcut="7"
+            label="콜"
             onClick={call}
             disabled={!isTurn || isProcessing || canNotCall}
-          >
-            <span className="number">{6}</span>
-            <div className="value">콜</div>
-            <div className="view_money">{formatChipsAmount(callSize)}$</div>
-          </button>
+            amount={callSize}
+          />
         )}
 
-        <button
-          className="item disabled:pointer-events-none disabled:opacity-50"
+        <ActionItem
+          shortcut="8"
+          label="다이"
           onClick={fold}
           disabled={!isTurn || isProcessing}
-        >
-          <span className="number">7</span>
-          <div className="value">다이</div>
-        </button>
-        <button
-          className="item disabled:pointer-events-none disabled:opacity-50"
+        />
+
+        <ActionItem
+          shortcut="9"
+          label="올인"
           onClick={onAllIn}
           disabled={!isTurn || isProcessing}
-        >
-          <span className="number">{8}</span>
-          <div className="value">올인</div>
-        </button>
+        />
       </div>
 
       <div className="fixed right-12  bottom-9"></div>

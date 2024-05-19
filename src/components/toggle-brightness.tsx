@@ -1,6 +1,6 @@
 'use client'
 
-import { useTableBrightness } from '@/store/use-table-brightness'
+import { useBrightness } from '@/store/use-brightness'
 import { useEffect, useState } from 'react'
 import { Button } from './ui/button'
 import { Sun } from 'lucide-react'
@@ -8,29 +8,29 @@ import { Sun } from 'lucide-react'
 const BrightnessLevels = ['normal', 'dim', 'bright']
 
 export const ToggleBrightness = () => {
-  const { tableBrightness, setTableBrightness } = useTableBrightness()
+  const { brightness, setBrightness } = useBrightness()
 
-  const [brightness, setBrightness] = useState(tableBrightness)
+  const [brightnessData, setBrightnessData] = useState(brightness)
 
   const onBrightnessClick = () => {
-    const currentIndex = BrightnessLevels.indexOf(brightness)
+    const currentIndex = BrightnessLevels.indexOf(brightnessData)
     const nextIndex = (currentIndex + 1) % BrightnessLevels.length
     const newBrightness = BrightnessLevels[nextIndex] as
       | 'normal'
       | 'dim'
       | 'bright'
+    setBrightnessData(newBrightness)
     setBrightness(newBrightness)
-    setTableBrightness(newBrightness)
   }
 
   useEffect(() => {
     const brightnessLevel =
-      tableBrightness === 'dim' ? 0.7 : tableBrightness === 'normal' ? 1 : 1.5
+      brightness === 'dim' ? 0.7 : brightness === 'normal' ? 1 : 1.5
     document.documentElement.style.setProperty(
       '--brightness-level',
       brightnessLevel.toString()
     )
-  }, [tableBrightness])
+  }, [brightness])
 
   return (
     <Button onClick={onBrightnessClick}>

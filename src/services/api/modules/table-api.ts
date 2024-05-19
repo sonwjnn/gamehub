@@ -3,6 +3,7 @@ import publicClient from '@/services/api/client/private-client'
 const tableEndpoints = {
   getTableById: ({ tableId }: { tableId: string }) => `tables/${tableId}`,
   getTables: ({ page }: { page: string }) => `tables?page=${page}`,
+  switchTable: ({ tableId }: { tableId: string }) => `tables/switch/${tableId}`,
 }
 
 const tableApi = {
@@ -20,6 +21,15 @@ const tableApi = {
       const response = await publicClient.get(
         tableEndpoints.getTables({ page })
       )
+      if (response && response.data) return { response: response.data }
+      return { response }
+    } catch (error) {
+      return { error }
+    }
+  },
+  switchTable: async (data: { tableId: string }) => {
+    try {
+      const response = await publicClient.get(tableEndpoints.switchTable(data))
       if (response && response.data) return { response: response.data }
       return { response }
     } catch (error) {

@@ -17,6 +17,7 @@ import { useTransition } from 'react'
 import tableApi from '@/services/api/modules/table-api'
 import { ToggleSound } from '@/components/toggle-sound'
 import { ToggleBrightness } from '@/components/toggle-brightness'
+import ChangeTable from './change-table'
 type Props = {
   table: Table
   player: Player
@@ -108,12 +109,15 @@ export const Navbar = ({ table, player }: Props) => {
             </>
           )}
           {!player && (
-            <Button
-              variant="primary"
-              onClick={() => onOpen('buyIn', { table })}
-            >
-              Buyin
-            </Button>
+            <>
+              <Button
+                variant="primary"
+                onClick={() => onOpen('buyIn', { table })}
+              >
+                Buyin
+              </Button>
+              <ChangeTable tableId={table.id} />
+            </>
           )}
           <ToggleBrightness />
           <ToggleSound />

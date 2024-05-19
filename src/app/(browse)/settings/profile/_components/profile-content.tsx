@@ -24,9 +24,7 @@ import { useCurrentUser } from '@/hooks/use-current-user'
 import userApi from '@/services/api/modules/user-api'
 import { Button } from '@/components/ui/button'
 
-interface ProfileContentProps {}
-
-export const ProfileContent = ({}: ProfileContentProps) => {
+export const ProfileContent = () => {
   const user = useCurrentUser()
 
   const [isPending, startTransition] = useTransition()
@@ -64,10 +62,11 @@ export const ProfileContent = ({}: ProfileContentProps) => {
         user?.id as string
       )
 
-      if (error) {
-        toast.error('Something went wrong!')
+      if (error && (error as any).message) {
+        toast.error((error as any).message)
         return
       }
+
       update()
     })
   }
@@ -107,7 +106,7 @@ export const ProfileContent = ({}: ProfileContentProps) => {
                   <FormControl>
                     <div className="input-group">
                       <div className="wrap-input">
-                        <Input disabled={true} {...field} />
+                        <Input disabled={isPending} {...field} />
                         <label>User name</label>
                       </div>
                     </div>

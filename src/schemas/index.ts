@@ -8,7 +8,13 @@ export const LoginSchema = z.object({
 })
 
 export const RegisterSchema = z.object({
-  username: z.string().min(6, { message: 'Minimun 6 characters required' }),
+  username: z
+    .string()
+    .min(1, { message: 'User name is required' })
+    .max(14, { message: 'User name must be at most 11 characters' })
+    .refine(value => !value.includes(' '), {
+      message: 'User name cannot contain spaces',
+    }),
   email: z.string().email({ message: 'Email is required' }),
   password: z.string().min(6, { message: 'Minimun 6 characters required' }),
 })
@@ -18,9 +24,18 @@ export const ChatItemSchema = z.object({
 })
 
 export const UserSchema = z.object({
-  username: z.string().min(1, { message: 'User name is required' }),
+  username: z
+    .string()
+    .min(1, { message: 'User name is required' })
+    .max(14, { message: 'User name must be at most 11 characters' })
+    .refine(value => !value.includes(' '), {
+      message: 'User name cannot contain spaces',
+    }),
   email: z.string().email({ message: 'Email is required' }),
-  name: z.string().min(1, { message: 'User name is required' }),
+  name: z
+    .string()
+    .min(1, { message: 'User name is required' })
+    .max(14, { message: 'User name must be at most 11 characters' }),
   image: z.string().min(1, { message: 'User image is required' }),
 })
 
