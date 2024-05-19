@@ -295,16 +295,18 @@ export const TableContent = ({ tableId }: TableContentProps) => {
       socket.on(
         PokerActions.JOIN_TABLE,
         async ({
-          tableId,
+          tableId: tableSocketId,
           player,
         }: {
           tableId: string
           player: PlayerWithUser
         }) => {
+          if (tableSocketId !== tableId) return
+
           setPlayers(prev => [...prev, player])
 
           await socket.emit(PokerActions.TABLE_JOINED, {
-            tableId,
+            tableSocketId,
             player,
           })
         }
