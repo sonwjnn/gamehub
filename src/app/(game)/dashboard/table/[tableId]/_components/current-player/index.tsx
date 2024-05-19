@@ -64,6 +64,7 @@ export const CurrentPlayer = ({
   })
   const [isBet, setIsBet] = useState(false)
   const [winnerDelay, setWinnerDelay] = useState(false)
+  const [foldCount, setFoldCount] = useState(0)
 
   const gender = getGenderFromImageUrl(player?.user?.image || '')
   const currentParticipant = participants.find(
@@ -83,7 +84,8 @@ export const CurrentPlayer = ({
     (player &&
       match?.minBet &&
       player?.stack + match?.minBet - match.table.ante < 0 &&
-      isHaveWinner)
+      isHaveWinner) ||
+    foldCount >= 2
 
   const isWaiting = match && !match?.table.isHandOver && !currentParticipant
   const currentStack = player?.stack || 0
@@ -149,6 +151,9 @@ export const CurrentPlayer = ({
         ref.current.currentTime = 0
       }
     }
+    if (isAction) {
+      setFoldCount(0)
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAction, counter, ref])
 
@@ -169,6 +174,7 @@ export const CurrentPlayer = ({
     if (counter === 0 && isTurn) {
       fold()
       setIsFolded(true)
+      setFoldCount(prev => prev + 1)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [counter])
@@ -217,6 +223,7 @@ export const CurrentPlayer = ({
     if (canKick) {
       const timer = setTimeout(() => {
         removePlayer()
+        router.refresh()
       }, 4000)
 
       return () => clearTimeout(timer)
@@ -248,8 +255,6 @@ export const CurrentPlayer = ({
       if (error) {
         console.log(error)
       }
-
-      router.push('/dashboard/table')
     } catch (error) {
       console.log(error)
     }

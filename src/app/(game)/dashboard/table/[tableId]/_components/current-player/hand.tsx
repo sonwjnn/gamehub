@@ -3,6 +3,7 @@
 import { cn } from '@/lib/utils'
 import { Card } from '../card'
 import { HighlightCard } from '@/types'
+import { useMedia } from 'react-use'
 
 interface HandProps {
   imageUrlFirst: string
@@ -22,14 +23,17 @@ export const Hand = ({
 }: HandProps) => {
   const hasHighlight = hasFirstHighlight || hasSecondHighlight
 
+  const isMobile = useMedia('(max-width: 640px)', false)
+
   return (
     <div className="pocker_list current_poker_list">
       <div
         className={cn(
-          `item flipped opacity-0 pointer-events-none transition -translate-x-1 -translate-y-1 scale-110`,
+          `item flipped opacity-0 pointer-events-none transition -translate-x-1 -translate-y-1.5 scale-[1.14]`,
           !imageUrlFirst && 'hide',
           !isHidden && 'opacity-100 pointer-events-auto',
-          hasFirstHighlight && 'status_active'
+          hasFirstHighlight && 'status_active',
+          isMobile && 'scale-[1.1]'
         )}
       >
         <div
@@ -45,10 +49,11 @@ export const Hand = ({
       </div>
       <div
         className={cn(
-          `item flipped opacity-0 pointer-events-none transition -translate-x-0.5 -translate-y-1 scale-110`,
+          `item flipped opacity-0 pointer-events-none transition -translate-x-0.5 -translate-y-1.5 scale-[1.14]`,
           !imageUrlSecond && 'hide',
           !isHidden && 'opacity-100 pointer-events-auto',
-          hasSecondHighlight && 'status_active'
+          hasSecondHighlight && 'status_active',
+          isMobile && 'scale-[1.1]'
         )}
       >
         <div

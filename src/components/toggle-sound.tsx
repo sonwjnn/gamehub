@@ -1,24 +1,25 @@
 'use client'
 
 import { Button } from '@/components/ui/button'
+import { useToggleSound } from '@/store/use-toggle-sound'
 import { Volume, VolumeX } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 
 type ToggleSoundProps = {}
 
 export const ToggleSound = ({}: ToggleSoundProps) => {
-  const [isSoundOn, setSound] = useState(true)
+  const { isSound, setIsSound } = useToggleSound()
 
   useEffect(() => {
     const mediaElements = document.querySelectorAll('audio, video')
     mediaElements.forEach(media => {
-      ;(media as HTMLMediaElement).muted = !isSoundOn
+      ;(media as HTMLMediaElement).muted = !isSound
     })
-  }, [isSoundOn])
+  }, [isSound])
 
   return (
-    <Button onClick={() => setSound(!isSoundOn)}>
-      {isSoundOn ? <Volume /> : <VolumeX />}
+    <Button onClick={() => setIsSound(!isSound)}>
+      {isSound ? <Volume /> : <VolumeX />}
     </Button>
   )
 }

@@ -28,6 +28,7 @@ import { ShowdownModal } from './showdown-modal'
 import { Button } from '@/components/ui/button'
 import { useModal } from '@/store/use-modal-store'
 import { useIsFolded } from '@/store/use-is-folded'
+import { useMedia } from 'react-use'
 
 interface TableContentProps {
   tableId: string
@@ -39,6 +40,7 @@ export const TableContent = ({ tableId }: TableContentProps) => {
   const { socket } = useSocket()
   const { onClose } = useModal()
   const { setIsFolded } = useIsFolded()
+  const isMobile = useMedia('(max-width: 640px)', false)
 
   const [messages, setMessages] = useState([] as string[])
   const [match, setMatch] = useState<Match | null>(null)
@@ -119,7 +121,7 @@ export const TableContent = ({ tableId }: TableContentProps) => {
       })
 
       gsap.to('.current-player-card', {
-        scale: 1.2,
+        scale: isMobile ? 1.1 : 1.3,
         zIndex: 100,
       })
 
@@ -301,10 +303,10 @@ export const TableContent = ({ tableId }: TableContentProps) => {
         }) => {
           setPlayers(prev => [...prev, player])
 
-          await socket.emit(PokerActions.TABLE_JOINED, {
-            tableId,
-            player,
-          })
+          // await socket.emit(PokerActions.TABLE_JOINED, {
+          //   tableId,
+          //   player,
+          // })
         }
       )
 
@@ -599,8 +601,6 @@ export const TableContent = ({ tableId }: TableContentProps) => {
       console.log(error)
       return
     }
-
-    router.push('/dashboard/table')
   }
 
   const addMessage = (message: string) => {
@@ -620,14 +620,16 @@ export const TableContent = ({ tableId }: TableContentProps) => {
     <>
       <div className="absolute left-0 top-0 z-10 p-[12px] flex gap-x-4">
         {!currentPlayer && (
-          <LeaveButton
-            tableId={tableId}
-            className={cn(
-              'hidden',
-              !(match && players.length > 1 && !match.winners?.length) &&
-                'block'
-            )}
-          />
+          <>
+            <LeaveButton
+              tableId={tableId}
+              className={cn(
+                'hidden',
+                !(match && players.length > 1 && !match.winners?.length) &&
+                  'block'
+              )}
+            />
+          </>
         )}
       </div>
       <div className="wrapper md:w-full w-[86%] h-full" ref={wrapperRef}>
