@@ -2,7 +2,7 @@
 
 import { Button } from '@/components/ui/button'
 import { useToggleSound } from '@/store/use-toggle-sound'
-import { Volume, VolumeX } from 'lucide-react'
+import { Volume2, VolumeX } from 'lucide-react'
 import { useEffect } from 'react'
 
 type ToggleSoundProps = {}
@@ -19,7 +19,7 @@ export const ToggleSound = ({}: ToggleSoundProps) => {
 
   return (
     <Button onClick={() => setIsSound(!isSound)}>
-      {isSound ? <Volume /> : <VolumeX />}
+      {isSound ? <Volume2 /> : <VolumeX />}
     </Button>
   )
 }

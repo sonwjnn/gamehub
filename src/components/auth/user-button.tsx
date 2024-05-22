@@ -41,12 +41,12 @@ export const UserButton = ({ type = 'default' }: Props) => {
           </div>
         </div>
         <div className="content">
-          {user.username}
+          {user.name}
           <div className="flex flex-midle gapx-4">
             <span className="icon sz-12">
               <i className="icon-coin"> </i>
             </span>
-            <span className="text-gold fw-600">
+            <span className="text-money fw-600">
               {formatChipsAmount(user.chipsAmount)} $
             </span>
           </div>

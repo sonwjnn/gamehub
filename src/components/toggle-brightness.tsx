@@ -3,7 +3,7 @@
 import { useBrightness } from '@/store/use-brightness'
 import { useEffect, useState } from 'react'
 import { Button } from './ui/button'
-import { Sun } from 'lucide-react'
+import { Sun, SunDim, SunMedium } from 'lucide-react'
 
 const BrightnessLevels = ['normal', 'dim', 'bright']
 
@@ -34,7 +34,9 @@ export const ToggleBrightness = () => {
 
   return (
     <Button onClick={onBrightnessClick}>
-      <Sun /> {brightness}
+      {brightness === 'bright' && <Sun />}
+      {brightness === 'dim' && <SunDim />}
+      {brightness === 'normal' && <SunMedium />}
     </Button>
   )
 }

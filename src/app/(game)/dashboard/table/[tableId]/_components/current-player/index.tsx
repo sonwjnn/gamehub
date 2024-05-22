@@ -45,7 +45,6 @@ export const CurrentPlayer = ({
   tableId,
   highlightCards,
 }: CurrentPlayerProps) => {
-  console.log(player)
   const { socket } = useSocket()
   const { onOpen } = useModal()
   const { setIsFolded } = useIsFolded()
@@ -223,7 +222,6 @@ export const CurrentPlayer = ({
     if (canKick) {
       const timer = setTimeout(() => {
         removePlayer()
-        router.refresh()
       }, 4000)
 
       return () => clearTimeout(timer)
@@ -255,6 +253,8 @@ export const CurrentPlayer = ({
       if (error) {
         console.log(error)
       }
+
+      router.push('/dashboard/table')
     } catch (error) {
       console.log(error)
     }
@@ -387,9 +387,7 @@ export const CurrentPlayer = ({
             </div>
             <div className="flex info_user">
               <div className="left sp_full">
-                <div className="name text-center ">
-                  {player?.user?.username}
-                </div>
+                <div className="name text-center ">{player?.user?.name}</div>
               </div>
 
               <div className="right sp_full">
@@ -398,6 +396,16 @@ export const CurrentPlayer = ({
                     <i className="icon-coin"></i>
                   </div>
                   $ {formatChipsAmount(currentStack)}
+                </div>
+                <div
+                  className="btn_cash_chip"
+                  id="btn_cash"
+                  onClick={() => onOpen('rebuy', { tableId })}
+                >
+                  Nạp
+                  <span className="icon sz-16 icon-color-white">
+                    <i className="icon-cash"></i>
+                  </span>
                 </div>
               </div>
 

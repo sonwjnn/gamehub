@@ -88,10 +88,10 @@ export const QualityModal = () => {
   const isModalOpen = isOpen && type === 'quality'
 
   return (
-    <div className={cn('modal', isModalOpen && 'show')}>
+    <div className={cn('modal', isModalOpen && 'show')} id="modal_quality">
       <div className="modal_dark modal_close" onClick={onClose}></div>
-      <div className="modal_dialog sz-lg">
-        <div className="modal_content">
+      <div className="modal_dialog sz-md">
+        <div className="modal_content ">
           <div className="modal_head">
             CHẤT BÀI
             <div className="btn_close modal_close" onClick={onClose}>

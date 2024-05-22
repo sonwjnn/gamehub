@@ -1,26 +1,87 @@
 'use client'
 
 import { Button } from '@/components/ui/button'
+import { useCurrentUser } from '@/hooks/use-current-user'
 import { cn } from '@/lib/utils'
+import playerApi from '@/services/api/modules/player-api'
+import tableApi from '@/services/api/modules/table-api'
 import { useModal } from '@/store/use-modal-store'
+import { PlayerWithUser } from '@/types'
+import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
+import { useTransition } from 'react'
+import { toast } from 'sonner'
 
 interface LeaveTableProps {
   tableId: string
   className?: string
+  player: PlayerWithUser | undefined
 }
 
-export const LeaveButton = ({ className, tableId }: LeaveTableProps) => {
+export const LeaveButton = ({
+  className,
+  tableId,
+  player,
+}: LeaveTableProps) => {
+  const user = useCurrentUser()
   const router = useRouter()
+  const { update } = useSession()
+
+  const [isPending, startTransition] = useTransition()
+
+  const onClick = async () => {
+    if (!user || !tableId || !player) {
+      router.push('/dashboard/table')
+      return
+    }
+
+    startTransition(async () => {
+      const { response: tableData } = await tableApi.getTableById({
+        tableId,
+      })
+
+      if (!tableData) {
+        toast.error('Error when leaving table')
+        return
+      }
+
+      const currentPlayerOfTable = tableData.players.find(
+        (item: any) => item.userId === user.id
+      )
+
+      if (!currentPlayerOfTable) {
+        toast.error('Error when leaving table')
+        return
+      }
+
+      const { response, error } = await playerApi.removePlayer({
+        tableId,
+        playerId: currentPlayerOfTable.id,
+      })
+
+      if (error) {
+        toast.error('Error when leaving table')
+        return
+      }
+
+      update()
+      router.push('/dashboard/table')
+    })
+  }
 
   return (
-    <Button
-      size="sm"
-      className={cn(className)}
-      variant="destructive"
-      onClick={() => router.push('/dashboard/table')}
+    <div
+      className={cn(
+        'btn_action btn_leave',
+        className,
+        isPending && 'pointer-events-none bg-opacity-50'
+      )}
+      onClick={onClick}
     >
       Leave
-    </Button>
+      <span className="sz-16 icon icon-color-white">
+        <i className="icon-leave"></i>
+      </span>
+    </div>
   )
 }

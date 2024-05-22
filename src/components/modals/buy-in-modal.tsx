@@ -75,9 +75,10 @@ export const BuyInModal = () => {
         return
       }
 
+      router.push(`/dashboard/table/${table.id}`)
       update()
       onClose()
-      router.refresh()
+      // router.refresh()
     } catch {
     } finally {
       setIsLoading(false)
@@ -85,15 +86,14 @@ export const BuyInModal = () => {
   }
 
   const handleClose = () => {
-    form.reset()
     onClose()
   }
 
   return (
     <div className={cn('modal', isModalOpen && 'show')}>
       <div className="modal_dark modal_close" onClick={handleClose}></div>
-      <div className="modal_dialog sz-lg">
-        <div className="modal_content  max-w-[500px] flex-grow-0">
+      <div className="modal_dialog sz-sm">
+        <div className="modal_content ">
           <div className="modal_head">
             BUY IN
             <div className="btn_close modal_close" onClick={handleClose}>
@@ -101,53 +101,67 @@ export const BuyInModal = () => {
             </div>
           </div>
           <div className="modal_body">
-            <div className="mt-4 gap-x-2 text-center  text  mb-3 ">
-              Min : {formatChipsAmount(table?.minBuyIn || 0)}
-              <br />
-              Max : {formatChipsAmount(table?.maxBuyIn || 0)}
-              <br />
-              Ante: {formatChipsAmount(table?.ante || 0)}
-            </div>
-
             <Form {...form}>
               <form
                 onSubmit={form.handleSubmit(onSubmit)}
-                className="space-y-8"
+                className="row flex flex-space"
               >
-                <FormField
-                  control={form.control}
-                  name="buyIn"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormControl>
-                        <div className="input-group">
-                          <div className="wrap-input flex justify-center">
-                            <Input
-                              className="w-auto py-0 "
-                              type="number"
-                              min={table?.minBuyIn}
-                              max={table?.maxBuyIn}
-                              disabled={isLoading}
-                              {...field}
-                              onChange={e =>
-                                field.onChange(+e.target.value || ' ')
-                              }
-                            />
-                          </div>
-                        </div>
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                <div className="col-12 my-12 text-center color-primary fz-14">
+                  Ante:{' '}
+                  <span className="fw-16 fw-500">
+                    {formatChipsAmount(table?.ante || 0)}
+                  </span>
+                </div>
+                <div className="col color-primary fz-14">
+                  Min:{' '}
+                  <span className="fw-16 fw-500">
+                    {formatChipsAmount(table?.minBuyIn || 0)}
+                  </span>
+                </div>
+                <div className="col color-primary fz-14 text-right">
+                  Max:{' '}
+                  <span className="fz-16 fw-500">
+                    {formatChipsAmount(table?.maxBuyIn || 0)}
+                  </span>
+                </div>
 
-                <Button
-                  variant="primary"
-                  className="mx-auto"
-                  disabled={isLoading}
-                >
-                  Buy into game
-                </Button>
+                <div className="col-12 mt-12">
+                  <FormField
+                    control={form.control}
+                    name="buyIn"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormControl>
+                          <div className="input-group">
+                            <div className="wrap-input ">
+                              <Input
+                                className="w-full py-0 text-center"
+                                type="number"
+                                min={table?.minBuyIn}
+                                max={table?.maxBuyIn}
+                                disabled={isLoading}
+                                {...field}
+                                onChange={e =>
+                                  field.onChange(+e.target.value || ' ')
+                                }
+                              />
+                            </div>
+                          </div>
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+                <div className="col-12">
+                  <button
+                    type="submit"
+                    className="btn_submit w-full"
+                    disabled={isLoading}
+                  >
+                    <span>Buyin</span>
+                  </button>
+                </div>
               </form>
             </Form>
           </div>

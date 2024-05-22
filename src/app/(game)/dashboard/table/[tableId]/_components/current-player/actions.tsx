@@ -185,7 +185,7 @@ export const CurrentPlayerAction = ({
     <>
       <div className="toolbar">
         <ActionItem
-          shortcut="1"
+          shortcut="7"
           label="쿼터"
           onClick={onQuarter}
           disabled={!isTurn || isProcessing || !canQuarter}
@@ -193,7 +193,7 @@ export const CurrentPlayerAction = ({
         />
 
         <ActionItem
-          shortcut="2"
+          shortcut="8"
           label="하프"
           onClick={onHalf}
           disabled={!isTurn || isProcessing || !canHalf}
@@ -201,7 +201,7 @@ export const CurrentPlayerAction = ({
         />
 
         <ActionItem
-          shortcut="3"
+          shortcut="9"
           label="풀"
           onClick={onFull}
           disabled={!isTurn || isProcessing || !canFull}
@@ -227,7 +227,7 @@ export const CurrentPlayerAction = ({
 
         {!canNotCall ? (
           <ActionItem
-            shortcut="7"
+            shortcut="1"
             label="콜"
             onClick={call}
             disabled={!isTurn || isProcessing || canNotCall}
@@ -235,14 +235,14 @@ export const CurrentPlayerAction = ({
           />
         ) : !canNotCheck ? (
           <ActionItem
-            shortcut="7"
+            shortcut="1"
             label="체크"
             onClick={check}
             disabled={!isTurn || isProcessing || canNotCheck}
           />
         ) : (
           <ActionItem
-            shortcut="7"
+            shortcut="1"
             label="콜"
             onClick={call}
             disabled={!isTurn || isProcessing || canNotCall}
@@ -251,14 +251,14 @@ export const CurrentPlayerAction = ({
         )}
 
         <ActionItem
-          shortcut="8"
+          shortcut="2"
           label="다이"
           onClick={fold}
           disabled={!isTurn || isProcessing}
         />
 
         <ActionItem
-          shortcut="9"
+          shortcut="3"
           label="올인"
           onClick={onAllIn}
           disabled={!isTurn || isProcessing}

@@ -2,12 +2,15 @@
 
 import { useCurrentUser } from '@/hooks/use-current-user'
 import { cn } from '@/lib/utils'
+import historyApi from '@/services/api/modules/history-api'
 import { formatChipsAmount } from '@/utils/formatting'
 import { RotateCcw } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
+import { useEffect, useState } from 'react'
 import { BsCashCoin } from 'react-icons/bs'
+import { toast } from 'sonner'
 
 interface UserBoardProps {
   hasMenu?: boolean
@@ -18,6 +21,37 @@ export const UserBoard = ({ hasMenu = false }: UserBoardProps) => {
 
   const router = useRouter()
   const pathname = usePathname()
+
+  const [history, setHistory] = useState({
+    loseCount: 0,
+    winCount: 0,
+  })
+
+  useEffect(() => {
+    const getHistories = async () => {
+      if (!user) return
+
+      const { response: data, error } = await historyApi.getAllByUserId({
+        userId: user?.id,
+      })
+
+      if (error) {
+        toast.error('Something went wrong!')
+        return
+      }
+
+      if (data) {
+        setHistory({
+          loseCount:
+            data.filter((item: any) => item.type === 'lose')?.length || 0,
+          winCount:
+            data.filter((item: any) => item.type === 'win')?.length || 0,
+        })
+      }
+    }
+    getHistories()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   if (!user) {
     router.push('/auth/login')
@@ -41,7 +75,7 @@ export const UserBoard = ({ hasMenu = false }: UserBoardProps) => {
             </div>
           </div>
         </div>
-        <div className="name text-center mt-8 fw-500">{user.username}</div>
+        <div className="name text-center mt-8 fw-500">{user.name}</div>
         <div className="rank flex gap-8 flex-center fz-10 flex-midle mt-8">
           Rank:
           <div>
@@ -59,7 +93,7 @@ export const UserBoard = ({ hasMenu = false }: UserBoardProps) => {
               <div className="icon sz-12">
                 <i className="icon-daimond"></i>
               </div>
-              <div className="rank_daimond">(DAIMOND Gamer)</div>
+              <div className="rank_daimond">(DIAMOND Gamer)</div>
             </div>
           </div>
         </div>
@@ -78,7 +112,7 @@ export const UserBoard = ({ hasMenu = false }: UserBoardProps) => {
                 </div>
                 <span>Points</span>
               </dt>
-              <dd>1000</dd>
+              <dd>{history.winCount * 100}</dd>
             </dl>
           </div>
           <div className="col-4">
@@ -89,7 +123,9 @@ export const UserBoard = ({ hasMenu = false }: UserBoardProps) => {
                 </div>
                 <span>Total win</span>
               </dt>
-              <dd>30/120</dd>
+              <dd>
+                {history.winCount}/{history.loseCount + history.winCount}
+              </dd>
             </dl>
           </div>
           <div className="col-4">
@@ -100,7 +136,9 @@ export const UserBoard = ({ hasMenu = false }: UserBoardProps) => {
                 </div>
                 <span>Total lose</span>
               </dt>
-              <dd>50/120</dd>
+              <dd>
+                {history.loseCount}/{history.loseCount + history.winCount}
+              </dd>
             </dl>
           </div>
         </div>

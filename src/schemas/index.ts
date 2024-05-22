@@ -15,6 +15,13 @@ export const RegisterSchema = z.object({
     .refine(value => !value.includes(' '), {
       message: 'User name cannot contain spaces',
     }),
+  name: z
+    .string()
+    .min(1, { message: 'Name is required' })
+    .max(14, { message: 'Name must be at most 11 characters' })
+    .refine(value => !value.includes(' '), {
+      message: 'Name cannot contain spaces',
+    }),
   email: z.string().email({ message: 'Email is required' }),
   password: z.string().min(6, { message: 'Minimun 6 characters required' }),
 })

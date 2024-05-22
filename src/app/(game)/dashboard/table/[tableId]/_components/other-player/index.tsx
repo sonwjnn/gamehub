@@ -210,7 +210,7 @@ export const OtherPlayer = ({
         </div>
         <div className="flex info_user">
           <div className="left sp_full">
-            <div className="name text-center">{player?.user?.username}</div>
+            <div className="name text-center">{player?.user?.name}</div>
           </div>
           <div className="right sp_full">
             <div className="money fw-700 flex flex-midle flex-center">

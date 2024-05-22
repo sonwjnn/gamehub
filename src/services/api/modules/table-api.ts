@@ -27,9 +27,18 @@ const tableApi = {
       return { error }
     }
   },
-  switchTable: async (data: { tableId: string }) => {
+  switchTable: async ({
+    tableId,
+    playerId,
+  }: {
+    tableId: string
+    playerId: string
+  }) => {
     try {
-      const response = await publicClient.get(tableEndpoints.switchTable(data))
+      const response = await publicClient.post(
+        tableEndpoints.switchTable({ tableId }),
+        { playerId }
+      )
       if (response && response.data) return { response: response.data }
       return { response }
     } catch (error) {

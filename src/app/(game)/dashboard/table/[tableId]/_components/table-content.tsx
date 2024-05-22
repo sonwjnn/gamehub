@@ -29,6 +29,7 @@ import { Button } from '@/components/ui/button'
 import { useModal } from '@/store/use-modal-store'
 import { useIsFolded } from '@/store/use-is-folded'
 import { useMedia } from 'react-use'
+import ChangeTable from './change-table'
 
 interface TableContentProps {
   tableId: string
@@ -121,7 +122,7 @@ export const TableContent = ({ tableId }: TableContentProps) => {
       })
 
       gsap.to('.current-player-card', {
-        scale: isMobile ? 1.1 : 1.3,
+        scale: 1.55,
         zIndex: 100,
       })
 
@@ -306,7 +307,7 @@ export const TableContent = ({ tableId }: TableContentProps) => {
           setPlayers(prev => [...prev, player])
 
           await socket.emit(PokerActions.TABLE_JOINED, {
-            tableSocketId,
+            tableId: tableSocketId,
             player,
           })
         }
@@ -314,11 +315,19 @@ export const TableContent = ({ tableId }: TableContentProps) => {
 
       socket.on(
         PokerActions.LEAVE_TABLE,
-        ({ tableId, playerId }: { tableId: string; playerId: string }) => {
+        ({
+          tableId: tableSocketId,
+          playerId,
+        }: {
+          tableId: string
+          playerId: string
+        }) => {
+          if (tableSocketId !== tableId) return
+
           setPlayers(prev => prev.filter(item => item.id !== playerId))
 
           socket.emit(PokerActions.TABLE_LEFT, {
-            tableId,
+            tableId: tableSocketId,
             playerId,
           })
         }
@@ -617,80 +626,86 @@ export const TableContent = ({ tableId }: TableContentProps) => {
   ]
 
   const currentPlayer = players.find(p => p.userId === user?.id)
+  const currentParticipant = participants.find(
+    p => p.playerId === currentPlayer?.id
+  )
 
   return (
-    <>
-      <div className="absolute left-0 top-0 z-10 p-[12px] flex gap-x-4">
-        {!currentPlayer && (
-          <>
-            <LeaveButton
-              tableId={tableId}
-              className={cn(
-                'hidden',
-                !(match && players.length > 1 && !match.winners?.length) &&
-                  'block'
-              )}
-            />
-          </>
-        )}
-      </div>
-      <div className="wrapper md:w-full w-[86%] h-full" ref={wrapperRef}>
-        <Image
-          src="/images/table_v3.png"
-          alt="tableImage"
-          width={0}
-          height={0}
-          sizes="100vw"
-          className="w-full h-auto"
+    <div className="wrapper md:w-full w-[86%] h-full" ref={wrapperRef}>
+      <Image
+        src="/images/table_v3.png"
+        alt="tableImage"
+        width={0}
+        height={0}
+        sizes="100vw"
+        className="w-full h-auto"
+      />
+
+      <div className="group_button">
+        <LeaveButton
+          tableId={tableId}
+          player={currentPlayer}
+          className={cn(
+            'hidden',
+            (!currentParticipant || currentParticipant?.isFolded) && 'block'
+          )}
         />
-        <div className="inner">
-          <div className="list_user" ref={tableRef}>
-            <div className="dealer" ref={dealerRef}></div>
+        <ChangeTable
+          tableId={tableId}
+          playerId={currentPlayer?.id}
+          className={cn(
+            'hidden',
+            (!currentParticipant || currentParticipant?.isFolded) && 'block'
+          )}
+        />
+      </div>
+      <div className="inner">
+        <div className="list_user" ref={tableRef}>
+          <div className="dealer" ref={dealerRef}></div>
 
-            <div className="wrap_list">
-              {sortedPlayers.map((player, index) => {
-                if (player.userId === user?.id) {
-                  return
-                }
+          <div className="wrap_list">
+            {sortedPlayers.map((player, index) => {
+              if (player.userId === user?.id) {
+                return
+              }
 
-                return (
-                  <OtherPlayer
-                    match={match}
-                    key={index}
-                    player={player}
-                    participants={participants}
-                    isHandVisible={isHandVisible}
-                    tableId={tableId}
-                  />
-                )
-              })}
-              <ShowdownModal match={match} participants={participants} />
-              <WinnerModal match={match} />
-            </div>
+              return (
+                <OtherPlayer
+                  match={match}
+                  key={index}
+                  player={player}
+                  participants={participants}
+                  isHandVisible={isHandVisible}
+                  tableId={tableId}
+                />
+              )
+            })}
+            <ShowdownModal match={match} participants={participants} />
+            <WinnerModal match={match} />
           </div>
         </div>
-        <Board
+      </div>
+      <Board
+        match={match}
+        isShuffle={isShuffle}
+        highlightCards={highlightCards}
+      />
+
+      {messages && messages.length > 0 && (
+        <div className="absolute font-semibold top-[60%] text-lime-500 text-xs md:text-xl left-1/2 -translate-y-1/2 -translate-x-1/2">
+          {messages[messages.length - 1]}
+        </div>
+      )}
+      {currentPlayer && (
+        <CurrentPlayer
           match={match}
-          isShuffle={isShuffle}
+          player={currentPlayer}
+          participants={participants}
+          isHandVisible={isHandVisible}
+          tableId={tableId}
           highlightCards={highlightCards}
         />
-
-        {messages && messages.length > 0 && (
-          <div className="absolute font-semibold top-[60%] text-lime-500 text-xs md:text-xl left-1/2 -translate-y-1/2 -translate-x-1/2">
-            {messages[messages.length - 1]}
-          </div>
-        )}
-        {currentPlayer && (
-          <CurrentPlayer
-            match={match}
-            player={currentPlayer}
-            participants={participants}
-            isHandVisible={isHandVisible}
-            tableId={tableId}
-            highlightCards={highlightCards}
-          />
-        )}
-      </div>
-    </>
+      )}
+    </div>
   )
 }

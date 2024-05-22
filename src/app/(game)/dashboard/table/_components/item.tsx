@@ -1,5 +1,6 @@
 'use client'
 
+import { useModal } from '@/store/use-modal-store'
 import { Table } from '@/types'
 import { formatChipsAmount } from '@/utils/formatting'
 import Image from 'next/image'
@@ -11,13 +12,10 @@ interface ItemProps {
 
 export const Item = ({ table }: ItemProps) => {
   const router = useRouter()
-
-  const onClick = () => {
-    return router.push(`/dashboard/table/${table.id}`)
-  }
+  const { onOpen } = useModal()
 
   return (
-    <div className="room" onClick={onClick}>
+    <div className="room" onClick={() => onOpen('buyIn', { table })}>
       <div className="icon icon-color-white">
         <Image
           src="/images/icon/icon_poker.png"

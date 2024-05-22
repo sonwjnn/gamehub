@@ -3,14 +3,20 @@
 import { cn } from '@/lib/utils'
 import { useModal } from '@/store/use-modal-store'
 import { X } from 'lucide-react'
+import { useParams } from 'next/navigation'
 
 export const RuleModal = () => {
   const { isOpen, onClose, type } = useModal()
 
+  const params = useParams()
+
   const isModalOpen = isOpen && type === 'rule'
 
   return (
-    <div className={cn('modal', isModalOpen && 'show')}>
+    <div
+      className={cn('modal', isModalOpen && 'show')}
+      id={params?.tableId && 'modal_rule'}
+    >
       <div className="modal_dark modal_close" onClick={onClose}></div>
       <div className="modal_dialog sz-lg">
         <div className="modal_content">

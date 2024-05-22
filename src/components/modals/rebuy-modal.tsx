@@ -1,13 +1,6 @@
 'use client'
 
 import { Button } from '@/components/ui/button'
-import {
-  Dialog,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog'
 
 import {
   Form,
@@ -47,7 +40,7 @@ export const RebuyModal = () => {
   const router = useRouter()
   const user = useCurrentUser()
   const { socket } = useSocket()
-  const { table } = data
+  const { tableId } = data
   const { update } = useSession()
 
   const [isLoading, setIsLoading] = useState(false)
@@ -63,17 +56,17 @@ export const RebuyModal = () => {
   })
 
   useEffect(() => {
-    if (table) {
-      form.setValue('buyIn', table.minBuyIn)
+    if (tableData) {
+      form.setValue('buyIn', tableData.minBuyIn)
     }
-  }, [form, table])
+  }, [form, tableData])
 
   useEffect(() => {
     const getTableById = async () => {
-      if (!table) return
+      if (!tableId) return
 
       const { response, error } = await tableApi.getTableById({
-        tableId: table.id,
+        tableId,
       })
 
       if (error) {
@@ -83,7 +76,6 @@ export const RebuyModal = () => {
 
       setTableData(response)
     }
-
     if (isModalOpen) {
       getTableById()
     }
@@ -124,45 +116,16 @@ export const RebuyModal = () => {
     }
   }
 
-  // const onCancel = async () => {
-  //   try {
-  //     if (!user || !tableData) return
-
-  //     const currentPlayerOfTable = tableData.players.find(
-  //       item => item.userId === user.id
-  //     )
-
-  //     if (!currentPlayerOfTable) return
-
-  //     setIsLoading(true)
-
-  //     const { response, error } = await playerApi.removePlayer({
-  //       tableId: tableData.id,
-  //       playerId: currentPlayerOfTable.id,
-  //     })
-
-  //     if (error) {
-  //       toast.error('Error when leaving table')
-  //       return
-  //     }
-
-  //     onClose()
-  //     update()
-  //   } catch {
-  //   } finally {
-  //     setIsLoading(false)
-  //   }
-  // }
-
   const handleClose = async () => {
+    onClose()
     form.reset()
   }
 
   return (
-    <div className={cn('modal', isModalOpen && 'show')}>
+    <div className={cn('modal', isModalOpen && 'show')} id="modal_cash">
       <div className="modal_dark modal_close" onClick={handleClose}></div>
-      <div className="modal_dialog sz-lg">
-        <div className="modal_content  max-w-[500px] flex-grow-0">
+      <div className="modal_dialog sz-sm">
+        <div className="modal_content ">
           <div className="modal_head">
             REBUY
             <div className="btn_close modal_close" onClick={handleClose}>
@@ -170,53 +133,61 @@ export const RebuyModal = () => {
             </div>
           </div>
           <div className="modal_body">
-            <div className="mt-4 gap-x-2 text-center  text  mb-3 ">
-              Min : {formatChipsAmount(table?.minBuyIn || 0)}
-              <br />
-              Max : {formatChipsAmount(table?.maxBuyIn || 0)}
-              <br />
-              Ante: {formatChipsAmount(table?.ante || 0)}
-            </div>
-
             <Form {...form}>
               <form
                 onSubmit={form.handleSubmit(onSubmit)}
-                className="space-y-8"
+                className="row flex flex-space"
               >
-                <FormField
-                  control={form.control}
-                  name="buyIn"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormControl>
-                        <div className="input-group">
-                          <div className="wrap-input flex justify-center">
-                            <Input
-                              className="w-auto py-0 "
-                              type="number"
-                              min={table?.minBuyIn}
-                              max={table?.maxBuyIn}
-                              disabled={isLoading}
-                              {...field}
-                              onChange={e =>
-                                field.onChange(+e.target.value || ' ')
-                              }
-                            />
+                <div className="col color-primary fz-14">
+                  Min:{' '}
+                  <span className="fw-16 fw-500">
+                    {formatChipsAmount(tableData?.minBuyIn || 0)}
+                  </span>
+                </div>
+                <div className="col color-primary fz-14 text-right">
+                  Max:{' '}
+                  <span className="fz-16 fw-500">
+                    {formatChipsAmount(tableData?.maxBuyIn || 0)}
+                  </span>
+                </div>
+                <div className="col-12 mt-12">
+                  <FormField
+                    control={form.control}
+                    name="buyIn"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormControl>
+                          <div className="input-group">
+                            <div className="wrap-input flex justify-center">
+                              <Input
+                                className="w-full py-0 text-center"
+                                type="number"
+                                min={tableData?.minBuyIn}
+                                max={tableData?.maxBuyIn}
+                                disabled={isLoading}
+                                {...field}
+                                onChange={e =>
+                                  field.onChange(+e.target.value || ' ')
+                                }
+                              />
+                            </div>
                           </div>
-                        </div>
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
 
-                <Button
-                  variant="primary"
-                  className="mx-auto"
-                  disabled={isLoading}
-                >
-                  Rebuy
-                </Button>
+                <div className="col-12">
+                  <button
+                    type="submit"
+                    className="btn_submit w-full"
+                    disabled={isLoading}
+                  >
+                    <span>Nạp</span>
+                  </button>
+                </div>
               </form>
             </Form>
           </div>

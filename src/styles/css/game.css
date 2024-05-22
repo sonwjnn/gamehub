@@ -145,6 +145,9 @@
 .text-link {
   cursor: pointer;
 }
+.text-money {
+  color: #ffaa00;
+}
 .text-gold {
   background: linear-gradient(
     236.68deg,
@@ -693,6 +696,40 @@ html {
   -ms-flex-positive: 1;
   flex-grow: 1;
   margin-left: 10.3626943005%;
+  position: relative;
+}
+.game-html .group_user .right .btn_cash_chip {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: #ef6c00;
+  padding: 0 12px 2px;
+  border-radius: 30px;
+  margin-left: 10px;
+  font-size: 14px;
+  line-height: 22px;
+  font-weight: 500;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 4px;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  height: 24px;
+  width: 80px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+}
+.game-html .group_user .right .btn_cash_chip:hover {
+  -webkit-transform: scale(1.05);
+  -ms-transform: scale(1.05);
+  transform: scale(1.05);
 }
 .game-html .group_user .info_user {
   margin-top: 4%;
@@ -730,6 +767,7 @@ html {
 .game-html .group_user .info_user .right {
   line-height: 16px;
   margin-top: 2px;
+  font-size: 112.5%;
 }
 .game-html .group_user .info_user .right .money {
   color: #ffaa00;
@@ -2505,6 +2543,7 @@ html {
   height: 180px;
 }
 .game-html .group_chat .chat_box .footer {
+  position: relative;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   background: #181818;
   min-height: 42px;
@@ -2527,6 +2566,8 @@ html {
   font-size: 12px !important;
   line-height: 18px !important;
   white-space: wrap !important;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
   color: #fff;
 }
 .game-html .group_chat .chat_box .footer .textarea_custom * {
@@ -2544,13 +2585,15 @@ html {
   content: attr(placeholder);
   pointer-events: none;
   color: rgba(255, 255, 255, 0.3);
-  display: block; /* For Firefox */
+  display: block;
+  /* For Firefox */
 }
-.game-html .group_chat .chat_box .footer .btn_send {
+.game-html .group_chat .chat_box .footer .btn_send,
+.game-html .group_chat .chat_box .footer .btn_sticker {
   cursor: pointer;
   -ms-flex-negative: 0;
   flex-shrink: 0;
-  width: 60px;
+  width: 40px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -2560,16 +2603,65 @@ html {
   -webkit-box-pack: center;
   -ms-flex-pack: center;
   justify-content: center;
-  border-radius: 0 0 8px 0;
 }
-.game-html .group_chat .chat_box .footer .btn_send:hover {
+.game-html .group_chat .chat_box .footer .btn_send:hover,
+.game-html .group_chat .chat_box .footer .btn_sticker:hover {
   background-color: rgba(0, 0, 0, 0.5);
 }
+.game-html .group_chat .chat_box .footer .btn_send {
+  border-radius: 0 0 8px 0;
+}
+.game-html .group_chat .chat_box .footer .btn_sticker {
+  border-radius: 0 0 0 8px;
+}
+.game-html .group_chat .chat_box .footer .block_sticker {
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  padding: 16px;
+  border-radius: 4px;
+  background: #414040;
+  margin: 4px;
+  width: 250px;
+  border: 1 solid rgba(255, 255, 255, 0.8);
+}
+.game-html .group_chat .chat_box .footer .block_sticker .list {
+  margin: -2px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+.game-html .group_chat .chat_box .footer .block_sticker .list .item {
+  width: 25%;
+  padding: 2px;
+}
+.game-html .group_chat .chat_box .footer .block_sticker .list .item .imgDrop {
+  padding-top: 100%;
+  cursor: pointer;
+  border-radius: 4px;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+}
+.game-html
+  .group_chat
+  .chat_box
+  .footer
+  .block_sticker
+  .list
+  .item
+  .imgDrop:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
 .game-html .group_chat .chat_box .chat_item {
-  max-width: 90%;
   font-size: 12px;
   line-height: 18px;
   color: #fff;
+}
+.game-html .group_chat .chat_box .chat_item .wraper {
+  max-width: 90%;
+  display: inline-block;
   padding: 8px 12px 4px;
   background-color: rgba(255, 255, 255, 0.05);
   border-radius: 4px;
@@ -2589,8 +2681,16 @@ html {
   opacity: 0.5;
   margin-top: 4px;
 }
+.game-html .group_chat .chat_box .chat_item .sticker {
+  width: 100px;
+}
+.game-html .group_chat .chat_box .chat_item .sticker .imgDrop {
+  padding-top: 100%;
+}
 .game-html .group_chat .chat_box .chat_item.me {
-  margin-left: auto;
+  text-align: right;
+}
+.game-html .group_chat .chat_box .chat_item.me .wraper {
   background-color: rgba(0, 0, 0, 0.2);
 }
 .game-html .group_chat .chat_box.is-show {
@@ -2746,35 +2846,27 @@ html {
   font-size: 87.5%;
   position: absolute;
   top: 100%;
+  font-weight: 500;
 }
 @media (min-width: 1024px), ((min-width: 768px) and (orientation: portrait)) {
   .game-html .group_midle .group_number {
     margin-top: 3%;
-    font-size: 125%;
+    font-size: 137.5%;
   }
 }
 @media (min-width: 1241px) {
   .game-html .group_midle .group_number {
-    font-size: 137.5%;
+    font-size: 150%;
   }
 }
 @media (min-width: 1367px) {
   .game-html .group_midle .group_number {
-    font-size: 150%;
+    font-size: 187.5%;
   }
 }
 .game-html .group_midle .group_number span {
-  background: linear-gradient(
-    236.68deg,
-    #ceb900 13.29%,
-    #fafbc0 30.82%,
-    #feffdc 43.82%,
-    #ffec42 59.09%,
-    #c4ff9f 69.83%
-  );
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
   margin-left: 4px;
+  color: #ffaa00;
 }
 .game-html .flipped .pocker {
   -webkit-transform-style: preserve-3d;
@@ -3096,10 +3188,13 @@ html {
   }
 }
 .game-html .group_tool .group_left .group_user .status {
-  -webkit-transform: translate(-50%, -163%);
-  -ms-transform: translate(-50%, -163%);
-  transform: translate(-50%, -163%);
+  -webkit-transform: translate(-58%, -170%);
+  -ms-transform: translate(-58%, -170%);
+  transform: translate(-58%, -170%);
   width: 24%;
+}
+.game-html .group_tool .group_left .group_user .info_user {
+  margin-top: 4px;
 }
 .game-html .group_tool .group_left .group_user .right {
   display: -webkit-box;
@@ -3108,6 +3203,8 @@ html {
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
+  position: relative;
+  margin-top: -2px !important;
 }
 @media (min-width: 320px) and (orientation: portrait),
   (max-width: 1023px) and (orientation: landscape) {
@@ -3122,10 +3219,20 @@ html {
     margin-top: 0;
   }
 }
+@media (min-width: 1024px), ((min-width: 768px) and (orientation: portrait)) {
+  .game-html .group_tool .group_left .group_user .right {
+    margin-left: 7%;
+  }
+}
 .game-html .group_tool .group_left .group_user .pocker_list {
   width: 50%;
-  height: 74%;
   top: 0;
+  height: 74%;
+}
+@media (min-width: 1024px), ((min-width: 768px) and (orientation: portrait)) {
+  .game-html .group_tool .group_left .group_user .pocker_list {
+    height: 90%;
+  }
 }
 .game-html .group_tool .group_left .group_user .money_bet {
   bottom: auto;
@@ -3139,9 +3246,6 @@ html {
 .game-html .group_tool .group_left .group_user .status {
   top: 0;
   left: 0;
-  -webkit-transform: translate(-50%, -68%);
-  -ms-transform: translate(-50%, -68%);
-  transform: translate(-50%, -68%);
 }
 .game-html .group_tool .slind {
   top: auto;
@@ -3712,6 +3816,275 @@ html {
     -ms-transform: scale(0.7);
     transform: scale(0.7);
   }
+}
+.game-html .game_heading .button.before {
+  font-weight: 500;
+  position: relative;
+  border: 1px solid #054eb5;
+  border-radius: 50px;
+  background-color: #033e91;
+  background-image: radial-gradient(
+      75% 50% at 50% 0%,
+      rgba(165, 237, 244, 0.6588235294),
+      transparent
+    ),
+    radial-gradient(75% 35% at 50% 85%, #30a4c8, transparent);
+  -webkit-box-shadow:
+    inset 0 -2px 4px 1px rgba(7, 71, 154, 0.6),
+    inset 0 -4px 4px 1px rgb(66, 178, 212),
+    inset 0 0 2px 1px rgba(255, 255, 255, 0.2),
+    0 1px 4px 1px rgba(17, 110, 231, 0.2),
+    0 1px 4px 1px rgba(0, 0, 0, 0.1);
+  box-shadow:
+    inset 0 -2px 4px 1px rgba(7, 71, 154, 0.6),
+    inset 0 -4px 4px 1px rgb(66, 178, 212),
+    inset 0 0 2px 1px rgba(255, 255, 255, 0.2),
+    0 1px 4px 1px rgba(17, 110, 231, 0.2),
+    0 1px 4px 1px rgba(0, 0, 0, 0.1);
+  color: #fff;
+  text-align: center;
+  text-shadow: 0 1px 1px #116ee7;
+  -webkit-transition-property:
+    border-color,
+    background-color,
+    -webkit-transform;
+  transition-property:
+    border-color,
+    background-color,
+    -webkit-transform;
+  transition-property: border-color, transform, background-color;
+  transition-property:
+    border-color,
+    transform,
+    background-color,
+    -webkit-transform;
+  -webkit-transition-duration: 0.2s;
+  transition-duration: 0.2s;
+  padding: 0 12px;
+}
+@media (min-width: 320px) and (orientation: portrait),
+  (max-width: 1023px) and (orientation: landscape) {
+  .game-html .game_heading .button.before {
+    font-size: 11px;
+  }
+  .game-html .game_heading .button.before .icon {
+    width: 14px;
+    height: 14px;
+  }
+}
+@media (min-width: 1024px), ((min-width: 768px) and (orientation: portrait)) {
+  .game-html .game_heading .button.before {
+    padding: 6px 16px;
+    min-width: 8em;
+  }
+}
+.game-html .game_heading .button.before::after {
+  content: '';
+  position: absolute;
+  top: 1px;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+  transform: translateX(-50%);
+  border-radius: 50px;
+  width: 80%;
+  height: 40%;
+  background-image: -webkit-gradient(
+    linear,
+    left top,
+    left bottom,
+    from(rgba(244, 254, 255, 0.4431372549)),
+    to(transparent)
+  );
+  background-image: linear-gradient(
+    to bottom,
+    rgba(244, 254, 255, 0.4431372549),
+    transparent
+  );
+  opacity: 0.75;
+}
+.game-html .game_heading .button.before:hover {
+  -webkit-transform: scale(1.04);
+  -ms-transform: scale(1.04);
+  transform: scale(1.04);
+}
+.game-html .game_heading .button.before:active {
+  border-color: #0048d5;
+  -webkit-transform: scale(0.96);
+  -ms-transform: scale(0.96);
+  transform: scale(0.96);
+  background-color: #0048d5;
+}
+@media (min-width: 1024px), ((min-width: 768px) and (orientation: portrait)) {
+  .game-html .game_heading .toolbar .item_account {
+    min-width: 180px;
+  }
+}
+.game-html .game_heading .btn_cash {
+  background: #ef6c00;
+  padding: 0 12px 2px;
+  border-radius: 12px;
+  margin-left: 10px;
+  font-size: 12px;
+  line-height: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+.game-html .game_heading .dropdown_cash {
+  position: absolute;
+  top: 100%;
+  height: 160px;
+  right: 0;
+  width: 340px;
+  margin-top: 2px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0 0 8px 8px;
+  background-color: #00152d;
+  border-top: none;
+  padding: 8px 24px;
+}
+.game-html .game_heading .dropdown_cash .btn_submit {
+  display: block;
+  width: 100%;
+  height: 40px !important;
+  border: none;
+  background-color: #ffaa00;
+  border-radius: 4px;
+  font-weight: 500;
+  font-size: 14px;
+}
+.game-html .game_heading .dropdown_cash .btn_submit span {
+  height: 38px;
+  line-height: 38px;
+  border-radius: 4px;
+}
+.game-html .game_heading .dropdown_cash .row > * {
+  padding: 0 4px !important;
+}
+.game-html .game_heading .dropdown_cash .input-group {
+  padding-bottom: 8px;
+}
+.game-html .game_heading .dropdown_cash .input-group label {
+  font-weight: normal;
+}
+.game-html .game_heading .dropdown_cash .input-group .form-control {
+  height: 40px;
+  border: none;
+}
+.game-html
+  .game_heading
+  .dropdown_cash
+  .input-group
+  .form-control:required:invalid:not(:-moz-placeholder-shown)
+  ~ label {
+  top: 2px;
+}
+.game-html
+  .game_heading
+  .dropdown_cash
+  .input-group
+  .form-control:required:invalid:not(:-ms-input-placeholder)
+  ~ label {
+  top: 2px;
+}
+.game-html
+  .game_heading
+  .dropdown_cash
+  .input-group
+  .form-control:-moz-read-only
+  ~ label {
+  top: 2px;
+}
+.game-html
+  .game_heading
+  .dropdown_cash
+  .input-group
+  .form-control:focus
+  ~ label,
+.game-html
+  .game_heading
+  .dropdown_cash
+  .input-group
+  .form-control:read-only
+  ~ label,
+.game-html
+  .game_heading
+  .dropdown_cash
+  .input-group
+  .form-control:required:invalid:not(:placeholder-shown)
+  ~ label,
+.game-html
+  .game_heading
+  .dropdown_cash
+  .input-group
+  .form-control:valid
+  ~ label {
+  top: 2px;
+}
+.game-html .game_heading .dropdown_cash .input-group .form-control:focus {
+  outline: none;
+  border: none;
+  background-color: rgba(255, 255, 255, 0.05);
+}
+.game-html .group_button {
+  position: fixed;
+  top: 56px;
+  left: 8px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 8px;
+  z-index: 9999;
+}
+@media (min-width: 1801px) {
+  .game-html .group_button {
+    top: 68px;
+  }
+}
+.game-html .group_button .btn_action {
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  padding: 0 12px;
+  min-width: 80px;
+  font-weight: 500;
+  text-align: center;
+  height: 36px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  gap: 4px;
+  line-height: 36px;
+  text-decoration: none;
+  cursor: pointer;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+}
+.game-html .group_button .btn_action:hover {
+  -webkit-transform: scale(1.05);
+  -ms-transform: scale(1.05);
+  transform: scale(1.05);
+}
+.game-html .group_button .btn_leave {
+  background: -webkit-linear-gradient(
+    top,
+    #cb6060 0%,
+    #c14646 50%,
+    #810202 51%,
+    #db363c 100%
+  );
+}
+.game-html .group_button .btn_change {
+  background: -webkit-linear-gradient(
+    top,
+    #609bcb 0%,
+    #4698c1 50%,
+    #0062a8 51%,
+    #3696db 100%
+  );
 }
 .game-html .game {
   background-image: url(/images/bg2.jpg);

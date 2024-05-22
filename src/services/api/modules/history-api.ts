@@ -2,6 +2,13 @@ import publicClient from '@/services/api/client/private-client'
 
 const historyEndpoints = {
   getAllByUserId: (userId: string) => `histories/user/${userId}`,
+  getStatisticalByTableId: ({
+    userId,
+    tableId,
+  }: {
+    userId: string
+    tableId: string
+  }) => `histories/statistical/${userId}/${tableId}`,
 }
 
 const historyApi = {
@@ -25,7 +32,7 @@ const historyApi = {
   }) => {
     try {
       const response = await publicClient.get(
-        `histories/statistical/${userId}/${tableId}`
+        historyEndpoints.getStatisticalByTableId({ userId, tableId })
       )
       if (response && response.data) return { response: response.data }
       return { response }

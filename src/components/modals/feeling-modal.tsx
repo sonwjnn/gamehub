@@ -10,9 +10,9 @@ export const FeelingModal = () => {
   const isModalOpen = isOpen && type === 'feeling'
 
   return (
-    <div className={cn('modal', isModalOpen && 'show')}>
+    <div className={cn('modal', isModalOpen && 'show')} id="modal_feeling">
       <div className="modal_dark modal_close" onClick={onClose}></div>
-      <div className="modal_dialog sz-lg">
+      <div className="modal_dialog sz-md">
         <div className="modal_content">
           <div className="modal_head">
             CẢM XÚC

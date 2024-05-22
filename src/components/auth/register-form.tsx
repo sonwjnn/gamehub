@@ -3,7 +3,6 @@
 import { CardWrapper } from '@/components/auth/card-wrapper'
 import { FormError } from '@/components/form-error'
 import { FormSuccess } from '@/components/form-success'
-import { Spinner } from '@/components/spinner'
 import { Button } from '@/components/ui/button'
 import {
   Form,
@@ -36,6 +35,7 @@ export const RegisterForm = ({}: RegisterFormProps) => {
     resolver: zodResolver(RegisterSchema),
     defaultValues: {
       username: '',
+      name: '',
       email: '',
       password: '',
     },
@@ -83,6 +83,25 @@ export const RegisterForm = ({}: RegisterFormProps) => {
                       <div className="wrap-input">
                         <Input disabled={isPending} {...field} />
                         <label>Username</label>
+                        <span className="validation">Text err</span>
+                      </div>
+                    </div>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <div className="input-group">
+                      <div className="wrap-input">
+                        <Input disabled={isPending} {...field} />
+                        <label>Name in game</label>
                         <span className="validation">Text err</span>
                       </div>
                     </div>

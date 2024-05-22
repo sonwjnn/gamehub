@@ -76,6 +76,8 @@ export const ChatMessages = ({
     )
   }
 
+  console.log(data)
+
   return (
     <div ref={chatRef} className="flex flex-1 flex-col overflow-y-auto py-4 ">
       {!hasNextPage && <div className="flex-1" />}
@@ -98,7 +100,7 @@ export const ChatMessages = ({
         {data?.pages?.map((group, i) => (
           <Fragment key={i}>
             {group?.items?.map((message: MessageWithPlayer) => {
-              if (!message.content) return null
+              if (!message.content && !message.stickerImageSrc) return null
               const isOwner = player.id === message.player?.id
               return (
                 <>
@@ -109,7 +111,7 @@ export const ChatMessages = ({
                         currentPlayer={player}
                         player={message.player!}
                         content={message.content}
-                        // fileUrl={message.fileUrl}
+                        stickerImageSrc={message.stickerImageSrc}
                         deleted={message.deleted}
                         timestamp={format(
                           new Date(message.createdAt),
@@ -127,7 +129,7 @@ export const ChatMessages = ({
                         currentPlayer={player}
                         player={message.player!}
                         content={message.content}
-                        // fileUrl={message.fileUrl}
+                        stickerImageSrc={message.stickerImageSrc}
                         deleted={message.deleted}
                         timestamp={format(
                           new Date(message.createdAt),

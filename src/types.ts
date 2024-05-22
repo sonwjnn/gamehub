@@ -88,6 +88,7 @@ export type Player = {
 export type Message = {
   id: string
   content: string
+  stickerImageSrc: string
 
   playerId: string
   player?: Player

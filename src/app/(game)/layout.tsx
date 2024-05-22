@@ -28,8 +28,8 @@ const GameLayout = ({ children }: GameLayoutProps) => {
             {children}
           </main>
         </div>
+        <ModalProvider />
       </div>
-      <ModalProvider />
     </div>
   )
 }
