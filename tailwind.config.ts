@@ -80,6 +80,7 @@ const config = {
       },
       transitionDuration: {
         '17000': '17000ms',
+        '1500': '1500ms',
       },
       content: {
         none: 'none',

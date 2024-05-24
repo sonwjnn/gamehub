@@ -30,6 +30,8 @@ import { useModal } from '@/store/use-modal-store'
 import { useIsFolded } from '@/store/use-is-folded'
 import { useMedia } from 'react-use'
 import ChangeTable from './change-table'
+import { AutoCheckbox } from './auto-checkbox'
+import { useAutoAction } from '@/store/use-auto-action'
 
 interface TableContentProps {
   tableId: string
@@ -41,18 +43,23 @@ export const TableContent = ({ tableId }: TableContentProps) => {
   const { socket } = useSocket()
   const { onClose } = useModal()
   const { setIsFolded } = useIsFolded()
+  const { setAutoAction } = useAutoAction()
   const isMobile = useMedia('(max-width: 640px)', false)
 
   const [messages, setMessages] = useState([] as string[])
   const [match, setMatch] = useState<Match | null>(null)
   const [participants, setParticipants] = useState<Participant[]>([])
-  const [isHandVisible, setHandVisible] = useState(false)
   const [players, setPlayers] = useState<PlayerWithUser[]>([])
-  const [isShuffle, setShuffle] = useState(false)
-  const [isChipsAnimation, setChipsAnimation] = useState(false)
   const [highlightCards, setHighlightCards] = useState<HighlightCard>({
     name: '',
     cards: [],
+  })
+  const [isHandVisible, setHandVisible] = useState(false)
+  const [isShuffle, setShuffle] = useState(false)
+  const [isChipsAnimation, setChipsAnimation] = useState(false)
+  const [checkOrCallOn, setCheckOrCallOn] = useState({
+    isChecked: false,
+    callAmount: 0,
   })
 
   const matchRef = useRef<Match | null>(null)
@@ -484,14 +491,21 @@ export const TableContent = ({ tableId }: TableContentProps) => {
                 isTurn !== matchData.isTurn ||
                 isRiver !== matchData.isRiver
 
+              const hasBet = participants.some(item => item.bet > 0)
               if (isNextRound) {
-                setChipsAnimation(true)
+                if (hasBet) {
+                  setChipsAnimation(true)
 
-                setTimeout(() => {
-                  setChipsAnimation(false)
+                  setTimeout(() => {
+                    setChipsAnimation(false)
+                    setMatch(matchData)
+                    setParticipants(matchData.participants)
+                  }, 1000)
+                } else {
                   setMatch(matchData)
                   setParticipants(matchData.participants)
-                }, 1000)
+                }
+                setAutoAction({ isChecked: false, callAmount: 0 })
               } else {
                 setMatch(matchData)
                 setParticipants(matchData.participants)
@@ -630,6 +644,13 @@ export const TableContent = ({ tableId }: TableContentProps) => {
     p => p.playerId === currentPlayer?.id
   )
 
+  const canAction =
+    !currentParticipant ||
+    currentParticipant?.isFolded ||
+    !currentPlayer ||
+    players.length <= 1 ||
+    (match && match.winners?.length)
+
   return (
     <div className="wrapper md:w-full w-[86%] h-full" ref={wrapperRef}>
       <Image
@@ -642,22 +663,16 @@ export const TableContent = ({ tableId }: TableContentProps) => {
       />
 
       <div className="group_button">
-        <LeaveButton
-          tableId={tableId}
-          player={currentPlayer}
-          className={cn(
-            'hidden',
-            (!currentParticipant || currentParticipant?.isFolded) && 'block'
-          )}
-        />
-        <ChangeTable
-          tableId={tableId}
-          playerId={currentPlayer?.id}
-          className={cn(
-            'hidden',
-            (!currentParticipant || currentParticipant?.isFolded) && 'block'
-          )}
-        />
+        {canAction ? (
+          <>
+            <LeaveButton tableId={tableId} player={currentPlayer} />
+            <ChangeTable tableId={tableId} playerId={currentPlayer?.id} />
+          </>
+        ) : (
+          <>
+            <AutoCheckbox match={match} />
+          </>
+        )}
       </div>
       <div className="inner">
         <div className="list_user" ref={tableRef}>

@@ -26,7 +26,7 @@ export const UserButton = ({ type = 'default' }: Props) => {
   return (
     <>
       <div className="item flex flex-midle gap-12 item_account">
-        <div className="avatar icon sz-36 flex-shrink">
+        <div className="avatar icon sz-36 flex-shrink mx-0">
           <div className="images">
             <div className="imgDrop">
               <Image
@@ -54,7 +54,7 @@ export const UserButton = ({ type = 'default' }: Props) => {
 
         {type !== 'game' ? (
           <>
-            <span className="icon sz-20 icon-color-white flex-shrink">
+            <span className="icon sz-20 icon-color-white flex-shrink ml-auto">
               <i className="icon-down2"></i>
             </span>
             <div className="dropdown_content">

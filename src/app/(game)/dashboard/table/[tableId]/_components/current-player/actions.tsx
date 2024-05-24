@@ -3,12 +3,13 @@
 import { BetSlider } from '@/components/bet-slider'
 import { useSocket } from '@/providers/socket-provider'
 import { Match, Participant, Player, PokerActions, RaiseType } from '@/types'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { formatChipsAmount } from '@/utils/formatting'
 import { getGenderFromImageUrl, playSound } from '@/utils/sound'
 import { useIsFolded } from '@/store/use-is-folded'
 import { ActionItem } from './action-item'
 import { useKey } from 'react-use'
+import { useAutoAction } from '@/store/use-auto-action'
 
 interface CurrentPlayerActionProps {
   tableId: string
@@ -33,6 +34,7 @@ export const CurrentPlayerAction = ({
 }: CurrentPlayerActionProps) => {
   const { socket } = useSocket()
   const { setIsFolded } = useIsFolded()
+  const { isChecked, setAutoAction, callAmount } = useAutoAction()
 
   const [isProcessing, setIsProcessing] = useState(false)
 
@@ -131,6 +133,26 @@ export const CurrentPlayerAction = ({
     raise(currentStack + currentBet, PokerActions.ALLIN)
   }
 
+  const onFourKeyPress = () => {
+    const value = Math.min(bet + 0.25 * max, max)
+
+    setBet(value)
+  }
+
+  const onFiveKeyPress = () => {
+    const value = Math.max(bet - 0.25 * max, min)
+
+    setBet(value)
+  }
+
+  const onAutoCheckOrCall = () => {
+    if (canNotCall) {
+      check()
+    } else if (canNotCheck) {
+      call()
+    }
+  }
+
   const currentPot = match?.pot || 0
   const currentStack = player?.stack || 0
   const currentBet = currentParticipant?.bet || 0
@@ -155,17 +177,23 @@ export const CurrentPlayerAction = ({
     ? Math.min(match?.table?.maxBuyIn, currentStack)
     : 0
 
-  const onFourKeyPress = () => {
-    const value = Math.min(bet + 0.25 * max, max)
+  useEffect(() => {
+    if (
+      typeof callAmount === 'number' &&
+      typeof match?.callAmount === 'number' &&
+      callAmount !== match?.callAmount
+    ) {
+      setAutoAction({ isChecked: false, callAmount: 0 })
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [match?.callAmount])
 
-    setBet(value)
-  }
-
-  const onFiveKeyPress = () => {
-    const value = Math.max(bet - 0.25 * max, min)
-
-    setBet(value)
-  }
+  useEffect(() => {
+    if (isTurn && isChecked && callAmount === match?.callAmount) {
+      onAutoCheckOrCall()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isTurn])
 
   //prettier-ignore
   useKey('4', () => {

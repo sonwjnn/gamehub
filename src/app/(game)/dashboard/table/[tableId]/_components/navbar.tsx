@@ -36,31 +36,6 @@ export const Navbar = ({ table, player }: Props) => {
         />
       </Link>
       <div className="toolbar flex flex-midle">
-        <div className="flex gap-x-2">
-          {player && (
-            <>
-              {/* <Button
-                variant="primary"
-                onClick={() => onOpen('rebuy', { table })}
-              >
-                Rebuy
-              </Button> */}
-            </>
-          )}
-          {!player && (
-            <>
-              {/* <Button
-                variant="primary"
-                onClick={() => onOpen('buyIn', { table })}
-              >
-                Buyin
-              </Button> */}
-            </>
-          )}
-          <ToggleBrightness />
-          <ToggleSound />
-        </div>
-
         <div
           className="item flex flex-midle gap-8 item_rule flex-center"
           onClick={() => onOpen('rule')}
@@ -69,6 +44,9 @@ export const Navbar = ({ table, player }: Props) => {
             <i className="icon-rule" />
           </div>
         </div>
+
+        <ToggleBrightness />
+        <ToggleSound />
 
         <UserButton type="game" />
       </div>

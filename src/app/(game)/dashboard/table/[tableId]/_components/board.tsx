@@ -34,7 +34,7 @@ export const Board = ({ match, highlightCards }: BoardProps) => {
   useEffect(() => {
     if (isTurn && turnCardRef.current) {
       gsap.from(turnCardRef.current, {
-        duration: 0.5,
+        duration: 0.3,
         x: '-100vw',
         y: '-100vh',
         opacity: 0,
@@ -45,7 +45,7 @@ export const Board = ({ match, highlightCards }: BoardProps) => {
         controls.volume(0.5)
         controls.play()
         setTurnHiddenClass('')
-      }, 500)
+      }, 300)
 
       return () => clearTimeout(timer)
     }
@@ -55,7 +55,7 @@ export const Board = ({ match, highlightCards }: BoardProps) => {
   useEffect(() => {
     if (isRiver && riverCardRef.current) {
       gsap.from(riverCardRef.current, {
-        duration: 0.5,
+        duration: 0.3,
         x: '-100vw',
         y: '-100vh',
         opacity: 0,
@@ -66,7 +66,7 @@ export const Board = ({ match, highlightCards }: BoardProps) => {
         controls.volume(0.5)
         controls.play()
         setRiverHiddenClass('')
-      }, 500)
+      }, 300)
 
       return () => clearTimeout(timer)
     }
@@ -176,7 +176,7 @@ export const Board = ({ match, highlightCards }: BoardProps) => {
                   >
                     <div
                       className={cn(
-                        'pocker',
+                        'pocker !duration-700',
                         hasHighLight &&
                           !hasTurnHighlight &&
                           'before:!inset-0 before:!bg-black/30',
@@ -203,7 +203,7 @@ export const Board = ({ match, highlightCards }: BoardProps) => {
                   >
                     <div
                       className={cn(
-                        'pocker',
+                        'pocker !duration-1500 ',
                         hasHighLight &&
                           !hasRiverHighlight &&
                           'before:!inset-0 before:!bg-black/30',

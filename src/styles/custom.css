@@ -37,112 +37,131 @@
   background-color: rgba(255, 255, 255, 0.2);
 }
 
-.game-html .change_button_custom.button.before {
-  font-weight: 500;
+.page-sub .game_heading .block_light {
+  background-color: rgba(255, 255, 255, 0.1);
+  min-width: 150px;
+  border-radius: 30px;
+  overflow: hidden;
+  height: 24px;
+}
+@media (min-width: 1024px), ((min-width: 768px) and (orientation: portrait)) {
+  .page-sub .game_heading .block_light {
+    height: 36px;
+  }
+}
+.page-sub .game_heading .block_light .light {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 33.33%;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+}
+.page-sub .game_heading .block_light .light + .light {
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
+}
+.page-sub .game_heading .block_light .light:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+}
+.page-sub .game_heading .block_light .light2 .icon {
   position: relative;
-  border: 1px solid #054eb5;
-  border-radius: 50px;
-  background-color: #033e91;
-  background-image: radial-gradient(
-      75% 50% at 50% 0%,
-      rgba(165, 237, 244, 0.6588235294),
-      transparent
-    ),
-    radial-gradient(75% 35% at 50% 85%, #30a4c8, transparent);
-  -webkit-box-shadow:
-    inset 0 -2px 4px 1px rgba(7, 71, 154, 0.6),
-    inset 0 -4px 4px 1px rgb(66, 178, 212),
-    inset 0 0 2px 1px rgba(255, 255, 255, 0.2),
-    0 1px 4px 1px rgba(17, 110, 231, 0.2),
-    0 1px 4px 1px rgba(0, 0, 0, 0.1);
-  box-shadow:
-    inset 0 -2px 4px 1px rgba(7, 71, 154, 0.6),
-    inset 0 -4px 4px 1px rgb(66, 178, 212),
-    inset 0 0 2px 1px rgba(255, 255, 255, 0.2),
-    0 1px 4px 1px rgba(17, 110, 231, 0.2),
-    0 1px 4px 1px rgba(0, 0, 0, 0.1);
-  color: #fff;
-  text-align: center;
-  text-shadow: 0 1px 1px #116ee7;
-  -webkit-transition-property:
-    border-color,
-    background-color,
-    -webkit-transform;
-  transition-property:
-    border-color,
-    background-color,
-    -webkit-transform;
-  transition-property: border-color, transform, background-color;
-  transition-property:
-    border-color,
-    transform,
-    background-color,
-    -webkit-transform;
-  -webkit-transition-duration: 0.2s;
-  transition-duration: 0.2s;
-  padding: 0 12px;
+}
+.page-sub .game_heading .block_light .light2 .icon:before {
+  position: absolute;
+  content: '';
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  right: 0;
+  background-image: url(/images/icon/icon_light2.png);
+  background-size: auto 100%;
+  background-position: center right;
 }
 @media (min-width: 320px) and (orientation: portrait),
   (max-width: 1023px) and (orientation: landscape) {
-  .game-html .change_button_custom.button.before {
-    font-size: 11px;
-  }
-  .game-html .change_button_custom.button.before .icon {
-    width: 14px;
-    height: 14px;
+  .page-sub .game_heading .block_light .light .icon {
+    width: 16px;
+    height: 16px;
   }
 }
-@media (min-width: 1024px), ((min-width: 768px) and (orientation: portrait)) {
-  .game-html .change_button_custom.button.before {
-    padding: 6px 16px;
-    min-width: 8em;
-  }
+.page-sub .game_heading .block_light .light.active {
+  background-color: rgba(255, 255, 255, 0.1);
 }
-.game-html .change_button_custom.button.before::after {
-  content: '';
-  position: absolute;
-  top: 1px;
-  left: 50%;
-  -webkit-transform: translateX(-50%);
-  -ms-transform: translateX(-50%);
-  transform: translateX(-50%);
-  border-radius: 50px;
-  width: 80%;
-  height: 40%;
-  background-image: -webkit-gradient(
-    linear,
-    left top,
-    left bottom,
-    from(rgba(244, 254, 255, 0.4431372549)),
-    to(transparent)
-  );
-  background-image: linear-gradient(
-    to bottom,
-    rgba(244, 254, 255, 0.4431372549),
-    transparent
-  );
-  opacity: 0.75;
+.page-sub .game_heading .block_switch {
+  display: inline-block;
 }
-.game-html .change_button_custom.button.before:hover {
-  -webkit-transform: scale(1.04);
-  -ms-transform: scale(1.04);
-  transform: scale(1.04);
+.page-sub .game_heading .block_switch input {
+  display: none;
 }
-.game-html .change_button_custom.button.before:active {
-  border-color: #0048d5;
-  -webkit-transform: scale(0.96);
-  -ms-transform: scale(0.96);
-  transform: scale(0.96);
-  background-color: #0048d5;
+.page-sub .game_heading .block_switch input ~ label {
+  background-color: rgba(111, 111, 111, 0.4);
 }
-
-.game-html .change_item_custom.item {
-  -webkit-transition: all 0.3s;
-  transition: all 0.3s;
-  color: #fff;
-  font-weight: 500;
-  font-size: 75%;
-  line-height: 18px;
-  border: 1px solid transparent;
+.page-sub .game_heading .block_switch input ~ label::after {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+.page-sub .game_heading .block_switch input ~ label::before {
+  opacity: 0.5;
+  background-image: url(/images/icon/icon_mute.png);
+  left: 8px;
+  margin-left: 0;
+  -webkit-transform: translateX(0);
+  -ms-transform: translateX(0);
+  transform: translateX(0);
+}
+.page-sub .game_heading .block_switch input:checked ~ label {
+  border-color: #ffffff;
+  background: #0062a8;
+}
+.page-sub .game_heading .block_switch input:checked ~ label::before {
+  left: 100%;
+  opacity: 1;
+  -webkit-transform: translateX(-100%);
+  -ms-transform: translateX(-100%);
+  transform: translateX(-100%);
+  margin-left: -8px;
+  background-image: url(/images/icon/icon_volume.png);
+}
+.page-sub .game_heading .block_switch input:checked ~ label::after {
+  translate: 30px 0;
+  background: #ffaa00;
+  opacity: 0;
+}
+.page-sub .game_heading .block_switch label {
+  display: block;
+  width: 60px;
+  height: 28px;
+  padding: 3px;
+  border-radius: 15px;
   cursor: pointer;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+.page-sub .game_heading .block_switch label:before {
+  border: none;
+  width: 20px;
+  height: 20px;
+  background-size: 16px;
+  background-repeat: no-repeat;
+  background-position: center;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+.page-sub .game_heading .block_switch label:after {
+  position: static;
+  opacity: 1;
+  content: '';
+  display: inherit;
+  width: 20px;
+  height: 20px;
+  border-radius: 12px;
+  background: #ffffff;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+  opacity: 0;
 }

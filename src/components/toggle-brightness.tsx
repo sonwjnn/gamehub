@@ -4,23 +4,15 @@ import { useBrightness } from '@/store/use-brightness'
 import { useEffect, useState } from 'react'
 import { Button } from './ui/button'
 import { Sun, SunDim, SunMedium } from 'lucide-react'
+import { cn } from '@/lib/utils'
 
 const BrightnessLevels = ['normal', 'dim', 'bright']
 
 export const ToggleBrightness = () => {
   const { brightness, setBrightness } = useBrightness()
 
-  const [brightnessData, setBrightnessData] = useState(brightness)
-
-  const onBrightnessClick = () => {
-    const currentIndex = BrightnessLevels.indexOf(brightnessData)
-    const nextIndex = (currentIndex + 1) % BrightnessLevels.length
-    const newBrightness = BrightnessLevels[nextIndex] as
-      | 'normal'
-      | 'dim'
-      | 'bright'
-    setBrightnessData(newBrightness)
-    setBrightness(newBrightness)
+  const onBrightnessClick = (type: 'dim' | 'normal' | 'bright') => {
+    setBrightness(type)
   }
 
   useEffect(() => {
@@ -33,10 +25,33 @@ export const ToggleBrightness = () => {
   }, [brightness])
 
   return (
-    <Button onClick={onBrightnessClick}>
-      {brightness === 'bright' && <Sun />}
-      {brightness === 'dim' && <SunDim />}
-      {brightness === 'normal' && <SunMedium />}
-    </Button>
+    <div className="item border-left">
+      <div className="block_light flex">
+        <div
+          onClick={() => onBrightnessClick('dim')}
+          className={cn('light light1', brightness === 'dim' && 'active')}
+        >
+          <span className="icon icon-color-white sz-20">
+            <i className="icon-light1"></i>
+          </span>
+        </div>
+        <div
+          onClick={() => onBrightnessClick('normal')}
+          className={cn('light light2', brightness === 'normal' && 'active')}
+        >
+          <span className="icon icon-color-white sz-20">
+            <i className="icon-light1"></i>
+          </span>
+        </div>
+        <div
+          onClick={() => onBrightnessClick('bright')}
+          className={cn('light light3', brightness === 'bright' && 'active')}
+        >
+          <span className="icon icon-color-white sz-20">
+            <i className="icon-light2"></i>
+          </span>
+        </div>
+      </div>
+    </div>
   )
 }

@@ -18,8 +18,12 @@ export const Actions = ({}: ActionsProps) => {
       {/* <div className="mr-[24px]">
         <SocketIndicator />
       </div> */}
-      <ToggleSound />
-      <ToggleBrightness />
+
+      <div className="flex gap-x-3 mx-3">
+        <ToggleSound />
+        <ToggleBrightness />
+      </div>
+
       <Link
         href="/dashboard/table"
         className="item btn_play flex flex-midle gap-8"
@@ -29,6 +33,7 @@ export const Actions = ({}: ActionsProps) => {
         </div>
         <span>PLAY </span>
       </Link>
+
       <div
         className="item flex flex-midle gap-8 item_rule flex-center"
         onClick={() => onOpen('rule')}
@@ -37,6 +42,7 @@ export const Actions = ({}: ActionsProps) => {
           <i className="icon-rule" />
         </div>
       </div>
+
       <UserButton />
       <MobileToggle />
     </div>

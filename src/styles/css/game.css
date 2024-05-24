@@ -3915,10 +3915,29 @@ html {
   transform: scale(0.96);
   background-color: #0048d5;
 }
+.game-html .game_heading .toolbar .item_account {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
 @media (min-width: 1024px), ((min-width: 768px) and (orientation: portrait)) {
   .game-html .game_heading .toolbar .item_account {
     min-width: 180px;
   }
+}
+.game-html .game_heading .toolbar .border-left {
+  padding: 0 16px;
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
 }
 .game-html .game_heading .btn_cash {
   background: #ef6c00;
@@ -4024,6 +4043,134 @@ html {
   outline: none;
   border: none;
   background-color: rgba(255, 255, 255, 0.05);
+}
+.game-html .game_heading .block_light {
+  background-color: rgba(255, 255, 255, 0.1);
+  min-width: 150px;
+  border-radius: 30px;
+  overflow: hidden;
+  height: 24px;
+}
+@media (min-width: 1024px), ((min-width: 768px) and (orientation: portrait)) {
+  .game-html .game_heading .block_light {
+    height: 36px;
+  }
+}
+.game-html .game_heading .block_light .light {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 33.33%;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+}
+.game-html .game_heading .block_light .light + .light {
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
+}
+.game-html .game_heading .block_light .light:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+}
+.game-html .game_heading .block_light .light2 .icon {
+  position: relative;
+}
+.game-html .game_heading .block_light .light2 .icon:before {
+  position: absolute;
+  content: '';
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  right: 0;
+  background-image: url(/images/icon/icon_light2.png);
+  background-size: auto 100%;
+  background-position: center right;
+}
+@media (min-width: 320px) and (orientation: portrait),
+  (max-width: 1023px) and (orientation: landscape) {
+  .game-html .game_heading .block_light .light .icon {
+    width: 16px;
+    height: 16px;
+  }
+}
+.game-html .game_heading .block_light .light.active {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+.game-html .game_heading .block_switch {
+  display: inline-block;
+}
+.game-html .game_heading .block_switch input {
+  display: none;
+}
+.game-html .game_heading .block_switch input ~ label {
+  background-color: rgba(111, 111, 111, 0.4);
+}
+.game-html .game_heading .block_switch input ~ label::after {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+.game-html .game_heading .block_switch input ~ label::before {
+  opacity: 0.5;
+  background-image: url(/images/icon/icon_mute.png);
+  left: 8px;
+  margin-left: 0;
+  -webkit-transform: translateX(0);
+  -ms-transform: translateX(0);
+  transform: translateX(0);
+}
+.game-html .game_heading .block_switch input:checked ~ label {
+  border-color: #ffffff;
+  background: #0062a8;
+}
+.game-html .game_heading .block_switch input:checked ~ label::before {
+  left: 100%;
+  opacity: 1;
+  -webkit-transform: translateX(-100%);
+  -ms-transform: translateX(-100%);
+  transform: translateX(-100%);
+  margin-left: -8px;
+  background-image: url(/images/icon/icon_volume.png);
+}
+.game-html .game_heading .block_switch input:checked ~ label::after {
+  translate: 30px 0;
+  background: #ffaa00;
+  opacity: 0;
+}
+.game-html .game_heading .block_switch label {
+  display: block;
+  width: 60px;
+  height: 28px;
+  padding: 3px;
+  border-radius: 15px;
+  cursor: pointer;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+.game-html .game_heading .block_switch label:before {
+  border: none;
+  width: 20px;
+  height: 20px;
+  background-size: 16px;
+  background-repeat: no-repeat;
+  background-position: center;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+.game-html .game_heading .block_switch label:after {
+  position: static;
+  opacity: 1;
+  content: '';
+  display: inherit;
+  width: 20px;
+  height: 20px;
+  border-radius: 12px;
+  background: #ffffff;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+  opacity: 0;
 }
 .game-html .group_button {
   position: fixed;

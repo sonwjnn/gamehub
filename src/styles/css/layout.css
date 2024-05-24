@@ -61,6 +61,10 @@ img {
   width: 24px;
   height: 24px;
 }
+.icon.sz-28 {
+  width: 28px;
+  height: 28px;
+}
 .icon.sz-30 {
   width: 30px;
   height: 30px;
@@ -204,6 +208,12 @@ img {
 }
 .icon-leave {
   background-image: url(/images/icon/icon_leave.png);
+}
+.icon-light1 {
+  background-image: url(/images/icon/icon_light1.png);
+}
+.icon-light2 {
+  background-image: url(/images/icon/icon_light2.png);
 }
 .icon-color-black {
   -webkit-filter: brightness(0) saturate(100%) invert(0%) sepia(91%)
