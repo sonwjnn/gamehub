@@ -4,13 +4,21 @@ import { Checkbox } from '@/components/ui/checkbox'
 import { cn } from '@/lib/utils'
 import { useAutoAction } from '@/store/use-auto-action'
 import { Match } from '@/types'
-import { useEffect } from 'react'
 
 interface AutoCheckboxProps {
-  match: Match | null
+  match: Match | undefined | null
+  type:
+    | 'check'
+    | 'fold'
+    | 'call'
+    | 'raise'
+    | 'allIn'
+    | 'quarter'
+    | 'half'
+    | 'full'
 }
 
-export const AutoCheckbox = ({ match }: AutoCheckboxProps) => {
+export const AutoCheckbox = ({ match, type }: AutoCheckboxProps) => {
   const { isChecked, setAutoAction, callAmount } = useAutoAction()
 
   const onToggle = () => {
@@ -19,28 +27,28 @@ export const AutoCheckbox = ({ match }: AutoCheckboxProps) => {
       typeof match?.callAmount === 'number' &&
       callAmount !== match?.callAmount
     ) {
-      if (!isChecked) {
-        setAutoAction({ isChecked: true, callAmount: match?.callAmount })
+      if (isChecked === type) {
+        setAutoAction({ isChecked: '', callAmount: 0 })
       } else {
-        setAutoAction({ isChecked: false, callAmount: 0 })
+        setAutoAction({ isChecked: type, callAmount: match?.callAmount })
       }
     } else {
-      setAutoAction({ isChecked: !isChecked })
+      if (isChecked === type) {
+        setAutoAction({ isChecked: '' })
+      } else {
+        setAutoAction({ isChecked: type })
+      }
     }
   }
 
   return (
     <div className="flex items-center space-x-2">
-      <Checkbox id="leave" checked={isChecked} onCheckedChange={onToggle} />
-      <label
-        htmlFor="leave"
-        className={cn(
-          'text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70',
-          isChecked ? 'text-primary' : 'text-gray-500'
-        )}
-      >
-        Auto check or call
-      </label>
+      <Checkbox
+        id="leave"
+        checked={isChecked === type}
+        onCheckedChange={onToggle}
+        className={cn(isChecked ? 'text-primary' : 'text-gray-500')}
+      />
     </div>
   )
 }

@@ -138,8 +138,5 @@ export const getStarRating = (card1: string, card2: string): number => {
     .join('')
   if (sameSuit) cardsString += 's'
 
-  console.log('cardsString', cardsString)
-  console.log('starRatings[cardsString]', starRatings[cardsString])
-
   return starRatings[cardsString] || 1
 }

@@ -1,27 +1,32 @@
 import { create } from 'zustand'
 
+type checkedType =
+  | 'check'
+  | 'fold'
+  | 'call'
+  | 'raise'
+  | 'allIn'
+  | 'quarter'
+  | 'half'
+  | 'full'
+  | ''
+
 interface AutoActionProps {
-  isChecked: boolean
+  isChecked: checkedType
   callAmount: number
   setAutoAction: ({
     isChecked,
     callAmount,
   }: {
-    isChecked?: boolean
+    isChecked?: checkedType
     callAmount?: number
   }) => void
 }
 
 export const useAutoAction = create<AutoActionProps>()(set => ({
-  isChecked: false,
+  isChecked: '',
   callAmount: 0,
-  setAutoAction: ({
-    isChecked,
-    callAmount,
-  }: {
-    isChecked?: boolean
-    callAmount?: number
-  }) => {
+  setAutoAction: ({ isChecked, callAmount }) => {
     set(state => ({
       ...state,
       isChecked: isChecked ?? state.isChecked,

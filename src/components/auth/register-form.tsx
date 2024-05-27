@@ -142,7 +142,6 @@ export const RegisterForm = ({}: RegisterFormProps) => {
                           disabled={isPending}
                           className="form-control"
                           type="password"
-                          placeholder="Password"
                           {...field}
                         />
                         <label>Password</label>

@@ -505,7 +505,7 @@ export const TableContent = ({ tableId }: TableContentProps) => {
                   setMatch(matchData)
                   setParticipants(matchData.participants)
                 }
-                setAutoAction({ isChecked: false, callAmount: 0 })
+                setAutoAction({ isChecked: '', callAmount: 0 })
               } else {
                 setMatch(matchData)
                 setParticipants(matchData.participants)
@@ -669,9 +669,7 @@ export const TableContent = ({ tableId }: TableContentProps) => {
             <ChangeTable tableId={tableId} playerId={currentPlayer?.id} />
           </>
         ) : (
-          <>
-            <AutoCheckbox match={match} />
-          </>
+          <></>
         )}
       </div>
       <div className="inner">

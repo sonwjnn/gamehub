@@ -10,6 +10,8 @@ import { useIsFolded } from '@/store/use-is-folded'
 import { ActionItem } from './action-item'
 import { useKey } from 'react-use'
 import { useAutoAction } from '@/store/use-auto-action'
+import matchApi from '@/services/api/modules/match-api'
+import { cn } from '@/lib/utils'
 
 interface CurrentPlayerActionProps {
   tableId: string
@@ -134,23 +136,15 @@ export const CurrentPlayerAction = ({
   }
 
   const onFourKeyPress = () => {
-    const value = Math.min(bet + 0.25 * max, max)
+    const value = Math.max(bet - Math.round(0.25 * max), min)
 
     setBet(value)
   }
 
   const onFiveKeyPress = () => {
-    const value = Math.max(bet - 0.25 * max, min)
+    const value = Math.min(bet + Math.round(0.25 * max), max)
 
     setBet(value)
-  }
-
-  const onAutoCheckOrCall = () => {
-    if (canNotCall) {
-      check()
-    } else if (canNotCheck) {
-      call()
-    }
   }
 
   const currentPot = match?.pot || 0
@@ -177,24 +171,6 @@ export const CurrentPlayerAction = ({
     ? Math.min(match?.table?.maxBuyIn, currentStack)
     : 0
 
-  useEffect(() => {
-    if (
-      typeof callAmount === 'number' &&
-      typeof match?.callAmount === 'number' &&
-      callAmount !== match?.callAmount
-    ) {
-      setAutoAction({ isChecked: false, callAmount: 0 })
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [match?.callAmount])
-
-  useEffect(() => {
-    if (isTurn && isChecked && callAmount === match?.callAmount) {
-      onAutoCheckOrCall()
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isTurn])
-
   //prettier-ignore
   useKey('4', () => {
     if(!isTurn || isProcessing) return 
@@ -213,82 +189,107 @@ export const CurrentPlayerAction = ({
     <>
       <div className="toolbar">
         <ActionItem
+          type="quarter"
           shortcut="7"
           label="쿼터"
           onClick={onQuarter}
           disabled={!isTurn || isProcessing || !canQuarter}
           amount={quarter}
+          match={match}
+          isTurn={isTurn}
         />
 
         <ActionItem
+          type="half"
           shortcut="8"
           label="하프"
           onClick={onHalf}
           disabled={!isTurn || isProcessing || !canHalf}
+          isTurn={isTurn}
+          match={match}
           amount={half}
         />
 
         <ActionItem
+          type="full"
           shortcut="9"
           label="풀"
           onClick={onFull}
           disabled={!isTurn || isProcessing || !canFull}
+          match={match}
+          isTurn={isTurn}
           amount={currentPot}
         />
 
         <button
-          className="item disabled:pointer-events-none disabled:opacity-50"
-          disabled={!isTurn || isProcessing}
+          className={cn('item ', (!isTurn || isProcessing) && 'opacity-80')}
         >
-          {/* <span className="number number_left">4 </span> */}
           <span className="number number_left">4</span>
           <span className="number">5</span>
           <BetSlider bet={bet} setBet={setBet} min={min} max={max} />
         </button>
 
         <ActionItem
+          type="raise"
           shortcut="6"
           label="라이즈"
           onClick={onRaise}
+          match={match}
+          isTurn={isTurn}
           disabled={!isTurn || isProcessing}
         />
 
         {!canNotCall ? (
           <ActionItem
+            type="call"
             shortcut="1"
             label="콜"
             onClick={call}
             disabled={!isTurn || isProcessing || canNotCall}
+            isTurn={isTurn}
             amount={callSize}
+            match={match}
           />
         ) : !canNotCheck ? (
           <ActionItem
+            type="check"
             shortcut="1"
             label="체크"
             onClick={check}
+            match={match}
+            isTurn={isTurn}
             disabled={!isTurn || isProcessing || canNotCheck}
           />
         ) : (
           <ActionItem
+            type="call"
             shortcut="1"
             label="콜"
             onClick={call}
+            match={match}
+            isTurn={isTurn}
             disabled={!isTurn || isProcessing || canNotCall}
             amount={callSize}
           />
         )}
 
         <ActionItem
+          type="fold"
           shortcut="2"
           label="다이"
           onClick={fold}
+          match={match}
+          isTurn={isTurn}
           disabled={!isTurn || isProcessing}
         />
 
         <ActionItem
+          type="allIn"
           shortcut="3"
           label="올인"
+          match={match}
           onClick={onAllIn}
+          isTurn={isTurn}
           disabled={!isTurn || isProcessing}
         />
       </div>
