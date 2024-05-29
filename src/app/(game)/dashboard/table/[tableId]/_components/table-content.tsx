@@ -21,16 +21,20 @@ import { useSocket } from '@/providers/socket-provider'
 
 import { LeaveButton } from './leave-button'
 import { cn } from '@/lib/utils'
-import { WinnerModal } from './winner-modal'
+import { WinDefaultModal } from '@/components/modals/quality/win-default-modal'
 import playerApi from '@/services/api/modules/player-api'
 import { useRouter } from 'next/navigation'
 import { ShowdownModal } from './showdown-modal'
+import { FlushModal } from '@/components/modals/quality/flush-modal'
+import { FourCardModal } from '@/components/modals/quality/fourcard-modal'
+import { FullHouseModal } from '@/components/modals/quality/full-house-modal'
+import { RoyalFlushModal } from '@/components/modals/quality/royal-flush-modal'
+import { StraightFlushModal } from '@/components/modals/quality/straight-flush-modal'
+import { StraightModal } from '@/components/modals/quality/straight-modal'
 import { Button } from '@/components/ui/button'
 import { useModal } from '@/store/use-modal-store'
 import { useIsFolded } from '@/store/use-is-folded'
-import { useMedia } from 'react-use'
 import ChangeTable from './change-table'
-import { AutoCheckbox } from './auto-checkbox'
 import { useAutoAction } from '@/store/use-auto-action'
 
 interface TableContentProps {
@@ -39,12 +43,11 @@ interface TableContentProps {
 
 export const TableContent = ({ tableId }: TableContentProps) => {
   const user = useCurrentUser()
-  const router = useRouter()
   const { socket } = useSocket()
   const { onClose } = useModal()
   const { setIsFolded } = useIsFolded()
   const { setAutoAction } = useAutoAction()
-  const isMobile = useMedia('(max-width: 640px)', false)
+  const { onOpen } = useModal()
 
   const [messages, setMessages] = useState([] as string[])
   const [match, setMatch] = useState<Match | null>(null)
@@ -57,10 +60,6 @@ export const TableContent = ({ tableId }: TableContentProps) => {
   const [isHandVisible, setHandVisible] = useState(false)
   const [isShuffle, setShuffle] = useState(false)
   const [isChipsAnimation, setChipsAnimation] = useState(false)
-  const [checkOrCallOn, setCheckOrCallOn] = useState({
-    isChecked: false,
-    callAmount: 0,
-  })
 
   const matchRef = useRef<Match | null>(null)
   const tableRef = useRef<HTMLDivElement | null>(null)
@@ -104,6 +103,7 @@ export const TableContent = ({ tableId }: TableContentProps) => {
         card.className = isCurrentPlayer
           ? 'player-card current-player-card'
           : 'player-card'
+
         card.textContent = i.toString()
         table?.appendChild(card)
       }
@@ -129,7 +129,7 @@ export const TableContent = ({ tableId }: TableContentProps) => {
       })
 
       gsap.to('.current-player-card', {
-        scale: 1.55,
+        scale: 1.36,
         zIndex: 100,
       })
 
@@ -217,9 +217,7 @@ export const TableContent = ({ tableId }: TableContentProps) => {
           x: deltaX,
           y: deltaY,
           ease: 'power3.out',
-          onComplete() {
-            // Hoàn tất hoạt ảnh
-          },
+          onComplete() {},
         })
       })
 
@@ -651,6 +649,17 @@ export const TableContent = ({ tableId }: TableContentProps) => {
     players.length <= 1 ||
     (match && match.winners?.length)
 
+  const isWinner = match?.winners?.some(w => w.id === currentPlayer?.id)
+
+  const canShowHand = match && isWinner && !match.isShowdown
+
+  const showHand = () => {
+    socket?.emit(PokerActions.SHOW_HAND, {
+      tableId,
+      playerId: currentPlayer?.id,
+    })
+  }
+
   return (
     <div className="wrapper md:w-full w-[86%] h-full" ref={wrapperRef}>
       <Image
@@ -671,6 +680,17 @@ export const TableContent = ({ tableId }: TableContentProps) => {
         ) : (
           <></>
         )}
+        {canShowHand && <Button onClick={showHand}>Show hand</Button>}
+      </div>
+      <div
+        className="btn_cash_chip btn_cash_chip_sp"
+        id="btn_cash"
+        onClick={() => onOpen('rebuy', { tableId })}
+      >
+        Nạp
+        <span className="icon sz-16 icon-color-white">
+          <i className="icon-cash"></i>
+        </span>
       </div>
       <div className="inner">
         <div className="list_user" ref={tableRef}>
@@ -694,7 +714,13 @@ export const TableContent = ({ tableId }: TableContentProps) => {
               )
             })}
             <ShowdownModal match={match} participants={participants} />
-            <WinnerModal match={match} />
+            <WinDefaultModal match={match} />
+            <RoyalFlushModal match={match} />
+            <FlushModal match={match} />
+            <StraightModal match={match} />
+            <StraightFlushModal match={match} />
+            <FourCardModal match={match} />
+            <FullHouseModal match={match} />
           </div>
         </div>
       </div>

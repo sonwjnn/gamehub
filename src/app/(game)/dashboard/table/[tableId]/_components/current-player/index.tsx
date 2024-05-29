@@ -16,7 +16,6 @@ import { useSocket } from '@/providers/socket-provider'
 import { cn } from '@/lib/utils'
 import { formatChipsAmount, getStarRating } from '@/utils/formatting'
 import sounds from '@/utils/contants/sound'
-import { useIsWinner } from '@/store/use-is-winner'
 import playerApi from '@/services/api/modules/player-api'
 import { useRouter } from 'next/navigation'
 import { CoinBet } from '@/components/coin-bet'
@@ -26,6 +25,7 @@ import { useModal } from '@/store/use-modal-store'
 import { ReviewStars } from './review-stars'
 import { CoinAnimate } from '@/components/coin-animate'
 import { useIsFolded } from '@/store/use-is-folded'
+import { showModalByHandName } from '@/utils/poker'
 
 interface CurrentPlayerProps {
   isShowdown?: boolean
@@ -50,7 +50,6 @@ export const CurrentPlayer = ({
   const { setIsFolded } = useIsFolded()
 
   const router = useRouter()
-  const { setIsWinner } = useIsWinner()
   const [imageUrlFirst, setImageUrlFirst] = useState('')
   const [imageUrlSecond, setImageUrlSecond] = useState('')
   const [isAction, setIsAction] = useState(false)
@@ -73,7 +72,6 @@ export const CurrentPlayer = ({
   const isFolded = currentParticipant?.isFolded
   const isHaveWinner = (match?.winners?.length ?? 0) > 0
   const isWinner = !isFolded && match?.winners?.some(w => w.id === player?.id)
-  const isOverOneWinner = (match?.winners?.length ?? 0) > 1
   const isTurn = !isFolded && player?.isTurn
   const isShowdown = match?.isShowdown
   const isUnfoldedParticipant = currentParticipant?.isFolded ? false : true
@@ -210,7 +208,7 @@ export const CurrentPlayer = ({
         } else {
           new Audio(sounds.soundLose).play()
         }
-        setIsWinner(true)
+        showModalByHandName({ match, onOpen })
       }, 2000)
 
       return () => clearTimeout(timeoutId)

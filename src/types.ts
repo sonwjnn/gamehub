@@ -243,6 +243,8 @@ export enum PokerActions {
   FULL = 'FULL',
   ALLIN = 'ALLIN',
   WINNER = 'WINNER',
+  SHOW_HAND = 'SHOW_HAND',
+  HAND_SHOWED = 'HAND_SHOWED',
   FETCH_LOBBY_INFO = 'FETCH_LOBBY_INFO',
   RECEIVE_LOBBY_INFO = 'RECEIVE_LOBBY_INFO',
   PLAYERS_UPDATED = 'PLAYERS_UPDATED',
@@ -272,4 +274,17 @@ export enum RaiseType {
   HALF = 'HALF',
   FULL = 'FULL',
   ALLIN = 'ALLIN',
+}
+
+export enum WinnerHandType {
+  RoyalFlush = 'RoyalFlush',
+  StraightFlush = 'StraightFlush',
+  FourOfAKind = 'FourOfAKind',
+  FullHouse = 'FullHouse',
+  Flush = 'Flush',
+  Straight = 'Straight',
+  ThreeOfAKind = 'ThreeOfAKind',
+  TwoPair = 'TwoPair',
+  Pair = 'Pair',
+  HighCard = 'HighCard',
 }

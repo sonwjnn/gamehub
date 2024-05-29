@@ -184,6 +184,7 @@ export const OtherPlayer = ({
           <div className="right">
             {!isWaiting && !isFolded && (
               <Hand
+                playerId={player?.id}
                 imageUrlFirst={imageUrlFirst}
                 imageUrlSecond={imageUrlSecond}
                 isShowdown={isShowdown}

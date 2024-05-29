@@ -352,6 +352,246 @@
   -ms-transform: rotate(-45deg);
   transform: rotate(-45deg);
 }
+.page-sub .game_heading .btn_cash {
+  background: #ef6c00;
+  padding: 0 12px 2px;
+  border-radius: 12px;
+  margin-left: 10px;
+  font-size: 12px;
+  line-height: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+.page-sub .game_heading .dropdown_cash {
+  position: absolute;
+  top: 100%;
+  height: 160px;
+  right: 0;
+  width: 340px;
+  margin-top: 2px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0 0 8px 8px;
+  background-color: #00152d;
+  border-top: none;
+  padding: 8px 24px;
+}
+.page-sub .game_heading .dropdown_cash .btn_submit {
+  display: block;
+  width: 100%;
+  height: 40px !important;
+  border: none;
+  background-color: #ffaa00;
+  border-radius: 4px;
+  font-weight: 500;
+  font-size: 14px;
+}
+.page-sub .game_heading .dropdown_cash .btn_submit span {
+  height: 38px;
+  line-height: 38px;
+  border-radius: 4px;
+}
+.page-sub .game_heading .dropdown_cash .row > * {
+  padding: 0 4px !important;
+}
+.page-sub .game_heading .dropdown_cash .input-group {
+  padding-bottom: 8px;
+}
+.page-sub .game_heading .dropdown_cash .input-group label {
+  font-weight: normal;
+}
+.page-sub .game_heading .dropdown_cash .input-group .form-control {
+  height: 40px;
+  border: none;
+}
+.page-sub
+  .game_heading
+  .dropdown_cash
+  .input-group
+  .form-control:required:invalid:not(:-moz-placeholder-shown)
+  ~ label {
+  top: 2px;
+}
+.page-sub
+  .game_heading
+  .dropdown_cash
+  .input-group
+  .form-control:required:invalid:not(:-ms-input-placeholder)
+  ~ label {
+  top: 2px;
+}
+.page-sub
+  .game_heading
+  .dropdown_cash
+  .input-group
+  .form-control:-moz-read-only
+  ~ label {
+  top: 2px;
+}
+.page-sub .game_heading .dropdown_cash .input-group .form-control:focus ~ label,
+.page-sub
+  .game_heading
+  .dropdown_cash
+  .input-group
+  .form-control:read-only
+  ~ label,
+.page-sub
+  .game_heading
+  .dropdown_cash
+  .input-group
+  .form-control:required:invalid:not(:placeholder-shown)
+  ~ label,
+.page-sub
+  .game_heading
+  .dropdown_cash
+  .input-group
+  .form-control:valid
+  ~ label {
+  top: 2px;
+}
+.page-sub .game_heading .dropdown_cash .input-group .form-control:focus {
+  outline: none;
+  border: none;
+  background-color: rgba(255, 255, 255, 0.05);
+}
+.page-sub .game_heading .block_light {
+  background-color: rgba(255, 255, 255, 0.1);
+  min-width: 150px;
+  border-radius: 30px;
+  overflow: hidden;
+  height: 22px;
+}
+@media (min-width: 1024px), ((min-width: 768px) and (orientation: portrait)) {
+  .page-sub .game_heading .block_light {
+    height: 36px;
+  }
+}
+.page-sub .game_heading .block_light .light {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 33.33%;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+}
+.page-sub .game_heading .block_light .light + .light {
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
+}
+.page-sub .game_heading .block_light .light:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+}
+.page-sub .game_heading .block_light .light2 .icon {
+  position: relative;
+}
+.page-sub .game_heading .block_light .light2 .icon:before {
+  position: absolute;
+  content: '';
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  right: 0;
+  background-image: url(/images/icon/icon_light2.png);
+  background-size: auto 100%;
+  background-position: center right;
+}
+@media (min-width: 320px) and (orientation: portrait),
+  (max-width: 1023px) and (orientation: landscape) {
+  .page-sub .game_heading .block_light .light .icon {
+    width: 16px;
+    height: 16px;
+  }
+}
+.page-sub .game_heading .block_light .light.active {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+.page-sub .game_heading .block_switch {
+  display: inline-block;
+}
+.page-sub .game_heading .block_switch input {
+  display: none;
+}
+.page-sub .game_heading .block_switch input ~ label {
+  background-color: rgba(111, 111, 111, 0.4);
+}
+.page-sub .game_heading .block_switch input ~ label::after {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+.page-sub .game_heading .block_switch input ~ label::before {
+  opacity: 0.5;
+  background-image: url(/images/icon/icon_mute.png);
+  left: 8px;
+  margin-left: 0;
+  -webkit-transform: translateX(0);
+  -ms-transform: translateX(0);
+  transform: translateX(0);
+}
+.page-sub .game_heading .block_switch input:checked ~ label {
+  border-color: #ffffff;
+  background: #0062a8;
+}
+.page-sub .game_heading .block_switch input:checked ~ label::before {
+  left: 100%;
+  opacity: 1;
+  -webkit-transform: translateX(-100%);
+  -ms-transform: translateX(-100%);
+  transform: translateX(-100%);
+  margin-left: -8px;
+  background-image: url(/images/icon/icon_volume.png);
+}
+.page-sub .game_heading .block_switch input:checked ~ label::after {
+  translate: 30px 0;
+  background: #ffaa00;
+  opacity: 0;
+}
+.page-sub .game_heading .block_switch label {
+  display: block;
+  width: 60px;
+  padding: 3px;
+  border-radius: 15px;
+  cursor: pointer;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+  height: 22px;
+}
+@media (min-width: 1024px), ((min-width: 768px) and (orientation: portrait)) {
+  .page-sub .game_heading .block_switch label {
+    height: 28px;
+  }
+}
+.page-sub .game_heading .block_switch label:before {
+  border: none;
+  background-repeat: no-repeat;
+  background-position: center;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+  background-size: 12px;
+  width: 14px;
+  height: 14px;
+}
+@media (min-width: 1024px), ((min-width: 768px) and (orientation: portrait)) {
+  .page-sub .game_heading .block_switch label:before {
+    width: 20px;
+    height: 20px;
+    background-size: 16px;
+  }
+}
+.page-sub .game_heading .block_switch label:after {
+  position: static;
+  opacity: 1;
+  content: '';
+  display: inherit;
+  width: 20px;
+  height: 20px;
+  border-radius: 12px;
+  background: #ffffff;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+  opacity: 0;
+}
 .page-sub body.open_nav {
   overflow: hidden;
 }

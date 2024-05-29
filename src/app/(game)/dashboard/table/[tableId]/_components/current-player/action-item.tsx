@@ -82,7 +82,7 @@ export const ActionItem = ({
       {amount !== undefined && (
         <div className="view_money">{formatChipsAmount(amount || 0)}$</div>
       )}
-      {!isTurn && <AutoCheckbox match={match} type={type} />}
+      {!isTurn && match && <AutoCheckbox match={match} type={type} />}
     </button>
   )
 }

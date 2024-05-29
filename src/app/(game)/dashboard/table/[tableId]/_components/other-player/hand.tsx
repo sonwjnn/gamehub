@@ -1,8 +1,11 @@
 import { cn } from '@/lib/utils'
 import { Card } from '../card'
 import { useEffect, useState } from 'react'
+import { useSocket } from '@/providers/socket-provider'
+import { PokerActions } from '@/types'
 
 interface HandProps {
+  playerId: string | undefined
   isShowdown?: boolean
   imageUrlFirst: string
   imageUrlSecond: string
@@ -11,12 +14,14 @@ interface HandProps {
 }
 
 export const Hand = ({
+  playerId,
   imageUrlFirst,
   imageUrlSecond,
   isShowdown,
   isHidden = true,
   isWinner = false,
 }: HandProps) => {
+  const { socket } = useSocket()
   const [showdownDelay, setShowdownDelay] = useState(false)
 
   useEffect(() => {
@@ -30,6 +35,33 @@ export const Hand = ({
       setShowdownDelay(false)
     }
   }, [isShowdown])
+
+  useEffect(() => {
+    if (socket) {
+      socket.on(
+        PokerActions.HAND_SHOWED,
+        ({
+          tableId,
+          playerId: playerSocketId,
+        }: {
+          tableId: string
+          playerId: string
+        }) => {
+          if (!playerId) return
+
+          if (playerSocketId === playerId) {
+            setShowdownDelay(true)
+          }
+        }
+      )
+    }
+
+    return () => {
+      if (socket) {
+        socket.off(PokerActions.HAND_SHOWED)
+      }
+    }
+  }, [socket, playerId])
 
   return (
     <div

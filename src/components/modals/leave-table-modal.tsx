@@ -78,9 +78,11 @@ export const LeaveTableModal = () => {
       <div className="modal_dialog sz-lg">
         <div className="modal_content  max-w-[500px] flex-grow-0">
           <div className="modal_head">
-            GO TO VIEWER
+            LEAVE TABLE
             <div className="btn_close modal_close" onClick={onClose}>
-              <X className="mt-3" size={24} />
+              <span className="icon sz-24">
+                <i className="icon_close"></i>
+              </span>
             </div>
           </div>
           <div className="modal_body space-y-6">

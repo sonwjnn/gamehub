@@ -1,45 +1,41 @@
 'use client'
 
 import { cn } from '@/lib/utils'
-import { useIsWinner } from '@/store/use-is-winner'
 import { Match } from '@/types'
 import { formattedStringToCards } from '@/utils/formatting'
 import Image from 'next/image'
 import { useEffect } from 'react'
+import { useModal } from '@/store/use-modal-store'
 
-interface WinnerModalProps {
+interface WinDefaultModalProps {
   match: Match | null
 }
 
-export const WinnerModal = ({ match }: WinnerModalProps) => {
-  const { isWinner, setIsWinner } = useIsWinner()
+export const WinDefaultModal = ({ match }: WinDefaultModalProps) => {
+  const { isOpen, onClose, type } = useModal()
+
+  const isModalOpen = isOpen && type === 'winDefault'
 
   useEffect(() => {
-    let timeoutId: NodeJS.Timeout | null = null
-
-    if (isWinner) {
-      timeoutId = setTimeout(() => {
-        setIsWinner(false)
+    if (isModalOpen) {
+      setTimeout(() => {
+        onClose()
       }, 5000)
     }
+  }, [isModalOpen, onClose])
 
-    return () => {
-      if (timeoutId) {
-        clearTimeout(timeoutId)
-      }
-    }
-  }, [isWinner, setIsWinner])
+  const winMessages = match?.winMessages || []
 
-  if (!match || !match.winMessages || !match.winMessages.length) return null
+  const lastWinMessage = winMessages[winMessages.length - 1]
 
-  const lastWinMessage = match.winMessages[match.winMessages.length - 1]
+  if (!lastWinMessage) return null
 
   const isShowdown = match?.isShowdown
 
   const bestHandCards = formattedStringToCards(lastWinMessage.bestHand || `[]`)
 
   return (
-    <div className={cn('status_win !z-10', isWinner && 'active')}>
+    <div className={cn('status_win !z-10', isModalOpen && 'active')}>
       <div className="content_top">
         <div className="list">
           {isShowdown &&

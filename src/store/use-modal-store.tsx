@@ -11,8 +11,15 @@ export type ModalType =
   | 'rule'
   | 'quality'
   | 'feeling'
+  | 'flush'
+  | 'fullHouse'
+  | 'straight'
+  | 'straightFlush'
+  | 'royalFlush'
+  | 'fourCard'
+  | 'winDefault'
 
-interface ModalData {
+export interface ModalData {
   tableId?: string
   table?: Table
   player?: Player

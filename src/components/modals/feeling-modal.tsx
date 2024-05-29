@@ -17,7 +17,9 @@ export const FeelingModal = () => {
           <div className="modal_head">
             CẢM XÚC
             <div className="btn_close modal_close" onClick={onClose}>
-              <X className="mt-3" size={24} />
+              <span className="icon sz-24">
+                <i className="icon_close"></i>
+              </span>
             </div>
           </div>
           <div className="modal_body">
