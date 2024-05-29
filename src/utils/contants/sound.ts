@@ -23,6 +23,19 @@ const soundWin = '/sounds/sound_win.mp3'
 const soundCoin = '/sounds/sound_coin.mp3'
 const soundCountdown = '/sounds/sound_countdown.mp3'
 const showdown = '/sounds/showdown.mp3'
+const soundStrongCongrats = '/sounds/table/strong_congrats.mp3'
+const soundWeakCongrats = '/sounds/table/weak_congrats.mp3'
+const soundTurnRiver = '/sounds/table/turn_river.mp3'
+const soundFlush = '/sounds/table/flush.mp3'
+// const soundThreeCards = '/sounds/table/three_of_kind.mp3'
+const soundTwoPair = '/sounds/table/two_pair.mp3'
+
+const soundStraight = '/sounds/table/straight.mp3'
+const soundHighCard = '/sounds/table/high_card.mp3'
+const soundFullHouse = '/sounds/table/full_house.mp3'
+const soundRoyalFlush = '/sounds/table/royal_flush.mp3'
+const soundFourCards = '/sounds/table/four_cards.mp3'
+const soundStraightFlush = '/sounds/table/straight_flush.mp3'
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
@@ -50,4 +63,16 @@ export default {
   soundCoin,
   soundCountdown,
   showdown,
+  soundStrongCongrats,
+  soundWeakCongrats,
+  soundTurnRiver,
+  soundTwoPair,
+  soundHighCard,
+
+  soundFlush,
+  soundStraight,
+  soundFullHouse,
+  soundRoyalFlush,
+  soundFourCards,
+  soundStraightFlush,
 }

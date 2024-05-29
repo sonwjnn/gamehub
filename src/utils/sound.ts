@@ -25,26 +25,26 @@ export const playSound = (action: PokerActions, gender: string) => {
     case PokerActions.RAISE:
       soundUrl =
         gender === 'male' ? sounds.soundRaiseBoy : sounds.soundRaiseGirl
-      if (gender === 'female') playbackRate = 1.7
-      if (gender === 'male') playbackRate = 2
+      // if (gender === 'female') playbackRate = 1.7
+      // if (gender === 'male') playbackRate = 2
       break
     case PokerActions.QUARTER:
       soundUrl =
         gender === 'male' ? sounds.soundQuarterBoy : sounds.soundQuarterGirl
-      if (gender === 'female') playbackRate = 1
-      if (gender === 'male') playbackRate = 2
+      // if (gender === 'female') playbackRate = 1
+      // if (gender === 'male') playbackRate = 2
       break
     case PokerActions.HALF:
       soundUrl = gender === 'male' ? sounds.soundHalfBoy : sounds.soundHalfGirl
-      if (gender === 'female') playbackRate = 1
+      // if (gender === 'female') playbackRate = 1
       break
     case PokerActions.FULL:
       soundUrl = gender === 'male' ? sounds.soundFullBoy : sounds.soundFullGirl
-      if (gender === 'female') playbackRate = 1
+      // if (gender === 'female') playbackRate = 1
       break
     case PokerActions.ALLIN:
       soundUrl = gender === 'male' ? sounds.soundAllBoy : sounds.soundAllGirl
-      if (gender === 'female') playbackRate = 1
+      // if (gender === 'female') playbackRate = 1
       break
     default:
       soundUrl = ''

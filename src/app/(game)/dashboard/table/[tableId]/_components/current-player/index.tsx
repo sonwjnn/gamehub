@@ -203,12 +203,7 @@ export const CurrentPlayer = ({
   useEffect(() => {
     if (currentParticipant && !currentParticipant.isFolded && isHaveWinner) {
       const timeoutId = setTimeout(() => {
-        if (isWinner) {
-          new Audio(sounds.soundWin).play()
-        } else {
-          new Audio(sounds.soundLose).play()
-        }
-        showModalByHandName({ match, onOpen })
+        showModalByHandName({ match, onOpen, isWinner })
       }, 2000)
 
       return () => clearTimeout(timeoutId)

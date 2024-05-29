@@ -17,7 +17,10 @@ interface BoardProps {
 }
 
 export const Board = ({ match, highlightCards }: BoardProps) => {
-  const [audio, _, controls] = useAudio({ src: sounds.soundOpen })
+  const [turnRiverAudio, _t, turnRiverControls] = useAudio({
+    src: sounds.soundTurnRiver,
+  })
+  const [flopAudio, _f, flopControls] = useAudio({ src: sounds.soundShare })
   const [hiddenClass, setHiddenClass] = useState('hide')
   const [turnHiddenClass, setTurnHiddenClass] = useState('hide')
   const [riverHiddenClass, setRiverHiddenClass] = useState('hide')
@@ -42,8 +45,8 @@ export const Board = ({ match, highlightCards }: BoardProps) => {
       })
 
       const timer = setTimeout(() => {
-        controls.volume(0.5)
-        controls.play()
+        turnRiverControls.volume(0.5)
+        turnRiverControls.play()
         setTurnHiddenClass('')
       }, 300)
 
@@ -63,8 +66,8 @@ export const Board = ({ match, highlightCards }: BoardProps) => {
       })
 
       const timer = setTimeout(() => {
-        controls.volume(0.5)
-        controls.play()
+        turnRiverControls.volume(0.5)
+        turnRiverControls.play()
         setRiverHiddenClass('')
       }, 300)
 
@@ -75,11 +78,9 @@ export const Board = ({ match, highlightCards }: BoardProps) => {
 
   useEffect(() => {
     if (isFlop) {
-      new Audio(sounds.soundShare).play()
-
       const timer = setTimeout(() => {
-        controls.volume(0.5)
-        controls.play()
+        flopControls.volume(0.5)
+        flopControls.play()
         setHiddenClass('')
       }, 700)
 
@@ -116,7 +117,8 @@ export const Board = ({ match, highlightCards }: BoardProps) => {
 
   return (
     <div className="group_midle">
-      {audio}
+      {flopAudio}
+      {turnRiverAudio}
       <div className="group_pocker">
         <div className="list_pocker group_mask">
           <div className="item"></div>
@@ -176,7 +178,7 @@ export const Board = ({ match, highlightCards }: BoardProps) => {
                   >
                     <div
                       className={cn(
-                        'pocker !duration-700',
+                        'pocker',
                         hasHighLight &&
                           !hasTurnHighlight &&
                           'before:!inset-0 before:!bg-black/30',
@@ -203,7 +205,7 @@ export const Board = ({ match, highlightCards }: BoardProps) => {
                   >
                     <div
                       className={cn(
-                        'pocker !duration-1500 ',
+                        'pocker',
                         hasHighLight &&
                           !hasRiverHighlight &&
                           'before:!inset-0 before:!bg-black/30',
