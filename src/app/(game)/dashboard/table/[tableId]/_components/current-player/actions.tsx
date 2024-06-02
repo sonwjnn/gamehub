@@ -3,14 +3,11 @@
 import { BetSlider } from '@/components/bet-slider'
 import { useSocket } from '@/providers/socket-provider'
 import { Match, Participant, Player, PokerActions, RaiseType } from '@/types'
-import React, { useEffect, useState } from 'react'
-import { formatChipsAmount } from '@/utils/formatting'
+import React, { useState } from 'react'
 import { getGenderFromImageUrl, playSound } from '@/utils/sound'
-import { useIsFolded } from '@/store/use-is-folded'
 import { ActionItem } from './action-item'
 import { useKey } from 'react-use'
 import { useAutoAction } from '@/store/use-auto-action'
-import matchApi from '@/services/api/modules/match-api'
 import { cn } from '@/lib/utils'
 
 interface CurrentPlayerActionProps {
@@ -35,8 +32,6 @@ export const CurrentPlayerAction = ({
   setIsAction,
 }: CurrentPlayerActionProps) => {
   const { socket } = useSocket()
-  const { setIsFolded } = useIsFolded()
-  const { isChecked, setAutoAction, callAmount } = useAutoAction()
 
   const [isProcessing, setIsProcessing] = useState(false)
 
@@ -51,7 +46,6 @@ export const CurrentPlayerAction = ({
         tableId,
         participantId: currentParticipant?.id,
       })
-      setIsFolded(true)
       setTimeout(() => {
         setIsProcessing(false)
         setIsAction(false)

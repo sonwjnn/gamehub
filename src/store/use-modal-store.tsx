@@ -18,6 +18,7 @@ export type ModalType =
   | 'royalFlush'
   | 'fourCard'
   | 'winDefault'
+  | 'autoRebuy'
 
 export interface ModalData {
   tableId?: string

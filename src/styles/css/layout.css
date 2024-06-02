@@ -6894,7 +6894,7 @@ a[href='none'] {
   transform: scale(1);
 }
 .viewed_stars {
-  color: #555;
+  color: #888;
   font-size: 18px;
 }
 @media ((min-width: 768px) and (orientation:portrait)), (min-width: 1024px) {
@@ -6910,7 +6910,7 @@ a[href='none'] {
   display: -ms-inline-flexbox;
   display: inline-flex;
   position: relative;
-  color: #555;
+  color: #888;
 }
 .viewed_stars .half > div:first-child {
   position: absolute;

@@ -1,7 +1,6 @@
 import { cn } from '@/lib/utils'
 import { formatChipsAmount } from '@/utils/formatting'
 import { useKey } from 'react-use'
-import { AutoCheckbox } from '../auto-checkbox'
 import { Match } from '@/types'
 import { useEffect } from 'react'
 import { useAutoAction } from '@/store/use-auto-action'
@@ -41,6 +40,8 @@ export const ActionItem = ({
 
   const canAutoAction =
     isTurn && isChecked === type && callAmount === match?.callAmount
+  const canCheck = match && !isTurn
+
   //prettier-ignore
   useKey( shortcut, () => {
     if (!disabled) {
@@ -66,7 +67,32 @@ export const ActionItem = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [canAutoAction])
 
+  const onToggle = () => {
+    if (
+      typeof callAmount === 'number' &&
+      typeof match?.callAmount === 'number' &&
+      callAmount !== match?.callAmount
+    ) {
+      if (isChecked === type) {
+        setAutoAction({ isChecked: '', callAmount: 0 })
+      } else {
+        setAutoAction({ isChecked: type, callAmount: match?.callAmount })
+      }
+    } else {
+      if (isChecked === type) {
+        setAutoAction({ isChecked: '' })
+      } else {
+        setAutoAction({ isChecked: type })
+      }
+    }
+  }
+
   const handleClick = () => {
+    if (canCheck) {
+      onToggle()
+      return
+    }
+
     if (disabled) return
 
     onClick()
@@ -74,7 +100,13 @@ export const ActionItem = ({
 
   return (
     <button
-      className={cn('item ', className, disabled && 'opacity-80')}
+      className={cn(
+        'item',
+        className,
+        disabled && 'opacity-80',
+        canCheck && 'has_check  before:focus-within:!h-full',
+        canCheck && type === isChecked && 'active'
+      )}
       onClick={handleClick}
     >
       <span className="number">{shortcut}</span>
@@ -82,7 +114,6 @@ export const ActionItem = ({
       {amount !== undefined && (
         <div className="view_money">{formatChipsAmount(amount || 0)}$</div>
       )}
-      {!isTurn && match && <AutoCheckbox match={match} type={type} />}
     </button>
   )
 }

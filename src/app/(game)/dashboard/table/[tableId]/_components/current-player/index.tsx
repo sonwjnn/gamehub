@@ -24,8 +24,9 @@ import { useAudio } from 'react-use'
 import { useModal } from '@/store/use-modal-store'
 import { ReviewStars } from './review-stars'
 import { CoinAnimate } from '@/components/coin-animate'
-import { useIsFolded } from '@/store/use-is-folded'
 import { showModalByHandName } from '@/utils/poker'
+import { RebuyButton } from '@/components/rebuy-button'
+import { useAutoRebuy } from '@/store/use-auto-rebuy'
 
 interface CurrentPlayerProps {
   isShowdown?: boolean
@@ -47,7 +48,7 @@ export const CurrentPlayer = ({
 }: CurrentPlayerProps) => {
   const { socket } = useSocket()
   const { onOpen } = useModal()
-  const { setIsFolded } = useIsFolded()
+  const { isAutoRebuy, autoRebuyAmount, setAutoRebuy } = useAutoRebuy()
 
   const router = useRouter()
   const [imageUrlFirst, setImageUrlFirst] = useState('')
@@ -77,12 +78,16 @@ export const CurrentPlayer = ({
   const isUnfoldedParticipant = currentParticipant?.isFolded ? false : true
 
   const canKick =
-    (player && player?.stack <= 0 && isHaveWinner) ||
-    (player &&
-      match?.minBet &&
-      player?.stack + match?.minBet - match.table.ante < 0 &&
-      isHaveWinner) ||
-    foldCount >= 2
+    !isAutoRebuy &&
+    !autoRebuyAmount &&
+    ((player && player?.stack <= 0 && isHaveWinner) ||
+      (player &&
+        match?.minBet &&
+        player?.stack + match?.minBet - match.table.ante < 0 &&
+        isHaveWinner) ||
+      foldCount >= 2)
+
+  const canShowHand = match && isWinner && !match.isShowdown
 
   const isWaiting = match && !match?.table.isHandOver && !currentParticipant
   const currentStack = player?.stack || 0
@@ -170,7 +175,6 @@ export const CurrentPlayer = ({
   useEffect(() => {
     if (counter === 0 && isTurn) {
       fold()
-      setIsFolded(true)
       setFoldCount(prev => prev + 1)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -246,7 +250,7 @@ export const CurrentPlayer = ({
       if (error) {
         console.log(error)
       }
-
+      setAutoRebuy({ isAutoRebuy: false, autoRebuyAmount: 0 })
       router.push('/dashboard/table')
     } catch (error) {
       console.log(error)
@@ -259,6 +263,15 @@ export const CurrentPlayer = ({
       socket.emit(PokerActions.FOLD, {
         tableId,
         participantId: currentParticipant?.id,
+      })
+    }
+  }
+
+  const showHand = () => {
+    if (socket && canShowHand) {
+      socket.emit(PokerActions.SHOW_HAND, {
+        tableId,
+        playerId: player?.id,
       })
     }
   }
@@ -354,6 +367,7 @@ export const CurrentPlayer = ({
               <div className="right">
                 {!isWaiting && !isFolded && (
                   <Hand
+                    onClick={showHand}
                     imageUrlFirst={imageUrlFirst}
                     imageUrlSecond={imageUrlSecond}
                     isHidden={!isHandVisible}
@@ -390,16 +404,7 @@ export const CurrentPlayer = ({
                   </div>
                   $ {formatChipsAmount(currentStack)}
                 </div>
-                <div
-                  className="btn_cash_chip"
-                  id="btn_cash"
-                  onClick={() => onOpen('rebuy', { tableId })}
-                >
-                  Nạp
-                  <span className="icon sz-16 icon-color-white">
-                    <i className="icon-cash"></i>
-                  </span>
-                </div>
+                <RebuyButton tableId={tableId} />
               </div>
 
               {isFolded && (

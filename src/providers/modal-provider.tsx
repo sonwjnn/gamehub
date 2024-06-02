@@ -1,5 +1,6 @@
 'use client'
 
+import { AutoRebuyModal } from '@/components/modals/auto-rebuy-modal'
 import { BuyChipsModal } from '@/components/modals/buy-chips-modal'
 import { BuyInModal } from '@/components/modals/buy-in-modal'
 import { FeelingModal } from '@/components/modals/feeling-modal'
@@ -25,6 +26,7 @@ export const ModalProvider = () => {
       <QualityModal />
       <RuleModal />
       <RebuyModal />
+      <AutoRebuyModal />
       <BuyInModal />
       <BuyChipsModal />
       <JoinTableModal />

@@ -15,11 +15,12 @@ export const CoinBet = ({ bet, pot, className }: CoinBetProps) => {
 
     if (isNaN(percentage)) return 0
 
-    if (percentage >= 25 && percentage < 50) return 3
-    else if (percentage >= 50 && percentage < 75) return 4
-    else if (percentage >= 75) return 5
+    if (percentage < 25) return 1
+    if (percentage >= 25 && percentage < 50) return 2
+    else if (percentage >= 50 && percentage < 75) return 3
+    else if (percentage >= 75) return 4
 
-    return 2
+    return 1
   }
 
   const numberToRender = getNumberToRender()

@@ -5,6 +5,7 @@ import { useCurrentUser } from '@/hooks/use-current-user'
 import { cn } from '@/lib/utils'
 import playerApi from '@/services/api/modules/player-api'
 import tableApi from '@/services/api/modules/table-api'
+import { useAutoRebuy } from '@/store/use-auto-rebuy'
 import { useModal } from '@/store/use-modal-store'
 import { PlayerWithUser } from '@/types'
 import { useSession } from 'next-auth/react'
@@ -26,6 +27,7 @@ export const LeaveButton = ({
   const user = useCurrentUser()
   const router = useRouter()
   const { update } = useSession()
+  const { setAutoRebuy } = useAutoRebuy()
 
   const [isPending, startTransition] = useTransition()
 
@@ -64,6 +66,7 @@ export const LeaveButton = ({
         return
       }
 
+      setAutoRebuy({ isAutoRebuy: false, autoRebuyAmount: 0 })
       update()
       router.push('/dashboard/table')
     })

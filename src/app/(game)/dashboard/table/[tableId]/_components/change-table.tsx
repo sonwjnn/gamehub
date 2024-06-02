@@ -3,6 +3,7 @@ import { cn } from '@/lib/utils'
 import { useSocket } from '@/providers/socket-provider'
 import playerApi from '@/services/api/modules/player-api'
 import tableApi from '@/services/api/modules/table-api'
+import { useAutoRebuy } from '@/store/use-auto-rebuy'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { useTransition } from 'react'
@@ -19,6 +20,7 @@ const ChangeTable = ({ tableId, playerId, className }: ChangeTableProps) => {
 
   const { socket } = useSocket()
   const { update } = useSession()
+  const { setAutoRebuy } = useAutoRebuy()
   const user = useCurrentUser()
   const router = useRouter()
 
@@ -57,6 +59,8 @@ const ChangeTable = ({ tableId, playerId, className }: ChangeTableProps) => {
         if (error) {
           toast.error('Something went wrong!')
         }
+
+        setAutoRebuy({ isAutoRebuy: false, autoRebuyAmount: 0 })
 
         router.push(`/dashboard/table/${nextTable.id}`)
         update()

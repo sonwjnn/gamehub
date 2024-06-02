@@ -31,11 +31,13 @@ import { FullHouseModal } from '@/components/modals/quality/full-house-modal'
 import { RoyalFlushModal } from '@/components/modals/quality/royal-flush-modal'
 import { StraightFlushModal } from '@/components/modals/quality/straight-flush-modal'
 import { StraightModal } from '@/components/modals/quality/straight-modal'
-import { Button } from '@/components/ui/button'
 import { useModal } from '@/store/use-modal-store'
-import { useIsFolded } from '@/store/use-is-folded'
 import ChangeTable from './change-table'
 import { useAutoAction } from '@/store/use-auto-action'
+import { AutoRebuyToggle } from '@/components/auto-rebuy-toggle'
+import { RebuyButton } from '@/components/rebuy-button'
+import { useAutoRebuy } from '@/store/use-auto-rebuy'
+import { Button } from '@/components/ui/button'
 
 interface TableContentProps {
   tableId: string
@@ -45,8 +47,8 @@ export const TableContent = ({ tableId }: TableContentProps) => {
   const user = useCurrentUser()
   const { socket } = useSocket()
   const { onClose } = useModal()
-  const { setIsFolded } = useIsFolded()
   const { setAutoAction } = useAutoAction()
+  const { setAutoRebuy } = useAutoRebuy()
   const { onOpen } = useModal()
 
   const [messages, setMessages] = useState([] as string[])
@@ -62,6 +64,7 @@ export const TableContent = ({ tableId }: TableContentProps) => {
   const [isChipsAnimation, setChipsAnimation] = useState(false)
 
   const matchRef = useRef<Match | null>(null)
+  const participantsRef = useRef<Participant[] | null>(null)
   const tableRef = useRef<HTMLDivElement | null>(null)
   const wrapperRef = useRef<HTMLDivElement | null>(null)
   const dealerRef = useRef<HTMLDivElement | null>(null)
@@ -213,11 +216,10 @@ export const TableContent = ({ tableId }: TableContentProps) => {
         const deltaY = targetY - originalPosition.top
 
         gsap.to(chip, {
-          duration: 0.5,
+          duration: 0.3,
           x: deltaX,
           y: deltaY,
           ease: 'power3.out',
-          onComplete() {},
         })
       })
 
@@ -227,11 +229,12 @@ export const TableContent = ({ tableId }: TableContentProps) => {
         const deltaY = targetY - other_originalPosition.top
 
         gsap.to(other_chips, {
-          duration: 0.5,
+          duration: 0.3,
           x: deltaX,
           y: deltaY,
           ease: 'power3.out',
           onComplete() {
+            setChipsAnimation(false)
             // Hoàn tất hoạt ảnh
           },
         })
@@ -242,6 +245,10 @@ export const TableContent = ({ tableId }: TableContentProps) => {
   useEffect(() => {
     matchRef.current = match
   }, [match])
+
+  useEffect(() => {
+    participantsRef.current = participants
+  }, [participants])
 
   useEffect(() => {
     if (socket) {
@@ -266,7 +273,7 @@ export const TableContent = ({ tableId }: TableContentProps) => {
           setParticipants([])
           setHighlightCards({ name: '', cards: [] })
           setHandVisible(false)
-          setIsFolded(false)
+          setAutoAction({ isChecked: '', callAmount: 0 })
           onClose()
 
           if (match) {
@@ -489,13 +496,14 @@ export const TableContent = ({ tableId }: TableContentProps) => {
                 isTurn !== matchData.isTurn ||
                 isRiver !== matchData.isRiver
 
-              const hasBet = participants.some(item => item.bet > 0)
               if (isNextRound) {
+                const hasBet =
+                  participantsRef?.current &&
+                  participantsRef?.current.some(item => item.bet > 0)
                 if (hasBet) {
                   setChipsAnimation(true)
 
                   setTimeout(() => {
-                    setChipsAnimation(false)
                     setMatch(matchData)
                     setParticipants(matchData.participants)
                   }, 1000)
@@ -522,6 +530,16 @@ export const TableContent = ({ tableId }: TableContentProps) => {
           tableId: string
           players: PlayerWithUser[]
         }) => {
+          // if (matchData.isShowdown && !matchData.isAllAllIn) {
+
+          // }
+
+          // if (matchData.isShowdown && matchData.isAllAllIn) {
+          //   setPlayers(prev => prev.map(item => ({ ...item, isTurn: false })))
+
+          //   setTimeout(() => {}, )
+          // }
+
           setPlayers(players)
         }
       )
@@ -624,6 +642,8 @@ export const TableContent = ({ tableId }: TableContentProps) => {
       console.log(error)
       return
     }
+
+    setAutoRebuy({ isAutoRebuy: false, autoRebuyAmount: 0 })
   }
 
   const addMessage = (message: string) => {
@@ -649,17 +669,6 @@ export const TableContent = ({ tableId }: TableContentProps) => {
     players.length <= 1 ||
     (match && match.winners?.length)
 
-  const isWinner = match?.winners?.some(w => w.id === currentPlayer?.id)
-
-  const canShowHand = match && isWinner && !match.isShowdown
-
-  const showHand = () => {
-    socket?.emit(PokerActions.SHOW_HAND, {
-      tableId,
-      playerId: currentPlayer?.id,
-    })
-  }
-
   return (
     <div className="wrapper md:w-full w-[86%] h-full" ref={wrapperRef}>
       <Image
@@ -680,18 +689,15 @@ export const TableContent = ({ tableId }: TableContentProps) => {
         ) : (
           <></>
         )}
-        {canShowHand && <Button onClick={showHand}>Show hand</Button>}
+        <AutoRebuyToggle
+          tableId={tableId}
+          player={currentPlayer}
+          match={match}
+        />
+        {/* <Button onClick={() => setChipsAnimation(true)}>Chips</Button> */}
       </div>
-      <div
-        className="btn_cash_chip btn_cash_chip_sp"
-        id="btn_cash"
-        onClick={() => onOpen('rebuy', { tableId })}
-      >
-        Nạp
-        <span className="icon sz-16 icon-color-white">
-          <i className="icon-cash"></i>
-        </span>
-      </div>
+      <RebuyButton className="btn_cash_chip_sp" tableId={tableId} />
+
       <div className="inner">
         <div className="list_user" ref={tableRef}>
           <div className="dealer" ref={dealerRef}></div>

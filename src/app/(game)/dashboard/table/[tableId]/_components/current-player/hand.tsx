@@ -6,6 +6,7 @@ import { HighlightCard } from '@/types'
 import { useMedia } from 'react-use'
 
 interface HandProps {
+  onClick: () => void
   imageUrlFirst: string
   imageUrlSecond: string
   isHidden?: boolean
@@ -15,6 +16,7 @@ interface HandProps {
 }
 
 export const Hand = ({
+  onClick,
   imageUrlFirst,
   imageUrlSecond,
   isHidden = true,
@@ -26,7 +28,10 @@ export const Hand = ({
   const isMobile = useMedia('(max-width: 640px)', false)
 
   return (
-    <div className="pocker_list current_poker_list">
+    <div
+      className="pocker_list current_poker_list cursor-pointer"
+      onClick={() => onClick()}
+    >
       <div
         className={cn(
           `item flipped opacity-0 pointer-events-none transition -translate-x-3 -translate-y-3.5`,
