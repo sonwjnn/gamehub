@@ -64,6 +64,7 @@ export const CurrentPlayer = ({
   const [isBet, setIsBet] = useState(false)
   const [winnerDelay, setWinnerDelay] = useState(false)
   const [foldCount, setFoldCount] = useState(0)
+  const [callRaiseMissing, setCallRaiseMissing] = useState(0)
 
   const gender = getGenderFromImageUrl(player?.user?.image || '')
   const currentParticipant = participants.find(
@@ -137,6 +138,7 @@ export const CurrentPlayer = ({
     if (!isTurn) {
       setCounter(12)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isTurn])
 
   useEffect(() => {
@@ -295,7 +297,6 @@ export const CurrentPlayer = ({
       className={cn(
         'group_tool flex flex-space gap-12 before:border-none',
         (isTurn || (winnerDelay && isHaveWinner)) && 'user_active',
-        isFolded && 'user_fold',
         !winnerDelay && isHaveWinner && currentParticipant && 'is-lose'
       )}
     >
@@ -320,7 +321,8 @@ export const CurrentPlayer = ({
             'group_user before:border-none',
             isTurn && 'is-status',
             isWaiting && 'user_waitting',
-            isShowdown && isUnfoldedParticipant && 'target_showdown'
+            isShowdown && isUnfoldedParticipant && 'target_showdown',
+            isFolded && 'user_fold'
           )}
         >
           <CoinBet
@@ -365,7 +367,7 @@ export const CurrentPlayer = ({
                 </div>
               </div>
               <div className="right">
-                {!isWaiting && !isFolded && (
+                {!isWaiting && (
                   <Hand
                     onClick={showHand}
                     imageUrlFirst={imageUrlFirst}
@@ -459,6 +461,7 @@ export const CurrentPlayer = ({
         match={match}
         tableId={tableId}
         currentParticipant={currentParticipant}
+        setCallRaiseMissing={setCallRaiseMissing}
       />
     </div>
   )

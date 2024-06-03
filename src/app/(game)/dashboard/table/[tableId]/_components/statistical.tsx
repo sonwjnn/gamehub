@@ -1,8 +1,10 @@
 'use client'
 
 import { useCurrentUser } from '@/hooks/use-current-user'
+import { cn } from '@/lib/utils'
 import { useSocket } from '@/providers/socket-provider'
 import historyApi from '@/services/api/modules/history-api'
+import { useSidebarMobile } from '@/store/use-sidebar-mobile'
 import { PokerActions } from '@/types'
 import { formatChipsAmount } from '@/utils/formatting'
 import { useEffect, useState } from 'react'
@@ -22,6 +24,7 @@ type Statistical = {
 export const Statistical = ({ tableId }: StatisticalProps) => {
   const user = useCurrentUser()
   const { socket } = useSocket()
+  const { sidebarMobile, setSidebarMobile } = useSidebarMobile()
 
   const [statistical, setStatistical] = useState<Statistical>({
     winCount: 0,
@@ -61,8 +64,27 @@ export const Statistical = ({ tableId }: StatisticalProps) => {
     getStatisticalByTableId()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  const onToggle = () => {
+    if (sidebarMobile === 'statistical') {
+      setSidebarMobile('none')
+      return
+    }
+
+    setSidebarMobile('statistical')
+  }
   return (
-    <div className="table_statistical">
+    <div
+      className={cn(
+        'table_statistical',
+        sidebarMobile === 'statistical' && 'active'
+      )}
+    >
+      <div className="close" onClick={onToggle}>
+        <span className="sz-16 icon">
+          <i className="icon-down"></i>
+        </span>
+      </div>
       <div className="ttl">THỐNG KÊ</div>
       <div className="content">
         <dl className="flex flex-midle">

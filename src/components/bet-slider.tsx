@@ -3,7 +3,6 @@
 import { Slider } from '@/components/ui/slider'
 import { formatChipsAmount } from '@/utils/formatting'
 import { Minus, Plus } from 'lucide-react'
-import { useEffect } from 'react'
 
 interface BetSliderProps {
   bet: number

@@ -6,6 +6,7 @@ import { Statistical } from './_components/statistical'
 import playerApi from '@/services/api/modules/player-api'
 import tableApi from '@/services/api/modules/table-api'
 import { redirect } from 'next/navigation'
+import { FixedSidebar } from './_components/fixed-sidebar'
 
 const TableIdLayout = async ({
   children,
@@ -42,6 +43,7 @@ const TableIdLayout = async ({
           <>
             <Chat tableId={tableId} player={player} />
             <Statistical tableId={tableId} />
+            <FixedSidebar />
           </>
         )}
       </div>

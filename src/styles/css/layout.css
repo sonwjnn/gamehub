@@ -215,6 +215,12 @@ img {
 .icon-light2 {
   background-image: url(/images/icon/icon_light2.png);
 }
+.icon-wreath {
+  background-image: url(/images/icon/icon_wreath.png);
+}
+.icon-capital {
+  background-image: url(/images/icon/icon_capital.png);
+}
 .icon-color-black {
   -webkit-filter: brightness(0) saturate(100%) invert(0%) sepia(91%)
     saturate(7448%) hue-rotate(41deg) brightness(104%) contrast(98%);

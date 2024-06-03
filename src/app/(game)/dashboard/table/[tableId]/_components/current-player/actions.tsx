@@ -7,8 +7,8 @@ import React, { useState } from 'react'
 import { getGenderFromImageUrl, playSound } from '@/utils/sound'
 import { ActionItem } from './action-item'
 import { useKey } from 'react-use'
-import { useAutoAction } from '@/store/use-auto-action'
 import { cn } from '@/lib/utils'
+import { FixedRaise } from '@/components/fixed-raise'
 
 interface CurrentPlayerActionProps {
   tableId: string
@@ -19,6 +19,7 @@ interface CurrentPlayerActionProps {
   player: Player | undefined
   isTurn: boolean | undefined
   setIsAction: (isAction: boolean) => void
+  setCallRaiseMissing: React.Dispatch<React.SetStateAction<number>>
 }
 
 export const CurrentPlayerAction = ({
@@ -30,6 +31,7 @@ export const CurrentPlayerAction = ({
   setBet,
   player,
   setIsAction,
+  setCallRaiseMissing,
 }: CurrentPlayerActionProps) => {
   const { socket } = useSocket()
 
@@ -75,10 +77,14 @@ export const CurrentPlayerAction = ({
       playSound(PokerActions.CALL, gender)
 
       setIsProcessing(true)
+      // setCallRaiseMissing(
+      //   match?.callAmount ? match?.callAmount + currentBet : 0
+      // )
       socket.emit(PokerActions.CALL, {
         tableId,
         participantId: currentParticipant?.id,
       })
+
       setTimeout(() => {
         setIsProcessing(false)
         setIsAction(false)
@@ -289,6 +295,7 @@ export const CurrentPlayerAction = ({
       </div>
 
       <div className="fixed right-12  bottom-9"></div>
+      <FixedRaise bet={bet} setBet={setBet} min={min} max={max} />
     </>
   )
 }

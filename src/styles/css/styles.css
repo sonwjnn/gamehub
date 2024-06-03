@@ -160,12 +160,12 @@
   display: block;
 }
 .page-sub .game_heading .logo img {
-  height: 33px;
+  height: 50px;
   width: auto;
 }
 @media (max-width: 991px) {
   .page-sub .game_heading .logo img {
-    height: 16px;
+    height: 34px;
   }
 }
 .page-sub .game_heading .toolbar {
