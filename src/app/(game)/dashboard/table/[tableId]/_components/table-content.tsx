@@ -545,6 +545,28 @@ export const TableContent = ({ tableId }: TableContentProps) => {
       )
 
       socket.on(
+        PokerActions.PARTICIPANTS_UPDATED,
+        ({
+          tableId,
+          participant,
+        }: {
+          tableId: string
+          participant: Participant
+        }) => {
+          setParticipants(prev => {
+            const updatedParticipants = prev.map(item => {
+              if (item.id === participant.id) {
+                return participant
+              }
+              return item
+            })
+
+            return updatedParticipants
+          })
+        }
+      )
+
+      socket.on(
         PokerActions.REBUY,
         ({ tableId, player }: { tableId: string; player: PlayerWithUser }) => {
           setPlayers(prev => {
