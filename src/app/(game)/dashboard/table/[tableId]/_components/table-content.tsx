@@ -38,6 +38,7 @@ import { AutoRebuyToggle } from '@/components/auto-rebuy-toggle'
 import { RebuyButton } from '@/components/rebuy-button'
 import { useAutoRebuy } from '@/store/use-auto-rebuy'
 import { Button } from '@/components/ui/button'
+import { LeaveNext } from './leave-next'
 
 interface TableContentProps {
   tableId: string
@@ -62,6 +63,7 @@ export const TableContent = ({ tableId }: TableContentProps) => {
   const [isHandVisible, setHandVisible] = useState(false)
   const [isShuffle, setShuffle] = useState(false)
   const [isChipsAnimation, setChipsAnimation] = useState(false)
+  const [isLeaveNext, setIsLeaveNext] = useState(false)
 
   const matchRef = useRef<Match | null>(null)
   const participantsRef = useRef<Participant[] | null>(null)
@@ -380,6 +382,7 @@ export const TableContent = ({ tableId }: TableContentProps) => {
               if (!isFlop && !isTurn && !isRiver) {
                 setMatch({
                   ...matchData,
+                  isAllAllIn: true,
                   isShowdown: true,
                   winners: [],
                   winMessages: [],
@@ -589,10 +592,11 @@ export const TableContent = ({ tableId }: TableContentProps) => {
 
       socket.on(
         PokerActions.HIGHLIGHT_CARDS,
-        (highlightCardsData: HighlightCard) => {
+        (highlightCardsData: HighlightCard, isAllAllIn: boolean) => {
           if (highlightCardsData) {
-            const delay =
-              matchRef.current?.isRiver || matchRef.current?.isTurn
+            const delay = isAllAllIn
+              ? 6000
+              : matchRef.current?.isRiver || matchRef.current?.isTurn
                 ? 1500
                 : 2500
 
@@ -715,8 +719,14 @@ export const TableContent = ({ tableId }: TableContentProps) => {
             <ChangeTable tableId={tableId} playerId={currentPlayer?.id} />
           </>
         ) : (
-          <></>
+          <>
+            <LeaveNext
+              isLeaveNext={isLeaveNext}
+              setIsLeaveNext={setIsLeaveNext}
+            />
+          </>
         )}
+
         <AutoRebuyToggle
           tableId={tableId}
           player={currentPlayer}
@@ -777,6 +787,7 @@ export const TableContent = ({ tableId }: TableContentProps) => {
           isHandVisible={isHandVisible}
           tableId={tableId}
           highlightCards={highlightCards}
+          isLeaveNext={isLeaveNext}
         />
       )}
     </div>

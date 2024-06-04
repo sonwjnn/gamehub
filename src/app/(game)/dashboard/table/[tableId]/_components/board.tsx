@@ -372,15 +372,3 @@ export const Board = ({ match, highlightCards }: BoardProps) => {
     </div>
   )
 }
-
-// 1.Cái phần tiền chip bay ra: là làm nó bay ra mọi lúc cược và tố theo luôn a. Cái này lúc bay ra lúc ko bay ra anh ạ (done)
-// 2. Khi phát 3 lá bài ra. Nếu nó cùng chất bài thì chưa kịp mở ra 3 lá thì có lá sẽ sáng trước khi dc mở ra. (done)
-// 3. Là showdown vẫn chưa sửa lại (cái này em không hiểu trong trường hợp gì)
-// 4.    2 lá bài ở player làm cho lá thứ 2 qua bên phải chút tại lá thứ 1 bị che (done)
-// 10. Các âm thanh cược của các player chậm lại 1 chút và lớn ra 1 chút giúp em (done)
-
-// ------------------- thắc mắc --------------------------------
-// 5. Giọng âm thanh của nữ cược thành giọng nam (đang thiếu sound)
-// + nữ: quarter half full
-// + nam: full
-// 9.Các nút này nó phải luôn hiển thị trong mọi trường hợp anh ạ chứ dg đánh muốn đăng kia thoát bàn mà ko ấn dc. Cái này bạn nào làm thì anh nhớ cái đợt e về e có giải thích r ấy a. Khi dg chơi thì ấn vào tức là nó sẽ thoát ra ngay khi ván đó kết thúc, và ấn lại lần nữa thì ván sau vẫn ở lại bth. (cái này là tính một chức năng luôn anh, chức năng hẹn trước để rời bàn ở ván sau)

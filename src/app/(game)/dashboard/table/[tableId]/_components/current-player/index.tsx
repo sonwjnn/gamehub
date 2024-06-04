@@ -36,6 +36,7 @@ interface CurrentPlayerProps {
   player: PlayerWithUser | undefined
   tableId: string
   highlightCards?: HighlightCard
+  isLeaveNext: boolean
 }
 
 export const CurrentPlayer = ({
@@ -45,6 +46,7 @@ export const CurrentPlayer = ({
   player,
   tableId,
   highlightCards,
+  isLeaveNext,
 }: CurrentPlayerProps) => {
   const { socket } = useSocket()
   const { onOpen } = useModal()
@@ -79,14 +81,15 @@ export const CurrentPlayer = ({
   const isUnfoldedParticipant = currentParticipant?.isFolded ? false : true
 
   const canKick =
-    !isAutoRebuy &&
-    !autoRebuyAmount &&
-    ((player && player?.stack <= 0 && isHaveWinner) ||
-      (player &&
-        match?.minBet &&
-        player?.stack + match?.minBet - match.table.ante < 0 &&
-        isHaveWinner) ||
-      foldCount >= 2)
+    (isLeaveNext && isHaveWinner) ||
+    (!isAutoRebuy &&
+      !autoRebuyAmount &&
+      ((player && player?.stack <= 0 && isHaveWinner) ||
+        (player &&
+          match?.minBet &&
+          player?.stack + match?.minBet - match.table.ante < 0 &&
+          isHaveWinner) ||
+        foldCount >= 2))
 
   const canShowHand = match && isWinner && !match.isShowdown
 

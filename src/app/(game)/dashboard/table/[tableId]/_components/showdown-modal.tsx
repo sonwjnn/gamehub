@@ -25,7 +25,7 @@ export const ShowdownModal = ({ match, participants }: ShowdownModalProps) => {
 
   useEffect(() => {
     let timerId: NodeJS.Timeout | null = null
-    if (match?.isShowdown && isHaveParticipant) {
+    if (match?.isShowdown && match?.isAllAllIn && isHaveParticipant) {
       setIsShowdown(true)
       controls.play()
       timerId = setTimeout(() => {
