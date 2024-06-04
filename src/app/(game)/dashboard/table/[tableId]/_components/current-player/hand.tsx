@@ -78,7 +78,7 @@ export const Hand = ({
       </div>
       <div
         className={cn(
-          `item flipped opacity-0 pointer-events-none transition -translate-x-3 -translate-y-3.5 `,
+          `item flipped opacity-0 pointer-events-none transition -translate-x-2 -translate-y-3.5 `,
           !imageUrl.second && 'hide',
           !isHidden && 'opacity-100 pointer-events-auto',
           hasSecondHighlight && 'status_active',

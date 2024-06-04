@@ -16,12 +16,65 @@ interface BoardProps {
   highlightCards?: HighlightCard
 }
 
+const FlopCard = ({
+  card,
+  hasHighLight,
+  hasFlopHighlight,
+  hiddenClass,
+}: any) => {
+  return (
+    <div
+      className={cn(
+        'item flipped',
+        hiddenClass,
+        hasFlopHighlight && 'status_active'
+      )}
+    >
+      <div
+        className={cn(
+          'pocker',
+          hasHighLight &&
+            !hasFlopHighlight &&
+            'before:!inset-0 before:!bg-black/30'
+        )}
+      >
+        <Card
+          imageUrl={`/images/pocker/${card.rank.toLowerCase()}_${card.suit.toLowerCase()}.png`}
+          value={10}
+        />
+      </div>
+    </div>
+  )
+}
+
 export const Board = ({ match, highlightCards }: BoardProps) => {
   const [turnRiverAudio, _t, turnRiverControls] = useAudio({
-    src: sounds.soundTurnRiver,
+    src: '/sounds/sound_slip_3.mp3',
+    autoPlay: false,
   })
-  const [flopAudio, _f, flopControls] = useAudio({ src: sounds.soundShare })
-  const [hiddenClass, setHiddenClass] = useState('hide')
+
+  const [openAudio, _o, openControls] = useAudio({
+    src: sounds.soundOpen,
+    autoPlay: false,
+  })
+
+  const [open2Audio, _o2, open2Controls] = useAudio({
+    src: sounds.soundOpen,
+    autoPlay: false,
+  })
+
+  const [open3Audio, _o3, open3Controls] = useAudio({
+    src: sounds.soundOpen,
+    autoPlay: false,
+  })
+  const [flopAudio, _f, flopControls] = useAudio({
+    src: '/sounds/sound_slip_2.mp3',
+    autoPlay: false,
+  })
+
+  const [firstFlopHiddenClass, setFirstFlopHiddenClass] = useState('hide')
+  const [secondFlopHiddenClass, setSecondFlopHiddenClass] = useState('hide')
+  const [thirdFlopHiddenClass, setThirdFlopHiddenClass] = useState('hide')
   const [turnHiddenClass, setTurnHiddenClass] = useState('hide')
   const [riverHiddenClass, setRiverHiddenClass] = useState('hide')
 
@@ -44,9 +97,11 @@ export const Board = ({ match, highlightCards }: BoardProps) => {
         ease: 'power3.out',
       })
 
+      turnRiverControls.play()
+
       const timer = setTimeout(() => {
-        turnRiverControls.volume(0.5)
-        turnRiverControls.play()
+        // turnRiverControls.volume(0.5)
+        openControls.play()
         setTurnHiddenClass('')
       }, 300)
 
@@ -65,9 +120,14 @@ export const Board = ({ match, highlightCards }: BoardProps) => {
         ease: 'power3.out',
       })
 
+      turnRiverControls.play()
+
+      setTimeout(() => {
+        openControls.play()
+      }, 700)
+
       const timer = setTimeout(() => {
-        turnRiverControls.volume(0.5)
-        turnRiverControls.play()
+        // turnRiverControls.volume(0.5)
         setRiverHiddenClass('')
       }, 300)
 
@@ -78,20 +138,31 @@ export const Board = ({ match, highlightCards }: BoardProps) => {
 
   useEffect(() => {
     if (isFlop) {
-      const timer = setTimeout(() => {
-        flopControls.volume(0.5)
-        flopControls.play()
-        setHiddenClass('')
-      }, 700)
+      turnRiverControls.play()
 
-      return () => clearTimeout(timer)
+      setTimeout(() => {
+        openControls.play()
+        setFirstFlopHiddenClass('')
+      }, 200)
+
+      setTimeout(() => {
+        open2Controls.play()
+        setSecondFlopHiddenClass('')
+      }, 400)
+
+      setTimeout(() => {
+        open3Controls.play()
+        setThirdFlopHiddenClass('')
+      }, 600)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isFlop])
 
   useEffect(() => {
     if (!isPreFlop) {
-      setHiddenClass('hide')
+      setFirstFlopHiddenClass('hide')
+      setSecondFlopHiddenClass('hide')
+      setThirdFlopHiddenClass('hide')
       setTurnHiddenClass('hide')
       setRiverHiddenClass('hide')
     }
@@ -115,8 +186,35 @@ export const Board = ({ match, highlightCards }: BoardProps) => {
   const hasHighLight =
     highlightCards && highlightCards.name && highlightCards.cards.length > 0
 
+  const hasFirstFlopHighlight = highlightCards?.cards.some(highlightCard => {
+    if (!board) return false
+    return (
+      highlightCard.rank === board[0].rank &&
+      highlightCard.suit === board[0].suit
+    )
+  })
+
+  const hasSecondFlopHighlight = highlightCards?.cards.some(highlightCard => {
+    if (!board) return false
+    return (
+      highlightCard.rank === board[1].rank &&
+      highlightCard.suit === board[1].suit
+    )
+  })
+
+  const hasThirdFlopHighlight = highlightCards?.cards.some(highlightCard => {
+    if (!board) return false
+    return (
+      highlightCard.rank === board[2].rank &&
+      highlightCard.suit === board[2].suit
+    )
+  })
+
   return (
     <div className="group_midle">
+      {openAudio}
+      {open2Audio}
+      {open3Audio}
       {flopAudio}
       {turnRiverAudio}
       <div className="group_pocker">
@@ -135,37 +233,71 @@ export const Board = ({ match, highlightCards }: BoardProps) => {
         >
           {board && board?.length && (
             <>
-              {board?.slice(0, 3).map((card, index) => {
-                const hasFlopHighlight = highlightCards?.cards.some(
-                  highlightCard =>
-                    highlightCard.rank === card.rank &&
-                    highlightCard.suit === card.suit
-                )
-                return (
-                  <div
-                    key={card.id}
-                    className={cn(
-                      'item flipped',
-                      hiddenClass,
-                      hasFlopHighlight && 'status_active'
-                    )}
-                  >
-                    <div
-                      className={cn(
-                        'pocker',
-                        hasHighLight &&
-                          !hasFlopHighlight &&
-                          'before:!inset-0 before:!bg-black/30'
-                      )}
-                    >
-                      <Card
-                        imageUrl={`/images/pocker/${card.rank.toLowerCase()}_${card.suit.toLowerCase()}.png`}
-                        value={10}
-                      />
-                    </div>
-                  </div>
-                )
-              })}
+              <div
+                className={cn(
+                  'item flipped',
+                  firstFlopHiddenClass,
+                  hasFirstFlopHighlight && 'status_active'
+                )}
+              >
+                <div
+                  className={cn(
+                    'pocker',
+                    hasHighLight &&
+                      !hasFirstFlopHighlight &&
+                      'before:!inset-0 before:!bg-black/30'
+                  )}
+                >
+                  <Card
+                    imageUrl={`/images/pocker/${board[0].rank.toLowerCase()}_${board[0].suit.toLowerCase()}.png`}
+                    value={10}
+                  />
+                </div>
+              </div>
+
+              <div
+                className={cn(
+                  'item flipped',
+                  secondFlopHiddenClass,
+                  hasSecondFlopHighlight && 'status_active'
+                )}
+              >
+                <div
+                  className={cn(
+                    'pocker',
+                    hasHighLight &&
+                      !hasSecondFlopHighlight &&
+                      'before:!inset-0 before:!bg-black/30'
+                  )}
+                >
+                  <Card
+                    imageUrl={`/images/pocker/${board[1].rank.toLowerCase()}_${board[1].suit.toLowerCase()}.png`}
+                    value={10}
+                  />
+                </div>
+              </div>
+
+              <div
+                className={cn(
+                  'item flipped',
+                  thirdFlopHiddenClass,
+                  hasThirdFlopHighlight && 'status_active'
+                )}
+              >
+                <div
+                  className={cn(
+                    'pocker',
+                    hasHighLight &&
+                      !hasThirdFlopHighlight &&
+                      'before:!inset-0 before:!bg-black/30'
+                  )}
+                >
+                  <Card
+                    imageUrl={`/images/pocker/${board[2].rank.toLowerCase()}_${board[2].suit.toLowerCase()}.png`}
+                    value={10}
+                  />
+                </div>
+              </div>
 
               {isTurn && (
                 <div ref={turnCardRef} className="py-[0.9%] px-[1.75%] grow-0">
@@ -240,3 +372,15 @@ export const Board = ({ match, highlightCards }: BoardProps) => {
     </div>
   )
 }
+
+// 1.Cái phần tiền chip bay ra: là làm nó bay ra mọi lúc cược và tố theo luôn a. Cái này lúc bay ra lúc ko bay ra anh ạ (done)
+// 2. Khi phát 3 lá bài ra. Nếu nó cùng chất bài thì chưa kịp mở ra 3 lá thì có lá sẽ sáng trước khi dc mở ra. (done)
+// 3. Là showdown vẫn chưa sửa lại (cái này em không hiểu trong trường hợp gì)
+// 4.    2 lá bài ở player làm cho lá thứ 2 qua bên phải chút tại lá thứ 1 bị che (done)
+// 10. Các âm thanh cược của các player chậm lại 1 chút và lớn ra 1 chút giúp em (done)
+
+// ------------------- thắc mắc --------------------------------
+// 5. Giọng âm thanh của nữ cược thành giọng nam (đang thiếu sound)
+// + nữ: quarter half full
+// + nam: full
+// 9.Các nút này nó phải luôn hiển thị trong mọi trường hợp anh ạ chứ dg đánh muốn đăng kia thoát bàn mà ko ấn dc. Cái này bạn nào làm thì anh nhớ cái đợt e về e có giải thích r ấy a. Khi dg chơi thì ấn vào tức là nó sẽ thoát ra ngay khi ván đó kết thúc, và ấn lại lần nữa thì ván sau vẫn ở lại bth. (cái này là tính một chức năng luôn anh, chức năng hẹn trước để rời bàn ở ván sau)

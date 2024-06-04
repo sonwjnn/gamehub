@@ -36,11 +36,13 @@ const soundFullHouse = '/sounds/table/full_house.mp3'
 const soundRoyalFlush = '/sounds/table/royal_flush.mp3'
 const soundFourCards = '/sounds/table/four_cards.mp3'
 const soundStraightFlush = '/sounds/table/straight_flush.mp3'
+const soundSlip = '/sounds/sound_slip.mp3'
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
   soundShare,
   soundOpen,
+  soundSlip,
   soundShufle,
   soundQuarterBoy,
   soundQuarterGirl,

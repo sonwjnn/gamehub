@@ -117,7 +117,7 @@ export const TableContent = ({ tableId }: TableContentProps) => {
       const cardIndex = Math.floor(i / numPlayers)
 
       if (coord === 'x') {
-        const offset = cardIndex * (cardWidth / 2 + 5)
+        const offset = cardIndex * (cardWidth / 2 + 10)
         return positions[playerIndex][coord] + offset
       } else {
         return positions[playerIndex][coord] + offsetY
@@ -591,9 +591,14 @@ export const TableContent = ({ tableId }: TableContentProps) => {
         PokerActions.HIGHLIGHT_CARDS,
         (highlightCardsData: HighlightCard) => {
           if (highlightCardsData) {
+            const delay =
+              matchRef.current?.isRiver || matchRef.current?.isTurn
+                ? 1500
+                : 2500
+
             timerHighlightId = setTimeout(() => {
               setHighlightCards(highlightCardsData)
-            }, 1500)
+            }, delay)
           }
         }
       )
@@ -607,6 +612,7 @@ export const TableContent = ({ tableId }: TableContentProps) => {
           socket.off(PokerActions.CHANGE_TURN)
           socket.off(PokerActions.HIGHLIGHT_CARDS)
           socket.off(PokerActions.REBUY)
+          socket.off(PokerActions.PARTICIPANTS_UPDATED)
 
           if (timerMatchId) {
             clearTimeout(timerMatchId)
@@ -692,7 +698,7 @@ export const TableContent = ({ tableId }: TableContentProps) => {
     (match && match.winners?.length)
 
   return (
-    <div className="wrapper md:w-full w-[86%] h-full" ref={wrapperRef}>
+    <div className="wrapper w-full h-full" ref={wrapperRef}>
       <Image
         src="/images/table_v3.png"
         alt="tableImage"
@@ -716,7 +722,7 @@ export const TableContent = ({ tableId }: TableContentProps) => {
           player={currentPlayer}
           match={match}
         />
-        {/* <Button onClick={() => setChipsAnimation(true)}>Chips</Button> */}
+        {/* <Button onClick={() => setShuffle(true)}>suffle</Button> */}
       </div>
       <RebuyButton className="btn_cash_chip_sp" tableId={tableId} />
 

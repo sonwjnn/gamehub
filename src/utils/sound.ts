@@ -10,7 +10,7 @@ export const getGenderFromImageUrl = (imageUrl: string) => {
 
 export const playSound = (action: PokerActions, gender: string) => {
   let soundUrl
-  let playbackRate = 1.5
+  let playbackRate = 1.2
   switch (action) {
     case PokerActions.FOLD:
       soundUrl = gender === 'male' ? sounds.soundFoldBoy : sounds.soundFoldGirl
@@ -52,5 +52,6 @@ export const playSound = (action: PokerActions, gender: string) => {
 
   const audio = new Audio(soundUrl)
   audio.playbackRate = playbackRate
+  audio.volume = 1.0
   audio.play()
 }
