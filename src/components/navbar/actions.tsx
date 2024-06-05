@@ -19,7 +19,7 @@ export const Actions = ({}: ActionsProps) => {
         <SocketIndicator />
       </div> */}
 
-      <div className="flex gap-x-3 mx-3">
+      <div className="gap-x-3 mx-3 hidden md:!flex">
         <ToggleSound />
         <ToggleBrightness />
       </div>

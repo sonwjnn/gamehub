@@ -333,10 +333,10 @@ export const TableContent = ({ tableId }: TableContentProps) => {
 
           setPlayers(prev => [...prev, player])
 
-          await socket.emit(PokerActions.TABLE_JOINED, {
-            tableId: tableSocketId,
-            player,
-          })
+          // await socket.emit(PokerActions.TABLE_JOINED, {
+          //   tableId: tableSocketId,
+          //   player,
+          // })
         }
       )
 
@@ -737,16 +737,9 @@ export const TableContent = ({ tableId }: TableContentProps) => {
     (match && match.winners?.length)
 
   return (
-    <div className="wrapper w-full h-full" ref={wrapperRef}>
+    <div className="wrapper" ref={wrapperRef}>
       {audioShuffle}
-      <Image
-        src="/images/table_v3.png"
-        alt="tableImage"
-        width={0}
-        height={0}
-        sizes="100vw"
-        className="w-full h-auto"
-      />
+      <img src="/images/table_v3.png" alt="tableImage" />
 
       <div className="group_button">
         {canAction ? (
