@@ -27,7 +27,7 @@ export const Navbar = ({ table, player }: Props) => {
     >
       <Link className="logo block pointer-events-none" href={pathname!}>
         <Image
-          src="/images/logo.png"
+          src="/images/logo_2.png"
           alt="Logo"
           width={0}
           height={0}

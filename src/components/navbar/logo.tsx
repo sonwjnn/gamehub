@@ -7,7 +7,7 @@ export const Logo = ({}: LogoProps) => {
   return (
     <Link className="logo block" href="/">
       <Image
-        src="/images/logo.png"
+        src="/images/logo_2.png"
         alt="Logo"
         width={0}
         height={0}

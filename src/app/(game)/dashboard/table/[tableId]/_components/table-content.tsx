@@ -39,6 +39,7 @@ import { RebuyButton } from '@/components/rebuy-button'
 import { useAutoRebuy } from '@/store/use-auto-rebuy'
 import { Button } from '@/components/ui/button'
 import { LeaveNext } from './leave-next'
+import { useAudio } from 'react-use'
 
 interface TableContentProps {
   tableId: string
@@ -50,7 +51,6 @@ export const TableContent = ({ tableId }: TableContentProps) => {
   const { onClose } = useModal()
   const { setAutoAction } = useAutoAction()
   const { setAutoRebuy } = useAutoRebuy()
-  const { onOpen } = useModal()
 
   const [messages, setMessages] = useState([] as string[])
   const [match, setMatch] = useState<Match | null>(null)
@@ -64,6 +64,11 @@ export const TableContent = ({ tableId }: TableContentProps) => {
   const [isShuffle, setShuffle] = useState(false)
   const [isChipsAnimation, setChipsAnimation] = useState(false)
   const [isLeaveNext, setIsLeaveNext] = useState(false)
+
+  const [audioShuffle, _, shuffleControls] = useAudio({
+    src: '/sounds/sound_shuffle.mp3',
+    autoPlay: false,
+  })
 
   const matchRef = useRef<Match | null>(null)
   const participantsRef = useRef<Participant[] | null>(null)
@@ -128,6 +133,10 @@ export const TableContent = ({ tableId }: TableContentProps) => {
     function dealCard(i: number) {
       createCard(i + 1)
 
+      if ((i + 1) % numPlayers === 0 && (i + 1) / numPlayers <= cardsHand) {
+        new Audio('/sounds/sound_slip_3.mp3').play()
+      }
+
       gsap.set('.player-card', {
         x: dealX,
         y: dealY,
@@ -158,16 +167,20 @@ export const TableContent = ({ tableId }: TableContentProps) => {
     }
 
     if (isShuffle) {
-      new Audio(sounds.soundShufle).play()
+      shuffleControls.volume(0.5)
+      shuffleControls.play()
 
       let i = 0
-      const dealInterval = setInterval(() => {
-        dealCard(i)
-        i++
-        if (i >= totalCards) {
-          clearInterval(dealInterval)
-        }
-      }, 300)
+      setTimeout(() => {
+        let i = 0
+        const dealInterval = setInterval(() => {
+          dealCard(i)
+          i++
+          if (i >= totalCards) {
+            clearInterval(dealInterval)
+          }
+        }, 300)
+      }, 1000)
     }
 
     return () => {
@@ -350,15 +363,6 @@ export const TableContent = ({ tableId }: TableContentProps) => {
       socket.on(
         PokerActions.CHANGE_TURN,
         ({ matchData, playerId }: { matchData: Match; playerId: string }) => {
-          setPlayers(prev =>
-            prev.map(item => {
-              if (item.id === playerId) {
-                return { ...item, isTurn: true }
-              }
-              return { ...item, isTurn: false }
-            })
-          )
-
           if (matchData) {
             if (matchData.isShowdown && !matchData.isAllAllIn) {
               setMatch({
@@ -510,14 +514,45 @@ export const TableContent = ({ tableId }: TableContentProps) => {
                     setMatch(matchData)
                     setParticipants(matchData.participants)
                   }, 1000)
+
+                  setTimeout(() => {
+                    setPlayers(prev =>
+                      prev.map(item => {
+                        if (item.id === playerId) {
+                          return { ...item, isTurn: true }
+                        }
+                        return { ...item, isTurn: false }
+                      })
+                    )
+                  }, 2000)
                 } else {
                   setMatch(matchData)
                   setParticipants(matchData.participants)
+
+                  setTimeout(() => {
+                    setPlayers(prev =>
+                      prev.map(item => {
+                        if (item.id === playerId) {
+                          return { ...item, isTurn: true }
+                        }
+                        return { ...item, isTurn: false }
+                      })
+                    )
+                  }, 1500)
                 }
                 setAutoAction({ isChecked: '', callAmount: 0 })
               } else {
                 setMatch(matchData)
                 setParticipants(matchData.participants)
+
+                setPlayers(prev =>
+                  prev.map(item => {
+                    if (item.id === playerId) {
+                      return { ...item, isTurn: true }
+                    }
+                    return { ...item, isTurn: false }
+                  })
+                )
               }
             }
           }
@@ -703,6 +738,7 @@ export const TableContent = ({ tableId }: TableContentProps) => {
 
   return (
     <div className="wrapper w-full h-full" ref={wrapperRef}>
+      {audioShuffle}
       <Image
         src="/images/table_v3.png"
         alt="tableImage"
