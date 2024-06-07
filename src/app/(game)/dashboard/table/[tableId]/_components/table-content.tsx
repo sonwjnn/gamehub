@@ -333,10 +333,10 @@ export const TableContent = ({ tableId }: TableContentProps) => {
 
           setPlayers(prev => [...prev, player])
 
-          // await socket.emit(PokerActions.TABLE_JOINED, {
-          //   tableId: tableSocketId,
-          //   player,
-          // })
+          await socket.emit(PokerActions.TABLE_JOINED, {
+            tableId: tableSocketId,
+            player,
+          })
         }
       )
 
