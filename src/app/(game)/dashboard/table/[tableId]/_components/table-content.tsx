@@ -508,14 +508,12 @@ export const TableContent = ({ tableId }: TableContentProps) => {
                   participantsRef?.current &&
                   participantsRef?.current.some(item => item.bet > 0)
                 if (hasBet) {
-                  setTimeout(() => {
-                    setChipsAnimation(true)
-                  }, 1000)
+                  setChipsAnimation(true)
 
                   setTimeout(() => {
                     setMatch(matchData)
                     setParticipants(matchData.participants)
-                  }, 2000)
+                  }, 1000)
 
                   setTimeout(() => {
                     setPlayers(prev =>
@@ -526,7 +524,7 @@ export const TableContent = ({ tableId }: TableContentProps) => {
                         return { ...item, isTurn: false }
                       })
                     )
-                  }, 3000)
+                  }, 2000)
                 } else {
                   setMatch(matchData)
                   setParticipants(matchData.participants)
