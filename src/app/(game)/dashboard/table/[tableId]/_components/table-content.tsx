@@ -1,6 +1,5 @@
 'use client'
 
-import Image from 'next/image'
 import { OtherPlayer } from './other-player'
 import { CurrentPlayer } from './current-player'
 import { Board } from './board'
@@ -8,7 +7,6 @@ import { useState, useEffect, useRef, useMemo } from 'react'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 
-import sounds from '@/utils/contants/sound'
 import {
   HighlightCard,
   Match,
@@ -20,10 +18,8 @@ import { useCurrentUser } from '@/hooks/use-current-user'
 import { useSocket } from '@/providers/socket-provider'
 
 import { LeaveButton } from './leave-button'
-import { cn } from '@/lib/utils'
 import { WinDefaultModal } from '@/components/modals/quality/win-default-modal'
 import playerApi from '@/services/api/modules/player-api'
-import { useRouter } from 'next/navigation'
 import { ShowdownModal } from './showdown-modal'
 import { FlushModal } from '@/components/modals/quality/flush-modal'
 import { FourCardModal } from '@/components/modals/quality/fourcard-modal'

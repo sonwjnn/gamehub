@@ -40,7 +40,9 @@ export const ActionItem = ({
 
   const canAutoAction =
     isTurn && isChecked === type && callAmount === match?.callAmount
-  const canCheck = match && !isTurn
+  const isHaveWinner = (match?.winners?.length ?? 0) > 0
+
+  const canCheck = match && !isHaveWinner && !isTurn
 
   //prettier-ignore
   useKey( shortcut, () => {

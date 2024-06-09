@@ -73,6 +73,14 @@ export const Statistical = ({ tableId }: StatisticalProps) => {
 
     setSidebarMobile('statistical')
   }
+
+  const totalWin = statistical.winAmount
+  const totalLose = statistical.loseAmount
+  const difference = totalWin - totalLose
+  const status =
+    difference > 0
+      ? `${formatChipsAmount(difference)}$ (Thắng)`
+      : `${formatChipsAmount(Math.abs(difference))}$ (Thua)`
   return (
     <div
       className={cn(
@@ -85,7 +93,9 @@ export const Statistical = ({ tableId }: StatisticalProps) => {
           <i className="icon-down"></i>
         </span>
       </div>
-      <div className="ttl">THỐNG KÊ</div>
+      <div className="ttl">
+        THỐNG KÊ - <span className="text-white">{status}</span>
+      </div>
       <div className="content">
         <dl className="flex flex-midle">
           <dt>Thắng :</dt>

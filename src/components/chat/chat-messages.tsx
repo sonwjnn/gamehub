@@ -76,12 +76,9 @@ export const ChatMessages = ({
     )
   }
 
-  console.log(data)
-
   return (
     <div ref={chatRef} className="flex flex-1 flex-col overflow-y-auto py-4 ">
       {!hasNextPage && <div className="flex-1" />}
-      {/* {!hasNextPage && <ChatWelcome type={type} name={name} />} */}
       {hasNextPage && (
         <div className="flex justify-center">
           {isFetchingNextPage ? (

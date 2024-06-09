@@ -1,6 +1,6 @@
 'use client'
 
-import { PageLoading } from '@/components/page-loading'
+import { LoadingPage } from '@/components/loading-page'
 import { useOrigin } from '@/hooks/use-origin'
 
 interface ContainerProps {
@@ -11,7 +11,7 @@ export const Container = ({ children }: ContainerProps) => {
   const origin = useOrigin()
 
   if (!origin) {
-    return <PageLoading />
+    return <LoadingPage />
   }
 
   return (

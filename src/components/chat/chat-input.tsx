@@ -1,6 +1,5 @@
 'use client'
 
-import { EmojiPicker } from '@/components/emoji-picker'
 import { Form, FormControl, FormField, FormItem } from '@/components/ui/form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import axios from 'axios'
