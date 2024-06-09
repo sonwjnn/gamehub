@@ -5,8 +5,6 @@ import Image from 'next/image'
 import { useEffect, useRef, useState } from 'react'
 import anime from 'animejs'
 import Link from 'next/link'
-import { useAudio } from 'react-use'
-import { useOrigin } from '@/hooks/use-origin'
 
 interface HomeContentProps {}
 
@@ -18,12 +16,6 @@ const textArray = [
 ]
 
 export const HomeContent = ({}: HomeContentProps) => {
-  const [audio, _] = useAudio({
-    src: '/sounds/sound_home.mp3',
-    autoPlay: true,
-    loop: true,
-  })
-
   const [textArrayIndex, setTextArrayIndex] = useState(0)
   const [charIndex, setCharIndex] = useState(0)
 
@@ -93,7 +85,6 @@ export const HomeContent = ({}: HomeContentProps) => {
 
   return (
     <div className="boding_main flex-wrap">
-      {audio}
       <div className="container">
         <div className="row py-24 gapy-24 ">
           <div className="col-12 col-md-6 col-lg-4 hidden md:!block">

@@ -66,7 +66,6 @@ export const CurrentPlayer = ({
   const [isBet, setIsBet] = useState(false)
   const [winnerDelay, setWinnerDelay] = useState(false)
   const [foldCount, setFoldCount] = useState(0)
-  const [callRaiseMissing, setCallRaiseMissing] = useState(0)
 
   const gender = getGenderFromImageUrl(player?.user?.image || '')
   const currentParticipant = participants.find(
@@ -464,7 +463,6 @@ export const CurrentPlayer = ({
         match={match}
         tableId={tableId}
         currentParticipant={currentParticipant}
-        setCallRaiseMissing={setCallRaiseMissing}
       />
     </div>
   )

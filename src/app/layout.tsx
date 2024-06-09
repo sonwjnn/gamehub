@@ -12,6 +12,7 @@ import '@/styles/bootstrap.css'
 
 import { SessionProvider } from 'next-auth/react'
 import { auth } from '@/auth'
+import { SoundProvider } from '@/providers/sound-provider'
 
 export const metadata: Metadata = {
   title: 'Poker',
@@ -29,6 +30,7 @@ export default async function RootLayout({
     <SessionProvider session={session}>
       <html className="h-full" lang="en" suppressHydrationWarning>
         <body className={cn('bg-white dark:bg-[#213338] h-full')}>
+          <SoundProvider />
           <Toaster />
           <ThemeProvider
             attribute="class"

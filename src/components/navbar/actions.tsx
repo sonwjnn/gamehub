@@ -2,7 +2,6 @@
 
 import { UserButton } from '@/components/auth/user-button'
 import { MobileToggle } from '@/components/mobile-toggle'
-import { SocketIndicator } from '@/components/socket-indicator'
 import { useModal } from '@/store/use-modal-store'
 import Link from 'next/link'
 import { ToggleBrightness } from '@/components/toggle-brightness'
@@ -15,10 +14,6 @@ export const Actions = ({}: ActionsProps) => {
 
   return (
     <div className="toolbar flex flex-midle">
-      {/* <div className="mr-[24px]">
-        <SocketIndicator />
-      </div> */}
-
       <div className="gap-x-3 mx-3 hidden md:!flex">
         <ToggleSound />
         <ToggleBrightness />

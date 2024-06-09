@@ -8,6 +8,7 @@ import playerApi from '@/services/api/modules/player-api'
 import { useCurrentUser } from '@/hooks/use-current-user'
 import { toast } from 'sonner'
 import { useSession } from 'next-auth/react'
+import { useModal } from '@/store/use-modal-store'
 
 type AutoRebuyToggleProps = {
   tableId: string
@@ -20,6 +21,7 @@ export const AutoRebuyToggle = ({
   player,
   match,
 }: AutoRebuyToggleProps) => {
+  const {onOpen} = useModal()
   const { isAutoRebuy, setAutoRebuy, autoRebuyAmount } = useAutoRebuy()
   const user = useCurrentUser()
   const { update } = useSession()
@@ -53,11 +55,20 @@ export const AutoRebuyToggle = ({
     update()
   }
 
+  const onToggle = () => {
+    if (isAutoRebuy) {
+      setAutoRebuy({ isAutoRebuy: false })
+    } else {
+      onOpen('autoRebuy')
+      setAutoRebuy({ isAutoRebuy: true })
+    }
+  }
+
   return (
     <div className="flex items-center gap-x-1">
       <Switch
         checked={isAutoRebuy}
-        onCheckedChange={() => setAutoRebuy({ isAutoRebuy: !isAutoRebuy })}
+        onCheckedChange={onToggle}
       />
       <p className="text-xs">Auto rebuy</p>
     </div>

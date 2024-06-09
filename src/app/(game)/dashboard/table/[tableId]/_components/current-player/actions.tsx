@@ -19,7 +19,6 @@ interface CurrentPlayerActionProps {
   player: Player | undefined
   isTurn: boolean | undefined
   setIsAction: (isAction: boolean) => void
-  setCallRaiseMissing: React.Dispatch<React.SetStateAction<number>>
 }
 
 export const CurrentPlayerAction = ({
@@ -31,7 +30,6 @@ export const CurrentPlayerAction = ({
   setBet,
   player,
   setIsAction,
-  setCallRaiseMissing,
 }: CurrentPlayerActionProps) => {
   const { socket } = useSocket()
 
@@ -40,56 +38,57 @@ export const CurrentPlayerAction = ({
   const gender = getGenderFromImageUrl(player?.user?.image || '')
 
   const fold = async () => {
-    setIsAction(true)
-    if (socket && !isProcessing) {
-      playSound(PokerActions.FOLD, gender)
-      setIsProcessing(true)
-      socket.emit(PokerActions.FOLD, {
-        tableId,
-        participantId: currentParticipant?.id,
-      })
-      setTimeout(() => {
-        setIsProcessing(false)
-        setIsAction(false)
-      }, 2000)
-    }
+    playSound(PokerActions.FOLD, gender)
+
+    // setIsAction(true)
+    // if (socket && !isProcessing) {
+    //   playSound(PokerActions.FOLD, gender)
+    //   setIsProcessing(true)
+    //   socket.emit(PokerActions.FOLD, {
+    //     tableId,
+    //     participantId: currentParticipant?.id,
+    //   })
+    //   setTimeout(() => {
+    //     setIsProcessing(false)
+    //     setIsAction(false)
+    //   }, 2000)
+    // }
   }
 
   const check = () => {
-    setIsAction(true)
-    if (socket && !isProcessing) {
-      playSound(PokerActions.CHECK, gender)
-      setIsProcessing(true)
-      socket.emit(PokerActions.CHECK, {
-        tableId,
-        participantId: currentParticipant?.id,
-      })
-      setTimeout(() => {
-        setIsProcessing(false)
-        setIsAction(false)
-      }, 2000)
-    }
+    playSound(PokerActions.CHECK, gender)
+    // setIsAction(true)
+    // if (socket && !isProcessing) {
+    //   playSound(PokerActions.CHECK, gender)
+    //   setIsProcessing(true)
+    //   socket.emit(PokerActions.CHECK, {
+    //     tableId,
+    //     participantId: currentParticipant?.id,
+    //   })
+    //   setTimeout(() => {
+    //     setIsProcessing(false)
+    //     setIsAction(false)
+    //   }, 2000)
+    // }
   }
 
   const call = () => {
-    setIsAction(true)
-    if (socket && !isProcessing) {
-      playSound(PokerActions.CALL, gender)
+    playSound(PokerActions.CALL, gender)
 
-      setIsProcessing(true)
-      // setCallRaiseMissing(
-      //   match?.callAmount ? match?.callAmount + currentBet : 0
-      // )
-      socket.emit(PokerActions.CALL, {
-        tableId,
-        participantId: currentParticipant?.id,
-      })
+    // setIsAction(true)
+    // if (socket && !isProcessing) {
+    //   playSound(PokerActions.CALL, gender)
+    //   setIsProcessing(true)
+    //   socket.emit(PokerActions.CALL, {
+    //     tableId,
+    //     participantId: currentParticipant?.id,
+    //   })
 
-      setTimeout(() => {
-        setIsProcessing(false)
-        setIsAction(false)
-      }, 2000)
-    }
+    //   setTimeout(() => {
+    //     setIsProcessing(false)
+    //     setIsAction(false)
+    //   }, 2000)
+    // }
   }
 
   const raise = (amount: number, type: PokerActions) => {
@@ -111,28 +110,28 @@ export const CurrentPlayerAction = ({
 
   const onRaise = () => {
     playSound(PokerActions.RAISE, gender)
-    const trueBetValue = bet > max ? max : bet < min ? min : bet
-    raise(trueBetValue + currentBet, PokerActions.RAISE)
+    // const trueBetValue = bet > max ? max : bet < min ? min : bet
+    // raise(trueBetValue + currentBet, PokerActions.RAISE)
   }
 
   const onQuarter = () => {
     playSound(PokerActions.QUARTER, gender)
-    raise(quarter + currentBet, PokerActions.QUARTER)
+    // raise(quarter + currentBet, PokerActions.QUARTER)
   }
 
   const onHalf = () => {
     playSound(PokerActions.HALF, gender)
-    raise(half + currentBet, PokerActions.HALF)
+    // raise(half + currentBet, PokerActions.HALF)
   }
 
   const onFull = () => {
     playSound(PokerActions.FULL, gender)
-    raise(currentPot + currentBet, PokerActions.FULL)
+    // raise(currentPot + currentBet, PokerActions.FULL)
   }
 
   const onAllIn = () => {
     playSound(PokerActions.ALLIN, gender)
-    raise(currentStack + currentBet, PokerActions.ALLIN)
+    // raise(currentStack + currentBet, PokerActions.ALLIN)
   }
 
   const onFourKeyPress = () => {
