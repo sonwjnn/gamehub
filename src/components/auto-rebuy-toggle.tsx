@@ -21,7 +21,7 @@ export const AutoRebuyToggle = ({
   player,
   match,
 }: AutoRebuyToggleProps) => {
-  const {onOpen} = useModal()
+  const { onOpen } = useModal()
   const { isAutoRebuy, setAutoRebuy, autoRebuyAmount } = useAutoRebuy()
   const user = useCurrentUser()
   const { update } = useSession()
@@ -66,10 +66,7 @@ export const AutoRebuyToggle = ({
 
   return (
     <div className="flex items-center gap-x-1">
-      <Switch
-        checked={isAutoRebuy}
-        onCheckedChange={onToggle}
-      />
+      <Switch checked={isAutoRebuy} onCheckedChange={onToggle} />
       <p className="text-xs">Auto rebuy</p>
     </div>
   )

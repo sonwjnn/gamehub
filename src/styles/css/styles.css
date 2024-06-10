@@ -1302,7 +1302,6 @@
   -webkit-filter: url(#noiseFilter2);
   filter: url(#noiseFilter2);
   opacity: 16%;
-  -webkit-clip-path: url(#rounded-clip);
   clip-path: url(#rounded-clip);
   mix-blend-mode: hard-light;
   -webkit-transition: all ease 0.3s;
@@ -1656,7 +1655,6 @@
   -webkit-filter: url(#noiseFilter2);
   filter: url(#noiseFilter2);
   opacity: 16%;
-  -webkit-clip-path: url(#rounded-clip);
   clip-path: url(#rounded-clip);
   mix-blend-mode: hard-light;
   -webkit-transition: all ease 0.3s;

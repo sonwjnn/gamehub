@@ -96,7 +96,11 @@ export const BankForm = ({ bank }: BankFormProps) => {
               <FormControl>
                 <div className="input-group">
                   <div className="wrap-input">
-                    <Input disabled={isPending} {...field} />
+                    <Input
+                      className="form-control"
+                      disabled={isPending}
+                      {...field}
+                    />
                     <label>Card number</label>
                   </div>
                 </div>

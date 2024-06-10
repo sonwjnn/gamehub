@@ -330,7 +330,7 @@ export const Board = ({ match, highlightCards }: BoardProps) => {
                 <div ref={riverCardRef} className="py-[0.9%] px-[1.75%] grow-0">
                   <div
                     className={cn(
-                      'item flipped is_slow !delay-1000',
+                      'item flipped is_slow',
                       riverHiddenClass,
                       hasRiverHighlight && 'status_active'
                     )}

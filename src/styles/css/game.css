@@ -203,6 +203,18 @@ html {
   background-color: #111;
 }
 
+/* :root {
+  --hue: 223;
+  --off-hue: 3;
+  --on-hue1: 123;
+  --on-hue2: 168;
+  --fg: hsl(var(--hue), 10%, 90%);
+  --primary: hsl(var(--hue), 90%, 50%);
+  --trans-dur: 0.6s;
+  --trans-timing: cubic-bezier(0.65, 0, 0.35, 1);
+  font-size: calc(40px + 20 * (100vw - 320px) / 2240);
+} */
+
 .game-html {
   height: 100%;
   width: 100%;
@@ -2175,7 +2187,7 @@ html {
   bottom: 0;
   left: 0;
   right: 0;
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: rgba(0, 0, 0, 0.2);
   z-index: 999;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -2445,7 +2457,7 @@ html {
   justify-content: center;
   margin: auto;
   width: 40%;
-  margin-top: -12%;
+  margin-top: -20%;
 }
 @media (min-width: 320px) and (orientation: portrait),
   (max-width: 1023px) and (orientation: landscape) {
@@ -3149,8 +3161,8 @@ html {
   transition-delay: 0.2s;
 }
 .game-html .group_midle .list_pocker .item.is_slow {
-  -webkit-transition: ease-in-out 0.7s;
-  transition: ease-in-out 0.7s;
+  -webkit-transition: ease-in-out 0.8s;
+  transition: ease-in-out 0.8s;
 }
 .game-html .group_midle .list_pocker .item .pocker {
   position: relative;
@@ -3310,8 +3322,8 @@ html {
 .game-html .flipped.is_slow .pocker,
 .game-html .flipped.is_slow .front,
 .game-html .flipped.is_slow .back {
-  -webkit-transition: cubic-bezier(0.1, 0.7, 1, 0.2) 0.5s !important;
-  transition: cubic-bezier(0.1, 0.7, 1, 0.2) 0.5s !important;
+  -webkit-transition: cubic-bezier(0.1, 0.7, 1, 0.2) 0.8s !important;
+  transition: cubic-bezier(0.1, 0.7, 1, 0.2) 0.8s !important;
 }
 .game-html .flipped.hide .pocker {
   -webkit-transform: rotateY(180deg);
@@ -3978,9 +3990,9 @@ html {
 .game-html .group_tool .coin_bet {
   top: auto;
   bottom: 100%;
-  -webkit-transform: translate(215%, -38%);
-  -ms-transform: translate(215%, -38%);
-  transform: translate(215%, -38%);
+  -webkit-transform: translate(215%, -20%);
+  -ms-transform: translate(215%, -20%);
+  transform: translate(215%, -20%);
   margin-top: 0;
 }
 @media (min-width: 320px) and (orientation: portrait),
