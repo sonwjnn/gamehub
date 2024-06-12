@@ -58,10 +58,14 @@ export const showModalByHandName = ({ match, onOpen, isWinner }: Props) => {
         new Audio(sounds.soundHighCard).play()
         new Audio(sounds.soundWeakCongrats).play()
         break
-      // case WinnerHandType.Pair:
-      // break
-      // case WinnerHandType.ThreeOfAKind:
-      // break
+      case WinnerHandType.Pair:
+        new Audio(sounds.soundPair).play()
+        new Audio(sounds.soundWeakCongrats).play()
+        break
+      case WinnerHandType.ThreeOfAKind:
+        new Audio(sounds.soundThreeCards).play()
+        new Audio(sounds.soundWeakCongrats).play()
+        break
       default:
         new Audio(sounds.soundWeakCongrats).play()
     }

@@ -1,6 +1,5 @@
 import { Toaster } from '@/components/ui/sonner'
 import { cn } from '@/lib/utils'
-import { ModalProvider } from '@/providers/modal-provider'
 import { QueryProvider } from '@/providers/query-provider'
 import { SocketProvider } from '@/providers/socket-provider'
 import { ThemeProvider } from '@/providers/theme-provider'

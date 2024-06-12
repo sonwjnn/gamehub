@@ -1,9 +1,10 @@
 import { cn } from '@/lib/utils'
 import { formatChipsAmount } from '@/utils/formatting'
-import { useKey } from 'react-use'
+import { useKey, useMedia } from 'react-use'
 import { Match } from '@/types'
 import { useEffect } from 'react'
 import { useAutoAction } from '@/store/use-auto-action'
+import { useSidebarMobile } from '@/store/use-sidebar-mobile'
 
 type ActionItemProps = {
   shortcut: string
@@ -36,7 +37,9 @@ export const ActionItem = ({
   match,
   isTurn,
 }: ActionItemProps) => {
+  const isMobile = useMedia('(max-width: 768px), (max-height: 768px)', false)
   const { isChecked, callAmount, setAutoAction } = useAutoAction()
+  const { sidebarMobile, setSidebarMobile } = useSidebarMobile()
 
   const canAutoAction =
     isTurn && isChecked === type && callAmount === match?.callAmount
@@ -64,7 +67,15 @@ export const ActionItem = ({
 
   useEffect(() => {
     if (canAutoAction) {
-      onClick()
+      if (type === 'raise' && isMobile) {
+        if (sidebarMobile !== 'raise') {
+          setSidebarMobile('raise')
+        } else {
+          onClick()
+        }
+      } else {
+        onClick()
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [canAutoAction])
@@ -97,7 +108,15 @@ export const ActionItem = ({
 
     if (disabled) return
 
-    onClick()
+    if (type === 'raise' && isMobile) {
+      if (sidebarMobile !== 'raise') {
+        setSidebarMobile('raise')
+      } else {
+        onClick()
+      }
+    } else {
+      onClick()
+    }
   }
 
   return (

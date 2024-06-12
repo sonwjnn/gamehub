@@ -799,11 +799,11 @@ export const TableContent = ({ tableId }: TableContentProps) => {
         highlightCards={highlightCards}
       />
 
-      {messages && messages.length > 0 && (
+      {/* {messages && messages.length > 0 && (
         <div className="absolute font-semibold top-[60%] text-lime-500 text-xs md:text-xl left-1/2 -translate-y-1/2 -translate-x-1/2">
           {messages[messages.length - 1]}
         </div>
-      )}
+      )} */}
       {currentPlayer && (
         <CurrentPlayer
           match={match}

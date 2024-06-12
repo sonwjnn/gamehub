@@ -6,18 +6,29 @@ import '@/styles/css/layout.css'
 import '@/styles/css/styles.css'
 import '@/styles/css/game.css'
 
-import { usePathname } from 'next/navigation'
+import { useParams } from 'next/navigation'
 import { cn } from '@/lib/utils'
 import { ModalProvider } from '@/providers/modal-provider'
+import { useEffect } from 'react'
 
 interface GameLayoutProps {
   children: React.ReactNode
 }
 
 const GameLayout = ({ children }: GameLayoutProps) => {
-  const pathname = usePathname()
+  const params = useParams()
 
-  const isTableIdRoute = pathname?.includes('/dashboard/table/')
+  const isTableIdRoute = params?.tableId
+
+  useEffect(() => {
+    if (isTableIdRoute) {
+      document.body.classList.add('overflow-hidden')
+      document.documentElement.classList.add('overflow-hidden')
+    } else {
+      document.body.classList.remove('overflow-hidden')
+      document.documentElement.classList.remove('overflow-hidden')
+    }
+  }, [isTableIdRoute])
 
   return (
     <div className={cn(isTableIdRoute ? 'game-html' : 'page-sub')}>

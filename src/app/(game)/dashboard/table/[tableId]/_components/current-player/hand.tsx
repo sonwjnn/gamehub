@@ -31,7 +31,7 @@ export const Hand = ({
 
   const hasHighlight = hasFirstHighlight || hasSecondHighlight
 
-  const isMobile = useMedia('(max-width: 640px)', false)
+  const isMobile = useMedia('(max-width: 768px), (max-height: 768px)', false)
 
   useEffect(() => {
     if (imageUrlFirst) {
@@ -62,7 +62,7 @@ export const Hand = ({
           !imageUrl.first && 'hide',
           !isHidden && 'opacity-100 pointer-events-auto',
           hasFirstHighlight && 'status_active',
-          isMobile && 'translate-y-0'
+          isMobile && '-translate-x-1.5 -translate-y-1.5'
         )}
       >
         <div
@@ -82,7 +82,7 @@ export const Hand = ({
           !imageUrl.second && 'hide',
           !isHidden && 'opacity-100 pointer-events-auto',
           hasSecondHighlight && 'status_active',
-          isMobile && 'translate-y-0'
+          isMobile && 'translate-x-2.5 -translate-y-1.5'
         )}
       >
         <div

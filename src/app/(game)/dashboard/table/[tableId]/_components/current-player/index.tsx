@@ -186,10 +186,16 @@ export const CurrentPlayer = ({
 
   useEffect(() => {
     if (match) {
+      // if (match.callAmount > match.minBet) {
+      //   setBet(match.callAmount)
+      // } else if (match.pot > 0) {
+      //   setBet(match.minRaise)
+      // } else {
+      //   setBet(match.minBet)
+      // }
+
       if (match.callAmount > match.minBet) {
         setBet(match.callAmount)
-      } else if (match.pot > 0) {
-        setBet(match.minRaise)
       } else {
         setBet(match.minBet)
       }

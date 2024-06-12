@@ -26,16 +26,17 @@ const showdown = '/sounds/showdown.mp3'
 const soundStrongCongrats = '/sounds/table/strong_congrats.mp3'
 const soundWeakCongrats = '/sounds/table/weak_congrats.mp3'
 const soundTurnRiver = '/sounds/table/turn_river.mp3'
-const soundFlush = '/sounds/table/flush.mp3'
-// const soundThreeCards = '/sounds/table/three_of_kind.mp3'
-const soundTwoPair = '/sounds/table/two_pair.mp3'
+const soundFlush = '/sounds/quality/flush.mp3'
+const soundThreeCards = '/sounds/quality/three_of_a_kind.mp3'
+const soundTwoPair = '/sounds/quality/two_pair.mp3'
+const soundPair = '/sounds/quality/pair.mp3'
 
-const soundStraight = '/sounds/table/straight.mp3'
-const soundHighCard = '/sounds/table/high_card.mp3'
-const soundFullHouse = '/sounds/table/full_house.mp3'
-const soundRoyalFlush = '/sounds/table/royal_flush.mp3'
-const soundFourCards = '/sounds/table/four_cards.mp3'
-const soundStraightFlush = '/sounds/table/straight_flush.mp3'
+const soundStraight = '/sounds/quality/straight.mp3'
+const soundHighCard = '/sounds/quality/high_card.mp3'
+const soundFullHouse = '/sounds/quality/full_house.mp3'
+const soundRoyalFlush = '/sounds/quality/royal_flush.mp3'
+const soundFourCards = '/sounds/quality/four_cards.mp3'
+const soundStraightFlush = '/sounds/quality/straight_flush.mp3'
 const soundSlip = '/sounds/sound_slip.mp3'
 
 // eslint-disable-next-line import/no-anonymous-default-export
@@ -68,8 +69,10 @@ export default {
   soundStrongCongrats,
   soundWeakCongrats,
   soundTurnRiver,
+  soundPair,
   soundTwoPair,
   soundHighCard,
+  soundThreeCards,
 
   soundFlush,
   soundStraight,
