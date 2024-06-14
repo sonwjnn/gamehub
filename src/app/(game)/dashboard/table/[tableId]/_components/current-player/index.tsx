@@ -338,6 +338,18 @@ export const CurrentPlayer = ({
             bet={currentBet}
             pot={currentPot}
           />
+          {participants.length > 2 && match?.buttonId === player?.id && (
+            <div className="slind slind_dealer">
+              <Image
+                src={'/images/slind_dealer.png'}
+                alt="dealerImage"
+                width={0}
+                height={0}
+                sizes="100vw"
+                className="w-auto h-full"
+              />
+            </div>
+          )}
 
           {match?.smallBlindId === player?.id && (
             <div className="slind slind_small">

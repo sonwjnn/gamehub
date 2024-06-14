@@ -35,7 +35,10 @@ export const WinDefaultModal = ({ match }: WinDefaultModalProps) => {
   const bestHandCards = formattedStringToCards(lastWinMessage.bestHand || `[]`)
 
   return (
-    <div className={cn('status_win !z-10', isModalOpen && 'active')}>
+    <div
+      className={cn('status_win !z-10', isModalOpen && 'active')}
+      id="status_win"
+    >
       <div className="content_top">
         <div className="list">
           {isShowdown &&

@@ -203,18 +203,6 @@ html {
   background-color: #111;
 }
 
-/* :root {
-  --hue: 223;
-  --off-hue: 3;
-  --on-hue1: 123;
-  --on-hue2: 168;
-  --fg: hsl(var(--hue), 10%, 90%);
-  --primary: hsl(var(--hue), 90%, 50%);
-  --trans-dur: 0.6s;
-  --trans-timing: cubic-bezier(0.65, 0, 0.35, 1);
-  font-size: calc(40px + 20 * (100vw - 320px) / 2240);
-} */
-
 .game-html {
   height: 100%;
   width: 100%;
@@ -1589,6 +1577,31 @@ html {
     0 0.75rem 0.5rem rgba(255, 255, 255, 0.4) inset,
     0 0.25rem 0.5rem 0 rgb(205, 207, 70) inset;
 }
+.game-html .group_user .slind_dealer:before {
+  border: 1px solid #1b171c;
+  background-image: -webkit-gradient(
+    linear,
+    left top,
+    left bottom,
+    from(#14130b),
+    to(#212206)
+  );
+  background-image: linear-gradient(-180deg, #14130b 0%, #212206 100%);
+  -webkit-box-shadow:
+    0 0.5rem 1.25rem rgba(42, 42, 34, 0.876),
+    0 -0.25rem 1.5rem rgb(42, 42, 36) inset,
+    0 0.75rem 0.5rem rgba(18, 15, 15, 0.4) inset,
+    0 0.25rem 0.5rem 0 rgb(41, 42, 15) inset;
+  box-shadow:
+    0 0.5rem 1.25rem rgba(42, 42, 34, 0.876),
+    0 -0.25rem 1.5rem rgb(42, 42, 36) inset,
+    0 0.75rem 0.5rem rgba(18, 15, 15, 0.4) inset,
+    0 0.25rem 0.5rem 0 rgb(41, 42, 15) inset;
+}
+.game-html .group_user .slind_dealer img {
+  position: relative;
+  z-index: 9;
+}
 .game-html .group_user .status {
   position: absolute;
   width: 27.6497695853%;
@@ -1974,7 +1987,7 @@ html {
   border-radius: 3px;
   top: -10px;
 }
-.game-html .status_win {
+.game-html #status_win {
   position: fixed;
   top: 50%;
   left: 50%;
@@ -1987,12 +2000,11 @@ html {
   opacity: 0;
   -webkit-transition: ease-in-out 0.3s;
   transition: ease-in-out 0.3s;
-  pointer-events: none;
   width: 33.3333333333%;
   font-size: 87.5%;
   line-height: 16px;
 }
-.game-html .status_win:after {
+.game-html #status_win:after {
   position: absolute;
   content: '';
   top: 0;
@@ -2044,28 +2056,49 @@ html {
   }
 }
 @media (min-width: 1024px), ((min-width: 768px) and (orientation: portrait)) {
-  .game-html .status_win {
+  .game-html #status_win {
     line-height: 26px;
     font-size: 125%;
     width: 27.5694444444%;
   }
 }
+.game-html #status_win .content_top {
+  width: 95.717884131%;
+}
+.game-html #status_win .content_top .list {
+  margin: 0 6% -65px;
+  max-width: 80%;
+}
+.game-html #status_win .content_top .title {
+  padding-bottom: 0;
+}
+.game-html #status_win.active {
+  -webkit-transform: translate(-50%, -50%) scale(1);
+  -ms-transform: translate(-50%, -50%) scale(1);
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
+}
 .game-html .status_win .content_top {
   position: relative;
-  width: 88.161209068%;
-  margin: 0 auto -10px;
+  width: 70.5289672544%;
+  margin: 0 auto;
 }
 .game-html .status_win .content_top .list {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 15.1133501259%;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  position: relative;
+  margin: 10px auto -20px;
+  max-width: 220px;
 }
 .game-html .status_win .content_top .list .item {
   width: 20%;
+}
+.game-html .status_win .content_top .list .item:nth-child(1) {
+  margin-left: -20px;
 }
 .game-html .status_win .content_top .list .item .wrap {
   padding-top: 220%;
@@ -2163,12 +2196,23 @@ html {
   text-align: center;
 }
 .game-html .status_win .content .title {
-  font-size: 87.5%;
-  padding: 4px;
+  font-size: 75%;
+  padding: 2px;
+}
+@media (min-width: 1024px), ((min-width: 768px) and (orientation: portrait)) {
+  .game-html .status_win .content .title {
+    font-size: 87.5%;
+    padding: 4px;
+  }
 }
 .game-html .status_win .content .money {
   background: #0e063a;
-  padding: 8px;
+  padding: 4px;
+}
+@media (min-width: 1024px), ((min-width: 768px) and (orientation: portrait)) {
+  .game-html .status_win .content .money {
+    padding: 8px;
+  }
 }
 .game-html .status_win .content .money span {
   font-weight: 900;
@@ -2286,8 +2330,8 @@ html {
 }
 .game-html .showdown .images,
 .game-html .status_quaility .images {
-  max-width: 430px;
-  margin: auto;
+  max-width: 380px;
+  margin: 0 auto -15%;
   position: relative;
 }
 @media (min-width: 320px) and (orientation: portrait),
@@ -2457,7 +2501,7 @@ html {
   justify-content: center;
   margin: auto;
   width: 40%;
-  margin-top: -20%;
+  margin-top: -12%;
 }
 @media (min-width: 320px) and (orientation: portrait),
   (max-width: 1023px) and (orientation: landscape) {
@@ -3621,10 +3665,17 @@ html {
   }
 }
 .game-html .group_tool .group_left .group_user .status {
-  -webkit-transform: translate(-58%, -170%);
-  -ms-transform: translate(-58%, -170%);
-  transform: translate(-58%, -170%);
+  -webkit-transform: translate(-70%, -40%);
+  -ms-transform: translate(-70%, -40%);
+  transform: translate(-70%, -40%);
   width: 20%;
+}
+@media (min-width: 1024px), ((min-width: 768px) and (orientation: portrait)) {
+  .game-html .group_tool .group_left .group_user .status {
+    -webkit-transform: translate(-58%, -170%);
+    -ms-transform: translate(-58%, -170%);
+    transform: translate(-58%, -170%);
+  }
 }
 .game-html .group_tool .group_left .group_user .info_user {
   margin-top: 4px;
@@ -3801,8 +3852,8 @@ html {
   transition: all 0.3s;
 }
 .game-html .group_tool .toolbar .item.has_check:after {
-  width: 22px;
-  height: 22px;
+  width: 18px;
+  height: 18px;
   top: 0;
   left: 0;
   border: 1px solid #888;
@@ -3810,6 +3861,12 @@ html {
   background-position: center;
   background-size: 12px;
   border-radius: 4px 0 2px 0;
+}
+@media (min-width: 1024px), ((min-width: 768px) and (orientation: portrait)) {
+  .game-html .group_tool .toolbar .item.has_check:after {
+    width: 22px;
+    height: 22px;
+  }
 }
 .game-html .group_tool .toolbar .item.has_check:before {
   right: 0;
@@ -3990,9 +4047,9 @@ html {
 .game-html .group_tool .coin_bet {
   top: auto;
   bottom: 100%;
-  -webkit-transform: translate(215%, -20%);
-  -ms-transform: translate(215%, -20%);
-  transform: translate(215%, -20%);
+  -webkit-transform: translate(215%, -30%);
+  -ms-transform: translate(215%, -30%);
+  transform: translate(215%, -30%);
   margin-top: 0;
 }
 @media (min-width: 320px) and (orientation: portrait),

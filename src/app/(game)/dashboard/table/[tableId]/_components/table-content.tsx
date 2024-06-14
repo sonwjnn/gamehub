@@ -44,7 +44,7 @@ interface TableContentProps {
 export const TableContent = ({ tableId }: TableContentProps) => {
   const user = useCurrentUser()
   const { socket } = useSocket()
-  const { onClose } = useModal()
+  const { onClose, onOpen } = useModal()
   const { setAutoAction } = useAutoAction()
   const { setAutoRebuy } = useAutoRebuy()
 
@@ -757,7 +757,7 @@ export const TableContent = ({ tableId }: TableContentProps) => {
           player={currentPlayer}
           match={match}
         />
-        {/* <Button onClick={() => setShuffle(true)}>suffle</Button> */}
+        {/* <Button onClick={() => onOpen('winDefault')}>suffle</Button> */}
       </div>
       <RebuyButton className="btn_cash_chip_sp" tableId={tableId} />
 

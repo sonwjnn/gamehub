@@ -136,6 +136,8 @@ export type Match = {
   isShowdown: boolean
   isAllAllIn: boolean
   winners?: Player[]
+  buttonId?: string
+  button?: Player
   bigBlindId?: string
   bigBlind?: Player
   smallBlindId?: string
