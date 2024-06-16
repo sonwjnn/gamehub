@@ -18,6 +18,7 @@ export const Card = ({ imageUrl }: CardProps) => {
           height={0}
           sizes="100vw"
           className="w-auto h-full"
+          unoptimized
         />
       </div>
       <div className="back">
@@ -28,6 +29,7 @@ export const Card = ({ imageUrl }: CardProps) => {
           height={0}
           sizes="100vw"
           className="w-auto h-full"
+          unoptimized
         />
       </div>
     </>
