@@ -40,7 +40,8 @@ export const CurrentPlayerAction = ({
   const fold = async () => {
     setIsAction(true)
     if (socket && !isProcessing) {
-      playSound(PokerActions.FOLD, gender)
+      const url = playSound(PokerActions.FOLD, gender)
+      new Audio(url).play()
       setIsProcessing(true)
       socket.emit(PokerActions.FOLD, {
         tableId,
@@ -56,7 +57,8 @@ export const CurrentPlayerAction = ({
   const check = () => {
     setIsAction(true)
     if (socket && !isProcessing) {
-      playSound(PokerActions.CHECK, gender)
+      const url = playSound(PokerActions.CHECK, gender)
+      new Audio(url).play()
       setIsProcessing(true)
       socket.emit(PokerActions.CHECK, {
         tableId,
@@ -72,7 +74,8 @@ export const CurrentPlayerAction = ({
   const call = () => {
     setIsAction(true)
     if (socket && !isProcessing) {
-      playSound(PokerActions.CALL, gender)
+      const url = playSound(PokerActions.CALL, gender)
+      new Audio(url).play()
       setIsProcessing(true)
       socket.emit(PokerActions.CALL, {
         tableId,
@@ -89,7 +92,8 @@ export const CurrentPlayerAction = ({
   const raise = (amount: number, type: PokerActions) => {
     setIsAction(true)
     if (socket && !isProcessing) {
-      playSound(type, gender)
+      const url = playSound(type, gender)
+      new Audio(url).play()
       setIsProcessing(true)
       socket.emit(PokerActions.RAISE, {
         tableId,

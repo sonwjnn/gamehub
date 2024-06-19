@@ -1651,7 +1651,7 @@ html {
   font-weight: 700;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  font-size: 100%;
+  font-size: 87.5%;
   text-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
 }
 @media (min-width: 1024px), ((min-width: 768px) and (orientation: portrait)) {
@@ -2091,11 +2091,21 @@ html {
   -ms-flex-pack: center;
   justify-content: center;
   position: relative;
-  margin: 10px auto -20px;
+  margin: 5px auto -10px;
   max-width: 220px;
 }
+@media (min-width: 1024px), ((min-width: 768px) and (orientation: portrait)) {
+  .game-html .status_win .content_top .list {
+    margin: 10px auto -20px;
+  }
+}
 .game-html .status_win .content_top .list .item {
-  width: 20%;
+  width: 15%;
+}
+@media (min-width: 1024px), ((min-width: 768px) and (orientation: portrait)) {
+  .game-html .status_win .content_top .list .item {
+    width: 20%;
+  }
 }
 .game-html .status_win .content_top .list .item:nth-child(1) {
   margin-left: -20px;
@@ -2116,7 +2126,12 @@ html {
   display: inline-block;
   -webkit-box-shadow: -2px 4px 6px 0px rgba(0, 0, 0, 0.5019607843);
   box-shadow: -2px 4px 6px 0px rgba(0, 0, 0, 0.5019607843);
-  border-radius: 8px;
+  border-radius: 4px;
+}
+@media (min-width: 1024px), ((min-width: 768px) and (orientation: portrait)) {
+  .game-html .status_win .content_top .list .item .wrap img {
+    border-radius: 8px;
+  }
 }
 .game-html .status_win .content_top .title {
   position: relative;
@@ -2197,7 +2212,7 @@ html {
 }
 .game-html .status_win .content .title {
   font-size: 75%;
-  padding: 2px;
+  padding: 0 2px;
 }
 @media (min-width: 1024px), ((min-width: 768px) and (orientation: portrait)) {
   .game-html .status_win .content .title {
@@ -2338,7 +2353,7 @@ html {
   (max-width: 1023px) and (orientation: landscape) {
   .game-html .showdown .images,
   .game-html .status_quaility .images {
-    max-width: 220px;
+    max-width: 200px;
   }
 }
 .game-html .showdown .images .result_info,
@@ -3196,6 +3211,7 @@ html {
   border-radius: 4px;
   height: 100%;
   width: 100%;
+  text-align: center;
   max-width: 18.5007496252%;
   -webkit-transition: all 0.5s;
   transition: all 0.5s;
@@ -3290,6 +3306,24 @@ html {
   z-index: 9;
   right: 0;
   bottom: 0;
+}
+.game-html .group_midle .list_pocker_last {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 3.5%;
+  left: 0;
+  -webkit-box-pack: end;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
+}
+.game-html .group_midle .list_pocker_last.last1 {
+  right: 26%;
+}
+@media (min-width: 1024px), ((min-width: 768px) and (orientation: portrait)) {
+  .game-html .group_midle .list_pocker_last.last1 {
+    right: 27%;
+  }
 }
 .game-html .group_midle .group_number {
   color: #fff;

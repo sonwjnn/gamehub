@@ -298,64 +298,69 @@ export const Board = ({ match, highlightCards }: BoardProps) => {
                   />
                 </div>
               </div>
-
-              {isTurn && (
-                <div ref={turnCardRef} className="py-[0.9%] px-[1.75%] grow-0">
-                  <div
-                    className={cn(
-                      'item flipped',
-                      turnHiddenClass,
-                      hasTurnHighlight && 'status_active'
-                    )}
-                  >
-                    <div
-                      className={cn(
-                        'pocker',
-                        hasHighLight &&
-                          !hasTurnHighlight &&
-                          'before:!inset-0 before:!bg-black/30',
-                        hasTurnHighlight &&
-                          'before:!-top-[6%] before:!-bottom-[6%] before:!-left-[12%] before:!-right-[12%] before:!bg-transparent'
-                      )}
-                    >
-                      <Card
-                        imageUrl={`/images/pocker/${board[3].rank.toLowerCase()}_${board[3].suit.toLowerCase()}.png`}
-                        value={10}
-                      />
-                    </div>
-                  </div>
-                </div>
-              )}
-              {isRiver && (
-                <div ref={riverCardRef} className="py-[0.9%] px-[1.75%] grow-0">
-                  <div
-                    className={cn(
-                      'item flipped is_slow',
-                      riverHiddenClass,
-                      hasRiverHighlight && 'status_active'
-                    )}
-                  >
-                    <div
-                      className={cn(
-                        'pocker',
-                        hasHighLight &&
-                          !hasRiverHighlight &&
-                          'before:!inset-0 before:!bg-black/30',
-                        hasRiverHighlight &&
-                          'before:!-top-[6%] before:!-bottom-[6%] before:!-left-[12%] before:!-right-[12%] before:!bg-transparent'
-                      )}
-                    >
-                      <Card
-                        imageUrl={`/images/pocker/${board[4].rank.toLowerCase()}_${board[4].suit.toLowerCase()}.png`}
-                        value={10}
-                      />
-                    </div>
-                  </div>
-                </div>
-              )}
             </>
           )}
         </div>
+        {board && board?.length && (
+          <>
+            {isTurn && (
+              <div
+                ref={turnCardRef}
+                className="list_pocker list_pocker_last last1"
+              >
+                <div
+                  className={cn(
+                    'item flipped',
+                    turnHiddenClass,
+                    hasTurnHighlight && 'status_active'
+                  )}
+                >
+                  <div
+                    className={cn(
+                      'pocker',
+                      hasHighLight &&
+                        !hasTurnHighlight &&
+                        'before:!inset-0 before:!bg-black/30'
+                    )}
+                  >
+                    <Card
+                      imageUrl={`/images/pocker/${board[3].rank.toLowerCase()}_${board[3].suit.toLowerCase()}.png`}
+                      value={10}
+                    />
+                  </div>
+                </div>
+              </div>
+            )}
+            {isRiver && (
+              <div
+                ref={riverCardRef}
+                className="list_pocker list_pocker_last last2"
+              >
+                <div
+                  className={cn(
+                    'item flipped is_slow',
+                    riverHiddenClass,
+                    hasRiverHighlight && 'status_active'
+                  )}
+                >
+                  <div
+                    className={cn(
+                      'pocker',
+                      hasHighLight &&
+                        !hasRiverHighlight &&
+                        'before:!inset-0 before:!bg-black/30'
+                    )}
+                  >
+                    <Card
+                      imageUrl={`/images/pocker/${board[4].rank.toLowerCase()}_${board[4].suit.toLowerCase()}.png`}
+                      value={10}
+                    />
+                  </div>
+                </div>
+              </div>
+            )}
+          </>
+        )}
       </div>
       <div className="group_number flex flex-midle flex-center gap-24">
         <div className="text">

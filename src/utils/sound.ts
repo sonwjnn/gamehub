@@ -10,7 +10,7 @@ export const getGenderFromImageUrl = (imageUrl: string) => {
 
 let audioContext = new window.AudioContext()
 
-export const playSound = (action: PokerActions, gender: string) => {
+export const playSound = (action: PokerActions, gender: string): string => {
   let soundUrl
   let playbackRate = 1.2
   switch (action) {
@@ -27,34 +27,29 @@ export const playSound = (action: PokerActions, gender: string) => {
     case PokerActions.RAISE:
       soundUrl =
         gender === 'male' ? sounds.soundRaiseBoy : sounds.soundRaiseGirl
-      // if (gender === 'female') playbackRate = 1.7
-      // if (gender === 'male') playbackRate = 2
       break
     case PokerActions.QUARTER:
       soundUrl =
         gender === 'male' ? sounds.soundQuarterBoy : sounds.soundQuarterGirl
-      // if (gender === 'female') playbackRate = 1
-      // if (gender === 'male') playbackRate = 2
       break
     case PokerActions.HALF:
       soundUrl = gender === 'male' ? sounds.soundHalfBoy : sounds.soundHalfGirl
-      // if (gender === 'female') playbackRate = 1
       break
     case PokerActions.FULL:
       soundUrl = gender === 'male' ? sounds.soundFullBoy : sounds.soundFullGirl
-      // if (gender === 'female') playbackRate = 1
       break
     case PokerActions.ALLIN:
       soundUrl = gender === 'male' ? sounds.soundAllBoy : sounds.soundAllGirl
-      // if (gender === 'female') playbackRate = 1
       break
     default:
       soundUrl = ''
   }
 
+  return soundUrl
+
+  // const track = audioContext.createMediaElementSource(audio)
+  // track.connect(audioContext.destination)
   const audio = new Audio(soundUrl)
-  const track = audioContext.createMediaElementSource(audio)
-  track.connect(audioContext.destination)
   audio.playbackRate = playbackRate
   audio.volume = 1.0
   audio.play()

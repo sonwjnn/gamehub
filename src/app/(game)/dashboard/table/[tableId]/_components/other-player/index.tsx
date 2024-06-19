@@ -94,22 +94,26 @@ export const OtherPlayer = ({
   }, [isTurn])
 
   useEffect(() => {
+    let url = ''
     if (currentParticipant?.lastAction === PokerActions.CALL) {
-      playSound(PokerActions.CALL, gender)
+      url = playSound(PokerActions.CALL, gender)
     } else if (currentParticipant?.lastAction === PokerActions.RAISE) {
-      playSound(PokerActions.RAISE, gender)
+      url = playSound(PokerActions.RAISE, gender)
     } else if (currentParticipant?.lastAction === PokerActions.FOLD) {
-      playSound(PokerActions.FOLD, gender)
+      url = playSound(PokerActions.FOLD, gender)
     } else if (currentParticipant?.lastAction === PokerActions.CHECK) {
-      playSound(PokerActions.CHECK, gender)
+      url = playSound(PokerActions.CHECK, gender)
     } else if (currentParticipant?.lastAction === PokerActions.ALLIN) {
-      playSound(PokerActions.ALLIN, gender)
+      url = playSound(PokerActions.ALLIN, gender)
     } else if (currentParticipant?.lastAction === PokerActions.QUARTER) {
-      playSound(PokerActions.QUARTER, gender)
+      url = playSound(PokerActions.QUARTER, gender)
     } else if (currentParticipant?.lastAction === PokerActions.HALF) {
-      playSound(PokerActions.HALF, gender)
+      url = playSound(PokerActions.HALF, gender)
     } else if (currentParticipant?.lastAction === PokerActions.FULL) {
-      playSound(PokerActions.FULL, gender)
+      url = playSound(PokerActions.FULL, gender)
+    }
+    if (url) {
+      new Audio(url).play()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentParticipant?.lastAction])
