@@ -34,13 +34,9 @@ export const Wrapper = ({ children }: WrapperProps) => {
         return
       }
 
-      if (!newMessageDate) {
+      if (newMessageDate !== firstMessageCreatedAt) {
+        setHasNewMessage(true)
         setNewMessageDate(firstMessageCreatedAt)
-      } else {
-        if (newMessageDate !== firstMessageCreatedAt) {
-          setHasNewMessage(true)
-          setNewMessageDate(firstMessageCreatedAt)
-        }
       }
     }
   }, [data])
