@@ -262,7 +262,7 @@ export const CurrentPlayer = ({
   const fold = () => {
     if (socket) {
       const url = playSound(PokerActions.FOLD, gender)
-      new Audio(url).play()
+      // new Audio(url).play()
       socket.emit(PokerActions.FOLD, {
         tableId,
         participantId: currentParticipant?.id,

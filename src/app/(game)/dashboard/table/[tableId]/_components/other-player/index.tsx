@@ -113,7 +113,7 @@ export const OtherPlayer = ({
       url = playSound(PokerActions.FULL, gender)
     }
     if (url) {
-      new Audio(url).play()
+      // new Audio(url).play()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentParticipant?.lastAction])
