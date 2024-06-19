@@ -19,6 +19,7 @@ import tableApi from '@/services/api/modules/table-api'
 import { Sticker } from './sticker'
 import { useOnClickOutside } from 'usehooks-ts'
 import { cn } from '@/lib/utils'
+import { useChatFocus } from '@/store/use-chat-focus'
 
 interface ChatInputProps {
   apiUrl: string
@@ -33,6 +34,7 @@ const formSchema = z.object({
 
 export const ChatInput = ({ apiUrl, query, name, type }: ChatInputProps) => {
   const { socket } = useSocket()
+  const { setIsChatFocus } = useChatFocus()
   const user = useCurrentUser()
   const params = useParams()
   const router = useRouter()
@@ -155,6 +157,8 @@ export const ChatInput = ({ apiUrl, query, name, type }: ChatInputProps) => {
                         }
                       }}
                       {...field}
+                      onFocus={() => setIsChatFocus(true)}
+                      onBlur={() => setIsChatFocus(false)}
                     />
                   </div>
 
@@ -165,7 +169,7 @@ export const ChatInput = ({ apiUrl, query, name, type }: ChatInputProps) => {
                         ((table?.chatBanned ?? false) &&
                           'opacity-50 pointer-events-none')
                     )}
-                    onClick={() => form.handleSubmit(onSubmit)}
+                    onClick={() => form.handleSubmit(onSubmit)()}
                   >
                     <span className="icon sz-24">
                       <i className="icon-send"></i>

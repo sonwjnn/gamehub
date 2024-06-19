@@ -5,6 +5,7 @@ import { Match } from '@/types'
 import { useEffect } from 'react'
 import { useAutoAction } from '@/store/use-auto-action'
 import { useSidebarMobile } from '@/store/use-sidebar-mobile'
+import { useChatFocus } from '@/store/use-chat-focus'
 
 type ActionItemProps = {
   shortcut: string
@@ -40,6 +41,7 @@ export const ActionItem = ({
   const isMobile = useMedia('(max-width: 768px), (max-height: 768px)', false)
   const { isChecked, callAmount, setAutoAction } = useAutoAction()
   const { sidebarMobile, setSidebarMobile } = useSidebarMobile()
+  const { isChatFocus } = useChatFocus()
 
   const canAutoAction =
     isTurn && isChecked === type && callAmount === match?.callAmount
@@ -49,7 +51,7 @@ export const ActionItem = ({
 
   //prettier-ignore
   useKey( shortcut, () => {
-    if (!disabled) {
+    if (!disabled && !isChatFocus) {
       onClick()
     }
   }, {}, [onClick])

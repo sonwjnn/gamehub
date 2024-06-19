@@ -152,7 +152,7 @@ export const OtherPlayer = ({
             width={0}
             height={0}
             sizes="100vw"
-            className="w-auto h-full"
+            className="w-full h-auto"
           />
         </div>
       )}
