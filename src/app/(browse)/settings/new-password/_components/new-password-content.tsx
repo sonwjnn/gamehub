@@ -84,7 +84,7 @@ export const NewPasswordContent = ({}: NewPasswordContentProps) => {
                           type="password"
                           {...field}
                         />
-                        <label>Password</label>
+                        <label>비밀번호</label>
                       </div>
                     </div>
                   </FormControl>
@@ -106,7 +106,7 @@ export const NewPasswordContent = ({}: NewPasswordContentProps) => {
                           placeholder="**********"
                           {...field}
                         />
-                        <label>New password</label>
+                        <label>새 비밀번호</label>
                       </div>
                     </div>
                   </FormControl>
@@ -128,7 +128,7 @@ export const NewPasswordContent = ({}: NewPasswordContentProps) => {
                           placeholder="**********"
                           {...field}
                         />
-                        <label>Confirm new password</label>
+                        <label>비밀번호 확인</label>
                       </div>
                     </div>
                   </FormControl>
@@ -140,7 +140,7 @@ export const NewPasswordContent = ({}: NewPasswordContentProps) => {
         </div>
         <div className="footing flex flex-end gap-8">
           <Button type="submit" className="btn_main" disabled={isPending}>
-            Save
+            저장
           </Button>
         </div>
       </form>

@@ -81,7 +81,7 @@ export const LeaveButton = ({
       )}
       onClick={onClick}
     >
-      Leave
+      나가기
       <span className="sz-16 icon icon-color-white">
         <i className="icon-leave"></i>
       </span>

@@ -43,7 +43,7 @@ export const MobileToggle = () => {
                   <span className="icon sz-16 icon-color-white">
                     <i className="icon-user"></i>
                   </span>
-                  <span className="icon-color-white">Profile</span>
+                  <span className="icon-color-white">마이 정보</span>
                 </Link>
               </li>
               <li>
@@ -51,7 +51,7 @@ export const MobileToggle = () => {
                   <span className="icon sz-20 icon-color-white">
                     <i className="icon-cash"></i>
                   </span>
-                  <span>Cash Games</span>
+                  <span>캐시 게임</span>
                 </Link>
               </li>
 
@@ -73,7 +73,7 @@ export const MobileToggle = () => {
                   <span className="icon sz-20 icon-color-white">
                     <i className="icon-points"></i>
                   </span>
-                  <span>Points</span>
+                  <span>포인트</span>
                 </Link>
               </li>
 
@@ -82,7 +82,7 @@ export const MobileToggle = () => {
                   <span className="icon sz-20 icon-color-white">
                     <i className="icon-history"></i>
                   </span>
-                  <span>History</span>
+                  <span>게임 기록</span>
                 </Link>
               </li>
 
@@ -94,7 +94,7 @@ export const MobileToggle = () => {
                   <span className="icon sz-20 icon-color-white">
                     <RotateCcw size={20} />
                   </span>
-                  <span>New Password</span>
+                  <span>새 비밀번호</span>
                 </Link>
               </li>
               <li>
@@ -103,7 +103,7 @@ export const MobileToggle = () => {
                     <span className="icon sz-16 icon-color-red">
                       <i className="icon-logout"></i>
                     </span>
-                    <span className="icon-color-red">Logout</span>
+                    <span className="icon-color-red">로그오웃</span>
                   </a>
                 </LogoutButton>
               </li>

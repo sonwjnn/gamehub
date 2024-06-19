@@ -118,7 +118,7 @@ export const AutoRebuyModal = () => {
       <div className="modal_dialog sz-sm">
         <div className="modal_content ">
           <div className="modal_head">
-            AUTO REBUY ({autoRebuyAmount ? 'Setted' : 'Not set'})
+            자동충전 ({autoRebuyAmount ? 'Setted' : 'Not set'})
             <div className="btn_close modal_close" onClick={handleClose}>
               <span className="icon sz-24">
                 <i className="icon_close"></i>
@@ -132,13 +132,13 @@ export const AutoRebuyModal = () => {
                 className="row flex flex-space"
               >
                 <div className="col color-primary fz-14">
-                  Min:{' '}
+                  최소한도:{' '}
                   <span className="fw-16 fw-500">
                     {formatChipsAmount(tableData?.minBuyIn || 0)}
                   </span>
                 </div>
                 <div className="col color-primary fz-14 text-right">
-                  Max:{' '}
+                  최고:{' '}
                   <span className="fz-16 fw-500">
                     {formatChipsAmount(tableData?.maxBuyIn || 0)}
                   </span>
@@ -178,7 +178,7 @@ export const AutoRebuyModal = () => {
                     className="btn_submit w-full"
                     disabled={isLoading}
                   >
-                    <span>Nạp</span>
+                    <span>충전</span>
                   </button>
                 </div>
               </form>
