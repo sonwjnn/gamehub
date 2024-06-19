@@ -325,7 +325,6 @@ export const TableContent = ({ tableId }: TableContentProps) => {
           tableId: string
           player: PlayerWithUser
         }) => {
-          console.log(tableSocketId, player)
           if (tableSocketId !== tableId) return
 
           setPlayers(prev => [...prev, player])

@@ -6,7 +6,6 @@ import { FormError } from '@/components/form-error'
 import { FormSuccess } from '@/components/form-success'
 import { useSearchParams } from 'next/navigation'
 import { useCallback, useEffect, useState } from 'react'
-import { Spinner } from '@/components/spinner'
 
 interface NewVerificationFormProps {}
 

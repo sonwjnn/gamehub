@@ -130,9 +130,6 @@ export const getStarRating = (card1: string, card2: string): number => {
   const formattedRank1 = rankMapReverse[rank1]
   const formattedRank2 = rankMapReverse[rank2]
 
-  console.log('formattedRank1', formattedRank1)
-  console.log('formattedRank2', formattedRank2)
-
   let cardsString = [formattedRank1, formattedRank2]
     .sort((a, b) => rankOrder[b] - rankOrder[a])
     .join('')

@@ -7,13 +7,17 @@ import {
   publicRoutes,
 } from '@/routes'
 import NextAuth from 'next-auth'
-import { NextResponse } from 'next/server'
+import { NextResponse, userAgent } from 'next/server'
 
 const { auth } = NextAuth(authConfig)
 
 export default auth(req => {
   const { nextUrl } = req
   const isLoggedIn = !!req.auth
+
+  const { device } = userAgent(req)
+  const viewport = device.type === 'mobile' ? 'mobile' : 'desktop'
+  nextUrl.searchParams.set('viewport', viewport)
 
   const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix)
   const isApiWebhooksRoute = nextUrl.pathname.startsWith(apiWebhooksPrefix)

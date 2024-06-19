@@ -64,7 +64,6 @@ export const ChatInput = ({ apiUrl, query, name, type }: ChatInputProps) => {
 
   useEffect(() => {
     const getTable = async () => {
-      console.log(params)
       if (!params?.tableId) return
 
       const { response, error } = await tableApi.getTableById({

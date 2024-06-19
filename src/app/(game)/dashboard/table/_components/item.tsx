@@ -23,7 +23,7 @@ export const Item = ({ table }: ItemProps) => {
           width={0}
           height={0}
           sizes="100vw"
-          className="w-auto h-full object-cover"
+          className="w-full h-auto"
         />
       </div>
       <div className="room_name fz-10">

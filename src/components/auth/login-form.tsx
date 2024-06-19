@@ -3,8 +3,6 @@
 import { CardWrapper } from '@/components/auth/card-wrapper'
 import { FormError } from '@/components/form-error'
 import { FormSuccess } from '@/components/form-success'
-import { Spinner } from '@/components/spinner'
-import { Button } from '@/components/ui/button'
 import {
   Form,
   FormControl,
