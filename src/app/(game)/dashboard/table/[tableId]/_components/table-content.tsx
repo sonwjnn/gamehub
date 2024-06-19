@@ -61,8 +61,13 @@ export const TableContent = ({ tableId }: TableContentProps) => {
   const [isChipsAnimation, setChipsAnimation] = useState(false)
   const [isLeaveNext, setIsLeaveNext] = useState(false)
 
-  const [audioShuffle, _, shuffleControls] = useAudio({
+  const [audioShuffle, _sh, shuffleControls] = useAudio({
     src: '/sounds/sound_shuffle.mp3',
+    autoPlay: false,
+  })
+
+  const [audioSlip, _s, slipControls] = useAudio({
+    src: '/sounds/sound_slip_3.mp3',
     autoPlay: false,
   })
 
@@ -130,7 +135,7 @@ export const TableContent = ({ tableId }: TableContentProps) => {
       createCard(i + 1)
 
       if ((i + 1) % numPlayers === 0 && (i + 1) / numPlayers <= cardsHand) {
-        new Audio('/sounds/sound_slip_3.mp3').play()
+        slipControls.play()
       }
 
       gsap.set('.player-card', {
@@ -735,6 +740,7 @@ export const TableContent = ({ tableId }: TableContentProps) => {
   return (
     <div className="wrapper" ref={wrapperRef}>
       {audioShuffle}
+      {audioSlip}
       <img src="/images/table_v3.png" alt="tableImage" />
 
       <div className="group_button">

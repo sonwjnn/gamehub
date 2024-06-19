@@ -8,6 +8,20 @@ type Props = {
   isWinner: boolean | undefined
 }
 
+const soundLose = new Audio(sounds.soundLose)
+const soundStraight = new Audio(sounds.soundStraight)
+const soundFlush = new Audio(sounds.soundFlush)
+const soundFullHouse = new Audio(sounds.soundFullHouse)
+const soundFourCards = new Audio(sounds.soundFourCards)
+const soundStraightFlush = new Audio(sounds.soundStraightFlush)
+const soundRoyalFlush = new Audio(sounds.soundRoyalFlush)
+const soundTwoPair = new Audio(sounds.soundTwoPair)
+const soundHighCard = new Audio(sounds.soundHighCard)
+const soundPair = new Audio(sounds.soundPair)
+const soundThreeCards = new Audio(sounds.soundThreeCards)
+const soundWeakCongrats = new Audio(sounds.soundWeakCongrats)
+const soundStrongCongrats = new Audio(sounds.soundStrongCongrats)
+
 export const showModalByHandName = ({ match, onOpen, isWinner }: Props) => {
   const winMessages = match?.winMessages || []
 
@@ -21,53 +35,53 @@ export const showModalByHandName = ({ match, onOpen, isWinner }: Props) => {
 
   const handleSound = () => {
     if (!isWinner) {
-      new Audio(sounds.soundLose).play()
+      soundLose.play()
       return
     }
 
     switch (handName) {
       case WinnerHandType.Straight:
-        new Audio(sounds.soundStraight).play()
-        new Audio(sounds.soundStrongCongrats).play()
+        soundStraight.play()
+        soundStrongCongrats.play()
         break
       case WinnerHandType.Flush:
-        new Audio(sounds.soundFlush).play()
-        new Audio(sounds.soundStrongCongrats).play()
+        soundFlush.play()
+        soundStrongCongrats.play()
         break
       case WinnerHandType.FullHouse:
-        new Audio(sounds.soundFullHouse).play()
-        new Audio(sounds.soundStrongCongrats).play()
+        soundFullHouse.play()
+        soundStrongCongrats.play()
         break
       case WinnerHandType.FourOfAKind:
-        new Audio(sounds.soundFourCards).play()
-        new Audio(sounds.soundStrongCongrats).play()
+        soundFourCards.play()
+        soundStrongCongrats.play()
         break
       case WinnerHandType.StraightFlush:
-        new Audio(sounds.soundStraightFlush).play()
-        new Audio(sounds.soundStrongCongrats).play()
+        soundStraightFlush.play()
+        soundStrongCongrats.play()
         break
       case WinnerHandType.RoyalFlush:
-        new Audio(sounds.soundRoyalFlush).play()
-        new Audio(sounds.soundStrongCongrats).play()
+        soundRoyalFlush.play()
+        soundStrongCongrats.play()
         break
       case WinnerHandType.TwoPair:
-        new Audio(sounds.soundTwoPair).play()
-        new Audio(sounds.soundWeakCongrats).play()
+        soundTwoPair.play()
+        soundWeakCongrats.play()
         break
       case WinnerHandType.HighCard:
-        new Audio(sounds.soundHighCard).play()
-        new Audio(sounds.soundWeakCongrats).play()
+        soundHighCard.play()
+        soundWeakCongrats.play()
         break
       case WinnerHandType.Pair:
-        new Audio(sounds.soundPair).play()
-        new Audio(sounds.soundWeakCongrats).play()
+        soundPair.play()
+        soundWeakCongrats.play()
         break
       case WinnerHandType.ThreeOfAKind:
-        new Audio(sounds.soundThreeCards).play()
-        new Audio(sounds.soundWeakCongrats).play()
+        soundThreeCards.play()
+        soundWeakCongrats.play()
         break
       default:
-        new Audio(sounds.soundWeakCongrats).play()
+        soundWeakCongrats.play()
     }
   }
 
