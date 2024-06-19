@@ -35,12 +35,14 @@ const ChangeTable = ({ tableId, playerId, className }: ChangeTableProps) => {
 
       if (error) {
         toast.error('Not found table same value!')
+        router.push(`/dashboard/table`)
         return
       }
 
       if (nextTable) {
         if (nextTable.id === tableId) {
           toast.error('Only one table!')
+          router.push(`/dashboard/table`)
           return
         }
 

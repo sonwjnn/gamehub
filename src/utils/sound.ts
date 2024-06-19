@@ -1,23 +1,6 @@
 import { PokerActions } from '@/types'
 import sounds from '@/utils/contants/sound'
 
-const soundFoldBoy = new Audio(sounds.soundFoldBoy)
-const soundFoldGirl = new Audio(sounds.soundFoldGirl)
-const soundCheckBoy = new Audio(sounds.soundCheckBoy)
-const soundCheckGirl = new Audio(sounds.soundCheckGirl)
-const soundCallBoy = new Audio(sounds.soundCallBoy)
-const soundCallGirl = new Audio(sounds.soundCallGirl)
-const soundRaiseBoy = new Audio(sounds.soundRaiseBoy)
-const soundRaiseGirl = new Audio(sounds.soundRaiseGirl)
-const soundQuarterBoy = new Audio(sounds.soundQuarterBoy)
-const soundQuarterGirl = new Audio(sounds.soundQuarterGirl)
-const soundHalfBoy = new Audio(sounds.soundHalfBoy)
-const soundHalfGirl = new Audio(sounds.soundHalfGirl)
-const soundFullBoy = new Audio(sounds.soundFullBoy)
-const soundFullGirl = new Audio(sounds.soundFullGirl)
-const soundAllBoy = new Audio(sounds.soundAllBoy)
-const soundAllGirl = new Audio(sounds.soundAllGirl)
-
 export const getGenderFromImageUrl = (imageUrl: string) => {
   const imageNumber = parseInt(
     imageUrl.replace('/images/avt/', '').replace('.jpg', '')
@@ -25,39 +8,54 @@ export const getGenderFromImageUrl = (imageUrl: string) => {
   return imageNumber >= 1 && imageNumber <= 12 ? 'male' : 'female'
 }
 
+let audioContext = new window.AudioContext()
+
 export const playSound = (action: PokerActions, gender: string) => {
-  let sound
+  let soundUrl
   let playbackRate = 1.2
   switch (action) {
     case PokerActions.FOLD:
-      sound = gender === 'male' ? soundFoldBoy : soundFoldGirl
+      soundUrl = gender === 'male' ? sounds.soundFoldBoy : sounds.soundFoldGirl
       break
     case PokerActions.CHECK:
-      sound = gender === 'male' ? soundCheckBoy : soundCheckGirl
+      soundUrl =
+        gender === 'male' ? sounds.soundCheckBoy : sounds.soundCheckGirl
       break
     case PokerActions.CALL:
-      sound = gender === 'male' ? soundCallBoy : soundCallGirl
+      soundUrl = gender === 'male' ? sounds.soundCallBoy : sounds.soundCallGirl
       break
     case PokerActions.RAISE:
-      sound = gender === 'male' ? soundRaiseBoy : soundRaiseGirl
+      soundUrl =
+        gender === 'male' ? sounds.soundRaiseBoy : sounds.soundRaiseGirl
+      // if (gender === 'female') playbackRate = 1.7
+      // if (gender === 'male') playbackRate = 2
       break
     case PokerActions.QUARTER:
-      sound = gender === 'male' ? soundQuarterBoy : soundQuarterGirl
+      soundUrl =
+        gender === 'male' ? sounds.soundQuarterBoy : sounds.soundQuarterGirl
+      // if (gender === 'female') playbackRate = 1
+      // if (gender === 'male') playbackRate = 2
       break
     case PokerActions.HALF:
-      sound = gender === 'male' ? soundHalfBoy : soundHalfGirl
+      soundUrl = gender === 'male' ? sounds.soundHalfBoy : sounds.soundHalfGirl
+      // if (gender === 'female') playbackRate = 1
       break
     case PokerActions.FULL:
-      sound = gender === 'male' ? soundFullBoy : soundFullGirl
+      soundUrl = gender === 'male' ? sounds.soundFullBoy : sounds.soundFullGirl
+      // if (gender === 'female') playbackRate = 1
       break
     case PokerActions.ALLIN:
-      sound = gender === 'male' ? soundAllBoy : soundAllGirl
+      soundUrl = gender === 'male' ? sounds.soundAllBoy : sounds.soundAllGirl
+      // if (gender === 'female') playbackRate = 1
       break
     default:
-      return
+      soundUrl = ''
   }
 
-  sound.playbackRate = playbackRate
-  sound.volume = 1.0
-  sound.play()
+  const audio = new Audio(soundUrl)
+  const track = audioContext.createMediaElementSource(audio)
+  track.connect(audioContext.destination)
+  audio.playbackRate = playbackRate
+  audio.volume = 1.0
+  audio.play()
 }

@@ -75,9 +75,9 @@ export const ActionItem = ({
         } else {
           onClick()
         }
-      } else {
-        onClick()
+        return
       }
+      onClick()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [canAutoAction])
@@ -116,9 +116,10 @@ export const ActionItem = ({
       } else {
         onClick()
       }
-    } else {
-      onClick()
+      return
     }
+
+    onClick()
   }
 
   return (

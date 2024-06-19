@@ -450,8 +450,8 @@ export const CurrentPlayer = ({
                         cy="100"
                         r="95"
                         stroke="#231f20"
-                        stroke-width="8"
-                        fill-opacity="0"
+                        strokeWidth="8"
+                        fillOpacity="0"
                       ></circle>
                     </svg>
                     <span className="sub">

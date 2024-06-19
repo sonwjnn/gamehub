@@ -279,8 +279,8 @@ export const OtherPlayer = ({
                 cy="100"
                 r="95"
                 stroke="#231f20"
-                stroke-width="8"
-                fill-opacity="0"
+                strokeWidth="8"
+                fillOpacity="0"
               ></circle>
             </svg>
             <span className="sub">콜</span>
@@ -300,8 +300,8 @@ export const OtherPlayer = ({
                 cy="100"
                 r="95"
                 stroke="#231f20"
-                stroke-width="8"
-                fill-opacity="0"
+                strokeWidth="8"
+                fillOpacity="0"
               ></circle>
             </svg>
             <span className="sub">라이즈</span>
@@ -320,8 +320,8 @@ export const OtherPlayer = ({
                 cy="100"
                 r="95"
                 stroke="#231f20"
-                stroke-width="8"
-                fill-opacity="0"
+                strokeWidth="8"
+                fillOpacity="0"
               ></circle>
             </svg>
             <span className="sub">체크</span>
@@ -360,8 +360,8 @@ export const OtherPlayer = ({
                 cy="100"
                 r="95"
                 stroke="#231f20"
-                stroke-width="8"
-                fill-opacity="0"
+                strokeWidth="8"
+                fillOpacity="0"
               ></circle>
             </svg>
             <span className="sub">쿼터</span>
@@ -380,8 +380,8 @@ export const OtherPlayer = ({
                 cy="100"
                 r="95"
                 stroke="#231f20"
-                stroke-width="8"
-                fill-opacity="0"
+                strokeWidth="8"
+                fillOpacity="0"
               ></circle>
             </svg>
             <span className="sub">하프</span>
@@ -400,8 +400,8 @@ export const OtherPlayer = ({
                 cy="100"
                 r="95"
                 stroke="#231f20"
-                stroke-width="8"
-                fill-opacity="0"
+                strokeWidth="8"
+                fillOpacity="0"
               ></circle>
             </svg>
             <span className="sub">풀</span>
@@ -420,8 +420,8 @@ export const OtherPlayer = ({
                 cy="100"
                 r="95"
                 stroke="#231f20"
-                stroke-width="8"
-                fill-opacity="0"
+                strokeWidth="8"
+                fillOpacity="0"
               ></circle>
             </svg>
             <span className="sub">올인</span>
@@ -439,8 +439,8 @@ export const OtherPlayer = ({
                 cy="100"
                 r="95"
                 stroke="#231f20"
-                stroke-width="8"
-                fill-opacity="0"
+                strokeWidth="8"
+                fillOpacity="0"
               ></circle>
             </svg>
             <span className="sub">{counter - 2 >= 0 ? counter - 2 : 0}s</span>

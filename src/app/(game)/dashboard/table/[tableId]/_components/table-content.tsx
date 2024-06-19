@@ -60,6 +60,7 @@ export const TableContent = ({ tableId }: TableContentProps) => {
   const [isShuffle, setShuffle] = useState(false)
   const [isChipsAnimation, setChipsAnimation] = useState(false)
   const [isLeaveNext, setIsLeaveNext] = useState(false)
+  const [isNextMatchComing, setIsNextMatchComing] = useState<boolean>(false)
 
   const [audioShuffle, _sh, shuffleControls] = useAudio({
     src: '/sounds/sound_shuffle.mp3',
@@ -73,6 +74,7 @@ export const TableContent = ({ tableId }: TableContentProps) => {
 
   const matchRef = useRef<Match | null>(null)
   const participantsRef = useRef<Participant[] | null>(null)
+  const playersRef = useRef<PlayerWithUser[] | null>(null)
   const tableRef = useRef<HTMLDivElement | null>(null)
   const wrapperRef = useRef<HTMLDivElement | null>(null)
   const dealerRef = useRef<HTMLDivElement | null>(null)
@@ -263,6 +265,10 @@ export const TableContent = ({ tableId }: TableContentProps) => {
   }, [match])
 
   useEffect(() => {
+    playersRef.current = players
+  }, [players])
+
+  useEffect(() => {
     participantsRef.current = participants
   }, [participants])
 
@@ -300,6 +306,7 @@ export const TableContent = ({ tableId }: TableContentProps) => {
 
             timerMatchId = setTimeout(() => {
               setMatch(match)
+              setIsNextMatchComing(false)
               setParticipants(match.participants)
               setPlayers(prev =>
                 prev.map(item => {
@@ -643,6 +650,21 @@ export const TableContent = ({ tableId }: TableContentProps) => {
         }
       )
 
+      socket.on(
+        PokerActions.NEXT_MATCH_IS_COMING,
+        ({ tableId, isComing }: { tableId: string; isComing: boolean }) => {
+          if (isComing) {
+            if (playersRef.current && playersRef.current.length <= 1) {
+              setIsNextMatchComing(false)
+              return
+            }
+            setIsNextMatchComing(true)
+          } else {
+            setIsNextMatchComing(false)
+          }
+        }
+      )
+
       return () => {
         if (socket) {
           socket.off(PokerActions.JOIN_TABLE)
@@ -653,6 +675,8 @@ export const TableContent = ({ tableId }: TableContentProps) => {
           socket.off(PokerActions.HIGHLIGHT_CARDS)
           socket.off(PokerActions.REBUY)
           socket.off(PokerActions.PARTICIPANTS_UPDATED)
+          socket.off(PokerActions.PLAYERS_UPDATED)
+          socket.off(PokerActions.NEXT_MATCH_IS_COMING)
 
           if (timerMatchId) {
             clearTimeout(timerMatchId)
@@ -735,7 +759,7 @@ export const TableContent = ({ tableId }: TableContentProps) => {
     currentParticipant?.isFolded ||
     !currentPlayer ||
     players.length <= 1 ||
-    (match && match.winners?.length)
+    (match && match.isShowdown && match.winners?.length)
 
   return (
     <div className="wrapper" ref={wrapperRef}>
@@ -744,19 +768,18 @@ export const TableContent = ({ tableId }: TableContentProps) => {
       <img src="/images/table_v3.png" alt="tableImage" />
 
       <div className="group_button">
-        {canAction ? (
+        {canAction && !isNextMatchComing ? (
           <>
             <LeaveButton tableId={tableId} player={currentPlayer} />
             <ChangeTable tableId={tableId} playerId={currentPlayer?.id} />
           </>
-        ) : (
-          <>
-            <LeaveNext
-              isLeaveNext={isLeaveNext}
-              setIsLeaveNext={setIsLeaveNext}
-            />
-          </>
-        )}
+        ) : null}
+        {!canAction ? (
+          <LeaveNext
+            isLeaveNext={isLeaveNext}
+            setIsLeaveNext={setIsLeaveNext}
+          />
+        ) : null}
 
         <AutoRebuyToggle
           tableId={tableId}
