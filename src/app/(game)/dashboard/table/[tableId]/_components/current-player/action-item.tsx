@@ -1,6 +1,6 @@
 import { cn } from '@/lib/utils'
 import { formatChipsAmount } from '@/utils/formatting'
-import { useKey, useMedia } from 'react-use'
+import { useAudio, useKey, useMedia } from 'react-use'
 import { Match } from '@/types'
 import { useEffect } from 'react'
 import { useAutoAction } from '@/store/use-auto-action'
@@ -25,6 +25,9 @@ type ActionItemProps = {
     | 'full'
   match?: Match | null
   isTurn?: boolean
+  audioBoySrc: string
+  audioGirlSrc: string
+  gender: 'male' | 'female'
 }
 
 export const ActionItem = ({
@@ -37,8 +40,13 @@ export const ActionItem = ({
   type,
   match,
   isTurn,
+  audioBoySrc,
+  audioGirlSrc,
+  gender = 'male',
 }: ActionItemProps) => {
   const isMobile = useMedia('(max-width: 768px), (max-height: 768px)', false)
+  const [audioBoy, _b, boyControls] = useAudio({ src: audioBoySrc })
+  const [audioGirl, _g, girlControls] = useAudio({ src: audioGirlSrc })
   const { isChecked, callAmount, setAutoAction } = useAutoAction()
   const { sidebarMobile, setSidebarMobile } = useSidebarMobile()
   const { isChatFocus } = useChatFocus()
@@ -52,6 +60,7 @@ export const ActionItem = ({
   //prettier-ignore
   useKey( shortcut, () => {
     if (!disabled && !isChatFocus) {
+      onPlayAudio()
       onClick()
     }
   }, {}, [onClick])
@@ -73,10 +82,12 @@ export const ActionItem = ({
         if (sidebarMobile !== 'raise') {
           setSidebarMobile('raise')
         } else {
+          onPlayAudio()
           onClick()
         }
         return
       }
+      onPlayAudio()
       onClick()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -114,12 +125,21 @@ export const ActionItem = ({
       if (sidebarMobile !== 'raise') {
         setSidebarMobile('raise')
       } else {
+        onPlayAudio()
         onClick()
       }
       return
     }
-
+    onPlayAudio()
     onClick()
+  }
+
+  const onPlayAudio = () => {
+    if (gender === 'male') {
+      boyControls.play()
+    } else {
+      girlControls.play()
+    }
   }
 
   return (
@@ -133,6 +153,8 @@ export const ActionItem = ({
       )}
       onClick={handleClick}
     >
+      {audioBoy}
+      {audioGirl}
       <span className="number">{shortcut}</span>
       <div className="value">{label}</div>
       {amount !== undefined && (

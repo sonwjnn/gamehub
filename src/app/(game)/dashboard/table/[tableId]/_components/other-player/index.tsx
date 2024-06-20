@@ -15,6 +15,8 @@ import { formatChipsAmount } from '@/utils/formatting'
 import { CoinBet } from '@/components/coin-bet'
 import { getGenderFromImageUrl, playSound } from '@/utils/sound'
 import { CoinAnimate } from '@/components/coin-animate'
+import { useAudio } from 'react-use'
+import sound from '@/utils/contants/sound'
 
 interface OtherPlayerProps {
   type?: 'fold' | 'active' | 'default'
@@ -32,12 +34,38 @@ export const OtherPlayer = ({
   participants,
   tableId,
 }: OtherPlayerProps) => {
+  const gender = getGenderFromImageUrl(player?.user?.image || '')
+
+  const [quarAudio, _q, quarControls] = useAudio({
+    src: gender === 'male' ? sound.soundQuarterBoy : sound.soundQuarterGirl,
+  })
+  const [halfAudio, _h, halfControls] = useAudio({
+    src: gender === 'male' ? sound.soundHalfBoy : sound.soundHalfGirl,
+  })
+  const [fullAudio, _f, fullControls] = useAudio({
+    src: gender === 'male' ? sound.soundFullBoy : sound.soundFullGirl,
+  })
+  const [allAudio, _a, allControls] = useAudio({
+    src: gender === 'male' ? sound.soundAllBoy : sound.soundAllGirl,
+  })
+  const [raiseAudio, _r, raiseControls] = useAudio({
+    src: gender === 'male' ? sound.soundRaiseBoy : sound.soundRaiseGirl,
+  })
+  const [callAudio, _c, callControls] = useAudio({
+    src: gender === 'male' ? sound.soundCallBoy : sound.soundCallGirl,
+  })
+  const [checkAudio, _ch, checkControls] = useAudio({
+    src: gender === 'male' ? sound.soundCheckBoy : sound.soundCheckGirl,
+  })
+  const [foldAudio, _fo, foldControls] = useAudio({
+    src: gender === 'male' ? sound.soundFoldBoy : sound.soundFoldGirl,
+  })
+
   const [imageUrlFirst, setImageUrlFirst] = useState('')
   const [imageUrlSecond, setImageUrlSecond] = useState('')
   const [counter, setCounter] = useState(12)
   const [isBet, setIsBet] = useState(false)
 
-  const gender = getGenderFromImageUrl(player?.user?.image || '')
   const currentParticipant = participants.find(
     item => item.playerId === player?.id
   )
@@ -96,24 +124,21 @@ export const OtherPlayer = ({
   useEffect(() => {
     let url = ''
     if (currentParticipant?.lastAction === PokerActions.CALL) {
-      url = playSound(PokerActions.CALL, gender)
+      callControls.play()
     } else if (currentParticipant?.lastAction === PokerActions.RAISE) {
-      url = playSound(PokerActions.RAISE, gender)
+      raiseControls.play()
     } else if (currentParticipant?.lastAction === PokerActions.FOLD) {
-      url = playSound(PokerActions.FOLD, gender)
+      foldControls.play()
     } else if (currentParticipant?.lastAction === PokerActions.CHECK) {
-      url = playSound(PokerActions.CHECK, gender)
+      checkControls.play()
     } else if (currentParticipant?.lastAction === PokerActions.ALLIN) {
-      url = playSound(PokerActions.ALLIN, gender)
+      allControls.play()
     } else if (currentParticipant?.lastAction === PokerActions.QUARTER) {
-      url = playSound(PokerActions.QUARTER, gender)
+      quarControls.play()
     } else if (currentParticipant?.lastAction === PokerActions.HALF) {
-      url = playSound(PokerActions.HALF, gender)
+      halfControls.play()
     } else if (currentParticipant?.lastAction === PokerActions.FULL) {
-      url = playSound(PokerActions.FULL, gender)
-    }
-    if (url) {
-      // new Audio(url).play()
+      fullControls.play()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentParticipant?.lastAction])
@@ -147,6 +172,14 @@ export const OtherPlayer = ({
         isShowdown && isUnfoldedParticipant && 'target_showdown'
       )}
     >
+      {quarAudio}
+      {halfAudio}
+      {fullAudio}
+      {allAudio}
+      {raiseAudio}
+      {callAudio}
+      {checkAudio}
+      {foldAudio}
       <CoinBet className="coin_bet_other" bet={currentBet} pot={currentPot} />
       {participants.length > 2 && match?.buttonId === player?.id && (
         <div className="slind slind_dealer">

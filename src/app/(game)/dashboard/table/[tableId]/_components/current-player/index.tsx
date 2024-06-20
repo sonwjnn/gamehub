@@ -48,6 +48,11 @@ export const CurrentPlayer = ({
   highlightCards,
   isLeaveNext,
 }: CurrentPlayerProps) => {
+  const gender = getGenderFromImageUrl(player?.user?.image || '')
+
+  const [foldAudio, _f, foldControls] = useAudio({
+    src: gender === 'male' ? sounds.soundFoldBoy : sounds.soundFoldGirl,
+  })
   const { socket } = useSocket()
   const { onOpen } = useModal()
   const { isAutoRebuy, autoRebuyAmount, setAutoRebuy } = useAutoRebuy()
@@ -67,7 +72,6 @@ export const CurrentPlayer = ({
   const [winnerDelay, setWinnerDelay] = useState(false)
   const [foldCount, setFoldCount] = useState(0)
 
-  const gender = getGenderFromImageUrl(player?.user?.image || '')
   const currentParticipant = participants.find(
     item => item.playerId === player?.id
   )
@@ -261,8 +265,7 @@ export const CurrentPlayer = ({
 
   const fold = () => {
     if (socket) {
-      const url = playSound(PokerActions.FOLD, gender)
-      // new Audio(url).play()
+      foldControls.play()
       socket.emit(PokerActions.FOLD, {
         tableId,
         participantId: currentParticipant?.id,
@@ -301,6 +304,7 @@ export const CurrentPlayer = ({
         !winnerDelay && isHaveWinner && currentParticipant && 'is-lose'
       )}
     >
+      {foldAudio}
       {countdownSrcAudio}
       <div className="group_flush">
         <div className="ttl">

@@ -9,6 +9,7 @@ import { ActionItem } from './action-item'
 import { useKey } from 'react-use'
 import { cn } from '@/lib/utils'
 import { FixedRaise } from '@/components/fixed-raise'
+import sound from '@/utils/contants/sound'
 
 interface CurrentPlayerActionProps {
   tableId: string
@@ -40,8 +41,6 @@ export const CurrentPlayerAction = ({
   const fold = async () => {
     setIsAction(true)
     if (socket && !isProcessing) {
-      const url = playSound(PokerActions.FOLD, gender)
-      // new Audio(url).play()
       setIsProcessing(true)
       socket.emit(PokerActions.FOLD, {
         tableId,
@@ -57,8 +56,6 @@ export const CurrentPlayerAction = ({
   const check = () => {
     setIsAction(true)
     if (socket && !isProcessing) {
-      const url = playSound(PokerActions.CHECK, gender)
-      // new Audio(url).play()
       setIsProcessing(true)
       socket.emit(PokerActions.CHECK, {
         tableId,
@@ -74,8 +71,6 @@ export const CurrentPlayerAction = ({
   const call = () => {
     setIsAction(true)
     if (socket && !isProcessing) {
-      const url = playSound(PokerActions.CALL, gender)
-      // new Audio(url).play()
       setIsProcessing(true)
       socket.emit(PokerActions.CALL, {
         tableId,
@@ -92,8 +87,6 @@ export const CurrentPlayerAction = ({
   const raise = (amount: number, type: PokerActions) => {
     setIsAction(true)
     if (socket && !isProcessing) {
-      const url = playSound(type, gender)
-      // new Audio(url).play()
       setIsProcessing(true)
       socket.emit(PokerActions.RAISE, {
         tableId,
@@ -191,6 +184,9 @@ export const CurrentPlayerAction = ({
           amount={quarter}
           match={match}
           isTurn={isTurn}
+          audioBoySrc={sound.soundQuarterBoy}
+          audioGirlSrc={sound.soundQuarterGirl}
+          gender={gender}
         />
 
         <ActionItem
@@ -202,6 +198,9 @@ export const CurrentPlayerAction = ({
           isTurn={isTurn}
           match={match}
           amount={half}
+          audioBoySrc={sound.soundHalfBoy}
+          audioGirlSrc={sound.soundHalfGirl}
+          gender={gender}
         />
 
         <ActionItem
@@ -213,6 +212,9 @@ export const CurrentPlayerAction = ({
           match={match}
           isTurn={isTurn}
           amount={currentPot}
+          audioBoySrc={sound.soundFullBoy}
+          audioGirlSrc={sound.soundFullGirl}
+          gender={gender}
         />
 
         <button
@@ -231,6 +233,9 @@ export const CurrentPlayerAction = ({
           match={match}
           isTurn={isTurn}
           disabled={!isTurn || isProcessing}
+          audioBoySrc={sound.soundRaiseBoy}
+          audioGirlSrc={sound.soundRaiseGirl}
+          gender={gender}
         />
 
         {!canNotCall ? (
@@ -243,6 +248,9 @@ export const CurrentPlayerAction = ({
             isTurn={isTurn}
             amount={callSize}
             match={match}
+            audioBoySrc={sound.soundCallBoy}
+            audioGirlSrc={sound.soundCallGirl}
+            gender={gender}
           />
         ) : !canNotCheck ? (
           <ActionItem
@@ -253,6 +261,9 @@ export const CurrentPlayerAction = ({
             match={match}
             isTurn={isTurn}
             disabled={!isTurn || isProcessing || canNotCheck}
+            audioBoySrc={sound.soundCheckBoy}
+            audioGirlSrc={sound.soundCheckGirl}
+            gender={gender}
           />
         ) : (
           <ActionItem
@@ -264,6 +275,9 @@ export const CurrentPlayerAction = ({
             isTurn={isTurn}
             disabled={!isTurn || isProcessing || canNotCall}
             amount={callSize}
+            audioBoySrc={sound.soundCallBoy}
+            audioGirlSrc={sound.soundCallGirl}
+            gender={gender}
           />
         )}
 
@@ -275,6 +289,9 @@ export const CurrentPlayerAction = ({
           match={match}
           isTurn={isTurn}
           disabled={!isTurn || isProcessing}
+          audioBoySrc={sound.soundFoldBoy}
+          audioGirlSrc={sound.soundFoldGirl}
+          gender={gender}
         />
 
         <ActionItem
@@ -285,6 +302,9 @@ export const CurrentPlayerAction = ({
           onClick={onAllIn}
           isTurn={isTurn}
           disabled={!isTurn || isProcessing}
+          audioBoySrc={sound.soundAllBoy}
+          audioGirlSrc={sound.soundAllGirl}
+          gender={gender}
         />
       </div>
 
