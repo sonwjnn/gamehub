@@ -32,7 +32,7 @@ const HistoryPage = async () => {
           <strong className="icon sz-24 icon-color-white flex-shrink">
             <i className="icon-history"></i>
           </strong>
-          HISTORY
+          게임 기록
         </span>
       </h2>
 

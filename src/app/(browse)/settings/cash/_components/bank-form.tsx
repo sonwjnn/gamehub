@@ -172,7 +172,7 @@ export const BankForm = ({ bank }: BankFormProps) => {
         />
         <div className="footing flex flex-end gap-8">
           <Button type="submit" className="btn_main" disabled={isPending}>
-            Save
+            저장
           </Button>
         </div>
       </form>

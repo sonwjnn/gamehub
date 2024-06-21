@@ -80,7 +80,7 @@ const ChangeTable = ({ tableId, playerId, className }: ChangeTableProps) => {
       )}
       onClick={onClick}
     >
-      Change room
+      방이동
       <span className="sz-16 icon">
         <i className="icon-change"></i>
       </span>
