@@ -19,7 +19,7 @@ export const RebuyButton = ({ tableId, className }: RebuyButtonProps) => {
         onOpen(`${isAutoRebuy ? 'autoRebuy' : 'rebuy'}`, { tableId })
       }
     >
-      Nạp
+      충전
       <span className="icon sz-16 icon-color-white">
         <i className="icon-cash"></i>
       </span>

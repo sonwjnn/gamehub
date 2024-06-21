@@ -23,6 +23,10 @@ export const Hand = ({
 }: HandProps) => {
   const { socket } = useSocket()
   const [showdownDelay, setShowdownDelay] = useState(false)
+  const [imageUrl, setImageUrl] = useState({
+    first: '',
+    second: '',
+  })
 
   useEffect(() => {
     if (isShowdown) {
@@ -63,6 +67,24 @@ export const Hand = ({
     }
   }, [socket, playerId])
 
+  useEffect(() => {
+    if (imageUrlFirst) {
+      setImageUrl(prevImageUrl => ({ ...prevImageUrl, first: imageUrlFirst }))
+    }
+  }, [imageUrlFirst])
+
+  useEffect(() => {
+    if (imageUrlSecond) {
+      setImageUrl(prevImageUrl => ({ ...prevImageUrl, second: imageUrlSecond }))
+    }
+  }, [imageUrlSecond])
+
+  useEffect(() => {
+    if (isHidden) {
+      setImageUrl({ first: '', second: '' })
+    }
+  }, [isHidden])
+
   return (
     <div
       className={cn(
@@ -80,7 +102,7 @@ export const Hand = ({
       >
         <div className="pocker">
           <Card
-            imageUrl={imageUrlFirst}
+            imageUrl={imageUrl.first}
             isShowdown={showdownDelay}
             value={10}
           />
@@ -96,7 +118,7 @@ export const Hand = ({
       >
         <div className="pocker">
           <Card
-            imageUrl={imageUrlSecond}
+            imageUrl={imageUrl.second}
             isShowdown={showdownDelay}
             value={10}
           />

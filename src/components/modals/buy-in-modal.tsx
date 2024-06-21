@@ -95,7 +95,7 @@ export const BuyInModal = () => {
       <div className="modal_dialog sz-sm">
         <div className="modal_content ">
           <div className="modal_head">
-            BUY IN
+            매입금
             <div className="btn_close modal_close" onClick={handleClose}>
               <span className="icon sz-24">
                 <i className="icon_close"></i>
@@ -109,19 +109,19 @@ export const BuyInModal = () => {
                 className="row flex flex-space"
               >
                 <div className="col-12 my-12 text-center color-primary fz-14">
-                  Ante:{' '}
+                  자금:{' '}
                   <span className="fw-16 fw-500">
                     {formatChipsAmount(table?.ante || 0)}
                   </span>
                 </div>
                 <div className="col color-primary fz-14">
-                  Min:{' '}
+                  최소한도:{' '}
                   <span className="fw-16 fw-500">
                     {formatChipsAmount(table?.minBuyIn || 0)}
                   </span>
                 </div>
                 <div className="col color-primary fz-14 text-right">
-                  Max:{' '}
+                  최고:{' '}
                   <span className="fz-16 fw-500">
                     {formatChipsAmount(table?.maxBuyIn || 0)}
                   </span>
@@ -161,7 +161,7 @@ export const BuyInModal = () => {
                     className="btn_submit w-full"
                     disabled={isLoading}
                   >
-                    <span>Buyin</span>
+                    <span>매입금</span>
                   </button>
                 </div>
               </form>

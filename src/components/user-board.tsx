@@ -77,7 +77,7 @@ export const UserBoard = ({ hasMenu = false }: UserBoardProps) => {
         </div>
         <div className="name text-center mt-8 fw-500">{user.name}</div>
         <div className="rank flex gap-8 flex-center fz-10 flex-midle mt-8">
-          Rank:
+          등급:
           <div>
             {/* <!--.flex.gap-8.flex-midle
                   .icon.sz-12 
@@ -110,7 +110,7 @@ export const UserBoard = ({ hasMenu = false }: UserBoardProps) => {
                 <div className="icon sz-20 icon-color-white mx-auto">
                   <i className="icon-points"></i>
                 </div>
-                <span>Points</span>
+                <span>포인트</span>
               </dt>
               <dd>{history.winCount * 100}</dd>
             </dl>
@@ -121,7 +121,7 @@ export const UserBoard = ({ hasMenu = false }: UserBoardProps) => {
                 <div className="icon sz-20 icon-color-white mx-auto">
                   <i className="icon-win"></i>
                 </div>
-                <span>Total win</span>
+                <span>총 승리</span>
               </dt>
               <dd>
                 {history.winCount}/{history.loseCount + history.winCount}
@@ -134,7 +134,7 @@ export const UserBoard = ({ hasMenu = false }: UserBoardProps) => {
                 <div className="icon sz-20 icon-color-white mx-auto">
                   <i className="icon-lose"></i>
                 </div>
-                <span>Total lose</span>
+                <span>총 패배</span>
               </dt>
               <dd>
                 {history.loseCount}/{history.loseCount + history.winCount}
@@ -151,7 +151,7 @@ export const UserBoard = ({ hasMenu = false }: UserBoardProps) => {
                 <span className="icon sz-20 icon-color-white">
                   <i className="icon-user"></i>
                 </span>
-                <span>Profile</span>
+                <span>마이 정보</span>
               </Link>
             </li>
             <li className={pathname === '/settings/cash' ? 'active' : ''}>
@@ -159,7 +159,7 @@ export const UserBoard = ({ hasMenu = false }: UserBoardProps) => {
                 <span className="icon sz-20 icon-color-white">
                   <i className="icon-cash"></i>
                 </span>
-                <span>Cash Games</span>
+                <span>캐시 게임</span>
               </Link>
             </li>
             <li
@@ -181,7 +181,7 @@ export const UserBoard = ({ hasMenu = false }: UserBoardProps) => {
                 <span className="icon sz-20 icon-color-white">
                   <i className="icon-points"></i>
                 </span>
-                <span>Points</span>
+                <span>포인트</span>
               </Link>
             </li>
             <li className={pathname === '/settings/history' ? 'active' : ''}>
@@ -189,7 +189,7 @@ export const UserBoard = ({ hasMenu = false }: UserBoardProps) => {
                 <span className="icon sz-20 icon-color-white">
                   <i className="icon-history"></i>
                 </span>
-                <span>History</span>
+                <span>게임 기록</span>
               </Link>
             </li>
             <li
@@ -199,7 +199,7 @@ export const UserBoard = ({ hasMenu = false }: UserBoardProps) => {
                 <span className="icon sz-20 icon-color-white">
                   <i className="icon-bell"></i>
                 </span>
-                <span>Notifications</span>
+                <span>알림</span>
               </Link>
             </li>
 
@@ -210,7 +210,7 @@ export const UserBoard = ({ hasMenu = false }: UserBoardProps) => {
                 <span className="icon sz-20 icon-color-white">
                   <RotateCcw size={20} />
                 </span>
-                <span>New Password</span>
+                <span>새 비밀번호</span>
               </Link>
             </li>
           </ul>

@@ -17,7 +17,7 @@ export const TableContent = ({ tables, pageCount }: TableContentProps) => {
               <strong className="icon sz-24 icon-color-white flex-shrink">
                 <i className="icon-room"></i>
               </strong>
-              LIST TABLE
+              테이블
             </span>
           </h2>
           <div className="row flex flex-center gapy-40">
@@ -47,9 +47,9 @@ export const TableContent = ({ tables, pageCount }: TableContentProps) => {
             </div>
             <div className="col-12 col-md-4 py-8">
               <div className="room room_event">
-                <p className="text-center">COMMING SOON</p>
+                <p className="text-center">출시 예정</p>
                 <br />
-                <span className="fz-14">Event Room</span>
+                <span className="fz-14">축제방</span>
               </div>
             </div>
           </div>

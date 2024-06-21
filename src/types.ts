@@ -224,7 +224,7 @@ export type NextApiResponseServerIo = NextApiResponse & {
   }
 }
 
-type CustomCard = {
+export type CustomCard = {
   id: string
   rank: string
   suit: string
@@ -233,6 +233,15 @@ type CustomCard = {
 export type HighlightCard = {
   cards: CustomCard[]
   name: string
+}
+
+export type PlayerHighlightCards = {
+  [key: string]: HighlightCard // key: playerId, value: HighlightCard
+}
+
+export type HighlightResponse = {
+  playerHighlightSet: PlayerHighlightCards
+  isAllAllIn: boolean
 }
 
 export enum PokerActions {

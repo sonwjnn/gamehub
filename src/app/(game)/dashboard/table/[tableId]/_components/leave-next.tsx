@@ -23,7 +23,7 @@ export const LeaveNext = ({ isLeaveNext, setIsLeaveNext }: LeaveNextProps) => {
           isMobile && 'text-xs'
         )}
       >
-        Leave next match
+        나가기예약
       </label>
     </div>
   )

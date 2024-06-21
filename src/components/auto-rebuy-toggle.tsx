@@ -67,7 +67,7 @@ export const AutoRebuyToggle = ({
   return (
     <div className="flex items-center gap-x-1">
       <Switch checked={isAutoRebuy} onCheckedChange={onToggle} />
-      <p className="text-xs">Auto rebuy</p>
+      <p className="text-xs">자동충전</p>
     </div>
   )
 }

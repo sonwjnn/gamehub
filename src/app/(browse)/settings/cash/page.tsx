@@ -52,18 +52,18 @@ const CashPage = async () => {
           <strong className="icon sz-24 icon-color-white flex-shrink">
             <i className="icon-cash"></i>
           </strong>
-          CASH GAME
+          캐시 게임
         </span>
       </h2>
       <div className="row flex flex-center gapy-40 mt-16">
         <div className="col-12 col-md-12 col-xl-5 col-history">
           <h2 className="text-up mb-16 ttl_sub">
-            THÔNG TIN TÀI KHOẢN NGÂN HÀNG
+          계좌 정보
           </h2>
           <BankForm bank={bank} />
         </div>
         <div className="col-12 col-md-12 col-xl-7">
-          <h2 className="text-up mb-16 ttl_sub">LỊCH SỬ NẠP / RÚT</h2>
+          <h2 className="text-up mb-16 ttl_sub">입출금 내역</h2>
           <CashesClient data={formattedData} />
         </div>
       </div>

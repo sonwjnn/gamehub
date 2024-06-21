@@ -26,7 +26,7 @@ export const Actions = ({}: ActionsProps) => {
         <div className="icon flex-shrink sz-16">
           <i className="icon-play icon-color-white" />
         </div>
-        <span>PLAY </span>
+        <span>놀다 </span>
       </Link>
 
       <div

@@ -94,11 +94,11 @@ export const Statistical = ({ tableId }: StatisticalProps) => {
         </span>
       </div>
       <div className="ttl">
-        THỐNG KÊ - <span className="text-white">{status}</span>
+        통계 - <span className="text-white">{status}</span>
       </div>
       <div className="content">
         <dl className="flex flex-midle">
-          <dt>Thắng :</dt>
+          <dt>승 :</dt>
           <dd>{statistical.winCount} ván</dd>
           <dd className="flex gap-8 flex-midle">
             <span className="icon sz-8 flex-shrink">
@@ -108,7 +108,7 @@ export const Statistical = ({ tableId }: StatisticalProps) => {
           </dd>
         </dl>
         <dl className="flex flex-midle">
-          <dt>Thua :</dt>
+          <dt>패 :</dt>
           <dd>{statistical.loseCount} ván</dd>
           <dd className="flex gap-8 flex-midle">
             <span className="icon sz-8 flex-shrink">

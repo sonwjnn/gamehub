@@ -15,12 +15,12 @@ export type HistoryColumn = {
 export const columns: ColumnDef<HistoryColumn>[] = [
   {
     accessorKey: 'createdAt',
-    header: 'Date',
+    header: '테이블',
     filterFn: 'dateBetweenFilterFn',
   },
   {
     accessorKey: 'name',
-    header: 'Table Name',
+    header: '테이블',
   },
   {
     accessorKey: 'amount',
@@ -30,7 +30,7 @@ export const columns: ColumnDef<HistoryColumn>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
           className="flex gap-x-2 cursor-pointer"
         >
-          Amount
+          테이블
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </div>
       )
@@ -38,7 +38,7 @@ export const columns: ColumnDef<HistoryColumn>[] = [
   },
   {
     accessorKey: 'status',
-    header: 'Status',
+    header: '테이블',
     cell: ({ row }) => {
       return (
         <div

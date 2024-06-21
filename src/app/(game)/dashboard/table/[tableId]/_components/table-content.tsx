@@ -3,14 +3,16 @@
 import { OtherPlayer } from './other-player'
 import { CurrentPlayer } from './current-player'
 import { Board } from './board'
-import { useState, useEffect, useRef, useMemo } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 
 import {
   HighlightCard,
+  HighlightResponse,
   Match,
   Participant,
+  PlayerHighlightCards,
   PlayerWithUser,
   PokerActions,
 } from '@/types'
@@ -33,9 +35,9 @@ import { useAutoAction } from '@/store/use-auto-action'
 import { AutoRebuyToggle } from '@/components/auto-rebuy-toggle'
 import { RebuyButton } from '@/components/rebuy-button'
 import { useAutoRebuy } from '@/store/use-auto-rebuy'
-import { Button } from '@/components/ui/button'
 import { LeaveNext } from './leave-next'
 import { useAudio } from 'react-use'
+import { getPlayerIdByUserId } from '@/app/(game)/dashboard/table/_utils/user'
 
 interface TableContentProps {
   tableId: string
@@ -56,6 +58,8 @@ export const TableContent = ({ tableId }: TableContentProps) => {
     name: '',
     cards: [],
   })
+  const [playersHighlightSet, setPlayersHighlightSet] =
+    useState<PlayerHighlightCards>({})
   const [isHandVisible, setHandVisible] = useState(false)
   const [isShuffle, setShuffle] = useState(false)
   const [isChipsAnimation, setChipsAnimation] = useState(false)
@@ -516,12 +520,14 @@ export const TableContent = ({ tableId }: TableContentProps) => {
                   participantsRef?.current &&
                   participantsRef?.current.some(item => item.bet > 0)
                 if (hasBet) {
-                  setChipsAnimation(true)
+                  setTimeout(() => {
+                    setChipsAnimation(true)
+                  }, 1000)
 
                   setTimeout(() => {
                     setMatch(matchData)
                     setParticipants(matchData.participants)
-                  }, 1000)
+                  }, 2000)
 
                   setTimeout(() => {
                     setPlayers(prev =>
@@ -532,7 +538,7 @@ export const TableContent = ({ tableId }: TableContentProps) => {
                         return { ...item, isTurn: false }
                       })
                     )
-                  }, 2000)
+                  }, 3000)
                 } else {
                   setMatch(matchData)
                   setParticipants(matchData.participants)
@@ -572,21 +578,56 @@ export const TableContent = ({ tableId }: TableContentProps) => {
         ({
           tableId,
           players,
+          match: matchData,
         }: {
           tableId: string
           players: PlayerWithUser[]
+          match: Match | null
         }) => {
-          // if (matchData.isShowdown && !matchData.isAllAllIn) {
+          setPlayers(prev => {
+            const updatedPlayers = prev.map(item => {
+              return { ...item, isTurn: false }
+            })
+            return updatedPlayers
+          })
 
-          // }
+          if (matchData?.isShowdown && !matchData?.isAllAllIn) {
+            setTimeout(() => {
+              setPlayers(players)
+            }, 4000)
+          }
 
-          // if (matchData.isShowdown && matchData.isAllAllIn) {
-          //   setPlayers(prev => prev.map(item => ({ ...item, isTurn: false })))
+          if (matchData?.isShowdown && matchData?.isAllAllIn) {
+            const isFlop = matchRef.current?.isFlop
+            const isTurn = matchRef.current?.isTurn
+            const isRiver = matchRef.current?.isRiver
 
-          //   setTimeout(() => {}, )
-          // }
+            if (!isFlop && !isTurn && !isRiver) {
+              setTimeout(() => {
+                setPlayers(players)
+              }, 9000)
+            }
 
-          setPlayers(players)
+            if (isFlop && !isTurn && !isRiver) {
+              setTimeout(() => {
+                setPlayers(players)
+              }, 6000)
+            }
+
+            if (isFlop && isTurn && !isRiver) {
+              setTimeout(() => {
+                setPlayers(players)
+              }, 5000)
+            }
+
+            if (isFlop && isTurn && isRiver) {
+              setPlayers(players)
+            }
+          }
+
+          if (!matchData?.isShowdown && !matchData?.isAllAllIn) {
+            setPlayers(players)
+          }
         }
       )
 
@@ -633,22 +674,26 @@ export const TableContent = ({ tableId }: TableContentProps) => {
         }
       )
 
-      socket.on(
-        PokerActions.HIGHLIGHT_CARDS,
-        (highlightCardsData: HighlightCard, isAllAllIn: boolean) => {
-          if (highlightCardsData) {
-            const delay = isAllAllIn
-              ? 6000
-              : matchRef.current?.isRiver || matchRef.current?.isTurn
-                ? 1500
-                : 2500
+      socket.on(PokerActions.HIGHLIGHT_CARDS, (encoding: string) => {
+        const { playerHighlightSet, isAllAllIn } = JSON.parse(
+          atob(encoding)
+        ) as HighlightResponse
+        if (playerHighlightSet) {
+          const userId = user?.id
 
-            timerHighlightId = setTimeout(() => {
-              setHighlightCards(highlightCardsData)
-            }, delay)
-          }
+          if (!userId || !players) return
+
+          const delay = isAllAllIn
+            ? 6000
+            : matchRef.current?.isRiver || matchRef.current?.isTurn
+              ? 1500
+              : 2500
+
+          timerHighlightId = setTimeout(() => {
+            setPlayersHighlightSet(playerHighlightSet)
+          }, delay)
         }
-      )
+      })
 
       socket.on(
         PokerActions.NEXT_MATCH_IS_COMING,
@@ -721,6 +766,21 @@ export const TableContent = ({ tableId }: TableContentProps) => {
     }
     getPlayers()
   }, [tableId])
+
+  useEffect(() => {
+    if (playersHighlightSet && Object.keys(playersHighlightSet).length > 0) {
+      const userId = user?.id
+      if (!userId) return
+      const playerId = getPlayerIdByUserId(userId, players)
+
+      if (!playerId) return
+
+      const highlight = playersHighlightSet[playerId]
+      if (highlight) {
+        setHighlightCards(highlight)
+      }
+    }
+  }, [playersHighlightSet])
 
   const removePlayer = async () => {
     const currentPlayer = players.find(p => p.userId === user?.id)
@@ -808,6 +868,7 @@ export const TableContent = ({ tableId }: TableContentProps) => {
                   participants={participants}
                   isHandVisible={isHandVisible}
                   tableId={tableId}
+                  playersHighlightSet={playersHighlightSet}
                 />
               )
             })}
@@ -842,6 +903,7 @@ export const TableContent = ({ tableId }: TableContentProps) => {
           tableId={tableId}
           highlightCards={highlightCards}
           isLeaveNext={isLeaveNext}
+          playersHighlightSet={playersHighlightSet}
         />
       )}
     </div>

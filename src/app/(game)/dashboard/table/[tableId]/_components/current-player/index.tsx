@@ -4,11 +4,14 @@ import Image from 'next/image'
 import { Hand } from './hand'
 import { CurrentPlayerAction } from './actions'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import {
+  Card,
+  CustomCard,
   HighlightCard,
   Match,
   Participant,
+  PlayerHighlightCards,
   PlayerWithUser,
   PokerActions,
   WinnerHandType,
@@ -27,6 +30,10 @@ import { ReviewStars } from './review-stars'
 import { CoinAnimate } from '@/components/coin-animate'
 import { RebuyButton } from '@/components/rebuy-button'
 import { useAutoRebuy } from '@/store/use-auto-rebuy'
+import {
+  calculateWinRate,
+  evaluateHandStrength,
+} from '@/utils/winrate'
 
 interface CurrentPlayerProps {
   isShowdown?: boolean
@@ -37,6 +44,7 @@ interface CurrentPlayerProps {
   tableId: string
   highlightCards?: HighlightCard
   isLeaveNext: boolean
+  playersHighlightSet: PlayerHighlightCards
 }
 
 export const CurrentPlayer = ({
@@ -47,6 +55,7 @@ export const CurrentPlayer = ({
   tableId,
   highlightCards,
   isLeaveNext,
+  playersHighlightSet,
 }: CurrentPlayerProps) => {
   const isMounted = useMountedState()
 
@@ -93,10 +102,6 @@ export const CurrentPlayer = ({
     src: sounds.soundWeakCongrats,
   })
 
-  const [loseAudio, _lo, loseControls] = useAudio({
-    src: sounds.soundLose,
-  })
-
   const { socket } = useSocket()
   const { onOpen } = useModal()
   const { isAutoRebuy, autoRebuyAmount, setAutoRebuy } = useAutoRebuy()
@@ -115,6 +120,8 @@ export const CurrentPlayer = ({
   const [isBet, setIsBet] = useState(false)
   const [winnerDelay, setWinnerDelay] = useState(false)
   const [foldCount, setFoldCount] = useState(0)
+  const [callRaiseMissing, setCallRaiseMissing] = useState(0)
+  const [winRate, setWinRate] = useState(0)
 
   const currentParticipant = participants.find(
     item => item.playerId === player?.id
@@ -145,6 +152,55 @@ export const CurrentPlayer = ({
   const currentBet = currentParticipant?.bet || 0
   const currentPot = match?.pot || 0
 
+  const calculateWinRateForPlayer = useCallback(() => {
+    const getHandStrength = (playerId: string) => {
+      const playerCards = playersHighlightSet[playerId]?.cards
+      const boardCards = match?.board || []
+
+      if (
+        playerCards &&
+        playerCards.concat(boardCards).length >= 5 &&
+        (match?.isFlop || match?.isRiver)
+      ) {
+        const hand = hands(playerCards.concat(boardCards))
+        return evaluateHandStrength(hand)
+      }
+      return null
+    }
+
+    const playerHandStrength = player?.id ? getHandStrength(player.id) : 0
+    const winRate =
+      playerHandStrength && !isFolded
+        ? calculateWinRate(playerHandStrength?.score)
+        : 0
+
+    const combinedWinRate = Object.entries(playersHighlightSet).reduce(
+      (totalWinRate, [participantId, highlightSet]) => {
+        const combinedCards = highlightSet.cards.concat(match?.board || [])
+        if (combinedCards.length >= 5) {
+          const handStrength = evaluateHandStrength(hands(combinedCards))
+          const participant = participants.find(
+            item => item.playerId === participantId
+          )
+          if (participant?.isFolded) {
+            return totalWinRate
+          }
+          return totalWinRate + calculateWinRate(handStrength?.score)
+        }
+        return totalWinRate
+      },
+      0
+    )
+
+    return isNaN(winRate / combinedWinRate)
+      ? 0
+      : (winRate / combinedWinRate) * 100
+  }, [playersHighlightSet, match, participants, player?.id, isFolded])
+
+  useEffect(() => {
+    setWinRate(calculateWinRateForPlayer())
+  }, [calculateWinRateForPlayer, match?.isFlop, match?.isTurn, match?.isRiver])
+
   useEffect(() => {
     if (
       currentParticipant &&
@@ -165,7 +221,7 @@ export const CurrentPlayer = ({
     } else {
       setImageUrlFirst('')
       setImageUrlSecond('')
-      setStars
+      setStars(0)
     }
   }, [participants, player, currentParticipant])
 
@@ -339,7 +395,7 @@ export const CurrentPlayer = ({
 
     const handleSound = () => {
       if (!isWinner) {
-        loseControls.play()
+        new Audio(sounds.soundLose).play()
         return
       }
 
@@ -389,24 +445,24 @@ export const CurrentPlayer = ({
       }
     }
 
+    handleSound()
+
     switch (handName) {
       case WinnerHandType.Straight:
-        onOpen('straight')
+        return onOpen('straight')
       case WinnerHandType.Flush:
-        onOpen('flush')
+        return onOpen('flush')
       case WinnerHandType.FullHouse:
-        onOpen('fullHouse')
+        return onOpen('fullHouse')
       case WinnerHandType.FourOfAKind:
-        onOpen('fourCard')
+        return onOpen('fourCard')
       case WinnerHandType.StraightFlush:
-        onOpen('straightFlush')
+        return onOpen('straightFlush')
       case WinnerHandType.RoyalFlush:
-        onOpen('royalFlush')
+        return onOpen('royalFlush')
       default:
-        onOpen('winDefault')
+        return onOpen('winDefault')
     }
-
-    handleSound()
   }
 
   const hasFirstHighlight = highlightCards?.cards.some(item => {
@@ -424,16 +480,37 @@ export const CurrentPlayer = ({
   })
 
   if (!isMounted) return null
+  
+  const hands = (cards: CustomCard[]): CustomCard[] => {
+    return Array.from(
+      new Map(cards.map(item => [item.id, item])).values()
+    ).slice(0, 5)
+  }
+
+  const winRateResult = () => {
+    if (isWinner) return '100.00'
+    if (!isWinner && isHaveWinner) return '0.00'
+    return winRate.toFixed(2)
+  }
+
+  const WinRateList = () => {
+    return (
+      <div className="absolute right-[-40%] bottom-0 lg:right-8 lg:top-[-12%]">
+        <div className="bg-[#0e063a] text-white text-xs lg:text-sm font-bold rounded-sm p-1 lg:p-2 mb-2 opacity-80 border shining-card min-w-20 lg:min-w-32">
+          <p className="text-[#ffaa00] text-center">{winRateResult()}%</p>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div
       className={cn(
-        'group_tool flex flex-space gap-12 before:border-none',
+        'group_tool flex flex-space gap-12 before:border-none relative',
         (isTurn || (winnerDelay && isHaveWinner)) && 'user_active',
         !winnerDelay && isHaveWinner && currentParticipant && 'is-lose'
       )}
     >
-      {loseAudio}
       {foldAudio}
       {countdownSrcAudio}
       {straightAudio}
@@ -448,7 +525,7 @@ export const CurrentPlayer = ({
       {threeCardAudio}
       {strongCongratsAudio}
       {weakCongratsAudio}
-
+      <WinRateList />
       <div className="group_flush">
         <div className="ttl">
           <span>{highlightCards?.name || ''}</span>
@@ -459,7 +536,7 @@ export const CurrentPlayer = ({
             <ReviewStars stars={stars} />
           </div>
           <div className="btn_detail" onClick={() => onOpen('quality')}>
-            Detail
+            세부 사항
           </div>
         </div>
       </div>

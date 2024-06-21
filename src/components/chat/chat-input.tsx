@@ -149,7 +149,7 @@ export const ChatInput = ({ apiUrl, query, name, type }: ChatInputProps) => {
                     <Textarea
                       disabled={isLoading || (table?.chatBanned ?? false)}
                       className="border-0 border-none resize-none rounded-t-none   text-[12px]  py-[4px] bg-[#181818]  no-scrollbar  text-white min-h-[36px] max-h-[36px] focus-visible:ring-0 focus-visible:ring-offset-0  "
-                      placeholder={`Typing message...`}
+                      placeholder={`메시지 입력...`}
                       onKeyDown={event => {
                         if (event.key === 'Enter' && !event.shiftKey) {
                           event.preventDefault()

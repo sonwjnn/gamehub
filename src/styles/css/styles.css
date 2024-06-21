@@ -2742,3 +2742,23 @@
   -webkit-box-shadow: var(--box-shadow);
   box-shadow: var(--box-shadow);
 }
+
+@keyframes shine {
+  100% {
+    background-position: calc(200px + 100%) center;
+  }
+}
+
+.shining-card {
+  position: relative;
+  overflow: hidden;
+  background-image: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0.2) 20%,
+    rgba(255, 255, 255, 0.1) 40%,
+    rgba(255, 255, 255, 0.1) 100%
+  );
+  background-size: 200px 100%;
+  animation: shine 2s infinite;
+}

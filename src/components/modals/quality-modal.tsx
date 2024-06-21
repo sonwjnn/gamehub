@@ -93,7 +93,7 @@ export const QualityModal = () => {
       <div className="modal_dialog sz-md">
         <div className="modal_content ">
           <div className="modal_head">
-            CHẤT BÀI
+            족보
             <div className="btn_close modal_close" onClick={onClose}>
               <span className="icon sz-24">
                 <i className="icon_close"></i>
@@ -105,10 +105,10 @@ export const QualityModal = () => {
               <div className="table_quality">
                 <div className="tables">
                   <div className="tables_head">
-                    <div className="tables_td">STT</div>
-                    <div className="tables_td">Tên sảnh</div>
-                    <div className="tables_td">Ảnh sảnh</div>
-                    <div className="tables_td">Mô tả chi tiết</div>
+                    <div className="tables_td">수</div>
+                    <div className="tables_td">홀덤족보</div>
+                    <div className="tables_td">그림</div>
+                    <div className="tables_td">해당족보</div>
                   </div>
                   <div className="tables_body">
                     {contents.map((item, i) => (

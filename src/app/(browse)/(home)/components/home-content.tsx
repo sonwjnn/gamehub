@@ -106,15 +106,15 @@ export const HomeContent = ({}: HomeContentProps) => {
               <div className="text_box mt-16" ref={textWrapperRef}>
                 <div className="text_wrapper">
                   <div className="letters">
-                    Every step you take, no matter how small, is a stride toward
-                    your dreams. Keep moving forward with unwavering
-                    determination, for even the smallest progress is a victory
-                    on the path to greatness.
+                    어떤 단계 든 , 아무리 작은 것이라 도 앞으로 나아가는 것이
+                    매우 쉽습니다 . 우리 의 꿈 . 앞으로는 끊임 없는 단호한
+                    판단 을 통해 계속 해서 전진 하세요 .가장 작은 문제 는 더 큰 
+                    문제 로 이어지는 길 에서 승리 하는 것 입니다.
                   </div>
                 </div>
               </div>
               <a className="box__link button-animation mt-16" href="#">
-                Xem tất cả<span></span>
+              모두보기<span></span>
                 <span></span>
                 <span></span>
                 <span></span>
@@ -125,7 +125,7 @@ export const HomeContent = ({}: HomeContentProps) => {
             <div className="block_support h-full flex flex-center flex-midle">
               <div className="content">
                 <h3 className="title text-center fw-700 fz-24 color-main">
-                  CONTACT US
+                  문의하기
                 </h3>
                 <div className="text-center fz-12 mt-8">
                   Neque porro quisquam est qui dolorem
@@ -180,7 +180,7 @@ export const HomeContent = ({}: HomeContentProps) => {
               <div className="area">
                 <div className="context">
                   <p>
-                    <span className="animate-aitf">Poker Master </span>
+                    <span className="animate-aitf">포커 마스터 </span>
                   </p>
                   <div className="text_typed">
                     Neque porro quisquam est qui dolorem{' '}
@@ -195,7 +195,7 @@ export const HomeContent = ({}: HomeContentProps) => {
                       <div className="icon flex-shrink sz-24">
                         <i className="icon-play icon-color-white"></i>
                       </div>
-                      <span className="color-white">PLAY NOW</span>
+                      <span className="color-white">게임 플레이</span>
                     </Link>
                   </div>
                 </div>
@@ -247,8 +247,8 @@ export const HomeContent = ({}: HomeContentProps) => {
                 sizes="100vw"
                 className="w-auto h-full object-cover"
               />
-              <div className="box__link button-animation">
-                Click view<span></span>
+              <div className="box__link button-animation text-center">
+                보기 클릭<span></span>
                 <span></span>
                 <span></span>
                 <span></span>
@@ -263,7 +263,7 @@ export const HomeContent = ({}: HomeContentProps) => {
             <div className="col-12 col-md-6 col-lg-4">
               <div className="ttl_sub">
                 {' '}
-                <span>Điều khoản luật chơi</span>
+                <span>게임 규칙 용어</span>
               </div>
               <ul className="list_btn mt-20">
                 <li>
@@ -276,7 +276,7 @@ export const HomeContent = ({}: HomeContentProps) => {
                 <li>
                   <a href="#">
                     {' '}
-                    <span className="text">Luật chơi Poker</span>
+                    <span className="text">포커 규칙</span>
                     <span className="arrow"></span>
                   </a>
                 </li>
@@ -285,19 +285,19 @@ export const HomeContent = ({}: HomeContentProps) => {
             <div className="col-12 col-md-6 col-lg-4">
               <div className="ttl_sub">
                 {' '}
-                <span>Đổi điểm counp</span>
+                <span>쿠폰포인트 교환</span>
               </div>
               <a className="bnr_link bnr_points mt-20" href="#">
-                Click on<b>Change Points</b>
+                클릭<b>포인트</b>
               </a>
             </div>
             <div className="col-12 col-md-6 col-lg-4">
               <div className="ttl_sub">
                 {' '}
-                <span>Download</span>
+                <span>다운로드</span>
               </div>
               <a className="bnr_link bnr_download mt-20" href="">
-                Click on<b>Download</b>
+                클릭<b>다운로드</b>
               </a>
             </div>
           </div>

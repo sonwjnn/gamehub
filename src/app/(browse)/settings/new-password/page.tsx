@@ -7,7 +7,7 @@ const NewPasswordPage = () => {
       <h2 className="ttl_main fz-18">
         <span>
           <RotateCcw size={24} />
-          NEW PASSWORD
+          새 비밀번호
         </span>
       </h2>
       <NewPasswordContent />

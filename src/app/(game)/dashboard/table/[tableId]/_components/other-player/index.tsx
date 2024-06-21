@@ -4,19 +4,22 @@ import { cn } from '@/lib/utils'
 import Image from 'next/image'
 import { Hand } from './hand'
 import {
+  CustomCard,
   Match,
   Participant,
+  PlayerHighlightCards,
   PlayerWithUser,
   PokerActions,
   RaiseType,
 } from '@/types'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { formatChipsAmount } from '@/utils/formatting'
 import { CoinBet } from '@/components/coin-bet'
 import { getGenderFromImageUrl, playSound } from '@/utils/sound'
 import { CoinAnimate } from '@/components/coin-animate'
 import { useAudio } from 'react-use'
 import sound from '@/utils/contants/sound'
+import { calculateWinRate, evaluateHandStrength } from '@/utils/winrate'
 
 interface OtherPlayerProps {
   type?: 'fold' | 'active' | 'default'
@@ -25,6 +28,7 @@ interface OtherPlayerProps {
   player: PlayerWithUser | undefined
   participants: Participant[]
   tableId: string
+  playersHighlightSet: PlayerHighlightCards
 }
 
 export const OtherPlayer = ({
@@ -33,6 +37,7 @@ export const OtherPlayer = ({
   match,
   participants,
   tableId,
+  playersHighlightSet,
 }: OtherPlayerProps) => {
   const gender = getGenderFromImageUrl(player?.user?.image || '')
 
@@ -65,6 +70,7 @@ export const OtherPlayer = ({
   const [imageUrlSecond, setImageUrlSecond] = useState('')
   const [counter, setCounter] = useState(12)
   const [isBet, setIsBet] = useState(false)
+  const [winRate, setWinRate] = useState(0)
 
   const currentParticipant = participants.find(
     item => item.playerId === player?.id
@@ -83,6 +89,55 @@ export const OtherPlayer = ({
   const currentStack = player?.stack || 0
   const currentBet = currentParticipant?.bet || 0
   const currentPot = match?.pot || 0
+
+  const calculateWinRateForPlayer = useCallback(() => {
+    const getHandStrength = (playerId: string) => {
+      const playerCards = playersHighlightSet[playerId]?.cards
+      const boardCards = match?.board || []
+
+      if (
+        playerCards &&
+        playerCards.concat(boardCards).length >= 5 &&
+        (match?.isFlop || match?.isRiver)
+      ) {
+        const hand = hands(playerCards.concat(boardCards))
+        return evaluateHandStrength(hand)
+      }
+      return null
+    }
+
+    const playerHandStrength = player?.id ? getHandStrength(player.id) : 0
+    const winRate =
+      playerHandStrength && !isFolded
+        ? calculateWinRate(playerHandStrength?.score)
+        : 0
+
+    const combinedWinRate = Object.entries(playersHighlightSet).reduce(
+      (totalWinRate, [participantId, highlightSet]) => {
+        const combinedCards = highlightSet.cards.concat(match?.board || [])
+        if (combinedCards.length >= 5) {
+          const handStrength = evaluateHandStrength(hands(combinedCards))
+          const participant = participants.find(
+            item => item.playerId === participantId
+          )
+          if (participant?.isFolded) {
+            return totalWinRate
+          }
+          return totalWinRate + calculateWinRate(handStrength?.score)
+        }
+        return totalWinRate
+      },
+      0
+    )
+
+    return isNaN(winRate / combinedWinRate)
+      ? 0
+      : (winRate / combinedWinRate) * 100
+  }, [playersHighlightSet, match, participants, player?.id, isFolded])
+
+  useEffect(() => {
+    setWinRate(calculateWinRateForPlayer())
+  }, [calculateWinRateForPlayer, match?.isFlop, match?.isTurn, match?.isRiver])
 
   useEffect(() => {
     if (
@@ -159,6 +214,32 @@ export const OtherPlayer = ({
     }
   }, [currentBet])
 
+  const hands = (cards: CustomCard[]): CustomCard[] => {
+    return Array.from(
+      new Map(cards.map(item => [item.id, item])).values()
+    ).slice(0, 5)
+  }
+
+  const winRateResult = () => {
+    if (isWinner) return '100.00'
+    if (!isWinner && isHaveWinner) return '0.00'
+    return winRate.toFixed(2)
+  }
+
+  const WinRateCard = () => {
+    return (
+      <div
+        className={cn('absolute left-[-35%] lg:left-[-15%] bottom-[-45%] lg:bottom-[-35%] hidden', {
+          block: isFolded || isShowdown || isHaveWinner,
+        })}
+      >
+        <div className="bg-[#0e063a] text-white text-xs lg:text-sm font-bold rounded-sm p-1 lg:p-2 mb-2 opacity-80 border w-20 lg:w-32">
+          <p className="text-[#ffaa00] text-center">{winRateResult()}%</p>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div
       className={cn(
@@ -180,6 +261,7 @@ export const OtherPlayer = ({
       {callAudio}
       {checkAudio}
       {foldAudio}
+      <WinRateCard />
       <CoinBet className="coin_bet_other" bet={currentBet} pot={currentPot} />
       {participants.length > 2 && match?.buttonId === player?.id && (
         <div className="slind slind_dealer">

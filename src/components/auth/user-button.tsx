@@ -77,7 +77,7 @@ export const UserButton = ({ type = 'default' }: Props) => {
                   Lorem ipsum dolor
                 </div>
                 <div className="rank flex gap-8 flex-center fz-10 flex-midle mt-8">
-                  Rank:
+                  등급:
                   <div>
                     {/* <!--.flex.gap-8.flex-midle
                       .icon.sz-12 
@@ -112,7 +112,7 @@ export const UserButton = ({ type = 'default' }: Props) => {
                         <div className="icon sz-20 icon-color-white mx-auto">
                           <i className="icon-points"></i>
                         </div>
-                        <span>Points</span>
+                        <span>포인트</span>
                       </dt>
                       <dd>1000</dd>
                     </dl>
@@ -123,7 +123,7 @@ export const UserButton = ({ type = 'default' }: Props) => {
                         <div className="icon sz-20 icon-color-white mx-auto">
                           <i className="icon-win"></i>
                         </div>
-                        <span>Total win</span>
+                        <span>총 승리</span>
                       </dt>
                       <dd>30/120</dd>
                     </dl>
@@ -134,7 +134,7 @@ export const UserButton = ({ type = 'default' }: Props) => {
                         <div className="icon sz-20 icon-color-white mx-auto">
                           <i className="icon-lose"></i>
                         </div>
-                        <span>Total lose</span>
+                        <span>총 패배</span>
                       </dt>
                       <dd>50/120</dd>
                     </dl>
@@ -150,7 +150,7 @@ export const UserButton = ({ type = 'default' }: Props) => {
                       <span className="icon sz-20 icon-color-white">
                         <i className="icon-user"></i>
                       </span>
-                      <span>Profile</span>
+                      <span>마이 정보</span>
                     </Link>
                   </li>
                   <li className={pathname === '/settings/cash' ? 'active' : ''}>
@@ -158,7 +158,7 @@ export const UserButton = ({ type = 'default' }: Props) => {
                       <span className="icon sz-20 icon-color-white">
                         <i className="icon-cash"></i>
                       </span>
-                      <span>Cash Games</span>
+                      <span>캐시 게임</span>
                     </Link>
                   </li>
                   <li
@@ -168,7 +168,7 @@ export const UserButton = ({ type = 'default' }: Props) => {
                       <span className="icon sz-20 icon-color-white">
                         <i className="icon-points"></i>
                       </span>
-                      <span>Points</span>
+                      <span>포인트</span>
                     </Link>
                   </li>
                   <li
@@ -178,7 +178,7 @@ export const UserButton = ({ type = 'default' }: Props) => {
                       <span className="icon sz-20 icon-color-white">
                         <i className="icon-history"></i>
                       </span>
-                      <span>History</span>
+                      <span>게임 기록</span>
                     </Link>
                   </li>
                   <li
@@ -190,7 +190,7 @@ export const UserButton = ({ type = 'default' }: Props) => {
                       <span className="icon sz-20 icon-color-white">
                         <i className="icon-bell"></i>
                       </span>
-                      <span>Notifications</span>
+                      <span>알림</span>
                     </Link>
                   </li>
                   <li>
@@ -199,7 +199,7 @@ export const UserButton = ({ type = 'default' }: Props) => {
                         <span className="icon sz-16 icon-color-red">
                           <i className="icon-logout"></i>
                         </span>
-                        <span className="icon-color-red">Logout</span>
+                        <span className="icon-color-red">로그오웃</span>
                       </a>
                     </LogoutButton>
                   </li>
