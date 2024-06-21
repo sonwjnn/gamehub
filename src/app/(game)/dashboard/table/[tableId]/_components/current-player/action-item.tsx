@@ -1,6 +1,6 @@
 import { cn } from '@/lib/utils'
 import { formatChipsAmount } from '@/utils/formatting'
-import { useAudio, useKey, useMedia } from 'react-use'
+import { useAudio, useKey, useMedia, useMountedState } from 'react-use'
 import { Match } from '@/types'
 import { useEffect } from 'react'
 import { useAutoAction } from '@/store/use-auto-action'
@@ -44,6 +44,8 @@ export const ActionItem = ({
   audioGirlSrc,
   gender = 'male',
 }: ActionItemProps) => {
+  const isMounted = useMountedState()
+
   const isMobile = useMedia('(max-width: 768px), (max-height: 768px)', false)
   const [audioBoy, _b, boyControls] = useAudio({ src: audioBoySrc })
   const [audioGirl, _g, girlControls] = useAudio({ src: audioGirlSrc })
@@ -141,6 +143,8 @@ export const ActionItem = ({
       girlControls.play()
     }
   }
+
+  if (!isMounted) return null
 
   return (
     <button

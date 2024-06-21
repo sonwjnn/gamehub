@@ -2,9 +2,11 @@
 
 import { useParams } from 'next/navigation'
 import { useEffect } from 'react'
-import { useAudio } from 'react-use'
+import { useAudio, useMountedState } from 'react-use'
 
 export const SoundProvider = () => {
+  const isMounted = useMountedState()
+
   const params = useParams()
 
   const [audio, _, controls] = useAudio({
@@ -21,6 +23,8 @@ export const SoundProvider = () => {
       controls.play()
     }
   }, [params])
+
+  if (!isMounted) return null
 
   return <>{audio}</>
 }
