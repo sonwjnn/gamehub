@@ -454,7 +454,7 @@ export const CurrentPlayer = ({
             <ReviewStars stars={stars} />
           </div>
           <div className="btn_detail" onClick={() => onOpen('quality')}>
-            Detail
+            세부 사항
           </div>
         </div>
       </div>

@@ -15,7 +15,7 @@ export const FeelingModal = () => {
       <div className="modal_dialog sz-md">
         <div className="modal_content">
           <div className="modal_head">
-            CẢM XÚC
+            포켓등급
             <div className="btn_close modal_close" onClick={onClose}>
               <span className="icon sz-24">
                 <i className="icon_close"></i>

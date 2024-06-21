@@ -107,7 +107,7 @@ export const ProfileContent = () => {
                     <div className="input-group">
                       <div className="wrap-input">
                         <Input disabled={true} {...field} />
-                        <label>User name</label>
+                        <label>닉네임</label>
                       </div>
                     </div>
                   </FormControl>
@@ -126,7 +126,7 @@ export const ProfileContent = () => {
                         <div className="input-group">
                           <div className="wrap-input">
                             <Input disabled={isPending} {...field} />
-                            <label>Name</label>
+                            <label>닉네임</label>
                           </div>
                         </div>
                       </FormControl>
@@ -145,7 +145,7 @@ export const ProfileContent = () => {
                         <div className="input-group">
                           <div className="wrap-input">
                             <Input disabled={true} {...field} />
-                            <label>Email</label>
+                            <label>이메일</label>
                           </div>
                         </div>
                       </FormControl>
@@ -156,7 +156,7 @@ export const ProfileContent = () => {
               </div>
             </div>
             <div className="group_select_avater">
-              <label className="label_select_avt">Change Profile Avatar</label>
+              <label className="label_select_avt">아바타 선택</label>
               <div className="select_avt mt-8 flex flex-wrap flex-grow">
                 {Array.from({ length: 17 }).map((_, index) => (
                   <ImageOption
@@ -172,7 +172,7 @@ export const ProfileContent = () => {
         </div>
         <div className="footing flex flex-end gap-8">
           <Button type="submit" className="btn_main" disabled={isPending}>
-            Save
+            저장
           </Button>
         </div>
       </form>

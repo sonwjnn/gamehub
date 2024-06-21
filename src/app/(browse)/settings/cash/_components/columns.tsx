@@ -15,12 +15,12 @@ export type CashColumn = {
 export const columns: ColumnDef<CashColumn>[] = [
   {
     accessorKey: 'createdAt',
-    header: 'Date',
+    header: '날짜',
     filterFn: 'dateBetweenFilterFn',
   },
   {
     accessorKey: 'action',
-    header: 'Action',
+    header: '행동',
     cell: ({ row }) => {
       return <div>{row.original.action.toLowerCase()}</div>
     },
@@ -33,7 +33,7 @@ export const columns: ColumnDef<CashColumn>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
           className="flex gap-x-2 cursor-pointer"
         >
-          Amount
+          (수)량   
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </div>
       )
@@ -41,7 +41,7 @@ export const columns: ColumnDef<CashColumn>[] = [
   },
   {
     accessorKey: 'status',
-    header: 'Status',
+    header: '상태',
     cell: ({ row }) => {
       return (
         <div

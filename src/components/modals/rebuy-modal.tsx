@@ -141,13 +141,13 @@ export const RebuyModal = () => {
                 className="row flex flex-space"
               >
                 <div className="col color-primary fz-14">
-                  Min:{' '}
+                  최소한도:{' '}
                   <span className="fw-16 fw-500">
                     {formatChipsAmount(tableData?.minBuyIn || 0)}
                   </span>
                 </div>
                 <div className="col color-primary fz-14 text-right">
-                  Max:{' '}
+                  최고:{' '}
                   <span className="fz-16 fw-500">
                     {formatChipsAmount(tableData?.maxBuyIn || 0)}
                   </span>
@@ -187,7 +187,7 @@ export const RebuyModal = () => {
                     className="btn_submit w-full"
                     disabled={isLoading}
                   >
-                    <span>Nạp</span>
+                    <span>충전</span>
                   </button>
                 </div>
               </form>

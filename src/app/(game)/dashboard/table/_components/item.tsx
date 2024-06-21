@@ -27,7 +27,7 @@ export const Item = ({ table }: ItemProps) => {
         />
       </div>
       <div className="room_name fz-10">
-        TABLE - <span className="fz-18 fw-600">{table.name}</span>
+        테이블 - <span className="fz-18 fw-600">{table.name}</span>
       </div>
       <div className="info fz-12 mt-8">
         <dl>
@@ -35,7 +35,7 @@ export const Item = ({ table }: ItemProps) => {
             <span className="icon sz-12 icon-color-white">
               <i className="icon-dolar"></i>
             </span>
-            Buy-in:
+            매입금:
           </dt>
           <dd>{formatChipsAmount(table.minBuyIn)}$</dd>
         </dl>
@@ -44,7 +44,7 @@ export const Item = ({ table }: ItemProps) => {
             <span className="icon sz-12 icon-color-white">
               <i className="icon-dolar"></i>
             </span>
-            Ante:
+            자금:
           </dt>
           <dd>{formatChipsAmount(table.ante)}$</dd>
         </dl>
@@ -53,7 +53,7 @@ export const Item = ({ table }: ItemProps) => {
             <span className="icon sz-12 icon-color-white">
               <i className="icon-group"></i>
             </span>
-            Number
+            (수)량
           </dt>
           <dd>{table.players.length}/10</dd>
         </dl>

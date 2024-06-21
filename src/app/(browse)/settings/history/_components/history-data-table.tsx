@@ -130,7 +130,7 @@ export function HistoryDataTable<TData, TValue>({
         <div className="max-w-sm">
           <Select onValueChange={handleSelectedStatus}>
             <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Status" />
+              <SelectValue placeholder="상태" />
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="win">Win</SelectItem>

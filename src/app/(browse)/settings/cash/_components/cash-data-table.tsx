@@ -109,7 +109,7 @@ export function CashDataTable<TData, TValue>({
         <div className="max-w-sm">
           <Select onValueChange={handleSelectedStatus}>
             <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Status" />
+              <SelectValue placeholder="상태" />
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="SUCCESS">Success</SelectItem>

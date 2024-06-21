@@ -21,7 +21,7 @@ export const RuleModal = () => {
       <div className="modal_dialog sz-lg">
         <div className="modal_content">
           <div className="modal_head">
-            LUẬT CHƠI
+            규칙
             <div className="btn_close modal_close" onClick={onClose}>
               <span className="icon sz-24">
                 <i className="icon_close"></i>
