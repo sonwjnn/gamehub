@@ -80,12 +80,12 @@ export const UserBoard = ({ hasMenu = false }: UserBoardProps) => {
           등급:
           <div>
             {/* <!--.flex.gap-8.flex-midle
-                  .icon.sz-12 
+                  .icon.sz-12
                   	i.icon-silver
                   .rank_silver (SILVER Gamer)
                   -->
                   <!--.flex.gap-8.flex-midle
-                  .icon.sz-12 
+                  .icon.sz-12
                   	i.icon-gold
                   .rank_gold (GOLD Gamer)
                   --> */}
@@ -173,7 +173,7 @@ export const UserBoard = ({ hasMenu = false }: UserBoardProps) => {
                   size={20}
                   className="group-hover:text-white transition"
                 />
-                <span>Cash Actions</span>
+                <span>캐시 게임</span>
               </Link>
             </li>
             <li className={pathname === '/settings/point' ? 'active' : ''}>

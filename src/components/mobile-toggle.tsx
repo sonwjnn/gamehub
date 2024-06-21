@@ -64,7 +64,7 @@ export const MobileToggle = () => {
                     size={20}
                     className="group-hover:text-white transition"
                   />
-                  <span>Cash Actions</span>
+                  <span>캐시 게임</span>
                 </Link>
               </li>
 
