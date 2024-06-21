@@ -24,7 +24,7 @@ const WithdrawPage = async () => {
       <h2 className="ttl_main fz-18">
         <span>
           <BsCashCoin size={24} className="text-white" />
-          Cash Actions
+          캐시 게임
         </span>
       </h2>
       <CardActionContent bank={bank} user={user} />
