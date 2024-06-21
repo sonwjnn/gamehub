@@ -60,7 +60,7 @@ export const ActionItem = ({
   //prettier-ignore
   useKey( shortcut, () => {
     if (!disabled && !isChatFocus) {
-      onPlayAudio()
+      // onPlayAudio()
       onClick()
     }
   }, {}, [onClick])
@@ -82,12 +82,12 @@ export const ActionItem = ({
         if (sidebarMobile !== 'raise') {
           setSidebarMobile('raise')
         } else {
-          onPlayAudio()
+          // onPlayAudio()
           onClick()
         }
         return
       }
-      onPlayAudio()
+      // onPlayAudio()
       onClick()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -125,12 +125,12 @@ export const ActionItem = ({
       if (sidebarMobile !== 'raise') {
         setSidebarMobile('raise')
       } else {
-        onPlayAudio()
+        // onPlayAudio()
         onClick()
       }
       return
     }
-    onPlayAudio()
+    // onPlayAudio()
     onClick()
   }
 
