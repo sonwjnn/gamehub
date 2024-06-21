@@ -93,6 +93,10 @@ export const CurrentPlayer = ({
     src: sounds.soundWeakCongrats,
   })
 
+  const [loseAudio, _lo, loseControls] = useAudio({
+    src: sounds.soundLose,
+  })
+
   const { socket } = useSocket()
   const { onOpen } = useModal()
   const { isAutoRebuy, autoRebuyAmount, setAutoRebuy } = useAutoRebuy()
@@ -335,7 +339,7 @@ export const CurrentPlayer = ({
 
     const handleSound = () => {
       if (!isWinner) {
-        new Audio(sounds.soundLose).play()
+        loseControls.play()
         return
       }
 
@@ -385,24 +389,24 @@ export const CurrentPlayer = ({
       }
     }
 
-    handleSound()
-
     switch (handName) {
       case WinnerHandType.Straight:
-        return onOpen('straight')
+        onOpen('straight')
       case WinnerHandType.Flush:
-        return onOpen('flush')
+        onOpen('flush')
       case WinnerHandType.FullHouse:
-        return onOpen('fullHouse')
+        onOpen('fullHouse')
       case WinnerHandType.FourOfAKind:
-        return onOpen('fourCard')
+        onOpen('fourCard')
       case WinnerHandType.StraightFlush:
-        return onOpen('straightFlush')
+        onOpen('straightFlush')
       case WinnerHandType.RoyalFlush:
-        return onOpen('royalFlush')
+        onOpen('royalFlush')
       default:
-        return onOpen('winDefault')
+        onOpen('winDefault')
     }
+
+    handleSound()
   }
 
   const hasFirstHighlight = highlightCards?.cards.some(item => {
@@ -429,6 +433,7 @@ export const CurrentPlayer = ({
         !winnerDelay && isHaveWinner && currentParticipant && 'is-lose'
       )}
     >
+      {loseAudio}
       {foldAudio}
       {countdownSrcAudio}
       {straightAudio}
