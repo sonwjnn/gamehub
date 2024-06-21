@@ -11,6 +11,7 @@ import {
   Participant,
   PlayerWithUser,
   PokerActions,
+  WinnerHandType,
 } from '@/types'
 import { useSocket } from '@/providers/socket-provider'
 import { cn } from '@/lib/utils'
@@ -19,12 +20,11 @@ import sounds from '@/utils/contants/sound'
 import playerApi from '@/services/api/modules/player-api'
 import { useRouter } from 'next/navigation'
 import { CoinBet } from '@/components/coin-bet'
-import { getGenderFromImageUrl, playSound } from '@/utils/sound'
-import { useAudio } from 'react-use'
+import { getGenderFromImageUrl } from '@/utils/sound'
+import { useAudio, useMountedState } from 'react-use'
 import { useModal } from '@/store/use-modal-store'
 import { ReviewStars } from './review-stars'
 import { CoinAnimate } from '@/components/coin-animate'
-import { showModalByHandName } from '@/utils/poker'
 import { RebuyButton } from '@/components/rebuy-button'
 import { useAutoRebuy } from '@/store/use-auto-rebuy'
 
@@ -48,11 +48,51 @@ export const CurrentPlayer = ({
   highlightCards,
   isLeaveNext,
 }: CurrentPlayerProps) => {
+  const isMounted = useMountedState()
+
   const gender = getGenderFromImageUrl(player?.user?.image || '')
 
   const [foldAudio, _f, foldControls] = useAudio({
     src: gender === 'male' ? sounds.soundFoldBoy : sounds.soundFoldGirl,
   })
+
+  const [straightAudio, _s, straightControls] = useAudio({
+    src: sounds.soundStraight,
+  })
+  const [flushAudio, _fl, flushControls] = useAudio({
+    src: sounds.soundFlush,
+  })
+  const [fourAudio, _fo, fourControls] = useAudio({
+    src: sounds.soundFourCards,
+  })
+  const [fullHouseAudio, _fh, fullHouseControls] = useAudio({
+    src: sounds.soundFullHouse,
+  })
+  const [straightFlushAudio, _sf, straightFlushControls] = useAudio({
+    src: sounds.soundStraightFlush,
+  })
+  const [royalFlushAudio, _rl, royalFlushControls] = useAudio({
+    src: sounds.soundRoyalFlush,
+  })
+  const [twoPairAudio, _tp, twoPairControls] = useAudio({
+    src: sounds.soundTwoPair,
+  })
+  const [highCardAudio, _hc, highCardControls] = useAudio({
+    src: sounds.soundHighCard,
+  })
+  const [pairAudio, _p, pairControls] = useAudio({
+    src: sounds.soundPair,
+  })
+  const [threeCardAudio, _tc, threeCardControls] = useAudio({
+    src: sounds.soundThreeCards,
+  })
+  const [strongCongratsAudio, _sc, strongCongratsControls] = useAudio({
+    src: sounds.soundStrongCongrats,
+  })
+  const [weakCongratsAudio, _wc, weakCongratsControls] = useAudio({
+    src: sounds.soundWeakCongrats,
+  })
+
   const { socket } = useSocket()
   const { onOpen } = useModal()
   const { isAutoRebuy, autoRebuyAmount, setAutoRebuy } = useAutoRebuy()
@@ -213,7 +253,7 @@ export const CurrentPlayer = ({
   useEffect(() => {
     if (currentParticipant && !currentParticipant.isFolded && isHaveWinner) {
       const timeoutId = setTimeout(() => {
-        showModalByHandName({ match, onOpen, isWinner })
+        showModalByHandName()
       }, 2000)
 
       return () => clearTimeout(timeoutId)
@@ -282,6 +322,89 @@ export const CurrentPlayer = ({
     }
   }
 
+  const showModalByHandName = () => {
+    const winMessages = match?.winMessages || []
+
+    if (!winMessages.length) return
+
+    const lastWinMessage = winMessages[winMessages.length - 1]
+
+    const handName = lastWinMessage.handName
+
+    if (!handName) return
+
+    const handleSound = () => {
+      if (!isWinner) {
+        new Audio(sounds.soundLose).play()
+        return
+      }
+
+      switch (handName) {
+        case WinnerHandType.Straight:
+          straightControls.play()
+          strongCongratsControls.play()
+          break
+        case WinnerHandType.Flush:
+          flushControls.play()
+          strongCongratsControls.play()
+          break
+        case WinnerHandType.FullHouse:
+          fullHouseControls.play()
+          strongCongratsControls.play()
+          break
+        case WinnerHandType.FourOfAKind:
+          fourControls.play()
+          strongCongratsControls.play()
+          break
+        case WinnerHandType.StraightFlush:
+          straightFlushControls.play()
+          strongCongratsControls.play()
+          break
+        case WinnerHandType.RoyalFlush:
+          royalFlushControls.play()
+          strongCongratsControls.play()
+          break
+        case WinnerHandType.TwoPair:
+          twoPairControls.play()
+          weakCongratsControls.play()
+          break
+        case WinnerHandType.HighCard:
+          highCardControls.play()
+          weakCongratsControls.play()
+          break
+        case WinnerHandType.Pair:
+          pairControls.play()
+          weakCongratsControls.play()
+          break
+        case WinnerHandType.ThreeOfAKind:
+          threeCardControls.play()
+          weakCongratsControls.play()
+          break
+        default:
+          weakCongratsControls.play()
+      }
+    }
+
+    handleSound()
+
+    switch (handName) {
+      case WinnerHandType.Straight:
+        return onOpen('straight')
+      case WinnerHandType.Flush:
+        return onOpen('flush')
+      case WinnerHandType.FullHouse:
+        return onOpen('fullHouse')
+      case WinnerHandType.FourOfAKind:
+        return onOpen('fourCard')
+      case WinnerHandType.StraightFlush:
+        return onOpen('straightFlush')
+      case WinnerHandType.RoyalFlush:
+        return onOpen('royalFlush')
+      default:
+        return onOpen('winDefault')
+    }
+  }
+
   const hasFirstHighlight = highlightCards?.cards.some(item => {
     return (
       item.rank === currentParticipant?.cardOne?.rank &&
@@ -296,6 +419,8 @@ export const CurrentPlayer = ({
     )
   })
 
+  if (!isMounted) return null
+
   return (
     <div
       className={cn(
@@ -306,6 +431,19 @@ export const CurrentPlayer = ({
     >
       {foldAudio}
       {countdownSrcAudio}
+      {straightAudio}
+      {flushAudio}
+      {fourAudio}
+      {fullHouseAudio}
+      {straightFlushAudio}
+      {royalFlushAudio}
+      {twoPairAudio}
+      {highCardAudio}
+      {pairAudio}
+      {threeCardAudio}
+      {strongCongratsAudio}
+      {weakCongratsAudio}
+
       <div className="group_flush">
         <div className="ttl">
           <span>{highlightCards?.name || ''}</span>
