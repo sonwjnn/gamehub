@@ -2,7 +2,6 @@
 
 import { cn } from '@/lib/utils'
 import { useModal } from '@/store/use-modal-store'
-import { X } from 'lucide-react'
 
 export const FeelingModal = () => {
   const { isOpen, onClose, type } = useModal()

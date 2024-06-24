@@ -4,7 +4,7 @@ import Image from 'next/image'
 import { Hand } from './hand'
 import { CurrentPlayerAction } from './actions'
 
-import { useEffect, useState, useCallback } from 'react'
+import { useEffect, useState, useCallback, useRef } from 'react'
 import {
   Card,
   CustomCard,
@@ -30,10 +30,9 @@ import { ReviewStars } from './review-stars'
 import { CoinAnimate } from '@/components/coin-animate'
 import { RebuyButton } from '@/components/rebuy-button'
 import { useAutoRebuy } from '@/store/use-auto-rebuy'
-import {
-  calculateWinRate,
-  evaluateHandStrength,
-} from '@/utils/winrate'
+import { calculateWinRate, evaluateHandStrength } from '@/utils/winrate'
+import { useGSAP } from '@gsap/react'
+import gsap from 'gsap'
 
 interface CurrentPlayerProps {
   isShowdown?: boolean
@@ -120,7 +119,6 @@ export const CurrentPlayer = ({
   const [isBet, setIsBet] = useState(false)
   const [winnerDelay, setWinnerDelay] = useState(false)
   const [foldCount, setFoldCount] = useState(0)
-  const [callRaiseMissing, setCallRaiseMissing] = useState(0)
   const [winRate, setWinRate] = useState(0)
 
   const currentParticipant = participants.find(
@@ -151,6 +149,8 @@ export const CurrentPlayer = ({
   const currentStack = player?.stack || 0
   const currentBet = currentParticipant?.bet || 0
   const currentPot = match?.pot || 0
+
+  const currentWrapperRef = useRef<HTMLDivElement>(null)
 
   const calculateWinRateForPlayer = useCallback(() => {
     const getHandStrength = (playerId: string) => {
@@ -336,14 +336,51 @@ export const CurrentPlayer = ({
   useEffect(() => {
     if (currentBet) {
       setIsBet(true)
-      const timer = setTimeout(() => {
-        setIsBet(false)
-      }, 2000)
-      return () => clearTimeout(timer)
-    } else {
-      setIsBet(false)
     }
   }, [currentBet])
+
+  useGSAP(() => {
+    const chips = currentWrapperRef.current?.querySelectorAll(
+      '.coin_bet_current.move'
+    )
+
+    const groupNumber = document.querySelector('.group_number')
+
+    if (!chips || !groupNumber) return
+
+    const bounds = groupNumber.getBoundingClientRect()
+
+    const targetX = bounds.left + bounds.width
+    const targetY = bounds.top - bounds.height * 3
+
+    const originalPositions = Array.from(chips).map(c => {
+      const originalLeft = c.getBoundingClientRect().left - window.scrollX
+      const originalTop = c.getBoundingClientRect().top - window.scrollY
+
+      return {
+        left: originalLeft,
+        top: originalTop,
+      }
+    })
+
+    if (isBet) {
+      Array.from(chips).forEach((chip, index) => {
+        const originalPosition = originalPositions[index]
+        const deltaX = originalPosition.left / 2.5
+        const deltaY = targetY - originalPosition.top
+
+        gsap.to(chip, {
+          duration: 0.2,
+          x: deltaX,
+          y: deltaY,
+          ease: 'power3.out',
+          onComplete: () => {
+            setTimeout(() => setIsBet(false), 500)
+          },
+        })
+      })
+    }
+  }, [isBet])
 
   const removePlayer = async () => {
     try {
@@ -480,7 +517,7 @@ export const CurrentPlayer = ({
   })
 
   if (!isMounted) return null
-  
+
   const hands = (cards: CustomCard[]): CustomCard[] => {
     return Array.from(
       new Map(cards.map(item => [item.id, item])).values()
@@ -510,6 +547,7 @@ export const CurrentPlayer = ({
         (isTurn || (winnerDelay && isHaveWinner)) && 'user_active',
         !winnerDelay && isHaveWinner && currentParticipant && 'is-lose'
       )}
+      ref={currentWrapperRef}
     >
       {foldAudio}
       {countdownSrcAudio}
@@ -551,10 +589,18 @@ export const CurrentPlayer = ({
           )}
         >
           <CoinBet
-            className="coin_bet_current"
+            className="coin_bet_current unmove"
             bet={currentBet}
             pot={currentPot}
           />
+          {isBet && (
+            <CoinBet
+              className="coin_bet_current move"
+              bet={currentBet}
+              pot={currentPot}
+            />
+          )}
+
           {participants.length > 2 && match?.buttonId === player?.id && (
             <div className="slind slind_dealer">
               <Image

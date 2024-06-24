@@ -107,14 +107,14 @@ export const HomeContent = ({}: HomeContentProps) => {
                 <div className="text_wrapper">
                   <div className="letters">
                     어떤 단계 든 , 아무리 작은 것이라 도 앞으로 나아가는 것이
-                    매우 쉽습니다 . 우리 의 꿈 . 앞으로는 끊임 없는 단호한
-                    판단 을 통해 계속 해서 전진 하세요 .가장 작은 문제 는 더 큰 
-                    문제 로 이어지는 길 에서 승리 하는 것 입니다.
+                    매우 쉽습니다 . 우리 의 꿈 . 앞으로는 끊임 없는 단호한 판단
+                    을 통해 계속 해서 전진 하세요 .가장 작은 문제 는 더 큰 문제
+                    로 이어지는 길 에서 승리 하는 것 입니다.
                   </div>
                 </div>
               </div>
               <a className="box__link button-animation mt-16" href="#">
-              모두보기<span></span>
+                모두보기<span></span>
                 <span></span>
                 <span></span>
                 <span></span>
@@ -269,7 +269,7 @@ export const HomeContent = ({}: HomeContentProps) => {
                 <li>
                   <a href="#">
                     {' '}
-                    <span className="text">Điều khoản & Điều kiện</span>
+                    <span className="text">이용 & 약관</span>
                     <span className="arrow"></span>
                   </a>
                 </li>

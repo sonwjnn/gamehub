@@ -199,9 +199,12 @@ export const TableContent = ({ tableId }: TableContentProps) => {
 
   useGSAP(() => {
     const table = tableRef.current
-    const chips = wrapperRef.current?.getElementsByClassName('coin_bet_current')
-    const other_chips =
-      wrapperRef.current?.getElementsByClassName('coin_bet_other')
+    const chips = wrapperRef.current?.querySelectorAll(
+      '.coin_bet_current.unmove'
+    )
+    const other_chips = wrapperRef.current?.querySelectorAll(
+      '.coin_bet_other.unmove'
+    )
     const groupNumber = document.querySelector('.group_number')
 
     if (!table || !chips || !groupNumber || !other_chips) return
@@ -238,7 +241,7 @@ export const TableContent = ({ tableId }: TableContentProps) => {
         const deltaY = targetY - originalPosition.top
 
         gsap.to(chip, {
-          duration: 0.3,
+          duration: 0.25,
           x: deltaX,
           y: deltaY,
           ease: 'power3.out',
@@ -251,13 +254,12 @@ export const TableContent = ({ tableId }: TableContentProps) => {
         const deltaY = targetY - other_originalPosition.top
 
         gsap.to(other_chips, {
-          duration: 0.3,
+          duration: 0.25,
           x: deltaX,
           y: deltaY,
           ease: 'power3.out',
           onComplete() {
             setChipsAnimation(false)
-            // Hoàn tất hoạt ảnh
           },
         })
       })
@@ -520,14 +522,12 @@ export const TableContent = ({ tableId }: TableContentProps) => {
                   participantsRef?.current &&
                   participantsRef?.current.some(item => item.bet > 0)
                 if (hasBet) {
-                  setTimeout(() => {
-                    setChipsAnimation(true)
-                  }, 1000)
+                  setChipsAnimation(true)
 
                   setTimeout(() => {
                     setMatch(matchData)
                     setParticipants(matchData.participants)
-                  }, 2000)
+                  }, 1000)
 
                   setTimeout(() => {
                     setPlayers(prev =>
@@ -538,7 +538,7 @@ export const TableContent = ({ tableId }: TableContentProps) => {
                         return { ...item, isTurn: false }
                       })
                     )
-                  }, 3000)
+                  }, 2000)
                 } else {
                   setMatch(matchData)
                   setParticipants(matchData.participants)

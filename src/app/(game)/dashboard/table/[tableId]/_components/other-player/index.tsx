@@ -12,14 +12,16 @@ import {
   PokerActions,
   RaiseType,
 } from '@/types'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { formatChipsAmount } from '@/utils/formatting'
 import { CoinBet } from '@/components/coin-bet'
-import { getGenderFromImageUrl, playSound } from '@/utils/sound'
+import { getGenderFromImageUrl } from '@/utils/sound'
 import { CoinAnimate } from '@/components/coin-animate'
 import { useAudio } from 'react-use'
 import sound from '@/utils/contants/sound'
 import { calculateWinRate, evaluateHandStrength } from '@/utils/winrate'
+import { useGSAP } from '@gsap/react'
+import gsap from 'gsap'
 
 interface OtherPlayerProps {
   type?: 'fold' | 'active' | 'default'
@@ -89,6 +91,8 @@ export const OtherPlayer = ({
   const currentStack = player?.stack || 0
   const currentBet = currentParticipant?.bet || 0
   const currentPot = match?.pot || 0
+
+  const otherWrapperRef = useRef<HTMLDivElement>(null)
 
   const calculateWinRateForPlayer = useCallback(() => {
     const getHandStrength = (playerId: string) => {
@@ -199,20 +203,53 @@ export const OtherPlayer = ({
   }, [currentParticipant?.lastAction])
 
   useEffect(() => {
-    let timer: NodeJS.Timeout | null = null
     if (currentBet) {
       setIsBet(true)
-      timer = setTimeout(() => {
-        setIsBet(false)
-      }, 2000)
-    }
-
-    return () => {
-      if (timer) {
-        clearTimeout(timer)
-      }
     }
   }, [currentBet])
+
+  useGSAP(() => {
+    const other_chips = otherWrapperRef.current?.querySelectorAll(
+      '.coin_bet_other.move'
+    )
+
+    const groupNumber = document.querySelector('.group_number')
+
+    if (!groupNumber || !other_chips) return
+
+    const bounds = groupNumber.getBoundingClientRect()
+
+    const targetX = bounds.left + bounds.width
+    const targetY = bounds.top - bounds.height * 3
+
+    const other_originalPositions = Array.from(other_chips).map(c => {
+      const originalLeft = c.getBoundingClientRect().left - window.scrollX
+      const originalTop = c.getBoundingClientRect().top - window.scrollY
+
+      return {
+        left: originalLeft,
+        top: originalTop,
+      }
+    })
+
+    if (isBet) {
+      Array.from(other_chips).forEach((other_chip, index) => {
+        const other_originalPosition = other_originalPositions[index]
+        const deltaX = targetX - other_originalPosition.left
+        const deltaY = targetY - other_originalPosition.top
+
+        gsap.to(other_chip, {
+          duration: 0.25,
+          x: deltaX,
+          y: deltaY,
+          ease: 'power3.out',
+          onComplete() {
+            setTimeout(() => setIsBet(false), 500)
+          },
+        })
+      })
+    }
+  }, [isBet])
 
   const hands = (cards: CustomCard[]): CustomCard[] => {
     return Array.from(
@@ -229,9 +266,12 @@ export const OtherPlayer = ({
   const WinRateCard = () => {
     return (
       <div
-        className={cn('absolute left-[-35%] lg:left-[-15%] bottom-[-45%] lg:bottom-[-35%] hidden', {
-          block: isFolded || isShowdown || isHaveWinner,
-        })}
+        className={cn(
+          'absolute left-[-35%] lg:left-[-15%] bottom-[-45%] lg:bottom-[-35%] hidden',
+          {
+            block: isFolded || isShowdown || isHaveWinner,
+          }
+        )}
       >
         <div className="bg-[#0e063a] text-white text-xs lg:text-sm font-bold rounded-sm p-1 lg:p-2 mb-2 opacity-80 border w-20 lg:w-32">
           <p className="text-[#ffaa00] text-center">{winRateResult()}%</p>
@@ -252,6 +292,7 @@ export const OtherPlayer = ({
         isWaiting && 'user_waitting',
         isShowdown && isUnfoldedParticipant && 'target_showdown'
       )}
+      ref={otherWrapperRef}
     >
       {quarAudio}
       {halfAudio}
@@ -262,7 +303,19 @@ export const OtherPlayer = ({
       {checkAudio}
       {foldAudio}
       <WinRateCard />
-      <CoinBet className="coin_bet_other" bet={currentBet} pot={currentPot} />
+      <CoinBet
+        className="coin_bet_other unmove"
+        bet={currentBet}
+        pot={currentPot}
+      />
+      {isBet && (
+        <CoinBet
+          className="coin_bet_other move"
+          bet={currentBet}
+          pot={currentPot}
+        />
+      )}
+
       {participants.length > 2 && match?.buttonId === player?.id && (
         <div className="slind slind_dealer">
           <Image
