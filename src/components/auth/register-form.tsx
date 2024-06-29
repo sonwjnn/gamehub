@@ -1,9 +1,6 @@
 'use client'
 
 import { CardWrapper } from '@/components/auth/card-wrapper'
-import { FormError } from '@/components/form-error'
-import { FormSuccess } from '@/components/form-success'
-import { Button } from '@/components/ui/button'
 import {
   Form,
   FormControl,
@@ -154,8 +151,6 @@ export const RegisterForm = ({}: RegisterFormProps) => {
               )}
             />
           </div>
-          <FormError message={error} />
-          <FormSuccess message={success} />
           <div className="input-group text-center">
             <button
               type="submit"

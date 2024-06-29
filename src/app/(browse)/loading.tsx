@@ -1,4 +1,4 @@
-export const LoadingPage = () => {
+const LoadingPage = () => {
   return (
     <div className="loading show">
       <div className="wrap">
@@ -8,3 +8,5 @@ export const LoadingPage = () => {
     </div>
   )
 }
+
+export default LoadingPage

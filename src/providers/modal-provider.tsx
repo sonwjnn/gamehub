@@ -11,12 +11,12 @@ import { QualityModal } from '@/components/modals/quality-modal'
 
 import { RebuyModal } from '@/components/modals/rebuy-modal'
 import { RuleModal } from '@/components/modals/rule-modal'
-import { useOrigin } from '@/hooks/use-origin'
+import { useMountedState } from 'react-use'
 
 export const ModalProvider = () => {
-  const origin = useOrigin()
+  const isMounted = useMountedState()
 
-  if (!origin) {
+  if (!isMounted) {
     return null
   }
 

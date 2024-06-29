@@ -8,7 +8,6 @@ import qs from 'query-string'
 import { useForm } from 'react-hook-form'
 import * as z from 'zod'
 
-import { Skeleton } from '@/components/ui/skeleton'
 import { useCurrentUser } from '@/hooks/use-current-user'
 import { Textarea } from '@/components/ui/textarea'
 import { useParams } from 'next/navigation'
@@ -17,7 +16,7 @@ import { useEffect, useRef, useState } from 'react'
 import { PokerActions, Table } from '@/types'
 import tableApi from '@/services/api/modules/table-api'
 import { Sticker } from './sticker'
-import { useOnClickOutside } from 'usehooks-ts'
+import { useClickAway } from 'react-use'
 import { cn } from '@/lib/utils'
 import { useChatFocus } from '@/store/use-chat-focus'
 
@@ -80,7 +79,7 @@ export const ChatInput = ({ apiUrl, query, name, type }: ChatInputProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  useOnClickOutside(wrapperRef, () => setShowSticker(false))
+  useClickAway(wrapperRef, () => setShowSticker(false))
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
@@ -184,9 +183,3 @@ export const ChatInput = ({ apiUrl, query, name, type }: ChatInputProps) => {
     </Form>
   )
 }
-
-export const ChatInputSkeleton = () => (
-  <div className="relative p-4 pb-6">
-    <Skeleton className="h-10 w-full" />
-  </div>
-)

@@ -1,6 +1,5 @@
 'use client'
 
-import { Skeleton } from '@/components/ui/skeleton'
 import { stringToColor } from '@/lib/utils'
 import { Player } from '@/types'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -75,13 +74,3 @@ export const ChatItem = ({
     </>
   )
 }
-
-export const ChatItemSkeleton = () => (
-  <div className="flex w-full items-center gap-x-2 p-4 transition hover:bg-black/5">
-    <Skeleton className="min-h-8 min-w-8 rounded-full" />
-    <div className="flex w-full flex-col gap-y-2">
-      <Skeleton className="h-4 w-40" />
-      <Skeleton className="h-20 w-full md:w-80" />
-    </div>
-  </div>
-)

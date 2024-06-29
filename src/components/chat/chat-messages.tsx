@@ -8,7 +8,7 @@ import { format } from 'date-fns'
 import { Loader2, ServerCrash } from 'lucide-react'
 import { ElementRef, Fragment, useRef } from 'react'
 
-import { ChatItem, ChatItemSkeleton } from './chat-item'
+import { ChatItem } from './chat-item'
 
 const DATE_FORMAT = 'HH:mm'
 
@@ -60,10 +60,6 @@ export const ChatMessages = ({
     shouldLoadMore: !isFetchingNextPage && !!hasNextPage,
     count: data?.pages?.[0]?.items?.length ?? 0,
   })
-
-  if (status === 'pending') {
-    return <ChatMessagesSkeleton />
-  }
 
   if (status === 'error') {
     return (
@@ -148,11 +144,3 @@ export const ChatMessages = ({
     </div>
   )
 }
-
-export const ChatMessagesSkeleton = () => (
-  <div className="h-full flex-1">
-    {[...Array(5)].map((_, i) => (
-      <ChatItemSkeleton key={i} />
-    ))}
-  </div>
-)

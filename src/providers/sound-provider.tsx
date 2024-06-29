@@ -1,13 +1,10 @@
 'use client'
 
-import { useVolume } from '@/store/use-volume'
 import { useParams } from 'next/navigation'
 import { useEffect } from 'react'
 import { useAudio, useMountedState } from 'react-use'
-import { useDebounceCallback } from 'usehooks-ts'
 
 export const SoundProvider = () => {
-  const { volume } = useVolume()
   const isMounted = useMountedState()
 
   const params = useParams()

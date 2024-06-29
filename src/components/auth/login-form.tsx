@@ -1,26 +1,21 @@
 'use client'
 
 import { CardWrapper } from '@/components/auth/card-wrapper'
-import { FormError } from '@/components/form-error'
-import { FormSuccess } from '@/components/form-success'
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { LoginSchema } from '@/schemas'
 import { zodResolver } from '@hookform/resolvers/zod'
-import Link from 'next/link'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useSearchParams } from 'next/navigation'
 import { useState, useTransition } from 'react'
 import { useForm } from 'react-hook-form'
 import * as z from 'zod'
 import { login } from '@/actions/login'
-import Image from 'next/image'
 
 interface LoginFormProps {}
 
@@ -117,8 +112,6 @@ export const LoginForm = ({}: LoginFormProps) => {
               )}
             />
           </div>
-          <FormError message={error || urlError} />
-          <FormSuccess message={success} />
           <p className="text-center color-main fz-12 mb-32 text-link mt-0">
             비밀번호 분실
           </p>
