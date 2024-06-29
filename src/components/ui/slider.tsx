@@ -14,7 +14,7 @@ interface SliderProps {
   className?: string
 }
 
-export const Slider: React.FC<SliderProps> = ({
+export const Slider = ({
   className,
   value = 0,
   maxValue = 100,
@@ -22,7 +22,7 @@ export const Slider: React.FC<SliderProps> = ({
   step = 1,
   onChange,
   onMouseUp,
-}) => {
+}: SliderProps) => {
   const handleMouseUp = (newValue: number[]): void => {
     onMouseUp?.(newValue[0] as number)
   }

@@ -101,7 +101,7 @@ export const BankForm = ({ bank }: BankFormProps) => {
                       disabled={isPending}
                       {...field}
                     />
-                    <label>Card number</label>
+                    <label>카드 번호</label>
                   </div>
                 </div>
               </FormControl>
@@ -123,7 +123,7 @@ export const BankForm = ({ bank }: BankFormProps) => {
                         setDate={date => field.onChange(date?.toString())}
                       />
                       <label className="absolute top-1 left-5 text-[10px] text-white/50">
-                        Expiry date
+                        만료일
                       </label>
                     </div>
                   </FormControl>
@@ -142,7 +142,7 @@ export const BankForm = ({ bank }: BankFormProps) => {
                     <div className="input-group">
                       <div className="wrap-input">
                         <Input disabled={isPending} {...field} />
-                        <label>Security code</label>
+                        <label>보안 코드</label>
                       </div>
                     </div>
                   </FormControl>
@@ -162,7 +162,7 @@ export const BankForm = ({ bank }: BankFormProps) => {
                 <div className="input-group">
                   <div className="wrap-input">
                     <Input disabled={isPending} {...field} />
-                    <label>Card holder name</label>
+                    <label>카드 소지자 이름</label>
                   </div>
                 </div>
               </FormControl>

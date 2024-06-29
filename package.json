@@ -53,7 +53,7 @@
     "string-to-color": "^2.2.2",
     "tailwind-merge": "^2.2.2",
     "tailwindcss-animate": "^1.0.7",
-    "use-debounce": "^10.0.0",
+    "use-debounce": "^10.0.1",
     "usehooks-ts": "^3.0.1",
     "zod": "^3.22.4",
     "zustand": "^4.5.2"

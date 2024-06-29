@@ -103,13 +103,13 @@ export const CardActionContent = ({ bank, user }: CardActionContentProps) => {
             <div className="input-group">
               <div className="wrap-input">
                 <Input value={bank.cardNumber} disabled={true} />
-                <label>Card number</label>
+                <label>카드 번호</label>
               </div>
             </div>
             <div className="input-group">
               <div className="wrap-input">
                 <Input value={bank.cardHolderName} disabled={true} />
-                <label>Card holder name</label>
+                <label>카드 소지자 이름</label>
               </div>
             </div>
             <FormField
@@ -130,7 +130,7 @@ export const CardActionContent = ({ bank, user }: CardActionContentProps) => {
                           {...field}
                           onChange={e => field.onChange(+e.target.value || ' ')}
                         />
-                        <label>Amount</label>
+                        <label>양</label>
                       </div>
                     </div>
                   </FormControl>
@@ -149,12 +149,12 @@ export const CardActionContent = ({ bank, user }: CardActionContentProps) => {
                   >
                     <FormControl>
                       <SelectTrigger>
-                        <SelectValue placeholder="Select type" />
+                        <SelectValue placeholder="유형 선택" />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      <SelectItem value="RECHARGE">Recharge</SelectItem>
-                      <SelectItem value="WITHDRAW">Withdraw</SelectItem>
+                      <SelectItem value="RECHARGE">재충전</SelectItem>
+                      <SelectItem value="WITHDRAW">철회하다</SelectItem>
                     </SelectContent>
                   </Select>
                   <FormMessage />
@@ -165,7 +165,7 @@ export const CardActionContent = ({ bank, user }: CardActionContentProps) => {
         </div>
         <div className="footing flex flex-end gap-8">
           <Button type="submit" className="btn_main" disabled={isPending}>
-            Request
+            요구
           </Button>
         </div>
       </form>
