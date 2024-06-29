@@ -42,6 +42,8 @@ import { getPlayerIdByUserId } from '@/app/(game)/dashboard/table/_utils/user'
 import { useCustomToast } from '@/hooks/use-custom-toast'
 import { CustomToast } from '@/components/custom-toast'
 import { Button } from '@/components/ui/button'
+import { useTableImage } from '@/store/use-table-image'
+import { TableImageSelect } from './table-image-select'
 
 interface TableContentProps {
   tableId: string
@@ -54,6 +56,7 @@ export const TableContent = ({ tableId }: TableContentProps) => {
   const { setAutoAction } = useAutoAction()
   const { setAutoRebuy } = useAutoRebuy()
   const { toasts, addToast, removeToast } = useCustomToast()
+  const { imageSrc } = useTableImage()
 
   const [messages, setMessages] = useState([] as string[])
   const [match, setMatch] = useState<Match | null>(null)
@@ -848,7 +851,7 @@ export const TableContent = ({ tableId }: TableContentProps) => {
         {audioShuffle}
         {audioSlip}
 
-        <img src="/images/table_v3.png" alt="tableImage" />
+        <img src={imageSrc} alt="tableImage" />
 
         <div className="group_button">
           {canAction && !isNextMatchComing ? (
@@ -872,6 +875,7 @@ export const TableContent = ({ tableId }: TableContentProps) => {
             match={match}
           />
           {/* <Button onClick={() => addRamdomToast()}>add toast</Button> */}
+          <TableImageSelect />
         </div>
         <RebuyButton className="btn_cash_chip_sp" tableId={tableId} />
 

@@ -5,8 +5,6 @@ import { TableList } from './list'
 import Pagination from './pagination'
 import { useSocket } from '@/providers/socket-provider'
 import { useEffect, useState } from 'react'
-import { toast } from 'sonner'
-import { useCustomToast } from '@/hooks/use-custom-toast'
 
 interface TableContentProps {
   tables: TableWithPlayers[]
@@ -58,6 +56,10 @@ export const TableContent = ({ tables, pageCount }: TableContentProps) => {
       socket.off(PokerActions.JOIN_TABLE)
     }
   }, [socket])
+
+  useEffect(() => {
+    setTableList(tables)
+  }, [tables])
 
   return (
     <div className="content_main">
