@@ -152,8 +152,6 @@ export const CurrentPlayerAction = ({
   const canHalf = half >= currentCallAmount && currentStack >= half
   const canFull = currentPot >= currentCallAmount && currentStack >= currentPot
 
-  const isCallAllIn = currentStack <= currentCallAmount
-
   const min = match?.minBet ? Math.max(match?.minBet, currentCallAmount) : 0
 
   const max = match?.table?.maxBuyIn

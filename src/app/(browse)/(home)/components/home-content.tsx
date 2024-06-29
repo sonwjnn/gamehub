@@ -180,7 +180,7 @@ export const HomeContent = ({}: HomeContentProps) => {
               <div className="area">
                 <div className="context">
                   <p>
-                    <span className="animate-aitf">포커 마스터 </span>
+                    <span className="animate-aitf">모두의홀덤 </span>
                   </p>
                   <div className="text_typed">
                     Neque porro quisquam est qui dolorem{' '}

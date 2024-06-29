@@ -112,9 +112,9 @@ export function CashDataTable<TData, TValue>({
               <SelectValue placeholder="상태" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="SUCCESS">Success</SelectItem>
-              <SelectItem value="PENDING">Pending</SelectItem>
-              <SelectItem value="FAILED">Failed</SelectItem>
+              <SelectItem value="SUCCESS">성공</SelectItem>
+              <SelectItem value="PENDING">대기 중</SelectItem>
+              <SelectItem value="FAILED">실패</SelectItem>
             </SelectContent>
           </Select>
         </div>

@@ -46,6 +46,8 @@ interface CurrentPlayerProps {
   playersHighlightSet: PlayerHighlightCards
 }
 
+const COUNTDOWN_SECONDS = 9
+
 export const CurrentPlayer = ({
   match,
   participants,
@@ -109,7 +111,7 @@ export const CurrentPlayer = ({
   const [imageUrlFirst, setImageUrlFirst] = useState('')
   const [imageUrlSecond, setImageUrlSecond] = useState('')
   const [isAction, setIsAction] = useState(false)
-  const [counter, setCounter] = useState(12)
+  const [counter, setCounter] = useState(COUNTDOWN_SECONDS)
   const [bet, setBet] = useState(0)
   const [stars, setStars] = useState(0)
   const [countdownSrcAudio, _, controls, ref] = useAudio({
@@ -242,7 +244,7 @@ export const CurrentPlayer = ({
 
   useEffect(() => {
     if (!isTurn) {
-      setCounter(12)
+      setCounter(COUNTDOWN_SECONDS)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isTurn])

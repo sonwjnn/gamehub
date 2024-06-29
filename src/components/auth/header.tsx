@@ -17,7 +17,7 @@ export const Header = ({ label, description }: HeaderProps) => {
     <div className="flex w-full flex-col items-center justify-center gap-y-4">
       <div className="logo w-[180px]">
         <Image
-          src="/images/logo.svg"
+          src="/images/logo_2.png"
           alt="pokerOnImage"
           width={0}
           height={0}

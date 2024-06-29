@@ -69,7 +69,7 @@ export const LoginForm = ({}: LoginFormProps) => {
     <CardWrapper
       headerLabel=""
       headerDescription="Log in to your account."
-      backButtonLabel="Sign up here"
+      backButtonLabel="가입하기"
       backButtonHref="/auth/register"
     >
       <Form {...form}>
@@ -84,7 +84,7 @@ export const LoginForm = ({}: LoginFormProps) => {
                     <div className="input-group">
                       <div className="wrap-input">
                         <Input type="text" disabled={isPending} {...field} />
-                        <label>Username</label>
+                        <label>사용자 이름</label>
                       </div>
                     </div>
                   </FormControl>
@@ -106,20 +106,12 @@ export const LoginForm = ({}: LoginFormProps) => {
                           type="password"
                           {...field}
                         />
-                        <label>Password</label>
+                        <label>비밀번호</label>
                         <span className="validation">Text err</span>
                       </div>
                     </div>
                   </FormControl>
 
-                  {/* <Button
-                    size="sm"
-                    variant="link"
-                    asChild
-                    className="px-0 font-normal"
-                  >
-                    <Link href={"/auth/reset"}>Forgot password?</Link>
-                  </Button> */}
                   <FormMessage />
                 </FormItem>
               )}
@@ -128,7 +120,7 @@ export const LoginForm = ({}: LoginFormProps) => {
           <FormError message={error || urlError} />
           <FormSuccess message={success} />
           <p className="text-center color-main fz-12 mb-32 text-link mt-0">
-            Forgot password
+            비밀번호 분실
           </p>
           <div className="input-group text-center">
             <button
@@ -136,7 +128,7 @@ export const LoginForm = ({}: LoginFormProps) => {
               className="btn btn-submit disabled:pointer-events-none disabled:opacity-50"
               disabled={isPending}
             >
-              <span className="color-main">Login</span>
+              <span className="color-main">로그인</span>
             </button>
           </div>
         </form>

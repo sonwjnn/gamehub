@@ -1,10 +1,12 @@
 'use client'
 
+import { useVolume } from '@/store/use-volume'
 import { useParams } from 'next/navigation'
 import { useEffect } from 'react'
 import { useAudio, useMountedState } from 'react-use'
 
 export const SoundProvider = () => {
+  const { volume } = useVolume()
   const isMounted = useMountedState()
 
   const params = useParams()
@@ -23,6 +25,18 @@ export const SoundProvider = () => {
       controls.play()
     }
   }, [params])
+
+  useEffect(() => {
+    const mediaElements = document.querySelectorAll('audio, video')
+    mediaElements.forEach(media => {
+      const mediaElement = media as HTMLMediaElement
+      mediaElement.volume = volume
+
+      mediaElement.onvolumechange = function () {
+        mediaElement.volume = volume
+      }
+    })
+  }, [volume])
 
   if (!isMounted) return null
 

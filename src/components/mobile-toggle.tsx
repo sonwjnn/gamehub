@@ -1,15 +1,15 @@
 'use client'
 
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
+import '@/styles/css/styles.css'
 import { cn } from '@/lib/utils'
 import { useState } from 'react'
 import { useCurrentUser } from '@/hooks/use-current-user'
-import { LogoutButton } from './auth/logout-button'
-import Link from 'next/link'
-import '@/styles/css/styles.css'
-import { UserBoard } from './user-board'
 import { RotateCcw } from 'lucide-react'
 import { BsCashCoin } from 'react-icons/bs'
+import { LogoutButton } from '@/components/auth/logout-button'
+import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
+import { UserBoard } from '@/components/user-board'
+import { BoardItem } from '@/components/board-item'
 
 export const MobileToggle = () => {
   const [isOpen, setIsOpen] = useState(false)
@@ -38,65 +38,45 @@ export const MobileToggle = () => {
 
           <div className="list_menu mt-[12px]">
             <ul>
-              <li>
-                <Link href="/settings/profile" onClick={() => setIsOpen(false)}>
-                  <span className="icon sz-16 icon-color-white">
-                    <i className="icon-user"></i>
-                  </span>
-                  <span className="icon-color-white">마이 정보</span>
-                </Link>
-              </li>
-              <li>
-                <Link href="/settings/cash" onClick={() => setIsOpen(false)}>
-                  <span className="icon sz-20 icon-color-white">
-                    <i className="icon-cash"></i>
-                  </span>
-                  <span>캐시 게임</span>
-                </Link>
-              </li>
+              <BoardItem
+                label="마이 정보"
+                icon={<i className="icon-user"></i>}
+                href="/settings/profile"
+                onClick={() => setIsOpen(false)}
+              />
+              <BoardItem
+                label="캐시 게임"
+                icon={<i className="icon-cash"></i>}
+                href="/settings/cash"
+                onClick={() => setIsOpen(false)}
+              />
+              <BoardItem
+                label="현금 조치"
+                icon={<BsCashCoin size={20} />}
+                href="/settings/cash-action"
+                onClick={() => setIsOpen(false)}
+              />
+              {/* <BoardItem
+                label="포인트"
+                icon={<i className="icon-points"></i>}
+                href="/settings/point"
+                onClick={() => setIsOpen(false)}
+              /> */}
 
-              <li>
-                <Link
-                  href="/settings/cash-action"
-                  onClick={() => setIsOpen(false)}
-                >
-                  <BsCashCoin
-                    size={20}
-                    className="group-hover:text-white transition"
-                  />
-                  <span>Cash Actions</span>
-                </Link>
-              </li>
+              <BoardItem
+                label="게임 기록"
+                icon={<i className="icon-history"></i>}
+                href="/settings/history"
+                onClick={() => setIsOpen(false)}
+              />
 
-              <li>
-                <Link href="/settings/cash" onClick={() => setIsOpen(false)}>
-                  <span className="icon sz-20 icon-color-white">
-                    <i className="icon-points"></i>
-                  </span>
-                  <span>포인트</span>
-                </Link>
-              </li>
+              <BoardItem
+                label="새 비밀번호"
+                icon={<RotateCcw size={20} />}
+                href="/settings/new-password"
+                onClick={() => setIsOpen(false)}
+              />
 
-              <li>
-                <Link href="/settings/history" onClick={() => setIsOpen(false)}>
-                  <span className="icon sz-20 icon-color-white">
-                    <i className="icon-history"></i>
-                  </span>
-                  <span>게임 기록</span>
-                </Link>
-              </li>
-
-              <li>
-                <Link
-                  href="/settings/new-password"
-                  onClick={() => setIsOpen(false)}
-                >
-                  <span className="icon sz-20 icon-color-white">
-                    <RotateCcw size={20} />
-                  </span>
-                  <span>새 비밀번호</span>
-                </Link>
-              </li>
               <li>
                 <LogoutButton>
                   <a href="">

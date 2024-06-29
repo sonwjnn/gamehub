@@ -33,6 +33,8 @@ interface OtherPlayerProps {
   playersHighlightSet: PlayerHighlightCards
 }
 
+const COUNTDOWN_SECONDS = 9
+
 export const OtherPlayer = ({
   isHandVisible,
   player,
@@ -70,7 +72,7 @@ export const OtherPlayer = ({
 
   const [imageUrlFirst, setImageUrlFirst] = useState('')
   const [imageUrlSecond, setImageUrlSecond] = useState('')
-  const [counter, setCounter] = useState(12)
+  const [counter, setCounter] = useState(COUNTDOWN_SECONDS)
   const [isBet, setIsBet] = useState(false)
   const [winRate, setWinRate] = useState(0)
 
@@ -176,7 +178,7 @@ export const OtherPlayer = ({
 
   useEffect(() => {
     if (isTurn) {
-      setCounter(12)
+      setCounter(COUNTDOWN_SECONDS)
     }
   }, [isTurn])
 

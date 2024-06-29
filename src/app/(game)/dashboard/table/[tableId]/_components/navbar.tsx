@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button'
 import { Player, Table } from '@/types'
 import { ToggleSound } from '@/components/toggle-sound'
 import { ToggleBrightness } from '@/components/toggle-brightness'
+import { VolumeSlider } from '@/components/volumn-slider'
 
 type Props = {
   table: Table
@@ -46,7 +47,8 @@ export const Navbar = ({ table, player }: Props) => {
         </div>
 
         <ToggleBrightness />
-        <ToggleSound />
+        {/* <ToggleSound /> */}
+        <VolumeSlider />
 
         <UserButton type="game" />
       </div>

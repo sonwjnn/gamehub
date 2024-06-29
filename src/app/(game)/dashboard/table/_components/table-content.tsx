@@ -1,6 +1,10 @@
-import { TableWithPlayers } from '@/types'
+'use client'
+
+import { Player, PokerActions, TableWithPlayers } from '@/types'
 import { TableList } from './list'
 import Pagination from './pagination'
+import { useSocket } from '@/providers/socket-provider'
+import { useEffect, useState } from 'react'
 
 interface TableContentProps {
   tables: TableWithPlayers[]
@@ -8,6 +12,45 @@ interface TableContentProps {
 }
 
 export const TableContent = ({ tables, pageCount }: TableContentProps) => {
+  const [tableList, setTableList] = useState<TableWithPlayers[]>(tables)
+  const { socket } = useSocket()
+
+  useEffect(() => {
+    if (!socket) return
+
+    socket.on(PokerActions.LEAVE_TABLE, (tableId: string, playerId: string) => {
+      setTableList(prev =>
+        prev.map(table => {
+          if (table.id === tableId) {
+            return {
+              ...table,
+              players: table.players.filter(player => player.id !== playerId),
+            }
+          }
+          return table
+        })
+      )
+    })
+    socket.on(PokerActions.JOIN_TABLE, (tableId: string, player: Player) => {
+      setTableList(prev =>
+        prev.map(table => {
+          if (table.id === tableId) {
+            return {
+              ...table,
+              players: [...table.players, player],
+            }
+          }
+          return table
+        })
+      )
+    })
+
+    return () => {
+      socket.off(PokerActions.LEAVE_TABLE)
+      socket.off(PokerActions.JOIN_TABLE)
+    }
+  }, [socket])
+
   return (
     <div className="content_main">
       <div className="inner">
@@ -20,6 +63,7 @@ export const TableContent = ({ tables, pageCount }: TableContentProps) => {
               테이블
             </span>
           </h2>
+
           <div className="row flex flex-center gapy-40">
             <svg>
               <filter id="noiseFilter2">
@@ -41,7 +85,7 @@ export const TableContent = ({ tables, pageCount }: TableContentProps) => {
               </clipPath>
             </svg>
             <div className="col-12 col-md-8">
-              <TableList tables={tables} />
+              <TableList tables={tableList} />
 
               {pageCount > 1 && <Pagination pageCount={pageCount} />}
             </div>

@@ -67,7 +67,7 @@ export const RegisterForm = ({}: RegisterFormProps) => {
     <CardWrapper
       headerLabel=""
       headerDescription="Create an account by verify email."
-      backButtonLabel="Already have an account?"
+      backButtonLabel="이미 계정이 있습니다?"
       backButtonHref="/auth/login"
     >
       <Form {...form}>
@@ -82,7 +82,7 @@ export const RegisterForm = ({}: RegisterFormProps) => {
                     <div className="input-group">
                       <div className="wrap-input">
                         <Input disabled={isPending} {...field} />
-                        <label>Username</label>
+                        <label>사용자 이름</label>
                         <span className="validation">Text err</span>
                       </div>
                     </div>
@@ -101,7 +101,7 @@ export const RegisterForm = ({}: RegisterFormProps) => {
                     <div className="input-group">
                       <div className="wrap-input">
                         <Input disabled={isPending} {...field} />
-                        <label>Name in game</label>
+                        <label>게임 내 이름</label>
                         <span className="validation">Text err</span>
                       </div>
                     </div>
@@ -120,7 +120,7 @@ export const RegisterForm = ({}: RegisterFormProps) => {
                     <div className="input-group">
                       <div className="wrap-input">
                         <Input type="email" disabled={isPending} {...field} />
-                        <label>Email</label>
+                        <label>이메일</label>
                         <span className="validation">Text err</span>
                       </div>
                     </div>
@@ -144,7 +144,7 @@ export const RegisterForm = ({}: RegisterFormProps) => {
                           type="password"
                           {...field}
                         />
-                        <label>Password</label>
+                        <label>비밀번호</label>
                         <span className="validation">Text err</span>
                       </div>
                     </div>
@@ -162,7 +162,7 @@ export const RegisterForm = ({}: RegisterFormProps) => {
               className="btn btn-submit disabled:pointer-events-none disabled:opacity-50"
               disabled={isPending}
             >
-              <span className="color-main">Create an account</span>
+              <span className="color-main">계정 만들기</span>
             </button>
           </div>
         </form>

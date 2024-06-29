@@ -133,8 +133,8 @@ export function HistoryDataTable<TData, TValue>({
               <SelectValue placeholder="상태" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="win">Win</SelectItem>
-              <SelectItem value="lose">Lose</SelectItem>
+              <SelectItem value="win">승리</SelectItem>
+              <SelectItem value="lose">잃다</SelectItem>
             </SelectContent>
           </Select>
         </div>
