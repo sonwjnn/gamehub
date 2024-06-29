@@ -5,18 +5,11 @@ import { useModal } from '@/store/use-modal-store'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Button } from '@/components/ui/button'
-import { Player, Table } from '@/types'
-import { ToggleSound } from '@/components/toggle-sound'
 import { ToggleBrightness } from '@/components/toggle-brightness'
 import { VolumeSlider } from '@/components/volumn-slider'
+import { useCustomToast } from '@/hooks/use-custom-toast'
 
-type Props = {
-  table: Table
-  player: Player
-}
-
-export const Navbar = ({ table, player }: Props) => {
+export const Navbar = () => {
   const { onOpen } = useModal()
 
   const pathname = usePathname()
@@ -47,7 +40,6 @@ export const Navbar = ({ table, player }: Props) => {
         </div>
 
         <ToggleBrightness />
-        {/* <ToggleSound /> */}
         <VolumeSlider />
 
         <UserButton type="game" />

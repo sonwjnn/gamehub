@@ -5,7 +5,6 @@ import { MobileToggle } from '@/components/mobile-toggle'
 import { useModal } from '@/store/use-modal-store'
 import Link from 'next/link'
 import { ToggleBrightness } from '@/components/toggle-brightness'
-import { ToggleSound } from '@/components/toggle-sound'
 import { VolumeSlider } from '@/components/volumn-slider'
 
 interface ActionsProps {}
@@ -17,7 +16,6 @@ export const Actions = ({}: ActionsProps) => {
     <div className="toolbar flex flex-midle">
       <div className="gap-x-3 mx-3 hidden md:!flex">
         <VolumeSlider />
-        {/* <ToggleSound /> */}
 
         <ToggleBrightness />
       </div>

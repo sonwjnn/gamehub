@@ -8,6 +8,7 @@ import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 
 import {
+  CustomToastType,
   HighlightCard,
   HighlightResponse,
   Match,
@@ -38,6 +39,9 @@ import { useAutoRebuy } from '@/store/use-auto-rebuy'
 import { LeaveNext } from './leave-next'
 import { useAudio } from 'react-use'
 import { getPlayerIdByUserId } from '@/app/(game)/dashboard/table/_utils/user'
+import { useCustomToast } from '@/hooks/use-custom-toast'
+import { CustomToast } from '@/components/custom-toast'
+import { Button } from '@/components/ui/button'
 
 interface TableContentProps {
   tableId: string
@@ -49,6 +53,7 @@ export const TableContent = ({ tableId }: TableContentProps) => {
   const { onClose, onOpen } = useModal()
   const { setAutoAction } = useAutoAction()
   const { setAutoRebuy } = useAutoRebuy()
+  const { toasts, addToast, removeToast } = useCustomToast()
 
   const [messages, setMessages] = useState([] as string[])
   const [match, setMatch] = useState<Match | null>(null)
@@ -329,8 +334,13 @@ export const TableContent = ({ tableId }: TableContentProps) => {
 
       socket.on(
         PokerActions.TABLE_MESSAGE,
-        ({ message, from }: { message: string; from: any }) => {
-          message && addMessage(message)
+        ({ message, type }: { message: string; type: CustomToastType }) => {
+          message &&
+            addToast({
+              id: Math.random().toString(),
+              messages: message,
+              type: type,
+            })
         }
       )
 
@@ -822,90 +832,106 @@ export const TableContent = ({ tableId }: TableContentProps) => {
     (match && match.isShowdown && match.winners?.length)
 
   return (
-    <div className="wrapper" ref={wrapperRef}>
-      {audioShuffle}
-      {audioSlip}
-      <img src="/images/table_v3.png" alt="tableImage" />
-
-      <div className="group_button">
-        {canAction && !isNextMatchComing ? (
-          <>
-            <LeaveButton tableId={tableId} player={currentPlayer} />
-            <ChangeTable tableId={tableId} playerId={currentPlayer?.id} />
-          </>
-        ) : null}
-        {!canAction ? (
-          <LeaveNext
-            isLeaveNext={isLeaveNext}
-            setIsLeaveNext={setIsLeaveNext}
+    <>
+      <div className="toast_mess">
+        {toasts.map((toast, _) => (
+          <CustomToast
+            key={toast.id}
+            id={toast.id}
+            messages={toast.messages}
+            type={toast.type}
+            onClose={() => removeToast(toast.id)}
           />
-        ) : null}
-
-        <AutoRebuyToggle
-          tableId={tableId}
-          player={currentPlayer}
-          match={match}
-        />
-        {/* <Button onClick={() => onOpen('winDefault')}>suffle</Button> */}
+        ))}
       </div>
-      <RebuyButton className="btn_cash_chip_sp" tableId={tableId} />
+      <div className="wrapper" ref={wrapperRef}>
+        {audioShuffle}
+        {audioSlip}
 
-      <div className="inner">
-        <div className="list_user" ref={tableRef}>
-          <div className="dealer" ref={dealerRef}></div>
+        <img src="/images/table_v3.png" alt="tableImage" />
 
-          <div className="wrap_list">
-            {sortedPlayers.map((player, index) => {
-              if (player.userId === user?.id) {
-                return
-              }
+        <div className="group_button">
+          {canAction && !isNextMatchComing ? (
+            <>
+              <LeaveButton tableId={tableId} player={currentPlayer} />
+              <ChangeTable tableId={tableId} playerId={currentPlayer?.id} />
+            </>
+          ) : null}
+          {!canAction ? (
+            <LeaveNext
+              isLeaveNext={isLeaveNext}
+              setIsLeaveNext={setIsLeaveNext}
+              tableId={tableId}
+              playerId={currentPlayer?.id}
+            />
+          ) : null}
 
-              return (
-                <OtherPlayer
-                  match={match}
-                  key={index}
-                  player={player}
-                  participants={participants}
-                  isHandVisible={isHandVisible}
-                  tableId={tableId}
-                  playersHighlightSet={playersHighlightSet}
-                />
-              )
-            })}
-            <ShowdownModal match={match} participants={participants} />
-            <WinDefaultModal match={match} />
-            <RoyalFlushModal match={match} />
-            <FlushModal match={match} />
-            <StraightModal match={match} />
-            <StraightFlushModal match={match} />
-            <FourCardModal match={match} />
-            <FullHouseModal match={match} />
+          <AutoRebuyToggle
+            tableId={tableId}
+            player={currentPlayer}
+            match={match}
+          />
+          {/* <Button onClick={() => addRamdomToast()}>add toast</Button> */}
+        </div>
+        <RebuyButton className="btn_cash_chip_sp" tableId={tableId} />
+
+        <div className="inner">
+          <div className="list_user" ref={tableRef}>
+            <div className="dealer" ref={dealerRef}></div>
+
+            <div className="wrap_list">
+              {sortedPlayers.map((player, index) => {
+                if (player.userId === user?.id) {
+                  return
+                }
+
+                return (
+                  <OtherPlayer
+                    match={match}
+                    key={index}
+                    player={player}
+                    participants={participants}
+                    isHandVisible={isHandVisible}
+                    tableId={tableId}
+                    playersHighlightSet={playersHighlightSet}
+                  />
+                )
+              })}
+              <ShowdownModal match={match} participants={participants} />
+              <WinDefaultModal match={match} />
+              <RoyalFlushModal match={match} />
+              <FlushModal match={match} />
+              <StraightModal match={match} />
+              <StraightFlushModal match={match} />
+              <FourCardModal match={match} />
+              <FullHouseModal match={match} />
+            </div>
           </div>
         </div>
-      </div>
-      <Board
-        match={match}
-        isShuffle={isShuffle}
-        highlightCards={highlightCards}
-      />
+        <Board
+          match={match}
+          isShuffle={isShuffle}
+          highlightCards={highlightCards}
+        />
 
-      {/* {messages && messages.length > 0 && (
+        {/* {messages && messages.length > 0 && (
         <div className="absolute font-semibold top-[60%] text-lime-500 text-xs md:text-xl left-1/2 -translate-y-1/2 -translate-x-1/2">
           {messages[messages.length - 1]}
         </div>
       )} */}
-      {currentPlayer && (
-        <CurrentPlayer
-          match={match}
-          player={currentPlayer}
-          participants={participants}
-          isHandVisible={isHandVisible}
-          tableId={tableId}
-          highlightCards={highlightCards}
-          isLeaveNext={isLeaveNext}
-          playersHighlightSet={playersHighlightSet}
-        />
-      )}
-    </div>
+        {currentPlayer && (
+          <CurrentPlayer
+            match={match}
+            player={currentPlayer}
+            participants={participants}
+            isHandVisible={isHandVisible}
+            tableId={tableId}
+            highlightCards={highlightCards}
+            isLeaveNext={isLeaveNext}
+            playersHighlightSet={playersHighlightSet}
+          />
+        )}
+      </div>
+    </>
   )
 }

@@ -1,12 +1,10 @@
 'use client'
 
-import { Button } from '@/components/ui/button'
 import { useCurrentUser } from '@/hooks/use-current-user'
 import { cn } from '@/lib/utils'
 import playerApi from '@/services/api/modules/player-api'
 import tableApi from '@/services/api/modules/table-api'
 import { useAutoRebuy } from '@/store/use-auto-rebuy'
-import { useModal } from '@/store/use-modal-store'
 import { PlayerWithUser } from '@/types'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'

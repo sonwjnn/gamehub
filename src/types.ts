@@ -257,9 +257,9 @@ export enum PokerActions {
   SHOW_HAND = 'SHOW_HAND',
   HAND_SHOWED = 'HAND_SHOWED',
   NEXT_MATCH_IS_COMING = 'NEXT_MATCH_IS_COMING',
-  TABLE_QUALITY_UPDATED = 'TABLE_QUALITY_UPDATED',
   FETCH_LOBBY_INFO = 'FETCH_LOBBY_INFO',
   RECEIVE_LOBBY_INFO = 'RECEIVE_LOBBY_INFO',
+  LEAVE_NEXT_MATCH = 'LEAVE_NEXT_MATCH',
   PLAYERS_UPDATED = 'PLAYERS_UPDATED',
   JOIN_TABLE = 'JOIN_TABLE',
   TABLE_JOINED = 'TABLE_JOINED',
@@ -301,4 +301,13 @@ export enum WinnerHandType {
   TwoPair = 'TwoPair',
   Pair = 'Pair',
   HighCard = 'HighCard',
+}
+
+export type CustomToastType = 'error' | 'success' | 'warning' | 'info'
+
+export type CustomToastProps = {
+  id: string
+  messages: string
+  type: CustomToastType
+  onClose?: () => void
 }

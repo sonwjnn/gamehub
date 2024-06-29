@@ -122,6 +122,18 @@ img {
 .icon-gold {
   background-image: url(/images/icon/icon_gold.png);
 }
+.icon-success {
+  background-image: url(/images/icon/icon_success.png);
+}
+.icon-error {
+  background-image: url(/images/icon/icon_error.png);
+}
+.icon-close {
+  background-image: url(/images/icon/icon_close.png);
+}
+.icon-warning {
+  background-image: url(/images/icon/icon_warning.png);
+}
 .icon-daimond {
   background-image: url(/images/icon/icon_daimond.png);
 }
@@ -166,6 +178,9 @@ img {
 }
 .icon-info {
   background-image: url(/images/icon/icon_info.png);
+}
+.icon-info2 {
+  background-image: url(/images/icon/icon_info2.png);
 }
 .icon-arr_right {
   background-image: url(/images/icon/icon_arr_right.png);
@@ -238,6 +253,12 @@ img {
     saturate(5442%) hue-rotate(324deg) brightness(116%) contrast(116%);
   filter: brightness(0) saturate(100%) invert(30%) sepia(12%) saturate(5442%)
     hue-rotate(324deg) brightness(116%) contrast(116%);
+}
+.icon-color-blue {
+  -webkit-filter: brightness(0) saturate(100%) invert(9%) sepia(100%)
+    saturate(7476%) hue-rotate(248deg) brightness(90%) contrast(144%);
+  filter: brightness(0) saturate(100%) invert(9%) sepia(100%) saturate(7476%)
+    hue-rotate(248deg) brightness(90%) contrast(144%);
 }
 .m-20 {
   margin: 10px;
@@ -6186,9 +6207,6 @@ img {
 .btn_main {
   height: 40px;
   min-width: 120px;
-  -webkit-clip-path: path(
-    'M 0 25 C 0 -5, -5 0, 80 0 S 160 -5, 160 25, 165 50 80 50, 0 55, 0 25'
-  );
   clip-path: path(
     'M 0 25 C 0 -5, -5 0, 80 0 S 160 -5, 160 25, 165 50 80 50, 0 55, 0 25'
   );

@@ -5,6 +5,8 @@ import { TableList } from './list'
 import Pagination from './pagination'
 import { useSocket } from '@/providers/socket-provider'
 import { useEffect, useState } from 'react'
+import { toast } from 'sonner'
+import { useCustomToast } from '@/hooks/use-custom-toast'
 
 interface TableContentProps {
   tables: TableWithPlayers[]
@@ -18,32 +20,38 @@ export const TableContent = ({ tables, pageCount }: TableContentProps) => {
   useEffect(() => {
     if (!socket) return
 
-    socket.on(PokerActions.LEAVE_TABLE, (tableId: string, playerId: string) => {
-      setTableList(prev =>
-        prev.map(table => {
-          if (table.id === tableId) {
-            return {
-              ...table,
-              players: table.players.filter(player => player.id !== playerId),
+    socket.on(
+      PokerActions.LEAVE_TABLE,
+      ({ tableId, playerId }: { tableId: string; playerId: string }) => {
+        setTableList(prev =>
+          prev.map(table => {
+            if (table.id === tableId) {
+              return {
+                ...table,
+                players: table.players.filter(player => player.id !== playerId),
+              }
             }
-          }
-          return table
-        })
-      )
-    })
-    socket.on(PokerActions.JOIN_TABLE, (tableId: string, player: Player) => {
-      setTableList(prev =>
-        prev.map(table => {
-          if (table.id === tableId) {
-            return {
-              ...table,
-              players: [...table.players, player],
+            return table
+          })
+        )
+      }
+    )
+    socket.on(
+      PokerActions.JOIN_TABLE,
+      ({ tableId, player }: { tableId: string; player: Player }) => {
+        setTableList(prev =>
+          prev.map(table => {
+            if (table.id === tableId) {
+              return {
+                ...table,
+                players: [...table.players, player],
+              }
             }
-          }
-          return table
-        })
-      )
-    })
+            return table
+          })
+        )
+      }
+    )
 
     return () => {
       socket.off(PokerActions.LEAVE_TABLE)

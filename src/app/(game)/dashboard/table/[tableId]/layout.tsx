@@ -1,6 +1,5 @@
 import { Chat } from './_components/chat'
 import { currentUser } from '@/lib/auth'
-// import '@/styles/css/game.css'
 import { Navbar } from './_components/navbar'
 import { Statistical } from './_components/statistical'
 import playerApi from '@/services/api/modules/player-api'
@@ -36,7 +35,7 @@ const TableIdLayout = async ({
 
   return (
     <>
-      <Navbar table={table} player={player} />
+      <Navbar />
       <div className="game_body">
         {children}
         {player && (
