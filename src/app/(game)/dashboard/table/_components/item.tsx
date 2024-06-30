@@ -1,5 +1,6 @@
 'use client'
 
+import { useCurrentUser } from '@/hooks/use-current-user'
 import { useModal } from '@/store/use-modal-store'
 import { Table } from '@/types'
 import { formatChipsAmount } from '@/utils/formatting'
@@ -12,10 +13,25 @@ interface ItemProps {
 
 export const Item = ({ table }: ItemProps) => {
   const router = useRouter()
+  const user = useCurrentUser()
   const { onOpen } = useModal()
 
+  const onClick = () => {
+    if (!user) {
+      return router.push('/auth/login')
+    }
+
+    const isNotEnoughChips = user.chipsAmount < table.minBuyIn
+
+    if (isNotEnoughChips) {
+      return onOpen('buyChips', { table })
+    }
+
+    onOpen('buyIn', { table })
+  }
+
   return (
-    <div className="room" onClick={() => onOpen('buyIn', { table })}>
+    <div className="room" onClick={onClick}>
       <div className="icon icon-color-white">
         <Image
           src="/images/icon/icon_poker.png"

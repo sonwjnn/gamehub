@@ -36,9 +36,7 @@ export const AutoRebuyModal = () => {
   const { autoRebuyAmount, setAutoRebuy } = useAutoRebuy()
   const router = useRouter()
   const user = useCurrentUser()
-  const { socket } = useSocket()
   const { tableId } = data
-  const { update } = useSession()
 
   const [isLoading, setIsLoading] = useState(false)
   const [tableData, setTableData] = useState<Table | null>(null)

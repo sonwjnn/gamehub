@@ -21,7 +21,6 @@ import { useSocket } from '@/providers/socket-provider'
 import playerApi from '@/services/api/modules/player-api'
 import { toast } from 'sonner'
 import { useSession } from 'next-auth/react'
-import { X } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { formatChipsAmount } from '@/utils/formatting'
 

@@ -22,6 +22,7 @@ import sound from '@/utils/contants/sound'
 import { calculateWinRate, evaluateHandStrength } from '@/utils/winrate'
 import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
+import { PlayerButtonActionType, StatusCircle } from './status-circle'
 
 interface OtherPlayerProps {
   type?: 'fold' | 'active' | 'default'
@@ -423,184 +424,11 @@ export const OtherPlayer = ({
         </div>
       )}
 
-      {isFolded && (
-        <div className="status">
-          <div className="wrap_status status_full">
-            <svg viewBox="0 0 200 200">
-              <circle
-                className="circle"
-                cx="100"
-                cy="100"
-                r="95"
-                stroke="#231f20"
-                strokeWidth="8"
-                fillOpacity="0"
-              />
-            </svg>
-            <span className="sub">풀</span>
-          </div>
-        </div>
-      )}
-
-      {currentParticipant?.lastAction === PokerActions.CALL && (
-        <div className="status">
-          <div className="wrap_status status_call">
-            <span className="money">{formatChipsAmount(currentBet)} $</span>
-            <svg viewBox="0 0 200 200">
-              <circle
-                className="circle"
-                cx="100"
-                cy="100"
-                r="95"
-                stroke="#231f20"
-                strokeWidth="8"
-                fillOpacity="0"
-              ></circle>
-            </svg>
-            <span className="sub">콜</span>
-            {/* <span>CALL</span> */}
-          </div>
-        </div>
-      )}
-
-      {currentParticipant?.lastAction === PokerActions.RAISE && (
-        <div className="status">
-          <div className="wrap_status status_raise">
-            <span className="money">{formatChipsAmount(currentBet)} $</span>
-            <svg viewBox="0 0 200 200">
-              <circle
-                className="circle"
-                cx="100"
-                cy="100"
-                r="95"
-                stroke="#231f20"
-                strokeWidth="8"
-                fillOpacity="0"
-              ></circle>
-            </svg>
-            <span className="sub">라이즈</span>
-            {/* <span>RAISE</span> */}
-          </div>
-        </div>
-      )}
-
-      {currentParticipant?.lastAction === PokerActions.CHECK && (
-        <div className="status">
-          <div className="wrap_status status_call">
-            <svg viewBox="0 0 200 200">
-              <circle
-                className="circle"
-                cx="100"
-                cy="100"
-                r="95"
-                stroke="#231f20"
-                strokeWidth="8"
-                fillOpacity="0"
-              ></circle>
-            </svg>
-            <span className="sub">체크</span>
-            {/* <span>CHECK</span> */}
-          </div>
-        </div>
-      )}
-
-      {currentParticipant?.isFolded && (
-        <div className="status">
-          <div className="wrap_status status_full">
-            <svg viewBox="0 0 200 200">
-              <circle
-                className="circle"
-                cx="100"
-                cy="100"
-                r="95"
-                stroke="#231f20"
-                strokeWidth="8"
-                fillOpacity="0"
-              />
-            </svg>
-            <span className="sub">풀</span>
-          </div>
-        </div>
-      )}
-
-      {currentParticipant?.lastAction === RaiseType.QUARTER && (
-        <div className="status">
-          <div className="wrap_status status_quarter">
-            <span className="money">{formatChipsAmount(currentBet)} $</span>
-            <svg viewBox="0 0 200 200">
-              <circle
-                className="circle"
-                cx="100"
-                cy="100"
-                r="95"
-                stroke="#231f20"
-                strokeWidth="8"
-                fillOpacity="0"
-              ></circle>
-            </svg>
-            <span className="sub">쿼터</span>
-          </div>
-        </div>
-      )}
-
-      {currentParticipant?.lastAction === RaiseType.HALF && (
-        <div className="status">
-          <div className="wrap_status status_half">
-            <span className="money">{formatChipsAmount(currentBet)} $</span>
-            <svg viewBox="0 0 200 200">
-              <circle
-                className="circle"
-                cx="100"
-                cy="100"
-                r="95"
-                stroke="#231f20"
-                strokeWidth="8"
-                fillOpacity="0"
-              ></circle>
-            </svg>
-            <span className="sub">하프</span>
-          </div>
-        </div>
-      )}
-
-      {currentParticipant?.lastAction === RaiseType.FULL && (
-        <div className="status">
-          <div className="wrap_status status_full">
-            <span className="money">{formatChipsAmount(currentBet)} $</span>
-            <svg viewBox="0 0 200 200">
-              <circle
-                className="circle"
-                cx="100"
-                cy="100"
-                r="95"
-                stroke="#231f20"
-                strokeWidth="8"
-                fillOpacity="0"
-              ></circle>
-            </svg>
-            <span className="sub">풀</span>
-          </div>
-        </div>
-      )}
-
-      {currentParticipant?.isAllin && (
-        <div className="status">
-          <div className="wrap_status status_all">
-            <span className="money">{formatChipsAmount(currentBet)} $</span>
-            <svg viewBox="0 0 200 200">
-              <circle
-                className="circle"
-                cx="100"
-                cy="100"
-                r="95"
-                stroke="#231f20"
-                strokeWidth="8"
-                fillOpacity="0"
-              ></circle>
-            </svg>
-            <span className="sub">올인</span>
-          </div>
-        </div>
+      {!isHaveWinner && !isTurn && (
+        <StatusCircle
+          amount={currentBet}
+          type={currentParticipant?.lastAction as PlayerButtonActionType}
+        />
       )}
 
       {isTurn && (

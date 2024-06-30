@@ -133,17 +133,18 @@ export const CurrentPlayer = ({
   const isTurn = !isFolded && player?.isTurn
   const isShowdown = match?.isShowdown
   const isUnfoldedParticipant = currentParticipant?.isFolded ? false : true
+  const isNotEnoughStack =
+    player &&
+    match?.minBet &&
+    player?.stack + match?.minBet * 2 - match.table.ante < 0 &&
+    isHaveWinner
+  const isStackEmpty = player && player?.stack <= 0 && isHaveWinner
 
   const canKick =
     (isLeaveNext && isHaveWinner) ||
     (!isAutoRebuy &&
       !autoRebuyAmount &&
-      ((player && player?.stack <= 0 && isHaveWinner) ||
-        (player &&
-          match?.minBet &&
-          player?.stack + match?.minBet - match.table.ante < 0 &&
-          isHaveWinner) ||
-        foldCount >= 2))
+      (isStackEmpty || isNotEnoughStack || foldCount >= 2))
 
   const canShowHand = match && isWinner && !match.isShowdown
 
@@ -696,7 +697,7 @@ export const CurrentPlayer = ({
 
               {isFolded && (
                 <div className="status">
-                  <div className="wrap_status status_full">
+                  <div className="wrap_status status_fold">
                     <svg viewBox="0 0 200 200">
                       <circle
                         className="circle"
