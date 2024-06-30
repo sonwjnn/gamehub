@@ -62,6 +62,8 @@ export const TableContent = ({ tableId }: TableContentProps) => {
   const [match, setMatch] = useState<Match | null>(null)
   const [participants, setParticipants] = useState<Participant[]>([])
   const [players, setPlayers] = useState<PlayerWithUser[]>([])
+  const [sortedPlayers, setSortedPlayers] = useState<PlayerWithUser[]>([])
+
   const [highlightCards, setHighlightCards] = useState<HighlightCard>({
     name: '',
     cards: [],
@@ -817,10 +819,13 @@ export const TableContent = ({ tableId }: TableContentProps) => {
 
   const currentPlayerIndex = players.findIndex(p => p.userId === user?.id)
 
-  const sortedPlayers = [
-    ...players.slice(currentPlayerIndex + 1),
-    ...players.slice(0, currentPlayerIndex + 1),
-  ]
+  useEffect(() => {
+    const newSortedPlayers = [
+      ...players.slice(currentPlayerIndex + 1),
+      ...players.slice(0, currentPlayerIndex + 1),
+    ]
+    setSortedPlayers(newSortedPlayers)
+  }, [players, currentPlayerIndex])
 
   const currentPlayer = players.find(p => p.userId === user?.id)
   const currentParticipant = participants.find(
