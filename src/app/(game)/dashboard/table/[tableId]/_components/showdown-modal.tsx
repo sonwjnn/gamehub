@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react'
 import { useAudio } from 'react-use'
 import sounds from '@/utils/contants/sound'
 import { useCurrentUser } from '@/hooks/use-current-user'
+import { useVolume } from '@/store/use-volume'
 
 interface ShowdownModalProps {
   match: Match | null
@@ -14,6 +15,7 @@ interface ShowdownModalProps {
 
 export const ShowdownModal = ({ match, participants }: ShowdownModalProps) => {
   const user = useCurrentUser()
+  const { volume } = useVolume()
 
   const isHaveParticipant = participants?.some(
     participant =>
@@ -27,6 +29,7 @@ export const ShowdownModal = ({ match, participants }: ShowdownModalProps) => {
     let timerId: NodeJS.Timeout | null = null
     if (match?.isShowdown && match?.isAllAllIn && isHaveParticipant) {
       setIsShowdown(true)
+      controls.volume(volume)
       controls.play()
       timerId = setTimeout(() => {
         setIsShowdown(false)

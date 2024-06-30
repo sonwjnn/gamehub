@@ -8,6 +8,7 @@ import { formatChipsAmount } from '@/utils/formatting'
 import sounds from '@/utils/contants/sound'
 import { useAudio } from 'react-use'
 import gsap from 'gsap'
+import { useVolume } from '@/store/use-volume'
 
 interface BoardProps {
   match: Match | null
@@ -48,6 +49,7 @@ const FlopCard = ({
 }
 
 export const Board = ({ match, highlightCards }: BoardProps) => {
+  const { volume } = useVolume()
   const [turnRiverAudio, _t, turnRiverControls] = useAudio({
     src: '/sounds/sound_slip_3.mp3',
     autoPlay: false,
@@ -97,10 +99,12 @@ export const Board = ({ match, highlightCards }: BoardProps) => {
         ease: 'power3.out',
       })
 
+      turnRiverControls.volume(volume)
       turnRiverControls.play()
 
       const timer = setTimeout(() => {
         // turnRiverControls.volume(0.5)
+        openControls.volume(volume)
         openControls.play()
         setTurnHiddenClass('')
       }, 300)
@@ -120,9 +124,11 @@ export const Board = ({ match, highlightCards }: BoardProps) => {
         ease: 'power3.out',
       })
 
+      turnRiverControls.volume(volume)
       turnRiverControls.play()
 
       setTimeout(() => {
+        openControls.volume(volume)
         openControls.play()
       }, 700)
 
@@ -138,19 +144,23 @@ export const Board = ({ match, highlightCards }: BoardProps) => {
 
   useEffect(() => {
     if (isFlop) {
+      turnRiverControls.volume(volume)
       turnRiverControls.play()
 
       setTimeout(() => {
+        openControls.volume(volume)
         openControls.play()
         setFirstFlopHiddenClass('')
       }, 200)
 
       setTimeout(() => {
+        open2Controls.volume(volume)
         open2Controls.play()
         setSecondFlopHiddenClass('')
       }, 400)
 
       setTimeout(() => {
+        open3Controls.volume(volume)
         open3Controls.play()
         setThirdFlopHiddenClass('')
       }, 600)

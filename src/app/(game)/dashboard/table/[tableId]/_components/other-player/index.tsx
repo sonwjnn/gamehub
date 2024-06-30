@@ -23,6 +23,7 @@ import { calculateWinRate, evaluateHandStrength } from '@/utils/winrate'
 import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
 import { PlayerButtonActionType, StatusCircle } from './status-circle'
+import { useVolume } from '@/store/use-volume'
 
 interface OtherPlayerProps {
   type?: 'fold' | 'active' | 'default'
@@ -44,6 +45,8 @@ export const OtherPlayer = ({
   tableId,
   playersHighlightSet,
 }: OtherPlayerProps) => {
+  const { volume } = useVolume()
+
   const gender = getGenderFromImageUrl(player?.user?.image || '')
 
   const [quarAudio, _q, quarControls] = useAudio({
@@ -186,20 +189,28 @@ export const OtherPlayer = ({
   useEffect(() => {
     let url = ''
     if (currentParticipant?.lastAction === PokerActions.CALL) {
+      callControls.volume(volume)
       callControls.play()
     } else if (currentParticipant?.lastAction === PokerActions.RAISE) {
+      raiseControls.volume(volume)
       raiseControls.play()
     } else if (currentParticipant?.lastAction === PokerActions.FOLD) {
+      foldControls.volume(volume)
       foldControls.play()
     } else if (currentParticipant?.lastAction === PokerActions.CHECK) {
+      checkControls.volume(volume)
       checkControls.play()
     } else if (currentParticipant?.lastAction === PokerActions.ALLIN) {
+      allControls.volume(volume)
       allControls.play()
     } else if (currentParticipant?.lastAction === PokerActions.QUARTER) {
+      quarControls.volume(volume)
       quarControls.play()
     } else if (currentParticipant?.lastAction === PokerActions.HALF) {
+      halfControls.volume(volume)
       halfControls.play()
     } else if (currentParticipant?.lastAction === PokerActions.FULL) {
+      fullControls.volume(volume)
       fullControls.play()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

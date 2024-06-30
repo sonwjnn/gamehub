@@ -33,6 +33,7 @@ import { useAutoRebuy } from '@/store/use-auto-rebuy'
 import { calculateWinRate, evaluateHandStrength } from '@/utils/winrate'
 import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
+import { useVolume } from '@/store/use-volume'
 
 interface CurrentPlayerProps {
   isShowdown?: boolean
@@ -58,6 +59,7 @@ export const CurrentPlayer = ({
   isLeaveNext,
   playersHighlightSet,
 }: CurrentPlayerProps) => {
+  const { volume } = useVolume()
   const isMounted = useMountedState()
 
   const gender = getGenderFromImageUrl(player?.user?.image || '')
@@ -438,6 +440,19 @@ export const CurrentPlayer = ({
         new Audio(sounds.soundLose).play()
         return
       }
+
+      strongCongratsControls.volume(volume)
+      weakCongratsControls.volume(volume)
+      straightControls.volume(volume)
+      flushControls.volume(volume)
+      fullHouseControls.volume(volume)
+      fourControls.volume(volume)
+      straightFlushControls.volume(volume)
+      royalFlushControls.volume(volume)
+      twoPairControls.volume(volume)
+      highCardControls.volume(volume)
+      pairControls.volume(volume)
+      threeCardControls.volume(volume)
 
       switch (handName) {
         case WinnerHandType.Straight:

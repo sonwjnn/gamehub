@@ -1,5 +1,6 @@
 'use client'
 
+import { useVolume } from '@/store/use-volume'
 import sound from '@/utils/contants/sound'
 import { useEffect } from 'react'
 import { useAudio } from 'react-use'
@@ -7,9 +8,11 @@ import { useAudio } from 'react-use'
 type CoinAnimateProps = {}
 
 export const CoinAnimate = ({}: CoinAnimateProps) => {
+  const { volume } = useVolume()
   const [audio, _, controls] = useAudio({ src: sound.soundCoin })
 
   useEffect(() => {
+    controls.volume(volume)
     controls.play()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])

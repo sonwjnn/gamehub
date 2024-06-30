@@ -44,6 +44,7 @@ import { CustomToast } from '@/components/custom-toast'
 import { Button } from '@/components/ui/button'
 import { useTableImage } from '@/store/use-table-image'
 import { TableImageSelect } from './table-image-select'
+import { useVolume } from '@/store/use-volume'
 
 interface TableContentProps {
   tableId: string
@@ -57,6 +58,7 @@ export const TableContent = ({ tableId }: TableContentProps) => {
   const { setAutoRebuy } = useAutoRebuy()
   const { toasts, addToast, removeToast } = useCustomToast()
   const { imageSrc } = useTableImage()
+  const { volume } = useVolume()
 
   const [messages, setMessages] = useState([] as string[])
   const [match, setMatch] = useState<Match | null>(null)
@@ -151,6 +153,7 @@ export const TableContent = ({ tableId }: TableContentProps) => {
       createCard(i + 1)
 
       if ((i + 1) % numPlayers === 0 && (i + 1) / numPlayers <= cardsHand) {
+        slipControls.volume(volume)
         slipControls.play()
       }
 
@@ -184,7 +187,7 @@ export const TableContent = ({ tableId }: TableContentProps) => {
     }
 
     if (isShuffle) {
-      shuffleControls.volume(0.5)
+      shuffleControls.volume(volume)
       shuffleControls.play()
 
       let i = 0
