@@ -5,15 +5,19 @@ import { TableList } from './list'
 import Pagination from './pagination'
 import { useSocket } from '@/providers/socket-provider'
 import { useEffect, useState } from 'react'
+import { LuRefreshCw } from 'react-icons/lu'
+import { useRouter, useSearchParams } from 'next/navigation'
+import tableApi from '@/services/api/modules/table-api'
+import { toast } from 'sonner'
 
-interface TableContentProps {
-  tables: TableWithPlayers[]
-  pageCount: number
-}
+interface TableContentProps {}
 
-export const TableContent = ({ tables, pageCount }: TableContentProps) => {
-  const [tableList, setTableList] = useState<TableWithPlayers[]>(tables)
+export const TableContent = ({}: TableContentProps) => {
+  const [tableList, setTableList] = useState<TableWithPlayers[]>([])
+  const [pageCount, setPageCount] = useState(1)
   const { socket } = useSocket()
+  const router = useRouter()
+  const searchParams = useSearchParams()
 
   useEffect(() => {
     if (!socket) return
@@ -40,9 +44,13 @@ export const TableContent = ({ tables, pageCount }: TableContentProps) => {
         setTableList(prev =>
           prev.map(table => {
             if (table.id === tableId) {
+              const updatedPlayers = table.players.filter(
+                p => p.id !== player.id
+              )
+
               return {
                 ...table,
-                players: [...table.players, player],
+                players: [...updatedPlayers, player],
               }
             }
             return table
@@ -58,8 +66,22 @@ export const TableContent = ({ tables, pageCount }: TableContentProps) => {
   }, [socket])
 
   useEffect(() => {
-    setTableList(tables)
-  }, [tables])
+    const fetchTables = async () => {
+      const { response, error } = await tableApi.getTables({
+        page: searchParams?.get('page') || '1',
+      })
+
+      if (error) {
+        return toast.error("Couldn't fetch tables")
+      }
+
+      if (response) {
+        setTableList(response?.tables as TableWithPlayers[])
+        setPageCount(response?.pageCount as number)
+      }
+    }
+    fetchTables()
+  }, [])
 
   return (
     <div className="content_main">
@@ -71,9 +93,12 @@ export const TableContent = ({ tables, pageCount }: TableContentProps) => {
                 <i className="icon-room"></i>
               </strong>
               테이블
+              <LuRefreshCw
+                className="size-4 text-white !block hover:scale-110 transition cursor-pointer"
+                onClick={() => router.refresh()}
+              />
             </span>
           </h2>
-
           <div className="row flex flex-center gapy-40">
             <svg>
               <filter id="noiseFilter2">

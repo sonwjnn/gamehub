@@ -5,6 +5,10 @@ export const useCustomToast = () => {
   const [toasts, setToasts] = useState<CustomToastProps[]>([])
 
   const addToast = (toast: CustomToastProps) => {
+    const hasDuplicate = toasts.some(t => t.messages === toast.messages)
+
+    if (hasDuplicate) return
+
     setToasts(prevToasts => [...prevToasts, toast])
   }
 
