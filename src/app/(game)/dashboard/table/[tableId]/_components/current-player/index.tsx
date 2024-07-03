@@ -253,6 +253,7 @@ export const CurrentPlayer = ({
 
   useEffect(() => {
     if (isTurn && counter === 5) {
+      controls.volume(volume)
       controls.play()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
