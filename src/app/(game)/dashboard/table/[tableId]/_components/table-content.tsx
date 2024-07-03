@@ -415,6 +415,13 @@ export const TableContent = ({ tableId }: TableContentProps) => {
               const isTurn = matchRef.current?.isTurn
               const isRiver = matchRef.current?.isRiver
 
+              const hasBet =
+                participantsRef?.current &&
+                participantsRef?.current.some(item => item.bet > 0)
+              if (hasBet) {
+                setChipsAnimation(true)
+              }
+
               if (!isFlop && !isTurn && !isRiver) {
                 setMatch({
                   ...matchData,
