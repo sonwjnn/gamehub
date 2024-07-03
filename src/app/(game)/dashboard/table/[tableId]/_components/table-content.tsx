@@ -13,6 +13,7 @@ import {
   HighlightResponse,
   Match,
   Participant,
+  Player,
   PlayerHighlightCards,
   PlayerWithUser,
   PokerActions,
@@ -735,6 +736,22 @@ export const TableContent = ({ tableId }: TableContentProps) => {
         }
       )
 
+      socket.on(
+        PokerActions.UPDATE_MISSING_PLAYER_STACK,
+        ({ tableId, player }: { tableId: string; player: Player }) => {
+          setPlayers(prev => {
+            const updatedPlayers = prev.map(item => {
+              if (item.id === player.id) {
+                return { ...item, stack: player.stack }
+              }
+              return item
+            })
+
+            return updatedPlayers
+          })
+        }
+      )
+
       return () => {
         if (socket) {
           socket.off(PokerActions.JOIN_TABLE)
@@ -747,6 +764,7 @@ export const TableContent = ({ tableId }: TableContentProps) => {
           socket.off(PokerActions.PARTICIPANTS_UPDATED)
           socket.off(PokerActions.PLAYERS_UPDATED)
           socket.off(PokerActions.NEXT_MATCH_IS_COMING)
+          socket.off(PokerActions.UPDATE_MISSING_PLAYER_STACK)
 
           if (timerMatchId) {
             clearTimeout(timerMatchId)
