@@ -256,9 +256,7 @@ html {
 .game-html .pocker_list .pocker {
   position: absolute;
   height: 100%;
-  -webkit-box-shadow: -2px 4px 6px 4px rgba(0, 0, 0, 0.5019607843);
-  box-shadow: -2px 4px 6px 4px rgba(0, 0, 0, 0.5019607843);
-  border-radius: 3px;
+  width: 100%;
 }
 .game-html .pocker_list .pocker img {
   height: 100%;
@@ -1981,7 +1979,7 @@ html {
   display: block;
   width: 3.9583333333% !important;
   height: 12.976022567%;
-  background-image: url(/images/pocker.png);
+  background-image: url(/images/pocker/back2.png);
   background-size: 100% 100%;
   color: transparent;
   border-radius: 3px;
@@ -3225,19 +3223,28 @@ html {
 .game-html .group_midle .list_pocker .item .pocker {
   position: relative;
   display: inline-block;
+  width: 100%;
 }
 .game-html .group_midle .list_pocker .item_active .pocker {
   position: relative;
 }
 .game-html .group_midle .list_pocker .item_active .pocker:before {
   position: absolute;
-  top: -6%;
-  bottom: -6%;
-  left: -12%;
-  right: -11%;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
   content: '';
-  background-image: url(/images/flare.png);
-  background-size: 100% 100%;
+  -webkit-box-shadow: 0px 1px 15px 3px rgba(255, 236, 66, 0.363);
+  box-shadow: 0px 1px 15px 3px rgba(255, 236, 66, 0.363);
+  background-image: linear-gradient(
+    236.68deg,
+    #ceb900 13.29%,
+    #fafbc0 30.82%,
+    #feffdc 43.82%,
+    #ffec42 59.09%,
+    #c4ff9f 69.83%
+  );
   z-index: 1;
   pointer-events: none;
 }
@@ -3290,6 +3297,7 @@ html {
 }
 .game-html .group_midle .list_pocker.pocker_hide {
   gap: 0;
+  position: relative;
 }
 .game-html .group_midle .list_pocker.pocker_hide .item {
   width: 0%;
@@ -3360,20 +3368,35 @@ html {
 }
 .game-html .flipped .pocker:before {
   position: absolute;
-  top: -6%;
-  bottom: -6%;
-  left: -12%;
-  right: -11%;
+  width: 85%;
+  margin: auto;
+  top: -1px;
+  bottom: -1px;
   content: '';
-  z-index: 1;
+  z-index: -1;
+  left: 13%;
   pointer-events: none;
-  border-radius: 3px;
+  border-radius: 5px;
+  -webkit-transform: scale(1.02);
+  -ms-transform: scale(1.02);
+  transform: scale(1.02);
+}
+@media (min-width: 320px) and (orientation: portrait),
+  (max-width: 1023px) and (orientation: landscape) {
+  .game-html .flipped .pocker:before {
+    width: 76%;
+    left: -25%;
+  }
 }
 .game-html .flipped .pocker .front,
 .game-html .flipped .pocker .back {
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
   height: 100%;
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  width: 100%;
 }
 .game-html .flipped .pocker .front img,
 .game-html .flipped .pocker .back img {
@@ -3405,30 +3428,22 @@ html {
   -webkit-transform: rotateY(180deg);
   transform: rotateY(180deg);
 }
+.game-html .flipped.hide .pocker .front {
+  opacity: 0;
+}
 .game-html .flipped:not(.hide) {
   z-index: 9;
 }
 .game-html .flipped.status_active {
   z-index: 9;
 }
-.game-html .flipped.status_active .pocker {
-  -webkit-box-shadow:
-    inset 0 0 30px rgba(150, 100, 50, 0.3),
-    0 0 15px rgba(255, 255, 200, 0.8);
-  box-shadow:
-    inset 0 0 30px rgba(150, 100, 50, 0.3),
-    0 0 15px rgba(255, 255, 200, 0.8);
+.game-html .flipped.status_active .pocker img {
+  -webkit-box-shadow: 0px 0px 3px 2px rgba(255, 236, 66, 0.97);
+  box-shadow: 0px 0px 3px 2px rgba(255, 236, 66, 0.97);
 }
-.game-html .flipped.status_active .pocker:before {
-  background-image: url(/images/flare.png);
-  background-size: 100% 100%;
-}
-.game-html .flipped.status_active ~ div:not(.status_active) .pocker:before {
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background-color: rgba(0, 0, 0, 0.6);
+.game-html .flipped.status_active ~ div .pocker img {
+  -webkit-filter: brightness(0.5);
+  filter: brightness(0.5);
 }
 @-webkit-keyframes mymove {
   from {
@@ -5207,7 +5222,7 @@ html {
   top: 30px;
   right: 0;
   padding: 8px;
-  z-index: 999;
+  z-index: 99999;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;

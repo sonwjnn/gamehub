@@ -12,7 +12,7 @@ export const Card = ({ imageUrl }: CardProps) => {
     <>
       <div className="front">
         <Image
-          src={imageUrl || '/images/pocker.png'}
+          src={imageUrl || '/images/back2.png'}
           alt="pokerOnImage"
           width={0}
           height={0}
@@ -23,7 +23,7 @@ export const Card = ({ imageUrl }: CardProps) => {
       </div>
       <div className="back">
         <Image
-          src="/images/pocker.png"
+          src="/images/pocker/back2.png"
           alt="pokerOnImage"
           width={0}
           height={0}

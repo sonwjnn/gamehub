@@ -60,7 +60,6 @@ export const CurrentPlayer = ({
   playersHighlightSet,
 }: CurrentPlayerProps) => {
   const { volume } = useVolume()
-  const isMounted = useMountedState()
 
   const gender = getGenderFromImageUrl(player?.user?.image || '')
 
@@ -533,8 +532,6 @@ export const CurrentPlayer = ({
       item.suit === currentParticipant?.cardTwo?.suit
     )
   })
-
-  if (!isMounted) return null
 
   const hands = (cards: CustomCard[]): CustomCard[] => {
     return Array.from(
