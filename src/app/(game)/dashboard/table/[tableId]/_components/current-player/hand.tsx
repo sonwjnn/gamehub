@@ -65,15 +65,14 @@ export const Hand = ({
           isMobile && '-translate-x-1.5 -translate-y-1.5'
         )}
       >
-        <div
-          className={cn(
-            'pocker ',
-            hasHighlight &&
-              !hasFirstHighlight &&
-              'before:!inset-0 before:!bg-black/30'
-          )}
-        >
-          <Card imageUrl={imageUrl.first} value={10} />
+        <div className={cn('pocker')}>
+          <Card
+            imageUrl={imageUrl.first}
+            value={10}
+            frontClassName={cn(
+              hasHighlight && !hasFirstHighlight && 'brightness-50'
+            )}
+          />
         </div>
       </div>
       <div
@@ -85,15 +84,14 @@ export const Hand = ({
           isMobile && 'translate-x-2.5 -translate-y-1.5'
         )}
       >
-        <div
-          className={cn(
-            'pocker ',
-            hasHighlight &&
-              !hasSecondHighlight &&
-              'before:!inset-0 before:!bg-black/30'
-          )}
-        >
-          <Card imageUrl={imageUrl.second} value={10} />
+        <div className={cn('pocker')}>
+          <Card
+            imageUrl={imageUrl.second}
+            value={10}
+            frontClassName={cn(
+              hasHighlight && !hasSecondHighlight && 'brightness-50'
+            )}
+          />
         </div>
       </div>
     </div>

@@ -1,3 +1,4 @@
+import { cn } from '@/lib/utils'
 import Image from 'next/image'
 
 interface CardProps {
@@ -5,9 +6,15 @@ interface CardProps {
   value: number
   className?: string
   isShowdown?: boolean
+  frontClassName?: string
+  backClassName?: string
 }
 
-export const Card = ({ imageUrl }: CardProps) => {
+export const Card = ({
+  imageUrl,
+  frontClassName,
+  backClassName,
+}: CardProps) => {
   return (
     <>
       <div className="front">
@@ -17,7 +24,7 @@ export const Card = ({ imageUrl }: CardProps) => {
           width={0}
           height={0}
           sizes="100vw"
-          className="w-auto h-full"
+          className={cn('w-auto h-full', frontClassName)}
           unoptimized
         />
       </div>
@@ -28,7 +35,7 @@ export const Card = ({ imageUrl }: CardProps) => {
           width={0}
           height={0}
           sizes="100vw"
-          className="w-auto h-full"
+          className={cn('w-auto h-full', backClassName)}
           unoptimized
         />
       </div>

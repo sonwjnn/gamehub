@@ -4,7 +4,7 @@ export type PlayerButtonActionType =
   | 'QUARTER'
   | 'HALF'
   | 'FULL'
-  | 'ALL'
+  | 'ALLIN'
   | 'FOLD'
   | 'RAISE'
   | 'CHECK'
@@ -19,7 +19,7 @@ const label = {
   QUARTER: '쿼터',
   HALF: '하프',
   FULL: '풀',
-  ALL: '올인',
+  ALLIN: '올인',
   FOLD: '풀',
   RAISE: '라이즈',
   CHECK: '체크',
@@ -27,14 +27,15 @@ const label = {
 }
 
 export const StatusCircle = ({ amount, type }: StatusCircleProps) => {
-  const formmatedType = type === 'CHECK' ? 'CALL' : type
+  const formmatedType =
+    type === 'CHECK' ? 'CALL' : type === 'ALLIN' ? 'ALL' : type
 
   const canHaveAmout =
     type === 'RAISE' ||
     type === 'FULL' ||
     type === 'HALF' ||
     type === 'QUARTER' ||
-    type === 'ALL'
+    type === 'ALLIN'
 
   if (!type) return null
 

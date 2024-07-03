@@ -250,17 +250,13 @@ export const Board = ({ match, highlightCards }: BoardProps) => {
                   hasFirstFlopHighlight && 'status_active'
                 )}
               >
-                <div
-                  className={cn(
-                    'pocker',
-                    hasHighLight &&
-                      !hasFirstFlopHighlight &&
-                      'before:!inset-0 before:!bg-black/30'
-                  )}
-                >
+                <div className={cn('pocker')}>
                   <Card
                     imageUrl={`/images/pocker/${board[0].rank.toLowerCase()}_${board[0].suit.toLowerCase()}.png`}
                     value={10}
+                    frontClassName={cn(
+                      hasHighLight && !hasFirstFlopHighlight && 'brightness-50'
+                    )}
                   />
                 </div>
               </div>
@@ -272,17 +268,13 @@ export const Board = ({ match, highlightCards }: BoardProps) => {
                   hasSecondFlopHighlight && 'status_active'
                 )}
               >
-                <div
-                  className={cn(
-                    'pocker',
-                    hasHighLight &&
-                      !hasSecondFlopHighlight &&
-                      'before:!inset-0 before:!bg-black/30'
-                  )}
-                >
+                <div className={cn('pocker')}>
                   <Card
                     imageUrl={`/images/pocker/${board[1].rank.toLowerCase()}_${board[1].suit.toLowerCase()}.png`}
                     value={10}
+                    frontClassName={cn(
+                      hasHighLight && !hasSecondFlopHighlight && 'brightness-50'
+                    )}
                   />
                 </div>
               </div>
@@ -294,17 +286,13 @@ export const Board = ({ match, highlightCards }: BoardProps) => {
                   hasThirdFlopHighlight && 'status_active'
                 )}
               >
-                <div
-                  className={cn(
-                    'pocker',
-                    hasHighLight &&
-                      !hasThirdFlopHighlight &&
-                      'before:!inset-0 before:!bg-black/30'
-                  )}
-                >
+                <div className={cn('pocker')}>
                   <Card
                     imageUrl={`/images/pocker/${board[2].rank.toLowerCase()}_${board[2].suit.toLowerCase()}.png`}
                     value={10}
+                    frontClassName={cn(
+                      hasHighLight && !hasThirdFlopHighlight && 'brightness-50'
+                    )}
                   />
                 </div>
               </div>
@@ -325,17 +313,13 @@ export const Board = ({ match, highlightCards }: BoardProps) => {
                     hasTurnHighlight && 'status_active'
                   )}
                 >
-                  <div
-                    className={cn(
-                      'pocker',
-                      hasHighLight &&
-                        !hasTurnHighlight &&
-                        'before:!inset-0 before:!bg-black/30'
-                    )}
-                  >
+                  <div className={cn('pocker')}>
                     <Card
                       imageUrl={`/images/pocker/${board[3].rank.toLowerCase()}_${board[3].suit.toLowerCase()}.png`}
                       value={10}
+                      frontClassName={cn(
+                        hasHighLight && !hasTurnHighlight && 'brightness-50'
+                      )}
                     />
                   </div>
                 </div>
@@ -353,17 +337,13 @@ export const Board = ({ match, highlightCards }: BoardProps) => {
                     hasRiverHighlight && 'status_active'
                   )}
                 >
-                  <div
-                    className={cn(
-                      'pocker',
-                      hasHighLight &&
-                        !hasRiverHighlight &&
-                        'before:!inset-0 before:!bg-black/30'
-                    )}
-                  >
+                  <div className={cn('pocker')}>
                     <Card
                       imageUrl={`/images/pocker/${board[4].rank.toLowerCase()}_${board[4].suit.toLowerCase()}.png`}
                       value={10}
+                      frontClassName={cn(
+                        hasHighLight && !hasRiverHighlight && 'brightness-50'
+                      )}
                     />
                   </div>
                 </div>
