@@ -702,7 +702,7 @@ export const TableContent = ({ tableId }: TableContentProps) => {
 
       socket.on(PokerActions.HIGHLIGHT_CARDS, (encoding: string) => {
         const { playerHighlightSet, isAllAllIn } = JSON.parse(
-          atob(encoding)
+          Buffer.from(encoding, 'base64').toString('utf-8')
         ) as HighlightResponse
         if (playerHighlightSet) {
           const userId = user?.id

@@ -432,7 +432,7 @@ export const CurrentPlayer = ({
 
     const handName = lastWinMessage.handName
 
-    if (!handName) return
+    // if (!handName) return
 
     const handleSound = () => {
       if (!isWinner) {
@@ -554,6 +554,8 @@ export const CurrentPlayer = ({
       </div>
     )
   }
+
+  console.log(highlightCards?.name)
 
   return (
     <div
