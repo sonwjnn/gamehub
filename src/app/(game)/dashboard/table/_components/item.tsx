@@ -9,9 +9,10 @@ import { useRouter } from 'next/navigation'
 
 interface ItemProps {
   table: Table
+  totalPlayersByMinBuyIn: number
 }
 
-export const Item = ({ table }: ItemProps) => {
+export const Item = ({ table, totalPlayersByMinBuyIn }: ItemProps) => {
   const router = useRouter()
   const user = useCurrentUser()
   const { onOpen } = useModal()
@@ -69,9 +70,11 @@ export const Item = ({ table }: ItemProps) => {
             <span className="icon sz-12 icon-color-white">
               <i className="icon-group"></i>
             </span>
-            (수)량
+            (수)량:
           </dt>
-          <dd>{table.players.length}/10</dd>
+          <dd>
+            {table.players.length}/{totalPlayersByMinBuyIn}
+          </dd>
         </dl>
       </div>
     </div>
