@@ -549,7 +549,12 @@ export const CurrentPlayer = ({
 
   const WinRateList = () => {
     return (
-      <div className="absolute right-[-40%] bottom-0 lg:right-8 lg:top-[-12%]">
+      <div
+        className={cn(
+          'absolute right-[-40%] bottom-0 lg:right-8 lg:top-[-12%]',
+          { block: isFolded || isShowdown || isHaveWinner }
+        )}
+      >
         <div className="bg-[#0e063a] text-white text-xs lg:text-sm font-bold rounded-sm p-1 lg:p-2 mb-2 opacity-80 border shining-card min-w-20 lg:min-w-32">
           <p className="text-[#ffaa00] text-center">{winRateResult()}%</p>
         </div>
