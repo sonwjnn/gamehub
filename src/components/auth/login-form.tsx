@@ -79,7 +79,7 @@ export const LoginForm = ({}: LoginFormProps) => {
                     <div className="input-group">
                       <div className="wrap-input">
                         <Input type="text" disabled={isPending} {...field} />
-                        <label>사용자 이름</label>
+                        <label>아이디</label>
                       </div>
                     </div>
                   </FormControl>

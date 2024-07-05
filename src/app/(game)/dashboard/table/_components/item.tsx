@@ -52,7 +52,7 @@ export const Item = ({ table, totalPlayersByMinBuyIn }: ItemProps) => {
             <span className="icon sz-12 icon-color-white">
               <i className="icon-dolar"></i>
             </span>
-            매입금:
+            최소바인:
           </dt>
           <dd>{formatChipsAmount(table.minBuyIn)}$</dd>
         </dl>
@@ -61,7 +61,7 @@ export const Item = ({ table, totalPlayersByMinBuyIn }: ItemProps) => {
             <span className="icon sz-12 icon-color-white">
               <i className="icon-dolar"></i>
             </span>
-            자금:
+            블라인드:
           </dt>
           <dd>{formatChipsAmount(table.ante)}$</dd>
         </dl>
@@ -70,7 +70,7 @@ export const Item = ({ table, totalPlayersByMinBuyIn }: ItemProps) => {
             <span className="icon sz-12 icon-color-white">
               <i className="icon-group"></i>
             </span>
-            (수)량:
+            인원:
           </dt>
           <dd>
             {table.players.length}/{totalPlayersByMinBuyIn}

@@ -79,8 +79,8 @@ export const Statistical = ({ tableId }: StatisticalProps) => {
   const difference = totalWin - totalLose
   const status =
     difference > 0
-      ? `${formatChipsAmount(difference)}$ (Thắng)`
-      : `${formatChipsAmount(Math.abs(difference))}$ (Thua)`
+      ? `${formatChipsAmount(difference)}$ (승)`
+      : `${formatChipsAmount(Math.abs(difference))}$ (패)`
   return (
     <div
       className={cn(
@@ -99,7 +99,7 @@ export const Statistical = ({ tableId }: StatisticalProps) => {
       <div className="content">
         <dl className="flex flex-midle">
           <dt>승 :</dt>
-          <dd>{statistical.winCount} ván</dd>
+          <dd>{statistical.winCount} 판</dd>
           <dd className="flex gap-8 flex-midle">
             <span className="icon sz-8 flex-shrink">
               <i className="icon-coin"></i>
@@ -109,7 +109,7 @@ export const Statistical = ({ tableId }: StatisticalProps) => {
         </dl>
         <dl className="flex flex-midle">
           <dt>패 :</dt>
-          <dd>{statistical.loseCount} ván</dd>
+          <dd>{statistical.loseCount} 판</dd>
           <dd className="flex gap-8 flex-midle">
             <span className="icon sz-8 flex-shrink">
               <i className="icon-coin"></i>

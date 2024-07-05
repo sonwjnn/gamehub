@@ -45,7 +45,7 @@ export const MobileToggle = () => {
                 onClick={() => setIsOpen(false)}
               />
               <BoardItem
-                label="캐시 게임"
+                label="입출금"
                 icon={<i className="icon-cash"></i>}
                 href="/settings/cash"
                 onClick={() => setIsOpen(false)}

@@ -101,7 +101,7 @@ export const BankForm = ({ bank }: BankFormProps) => {
                       disabled={isPending}
                       {...field}
                     />
-                    <label>카드 번호</label>
+                    <label>계좌번호</label>
                   </div>
                 </div>
               </FormControl>
@@ -162,7 +162,7 @@ export const BankForm = ({ bank }: BankFormProps) => {
                 <div className="input-group">
                   <div className="wrap-input">
                     <Input disabled={isPending} {...field} />
-                    <label>카드 소지자 이름</label>
+                    <label>예금주</label>
                   </div>
                 </div>
               </FormControl>

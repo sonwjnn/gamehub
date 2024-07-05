@@ -2,7 +2,6 @@
 
 import { cn } from '@/lib/utils'
 import { useModal } from '@/store/use-modal-store'
-import { X } from 'lucide-react'
 import { useParams } from 'next/navigation'
 
 export const RuleModal = () => {
@@ -32,115 +31,114 @@ export const RuleModal = () => {
             <div className="scrollbar">
               <h3 className="ttl color-primary text-up">
                 {' '}
-                <span>Thiết lập bàn chơi ban đầu</span>
+                <span>초기 테이블 설정</span>
               </h3>
               <div className="text">
-                <p>- Số người chơi: từ 2 đến 10 người chơi</p>
+                <p>- 플레이어 수: 2명에서 10명까지</p>
                 <p>
-                  - Chọn ra người làm Dealer và đưa thẻ Dealer đặt trước mặt
-                  người này. Để đảm bảo công bằng, sau mỗi ván chơi, vị trí
-                  Dealer sẽ chuyển cho người bên trái theo chiều kim đồng hồ.
-                  Như vậy tất cả người chơi đều sẽ lần lượt làm Dealer.
+                  - 딜러가 될 사람을 선택하고 딜러 카드를 이 사람 앞에 놓습니다.
+                  공정성을 보장하기 위해 각 게임이 끝난 후 딜러 위치는 시계
+                  방향으로 왼쪽에 있는 사람에게 이전됩니다. 따라서 모든
+                  플레이어가 차례로 딜러가 됩니다..
                 </p>
                 <p>
-                  - Dealer tiến hành chia theo chiều kim đồng hồ, mỗi người chơi
-                  2 lá bài và lật 5 lá bài đượt đặt úp ở giữa bàn chơi.
+                  - 딜러는 시계 방향으로 딜을 진행하며, 각 플레이어는 카드 2장을
+                  테이블 중앙에 뒤집습니다..
                 </p>
               </div>
               <br />
               <h3 className="ttl color-primary text-up">
-                <span>Tổng quan một ván Poker</span>
+                <span>포커 게임 개요</span>
               </h3>
               <div className="text">
                 <p>
-                  - Một ván bài Poker bao gồm 4 vòng cược là:
+                  - 포커 게임에는 4개의 베팅 라운드가 포함됩니다.:
                   <strong className="color-main">
                     Fre Flop, Flop, Turn, River.{' '}
                   </strong>
                 </p>
                 <p>
-                  - Sau mỗi vòng cược, tất cả tiền cược được gom vào vào một chỗ
-                  gọi là <strong className="color-main">Pot. </strong>Về nguyên
-                  tắc, một vòng cược chỉ kết thúc khi tiền cược của tất cả người
-                  chơi đều bằng nhau và không ai tố tiếp.{' '}
+                  - 각 베팅 라운드가 끝나면 모든 베팅은 다음과 같은 한 곳에
+                  모아집니다. <strong className="color-main">Pot. </strong>
+                  원칙적으로 베팅 라운드는 모든 플레이어의 베팅이 동일하고
+                  누구도 다시 레이즈하지 않는 경우에만 종료됩니다..{' '}
                 </p>
                 <p>
-                  - Sau 4 vòng chơi, người chơi nào sở hữu Tay bài mạnh nhất sẽ
-                  là người chiến thắng. Tuy nhiên, ván bài thực tế có thể kết
-                  thúc bất cứ lúc nào, khi có người tố và tất cả những người
-                  khác đều bỏ bài theo, khi đó người tố là người chiến thắng và
-                  ván kết thúc.
+                  - 4라운드 플레이 후, 가장 강한 패를 가진 플레이어가 승자가
+                  됩니다. 그러나 실제 핸드는 언제든지 끝날 수 있습니다. 누군가가
+                  레이즈하고 다른 모든 사람들이 폴드하면 레이즈한 사람이 승자가
+                  되고 게임이 종료됩니다..
                 </p>
                 <p>
-                  - Người chiến thắng sẽ ăn toàn bộ số tiền cược của mọi người ở{' '}
-                  <strong className="color-main">pot. </strong>Trường hợp người
-                  chiến thắng đã cược hết tiền trước mọi người{' '}
-                  <strong className="color-main">(all- in) </strong>thì chỉ có
-                  thể ăn được tiền trong pot tính tới thời điểm tất tay.
+                  - 승자는 모든 사람의 전체 베팅에서 승리하게 됩니다.{' '}
+                  <strong className="color-main">pot. </strong>승자가 다른
+                  사람보다 먼저 모든 돈을 걸었을 경우{' '}
+                  <strong className="color-main">(all- in) </strong>올인
+                  시점까지만 팟에 있는 돈을 얻을 수 있습니다..
                 </p>
               </div>
               <br />
               <h3 className="ttl color-primary text-up">
                 {' '}
-                <span>Hành động trong một lượt</span>
+                <span>한 턴에 액션</span>
               </h3>
               <div className="text">
-                Ở mỗi lượt chơi, người chơi có quyền đưa ra một trong số cách
-                hành động sau:
+                매 턴마다 플레이어는 다음 행동 중 하나를 취할 권리가 있습니다.:
               </div>
               <br />
-              <h4 className="color-main fw-700">Bỏ bài (Fold)</h4>
+              <h4 className="color-main fw-700">카드 건너뛰기 (Fold)</h4>
               <div className="text">
                 <p>
-                  Người chơi dừng chơi, ngồi chờ ván sau. Hành động này thường
-                  xảy ra khi người chơi bị chia bài xấu không có cơ hội chiến
-                  thắng hoặc khi người chơi không muốn bỏ thêm tiền cho đối thủ
-                  để theo tiếp ván chơi. Bạn sẽ bị mất số tiền cược trước đó.
+                  플레이어는 플레이를 멈추고 다음 게임을 기다립니다. 이 동작은
+                  플레이어가 이길 가능성이 없는 나쁜 카드를 받았거나 플레이어가
+                  게임을 계속하기 위해 상대방에게 더 많은 돈을 주고 싶지 않을 때
+                  자주 발생합니다. 이전 베팅을 잃게 됩니다..
                 </p>
               </div>
               <br />
-              <h4 className="color-main fw-700">Theo (Call)</h4>
+              <h4 className="color-main fw-700">에 따르면 (Call)</h4>
               <div className="text">
-                Bạn bỏ ra số tiền bằng với số tiền của người chơi trước đó tố để
-                theo ván đó.
+                해당 게임을 따르기 위해 이전 플레이어가 베팅한 금액과 동일한
+                금액을 지출합니다..
               </div>
               <br />
-              <h4 className="color-main fw-700">Cược (Bet)</h4>
+              <h4 className="color-main fw-700">내기 (Bet)</h4>
               <div className="text">
-                Bạn có thể cược khi chưa ai cược cả. Khi đó, những người chơi
-                khác muốn tiếp tục chơi thì cần phải chơi ít nhất bằng số tiền
-                của bạn đã cược (Call) hoặc cược thêm (Raise) hoặc bỏ bài
-                (Fold).
+                아직 아무도 베팅하지 않았을 때 베팅할 수 있습니다. 그 때,
+                계속해서 플레이하고 싶은 다른 플레이어들은 최소한 베팅한
+                금액만큼 플레이해야 합니다. (Call) 아니면 그 이상을 걸거나
+                (Raise) 또는 접어 (Fold).
               </div>
               <br />
-              <h4 className="color-main fw-700">Tố (Raise)</h4>
+              <h4 className="color-main fw-700">에게 (Raise)</h4>
               <div className="text">
                 <p>
-                  Khi có người đã đặt cược, bạn sẽ lựa chọn cược thêm gọi là Tố.
+                  누군가가 베팅을 하면 레이즈라는 추가 베팅을 선택하게 됩니다..
                 </p>
                 <p>
-                  Ví dụ : Ban đầu hai người chơi A và B cược mỗi người 250, tổng
-                  là 500. Người chơi A chọn Tố thêm 250. Vậy tổng là 750. Người
-                  chơi B lúc này có 3 hành động được lựa chọn hoặc là Theo thì
-                  cược thêm 250 như người chơi A, hoặc Tố thêm thì phải cược
-                  thêm so với người chơi A ví dụ 350 hoặc Bỏ bài (Fold).
+                  예: 처음에 두 명의 플레이어 A와 B가 각각 250을 베팅했고 총
+                  금액은 500입니다. 플레이어 A는 추가로 250을 레이즈하기로
+                  선택했습니다. 따라서 총 금액은 750입니다. 이제 플레이어 B는
+                  선택할 수 있는 3개의 액션이 있거나 콜을 한 다음 250을
+                  추가합니다. 플레이어 A가 레이즈하거나 더 많이 레이즈하려면
+                  플레이어 A보다 더 많이 베팅해야 합니다(예: 350 또는 폴드).
+                  (Fold).
                 </p>
               </div>
               <br />
-              <h4 className="color-main fw-700">Tố tất (All- in)</h4>
+              <h4 className="color-main fw-700">모든 (All- in)</h4>
               <div className="text">
-                Đó là khi bạn tố bằng toàn bộ số tiền đang có của mình hay còn
-                gọi là tất tay. Khi bạn tố tất và ván bài vẫn tiếp tục thì việc
-                còn lại của bạn chỉ là ngồi xem. Ở cuối ván bài sẽ ngửa bài để
-                phân định thắng thua. Nếu đến cuối cùng bạn là người chiến thắng
-                thì bạn sẽ chỉ nhận được số tiền trong pot tính tới thời điểm
-                bạn tố tất.
+                이때 돈을 전부 걸고 베팅하는 것을 올인이라고도 합니다. 모두
+                모으고 게임이 계속되면, 여러분이 할 수 있는 일은 편안히 앉아서
+                지켜보는 것뿐입니다. 게임이 끝나면 카드가 공개되어 승자와 패자를
+                결정합니다. 결국 당신이 승자가 된다면, 당신은 모두 콜한
+                시점까지의 팟에 있는 금액만 받게 됩니다..
               </div>
               <br />
-              <h4 className="color-main fw-700">Xem (Check)</h4>
+              <h4 className="color-main fw-700">보다 (Check)</h4>
               <div className="text">
-                Khi chưa có ai cược, bạn cũng không cược và chờ hành động của
-                người chơi khác.
+                아무도 배팅하지 않을 때는 배팅하지 않고 다른 플레이어의 행동을
+                기다립니다..
               </div>
             </div>
           </div>

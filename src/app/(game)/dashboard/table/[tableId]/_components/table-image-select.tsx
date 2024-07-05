@@ -18,25 +18,25 @@ export const TableImageSelect = () => {
     setImageSrc(value)
   }
 
-  const defaultLabel = TableImageEnum.V1 === imageSrc ? 'v1' : 'v2'
+  const defaultLabel = TableImageEnum.V1 === imageSrc ? '스타일1' : '스타일2'
 
   return (
     <Select onValueChange={onValueChange} defaultValue={imageSrc}>
-      <SelectTrigger className="w-[80px] py-2 h-8">
+      <SelectTrigger className="w-[100px] py-2 h-8">
         <SelectValue placeholder={defaultLabel} />
       </SelectTrigger>
       <SelectContent>
         <SelectItem
           value={TableImageEnum.V1}
-          defaultChecked={defaultLabel === 'v1'}
+          defaultChecked={defaultLabel === '스타일1'}
         >
-          v1
+          스타일1
         </SelectItem>
         <SelectItem
           value={TableImageEnum.V2}
-          defaultChecked={defaultLabel === 'v2'}
+          defaultChecked={defaultLabel === '스타일2'}
         >
-          v2
+          스타일2
         </SelectItem>
       </SelectContent>
     </Select>

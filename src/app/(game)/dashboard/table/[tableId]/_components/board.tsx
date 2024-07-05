@@ -354,11 +354,11 @@ export const Board = ({ match, highlightCards }: BoardProps) => {
       </div>
       <div className="group_number flex flex-midle flex-center gap-24">
         <div className="text">
-          TOTAL:
+          Total:
           <span className="fw-900">$ {formatChipsAmount(match?.pot || 0)}</span>
         </div>
         <div className="text">
-          CALL:
+          Call:
           <span className="fw-900">
             $ {formatChipsAmount(match?.callAmount || 0)}
           </span>

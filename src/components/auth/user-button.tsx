@@ -152,7 +152,7 @@ export const UserButton = ({ type = 'default' }: Props) => {
                     href="/settings/profile"
                   />
                   <BoardItem
-                    label="캐시 게임"
+                    label="입출금"
                     icon={<i className="icon-cash"></i>}
                     href="/settings/cash"
                   />

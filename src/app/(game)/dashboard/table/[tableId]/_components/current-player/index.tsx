@@ -145,6 +145,7 @@ export const CurrentPlayer = ({
     (isLeaveNext && isHaveWinner) ||
     (!isAutoRebuy &&
       !autoRebuyAmount &&
+      isHaveWinner &&
       (isStackEmpty || isNotEnoughStack || foldCount >= 2))
 
   const canShowHand = match && isWinner && !match.isShowdown
@@ -556,8 +557,6 @@ export const CurrentPlayer = ({
     )
   }
 
-  console.log(highlightCards?.name)
-
   return (
     <div
       className={cn(
@@ -592,7 +591,7 @@ export const CurrentPlayer = ({
             <ReviewStars stars={stars} />
           </div>
           <div className="btn_detail" onClick={() => onOpen('quality')}>
-            세부 사항
+            족보
           </div>
         </div>
       </div>
@@ -707,7 +706,7 @@ export const CurrentPlayer = ({
                   </div>
                   $ {formatChipsAmount(currentStack)}
                 </div>
-                <RebuyButton tableId={tableId} />
+                {/* <RebuyButton tableId={tableId} /> */}
               </div>
 
               {isFolded && (

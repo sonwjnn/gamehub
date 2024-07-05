@@ -8,7 +8,7 @@ const Loading = () => {
           <strong className="icon sz-24 icon-color-white flex-shrink">
             <i className="icon-cash"></i>
           </strong>
-          캐시 게임
+          입출금
         </span>
       </h2>
       <div className="row flex flex-center gapy-40 mt-16 ">

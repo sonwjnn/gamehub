@@ -78,7 +78,7 @@ export const RegisterForm = ({}: RegisterFormProps) => {
                     <div className="input-group">
                       <div className="wrap-input">
                         <Input disabled={isPending} {...field} />
-                        <label>사용자 이름</label>
+                        <label>아이디</label>
                         <span className="validation">Text err</span>
                       </div>
                     </div>
@@ -97,7 +97,7 @@ export const RegisterForm = ({}: RegisterFormProps) => {
                     <div className="input-group">
                       <div className="wrap-input">
                         <Input disabled={isPending} {...field} />
-                        <label>게임 내 이름</label>
+                        <label>닉네임</label>
                         <span className="validation">Text err</span>
                       </div>
                     </div>
