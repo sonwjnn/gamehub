@@ -60,11 +60,11 @@ export const ActionItem = ({
   const canCheck = match && !isHaveWinner && !isTurn
 
   //prettier-ignore
-  useKey( shortcut, () => {
-    if (!disabled && !isChatFocus) {
-      // onPlayAudio()
-      onClick()
-    }
+  useKey(shortcut, () => {
+    if (disabled) return
+    
+    // onPlayAudio()
+    onClick()
   }, {}, [onClick])
 
   useEffect(() => {
