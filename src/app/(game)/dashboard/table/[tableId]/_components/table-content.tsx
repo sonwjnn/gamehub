@@ -811,6 +811,12 @@ export const TableContent = ({ tableId }: TableContentProps) => {
   }, [tableId])
 
   useEffect(() => {
+    if (currentParticipant && !isHandVisible && !isShuffle) {
+      setHandVisible(true)
+    }
+  }, [])
+
+  useEffect(() => {
     if (playersHighlightSet && Object.keys(playersHighlightSet).length > 0) {
       const userId = user?.id
       if (!userId) return
