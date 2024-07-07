@@ -551,7 +551,7 @@ export const CurrentPlayer = ({
     return (
       <div
         className={cn(
-          'absolute right-[-40%] bottom-0 lg:right-8 lg:top-[-12%]',
+          'absolute right-[-40%] bottom-0 lg:right-8 lg:top-[-12%] hidden',
           { block: isFolded || isShowdown || isHaveWinner }
         )}
       >
