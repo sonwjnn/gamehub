@@ -916,7 +916,7 @@ export const TableContent = ({ tableId }: TableContentProps) => {
           {/* <Button onClick={() => addRamdomToast()}>add toast</Button> */}
           <TableImageSelect />
         </div>
-        <RebuyButton className="btn_cash_chip_sp" tableId={tableId} />
+        {/* <RebuyButton className="btn_cash_chip_sp" tableId={tableId} /> */}
 
         <div className="inner">
           <div className="list_user" ref={tableRef}>
