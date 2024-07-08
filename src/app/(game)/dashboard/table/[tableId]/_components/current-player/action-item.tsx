@@ -5,7 +5,6 @@ import { Match } from '@/types'
 import { useEffect } from 'react'
 import { useAutoAction } from '@/store/use-auto-action'
 import { useSidebarMobile } from '@/store/use-sidebar-mobile'
-import { useChatFocus } from '@/store/use-chat-focus'
 
 type ActionItemProps = {
   shortcut: string
@@ -51,7 +50,6 @@ export const ActionItem = ({
   const [audioGirl, _g, girlControls] = useAudio({ src: audioGirlSrc })
   const { isChecked, callAmount, setAutoAction } = useAutoAction()
   const { sidebarMobile, setSidebarMobile } = useSidebarMobile()
-  const { isChatFocus } = useChatFocus()
 
   const canAutoAction =
     isTurn && isChecked === type && callAmount === match?.callAmount
@@ -63,7 +61,7 @@ export const ActionItem = ({
   useKey(shortcut, () => {
     if (disabled) return
     
-    // onPlayAudio()
+    onPlayAudio()
     onClick()
   }, {}, [onClick])
 
@@ -84,12 +82,12 @@ export const ActionItem = ({
         if (sidebarMobile !== 'raise') {
           setSidebarMobile('raise')
         } else {
-          // onPlayAudio()
+          onPlayAudio()
           onClick()
         }
         return
       }
-      // onPlayAudio()
+      onPlayAudio()
       onClick()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -127,12 +125,12 @@ export const ActionItem = ({
       if (sidebarMobile !== 'raise') {
         setSidebarMobile('raise')
       } else {
-        // onPlayAudio()
+        onPlayAudio()
         onClick()
       }
       return
     }
-    // onPlayAudio()
+    onPlayAudio()
     onClick()
   }
 
