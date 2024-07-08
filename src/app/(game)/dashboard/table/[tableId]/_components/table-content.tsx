@@ -38,7 +38,7 @@ import { AutoRebuyToggle } from '@/components/auto-rebuy-toggle'
 import { RebuyButton } from '@/components/rebuy-button'
 import { useAutoRebuy } from '@/store/use-auto-rebuy'
 import { LeaveNext } from './leave-next'
-import { useAudio } from 'react-use'
+import { useAudio, useMedia } from 'react-use'
 import { getPlayerIdByUserId } from '@/app/(game)/dashboard/table/_utils/user'
 import { useCustomToast } from '@/hooks/use-custom-toast'
 import { CustomToast } from '@/components/custom-toast'
@@ -46,6 +46,7 @@ import { Button } from '@/components/ui/button'
 import { useTableImage } from '@/store/use-table-image'
 import { TableImageSelect } from './table-image-select'
 import { useVolume } from '@/store/use-volume'
+import { cn } from '@/lib/utils'
 
 interface TableContentProps {
   tableId: string
@@ -60,6 +61,10 @@ export const TableContent = ({ tableId }: TableContentProps) => {
   const { toasts, addToast, removeToast } = useCustomToast()
   const { imageSrc } = useTableImage()
   const { volume } = useVolume()
+  const isPortrait = useMedia('(min-width: 320px) and (orientation: portrait)')
+  const isLandscape = useMedia(
+    '(max-width: 1023px) and (orientation: landscape)'
+  )
 
   const [messages, setMessages] = useState([] as string[])
   const [match, setMatch] = useState<Match | null>(null)
@@ -906,18 +911,22 @@ export const TableContent = ({ tableId }: TableContentProps) => {
               playerId={currentPlayer?.id}
             />
           ) : null}
-
           <AutoRebuyToggle
             tableId={tableId}
             player={currentPlayer}
             match={match}
           />
-          {/* <Button onClick={() => addToastMessage()}>add toast</Button> */}
           <TableImageSelect />
         </div>
         {/* <RebuyButton className="btn_cash_chip_sp" tableId={tableId} /> */}
 
-        <div className="inner">
+        <div
+          className="inner"
+          style={{
+            backgroundImage:
+              isPortrait || isLandscape ? `url("${imageSrc}")` : '',
+          }}
+        >
           <div className="list_user" ref={tableRef}>
             <div className="dealer" ref={dealerRef}></div>
 
