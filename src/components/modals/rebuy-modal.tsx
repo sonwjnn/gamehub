@@ -1,7 +1,5 @@
 'use client'
 
-import { Button } from '@/components/ui/button'
-
 import {
   Form,
   FormControl,
@@ -19,13 +17,11 @@ import { useCurrentUser } from '@/hooks/use-current-user'
 import * as z from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
-import { useSocket } from '@/providers/socket-provider'
 import playerApi from '@/services/api/modules/player-api'
 import { toast } from 'sonner'
 import { useSession } from 'next-auth/react'
 import tableApi from '@/services/api/modules/table-api'
 import { Table } from '@/types'
-import { X } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { formatChipsAmount } from '@/utils/formatting'
 
@@ -39,7 +35,6 @@ export const RebuyModal = () => {
   const { isOpen, onClose, type, data } = useModal()
   const router = useRouter()
   const user = useCurrentUser()
-  const { socket } = useSocket()
   const { tableId } = data
   const { update } = useSession()
 

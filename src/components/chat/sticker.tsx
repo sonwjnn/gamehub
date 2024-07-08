@@ -1,5 +1,4 @@
 import { cn } from '@/lib/utils'
-import Image from 'next/image'
 
 type StickerProps = {
   show: boolean
@@ -39,15 +38,9 @@ export const Sticker = ({ show, setShow, onClick }: StickerProps) => {
             className="item rounded-sm cursor-pointer transition hover:bg-white/20"
             onClick={() => handleClick(src)}
           >
-            <Image
-              src={src}
-              alt="sticker"
-              width={0}
-              height={0}
-              sizes="100vw"
-              className="w-auto h-full"
-              unoptimized
-            />
+            <div className="imgDrop">
+              <img src={src} alt="sticker" />
+            </div>
           </div>
         ))}
       </div>

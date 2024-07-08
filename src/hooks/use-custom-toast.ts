@@ -5,7 +5,9 @@ export const useCustomToast = () => {
   const [toasts, setToasts] = useState<CustomToastProps[]>([])
 
   const addToast = (toast: CustomToastProps) => {
-    const hasDuplicate = toasts.some(t => t.messages === toast.messages)
+    const hasDuplicate = toasts.some(
+      t => JSON.stringify(t.messages) === JSON.stringify(toast.messages)
+    )
 
     if (hasDuplicate) return
 
@@ -21,7 +23,7 @@ export const useCustomToast = () => {
       if (toasts.length > 0) {
         removeToast(toasts[0].id)
       }
-    }, 5000)
+    }, 2000)
 
     return () => clearTimeout(timer)
   }, [toasts])

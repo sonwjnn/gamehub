@@ -814,7 +814,7 @@ export const TableContent = ({ tableId }: TableContentProps) => {
     if (currentParticipant && !isHandVisible && !isShuffle) {
       setHandVisible(true)
     }
-  }, [])
+  }, [match])
 
   useEffect(() => {
     if (playersHighlightSet && Object.keys(playersHighlightSet).length > 0) {
@@ -840,7 +840,6 @@ export const TableContent = ({ tableId }: TableContentProps) => {
     })
 
     if (error) {
-      console.log(error)
       return
     }
 
@@ -913,7 +912,7 @@ export const TableContent = ({ tableId }: TableContentProps) => {
             player={currentPlayer}
             match={match}
           />
-          {/* <Button onClick={() => addRamdomToast()}>add toast</Button> */}
+          {/* <Button onClick={() => addToastMessage()}>add toast</Button> */}
           <TableImageSelect />
         </div>
         {/* <RebuyButton className="btn_cash_chip_sp" tableId={tableId} /> */}

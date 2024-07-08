@@ -59,7 +59,7 @@ export const AutoRebuyToggle = ({
     if (isAutoRebuy) {
       setAutoRebuy({ isAutoRebuy: false })
     } else {
-      onOpen('autoRebuy')
+      onOpen('autoRebuy', { tableId })
       setAutoRebuy({ isAutoRebuy: true })
     }
   }

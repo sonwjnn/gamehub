@@ -134,19 +134,16 @@ export const CurrentPlayer = ({
   const isTurn = !isFolded && player?.isTurn
   const isShowdown = match?.isShowdown
   const isUnfoldedParticipant = currentParticipant?.isFolded ? false : true
+  const rebuyAmount = isAutoRebuy ? autoRebuyAmount : 0
   const isNotEnoughStack =
     player &&
     match?.minBet &&
-    player?.stack + match?.minBet * 2 - match.table.ante < 0 &&
-    isHaveWinner
-  const isStackEmpty = player && player?.stack <= 0 && isHaveWinner
+    player?.stack + rebuyAmount - match?.minBet * 2 - match.table.ante < 0
+  const isStackEmpty = player && player?.stack + rebuyAmount <= 0
 
   const canKick =
     (isLeaveNext && isHaveWinner) ||
-    (!isAutoRebuy &&
-      !autoRebuyAmount &&
-      isHaveWinner &&
-      (isStackEmpty || isNotEnoughStack || foldCount >= 2))
+    (isHaveWinner && (isStackEmpty || isNotEnoughStack || foldCount >= 2))
 
   const canShowHand = match && isWinner && !match.isShowdown
 

@@ -59,7 +59,7 @@ export const AutoRebuyModal = () => {
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [form, tableData?.minBuyIn, autoRebuyAmount])
+  }, [form, tableData, autoRebuyAmount])
 
   useEffect(() => {
     const getTableById = async () => {
@@ -105,7 +105,10 @@ export const AutoRebuyModal = () => {
     }
   }
 
-  const handleClose = async () => {
+  const handleClose = () => {
+    if (!autoRebuyAmount) {
+      setAutoRebuy({ isAutoRebuy: false })
+    }
     onClose()
     form.reset()
   }
