@@ -51,6 +51,7 @@ export const LeaveButton = ({
 
       if (!currentPlayerOfTable) {
         toast.error('Error when leaving table')
+        router.push('/dashboard/table')
         return
       }
 
@@ -61,6 +62,7 @@ export const LeaveButton = ({
 
       if (error) {
         toast.error('Error when leaving table')
+        router.push('/dashboard/table')
         return
       }
 
