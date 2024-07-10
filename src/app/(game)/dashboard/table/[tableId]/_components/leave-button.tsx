@@ -52,6 +52,8 @@ export const LeaveButton = ({
       if (!currentPlayerOfTable) {
         toast.error('Error when leaving table')
         router.push('/dashboard/table')
+        setAutoRebuy({ isAutoRebuy: false, autoRebuyAmount: 0 })
+        update()
         return
       }
 
@@ -62,8 +64,6 @@ export const LeaveButton = ({
 
       if (error) {
         toast.error('Error when leaving table')
-        router.push('/dashboard/table')
-        return
       }
 
       setAutoRebuy({ isAutoRebuy: false, autoRebuyAmount: 0 })

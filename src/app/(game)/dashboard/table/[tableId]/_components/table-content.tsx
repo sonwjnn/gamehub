@@ -196,6 +196,15 @@ export const TableContent = ({ tableId }: TableContentProps) => {
       shuffleControls.volume(volume)
       shuffleControls.play()
 
+      if (isPortrait || isLandscape) {
+        setTimeout(() => {
+          setHandVisible(true)
+          setShuffle(false)
+        }, 2000)
+
+        return
+      }
+
       let i = 0
       setTimeout(() => {
         let i = 0
