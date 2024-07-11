@@ -81,4 +81,12 @@
       #c4ff9f 69.83%
     );
   }
+  /* .slider-root[data-orientation='vertical'] {
+    width: 16px;
+    height: '100%';
+  }
+  */
+  /* .slider-range[data-orientation='vertical'] {
+    width: 100%;
+  }  */
 }
