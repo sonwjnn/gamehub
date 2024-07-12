@@ -92,7 +92,7 @@ export const OtherPlayer = ({
   const isAllIn = player?.stack === 0 || !isShowdown
   const isUnfoldedParticipant = currentParticipant?.isFolded ? false : true
 
-  const isWaiting = match && !match?.table.isHandOver && !currentParticipant
+  const isWaiting = match && !match?.table.handOver && !currentParticipant
 
   const currentStack = player?.stack || 0
   const currentBet = currentParticipant?.bet || 0

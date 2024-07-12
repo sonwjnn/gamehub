@@ -369,7 +369,7 @@ export const TableContent = ({ tableId }: TableContentProps) => {
 
       socket.on(
         PokerActions.JOIN_TABLE,
-        async ({
+        ({
           tableId: tableSocketId,
           player,
         }: {
@@ -380,7 +380,7 @@ export const TableContent = ({ tableId }: TableContentProps) => {
 
           setPlayers(prev => [...prev, player])
 
-          await socket.emit(PokerActions.TABLE_JOINED, {
+          socket.emit(PokerActions.TABLE_JOINED, {
             tableId: tableSocketId,
             player,
           })
@@ -873,6 +873,16 @@ export const TableContent = ({ tableId }: TableContentProps) => {
     ]
     setSortedPlayers(newSortedPlayers)
   }, [players, currentPlayerIndex])
+
+  useEffect(() => {
+    if (players.length === 2 && currentPlayer?.id === players[1].id) {
+      if (match && !match.table.handOver) return
+
+      socket.emit(PokerActions.START_INIT_MATCH, {
+        tableId,
+      })
+    }
+  }, [players])
 
   const currentPlayer = players.find(p => p.userId === user?.id)
   const currentParticipant = participants.find(

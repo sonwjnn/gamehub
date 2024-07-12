@@ -53,7 +53,7 @@ export type Table = {
   players: Player[]
   messages: Message[]
   matches?: Match[]
-  isHandOver: boolean
+  handOver: boolean
   chatBanned: boolean
 
   minBuyIn: number
@@ -266,6 +266,7 @@ export enum PokerActions {
   TABLE_JOINED = 'TABLE_JOINED',
   LEAVE_TABLE = 'LEAVE_TABLE',
   TABLE_LEFT = 'TABLE_LEFT',
+  START_INIT_MATCH = 'START_INIT_MATCH',
   TABLES_UPDATED = 'TABLES_UPDATED',
   TABLE_UPDATED = 'TABLE_UPDATED',
   TABLE_MESSAGE = 'TABLE_MESSAGE',

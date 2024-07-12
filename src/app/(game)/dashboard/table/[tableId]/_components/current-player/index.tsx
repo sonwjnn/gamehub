@@ -147,7 +147,7 @@ export const CurrentPlayer = ({
 
   const canShowHand = match && isWinner && !match.isShowdown
 
-  const isWaiting = match && !match?.table.isHandOver && !currentParticipant
+  const isWaiting = match && !match?.table.handOver && !currentParticipant
   const currentStack = player?.stack || 0
   const currentBet = currentParticipant?.bet || 0
   const currentPot = match?.pot || 0
