@@ -884,17 +884,22 @@ export const TableContent = ({ tableId }: TableContentProps) => {
     }
   }, [players])
 
-  const currentPlayer = players.find(p => p.userId === user?.id)
+  const currentPlayer = players.find(
+    ({ userId: pUserId }) => pUserId === user?.id
+  )
   const currentParticipant = participants.find(
-    p => p.playerId === currentPlayer?.id
+    ({ playerId }) => playerId === currentPlayer?.id
   )
 
+  const { isFolded } = currentParticipant || {}
+  const { isShowdown, winners } = match || {}
+
   const canAction =
-    !currentParticipant ||
-    currentParticipant?.isFolded ||
     !currentPlayer ||
     players.length <= 1 ||
-    (match && match.isShowdown && match.winners?.length)
+    !currentParticipant ||
+    isFolded ||
+    (isShowdown && winners?.length)
 
   return (
     <>

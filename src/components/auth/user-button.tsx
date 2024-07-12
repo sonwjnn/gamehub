@@ -181,7 +181,7 @@ export const UserButton = ({ type = 'default' }: Props) => {
 
                   <li>
                     <LogoutButton>
-                      <a href="">
+                      <a>
                         <span className="icon sz-16 icon-color-red">
                           <i className="icon-logout"></i>
                         </span>

@@ -79,7 +79,7 @@ export const MobileToggle = () => {
 
               <li>
                 <LogoutButton>
-                  <a href="">
+                  <a>
                     <span className="icon sz-16 icon-color-red">
                       <i className="icon-logout"></i>
                     </span>
