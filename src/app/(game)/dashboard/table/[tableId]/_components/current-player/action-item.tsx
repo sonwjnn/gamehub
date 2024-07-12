@@ -52,7 +52,10 @@ export const ActionItem = ({
   const { sidebarMobile, setSidebarMobile } = useSidebarMobile()
 
   const canAutoAction =
-    isTurn && isChecked === type && callAmount === match?.callAmount
+    !match?.isShowdown &&
+    isTurn &&
+    isChecked === type &&
+    callAmount === match?.callAmount
   const isHaveWinner = (match?.winners?.length ?? 0) > 0
 
   const canCheck = match && !isHaveWinner && !isTurn
