@@ -25,9 +25,13 @@ export const Slider = ({
   onChange,
   onMouseUp,
 }: SliderProps) => {
-  const isPortrait = useMedia('(min-width: 320px) and (orientation: portrait)')
+  const isPortrait = useMedia(
+    '(min-width: 320px) and (orientation: portrait)',
+    false
+  )
   const isLandscape = useMedia(
-    '(max-width: 1023px) and (orientation: landscape)'
+    '(max-width: 1023px) and (orientation: landscape)',
+    false
   )
 
   const handleMouseUp = (newValue: number[]): void => {

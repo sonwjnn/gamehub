@@ -61,9 +61,13 @@ export const TableContent = ({ tableId }: TableContentProps) => {
   const { toasts, addToast, removeToast } = useCustomToast()
   const { imageSrc } = useTableImage()
   const { volume } = useVolume()
-  const isPortrait = useMedia('(min-width: 320px) and (orientation: portrait)')
+  const isPortrait = useMedia(
+    '(min-width: 320px) and (orientation: portrait)',
+    false
+  )
   const isLandscape = useMedia(
-    '(max-width: 1023px) and (orientation: landscape)'
+    '(max-width: 1023px) and (orientation: landscape)',
+    false
   )
 
   const [messages, setMessages] = useState([] as string[])

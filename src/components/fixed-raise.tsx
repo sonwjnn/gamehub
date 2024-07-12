@@ -33,7 +33,7 @@ export const FixedRaise = ({ bet, setBet, min, max }: FixedRaiseProps) => {
       <div className="ttl">RAISE RANGE</div>
       <div className="content">
         <div className="slider_range">
-          <BetSlider bet={bet} setBet={setBet} min={0} max={1000} />
+          <BetSlider bet={bet} setBet={setBet} min={min} max={max} />
         </div>
       </div>
     </div>
