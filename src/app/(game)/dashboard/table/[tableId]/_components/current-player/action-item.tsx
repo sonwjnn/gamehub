@@ -51,14 +51,16 @@ export const ActionItem = ({
   const { isChecked, callAmount, setAutoAction } = useAutoAction()
   const { sidebarMobile, setSidebarMobile } = useSidebarMobile()
 
+  const isShowdown = match?.isShowdown ?? false
+
   const canAutoAction =
-    !match?.isShowdown &&
+    !isShowdown &&
     isTurn &&
     isChecked === type &&
     callAmount === match?.callAmount
   const isHaveWinner = (match?.winners?.length ?? 0) > 0
 
-  const canCheck = match && !isHaveWinner && !isTurn
+  const canCheck = match && !isShowdown && !isHaveWinner && !isTurn
 
   //prettier-ignore
   useKey(shortcut, () => {

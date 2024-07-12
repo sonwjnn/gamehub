@@ -87,6 +87,7 @@ export const TableContent = ({ tableId }: TableContentProps) => {
   const [isChipsAnimation, setChipsAnimation] = useState(false)
   const [isLeaveNext, setIsLeaveNext] = useState(false)
   const [isNextMatchComing, setIsNextMatchComing] = useState<boolean>(false)
+  const [isMatchInitiated, setIsMatchInitiated] = useState(false)
 
   const [audioShuffle, _sh, shuffleControls] = useAudio({
     src: '/sounds/sound_shuffle.mp3',
@@ -414,7 +415,22 @@ export const TableContent = ({ tableId }: TableContentProps) => {
       socket.on(
         PokerActions.CHANGE_TURN,
         ({ matchData, playerId }: { matchData: Match; playerId: string }) => {
+          const playersData = playersRef?.current || []
+
+          const currentPlayerData = playersData.find(p => p.userId === user?.id)
+          const isHaveWinner = (matchData?.winners?.length ?? 0) > 0
+
           if (matchData) {
+            // end without showdown, all players fold
+            if (!matchData.isShowdown && isHaveWinner) {
+              if (currentPlayerData?.id === playersData[1]?.id) {
+                socket.emit(PokerActions.START_INIT_MATCH, {
+                  tableId,
+                  delay: 4000,
+                })
+              }
+            }
+
             if (matchData.isShowdown && !matchData.isAllAllIn) {
               setMatch({
                 ...matchData,
@@ -426,6 +442,13 @@ export const TableContent = ({ tableId }: TableContentProps) => {
               setTimeout(() => {
                 setMatch(matchData)
                 setParticipants(matchData.participants)
+
+                if (currentPlayerData?.id === playersData[1]?.id) {
+                  socket.emit(PokerActions.START_INIT_MATCH, {
+                    tableId,
+                    delay: 8000,
+                  })
+                }
               }, 3000)
             }
 
@@ -485,6 +508,12 @@ export const TableContent = ({ tableId }: TableContentProps) => {
 
                 setTimeout(() => {
                   setMatch(matchData)
+                  if (currentPlayerData?.id === playersData[1]?.id) {
+                    socket.emit(PokerActions.START_INIT_MATCH, {
+                      tableId,
+                      delay: 8000,
+                    })
+                  }
                 }, 8000)
               }
 
@@ -520,6 +549,12 @@ export const TableContent = ({ tableId }: TableContentProps) => {
 
                 setTimeout(() => {
                   setMatch(matchData)
+                  if (currentPlayerData?.id === playersData[1]?.id) {
+                    socket.emit(PokerActions.START_INIT_MATCH, {
+                      tableId,
+                      delay: 8000,
+                    })
+                  }
                 }, 5000)
               }
 
@@ -543,11 +578,23 @@ export const TableContent = ({ tableId }: TableContentProps) => {
 
                 setTimeout(() => {
                   setMatch(matchData)
+                  if (currentPlayerData?.id === playersData[1]?.id) {
+                    socket.emit(PokerActions.START_INIT_MATCH, {
+                      tableId,
+                      delay: 8000,
+                    })
+                  }
                 }, 4000)
               }
 
               if (isFlop && isTurn && isRiver) {
                 setMatch(matchData)
+                if (currentPlayerData?.id === playersData[1]?.id) {
+                  socket.emit(PokerActions.START_INIT_MATCH, {
+                    tableId,
+                    delay: 8000,
+                  })
+                }
               }
             }
 
@@ -813,6 +860,7 @@ export const TableContent = ({ tableId }: TableContentProps) => {
   }, [players])
 
   useEffect(() => {
+    let timerId: NodeJS.Timeout | null = null
     const getPlayers = async () => {
       const { response } = await playerApi.getPlayersByTableId({
         tableId,
@@ -823,9 +871,33 @@ export const TableContent = ({ tableId }: TableContentProps) => {
         return
       }
 
-      setPlayers(response)
+      const players = response as PlayerWithUser[]
+      setPlayers(players)
+
+      const currentPlayer = players.find(p => p.userId === user?.id)
+
+      if (
+        !timerId &&
+        players.length >= 2 &&
+        currentPlayer?.id === players[1]?.id
+      ) {
+        if (match && !match.table.handOver) return
+
+        timerId = setTimeout(() => {
+          socket.emit(PokerActions.START_INIT_MATCH, {
+            tableId,
+            delay: 0,
+          })
+        }, 6000)
+      }
     }
     getPlayers()
+
+    return () => {
+      if (timerId) {
+        clearTimeout(timerId)
+      }
+    }
   }, [tableId])
 
   useEffect(() => {
@@ -877,16 +949,6 @@ export const TableContent = ({ tableId }: TableContentProps) => {
     ]
     setSortedPlayers(newSortedPlayers)
   }, [players, currentPlayerIndex])
-
-  useEffect(() => {
-    if (players.length === 2 && currentPlayer?.id === players[1].id) {
-      if (match && !match.table.handOver) return
-
-      socket.emit(PokerActions.START_INIT_MATCH, {
-        tableId,
-      })
-    }
-  }, [players])
 
   const currentPlayer = players.find(
     ({ userId: pUserId }) => pUserId === user?.id
