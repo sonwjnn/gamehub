@@ -44,7 +44,7 @@ export const Slider = ({
   return (
     <SliderPrimitive.Root
       className={twMerge(
-        'group  relative flex items-center select-none cursor-pointer touch-none w-full h-[30px] slider-root',
+        'group  relative flex items-center select-none cursor-pointer touch-none w-full h-[30px]',
         (isPortrait || isLandscape) && '',
         className
       )}
@@ -55,7 +55,7 @@ export const Slider = ({
       max={maxValue}
       min={minValue}
       step={step}
-      orientation={isPortrait || isLandscape ? 'vertical' : 'horizontal'}
+      orientation={isPortrait ? 'vertical' : 'horizontal'}
     >
       <SliderPrimitive.Track
         className={cn('relative  h-[1px] grow rounded-full bg-neutral-600 ')}
@@ -63,13 +63,10 @@ export const Slider = ({
         <SliderPrimitive.Range
           className={cn(
             'absolute h-[3px] -top-1/2 slider-range rounded-full bg-yellow-linear ',
-            (isPortrait || isLandscape) && '-translate-y-0.5'
+            isPortrait && '-translate-y-0.5'
           )}
           style={{
-            width:
-              isPortrait || isLandscape
-                ? `${(value / maxValue) * 100}%`
-                : 'auto',
+            width: isPortrait ? `${(value / maxValue) * 100}%` : 'auto',
           }}
         ></SliderPrimitive.Range>
       </SliderPrimitive.Track>
@@ -77,7 +74,7 @@ export const Slider = ({
         <SliderPrimitive.Thumb
           className={cn(
             'block size-[10px] rounded-full bg-yellow-linear  transition focus:outline-none ',
-            (isPortrait || isLandscape) && 'hidden'
+            isPortrait && 'hidden'
           )}
         />
       </Fragment>
