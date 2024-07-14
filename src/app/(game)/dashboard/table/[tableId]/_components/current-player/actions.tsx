@@ -2,9 +2,9 @@
 
 import { BetSlider } from '@/components/bet-slider'
 import { useSocket } from '@/providers/socket-provider'
-import { Match, Participant, Player, PokerActions, RaiseType } from '@/types'
+import { Match, Participant, Player, PokerActions } from '@/types'
 import React, { useState } from 'react'
-import { getGenderFromImageUrl, playSound } from '@/utils/sound'
+import { getGenderFromImageUrl } from '@/utils/sound'
 import { ActionItem } from './action-item'
 import { useKey } from 'react-use'
 import { cn } from '@/lib/utils'

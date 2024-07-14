@@ -46,7 +46,6 @@ import { Button } from '@/components/ui/button'
 import { useTableImage } from '@/store/use-table-image'
 import { TableImageSelect } from './table-image-select'
 import { useVolume } from '@/store/use-volume'
-import { cn } from '@/lib/utils'
 
 interface TableContentProps {
   tableId: string
@@ -55,7 +54,7 @@ interface TableContentProps {
 export const TableContent = ({ tableId }: TableContentProps) => {
   const user = useCurrentUser()
   const { socket } = useSocket()
-  const { onClose, onOpen } = useModal()
+  const { onClose } = useModal()
   const { setAutoAction } = useAutoAction()
   const { setAutoRebuy } = useAutoRebuy()
   const { toasts, addToast, removeToast } = useCustomToast()
@@ -70,7 +69,6 @@ export const TableContent = ({ tableId }: TableContentProps) => {
     false
   )
 
-  const [messages, setMessages] = useState([] as string[])
   const [match, setMatch] = useState<Match | null>(null)
   const [participants, setParticipants] = useState<Participant[]>([])
   const [players, setPlayers] = useState<PlayerWithUser[]>([])
@@ -87,7 +85,6 @@ export const TableContent = ({ tableId }: TableContentProps) => {
   const [isChipsAnimation, setChipsAnimation] = useState(false)
   const [isLeaveNext, setIsLeaveNext] = useState(false)
   const [isNextMatchComing, setIsNextMatchComing] = useState<boolean>(false)
-  const [isMatchInitiated, setIsMatchInitiated] = useState(false)
 
   const [audioShuffle, _sh, shuffleControls] = useAudio({
     src: '/sounds/sound_shuffle.mp3',
@@ -851,15 +848,6 @@ export const TableContent = ({ tableId }: TableContentProps) => {
   }, [])
 
   useEffect(() => {
-    if (players.length <= 1) {
-      setMatch(null)
-      setHandVisible(false)
-      setMessages([])
-      addMessage('Waiting for players to join the table')
-    }
-  }, [players])
-
-  useEffect(() => {
     let timerId: NodeJS.Timeout | null = null
     const getPlayers = async () => {
       const { response } = await playerApi.getPlayersByTableId({
@@ -891,6 +879,7 @@ export const TableContent = ({ tableId }: TableContentProps) => {
         }, 6000)
       }
     }
+
     getPlayers()
 
     return () => {
@@ -898,7 +887,7 @@ export const TableContent = ({ tableId }: TableContentProps) => {
         clearTimeout(timerId)
       }
     }
-  }, [tableId])
+  }, [])
 
   useEffect(() => {
     if (currentParticipant && !isHandVisible && !isShuffle) {
@@ -934,10 +923,6 @@ export const TableContent = ({ tableId }: TableContentProps) => {
     }
 
     setAutoRebuy({ isAutoRebuy: false, autoRebuyAmount: 0 })
-  }
-
-  const addMessage = (message: string) => {
-    setMessages((prevMessages: string[]) => [...prevMessages, message])
   }
 
   const currentPlayerIndex = players.findIndex(p => p.userId === user?.id)
@@ -1055,11 +1040,6 @@ export const TableContent = ({ tableId }: TableContentProps) => {
           highlightCards={highlightCards}
         />
 
-        {/* {messages && messages.length > 0 && (
-        <div className="absolute font-semibold top-[60%] text-lime-500 text-xs md:text-xl left-1/2 -translate-y-1/2 -translate-x-1/2">
-          {messages[messages.length - 1]}
-        </div>
-      )} */}
         {currentPlayer && (
           <CurrentPlayer
             match={match}

@@ -3,7 +3,6 @@ import { currentUser } from '@/lib/auth'
 import { Navbar } from './_components/navbar'
 import { Statistical } from './_components/statistical'
 import playerApi from '@/services/api/modules/player-api'
-import tableApi from '@/services/api/modules/table-api'
 import { redirect } from 'next/navigation'
 import { FixedSidebar } from './_components/fixed-sidebar'
 
@@ -26,12 +25,6 @@ const TableIdLayout = async ({
     tableId,
     userId: user.id,
   })
-
-  const { response: table } = await tableApi.getTableById({ tableId })
-
-  if (!table) {
-    redirect('/dashboard/table')
-  }
 
   return (
     <>
