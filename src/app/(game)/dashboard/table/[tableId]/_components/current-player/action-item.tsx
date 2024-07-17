@@ -5,6 +5,7 @@ import { Match } from '@/types'
 import { useEffect } from 'react'
 import { useAutoAction } from '@/store/use-auto-action'
 import { useSidebarMobile } from '@/store/use-sidebar-mobile'
+import { useVolume } from '@/store/use-volume'
 
 type ActionItemProps = {
   shortcut: string
@@ -45,6 +46,7 @@ export const ActionItem = ({
 }: ActionItemProps) => {
   const isMounted = useMountedState()
 
+  const { volume } = useVolume()
   const isMobile = useMedia('(max-width: 768px), (max-height: 768px)', false)
   const [audioBoy, _b, boyControls] = useAudio({ src: audioBoySrc })
   const [audioGirl, _g, girlControls] = useAudio({ src: audioGirlSrc })
@@ -141,8 +143,10 @@ export const ActionItem = ({
 
   const onPlayAudio = () => {
     if (gender === 'male') {
+      boyControls.volume(volume)
       boyControls.play()
     } else {
+      girlControls.volume(volume)
       girlControls.play()
     }
   }

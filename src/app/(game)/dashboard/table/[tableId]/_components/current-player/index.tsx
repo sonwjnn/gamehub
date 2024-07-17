@@ -328,7 +328,7 @@ export const CurrentPlayer = ({
     if (canKick) {
       const timer = setTimeout(() => {
         removePlayer()
-      }, 4000)
+      }, 3000)
 
       return () => clearTimeout(timer)
     }

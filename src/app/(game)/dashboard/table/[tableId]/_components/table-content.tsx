@@ -423,7 +423,7 @@ export const TableContent = ({ tableId }: TableContentProps) => {
               if (currentPlayerData?.id === playersData[1]?.id) {
                 socket.emit(PokerActions.START_INIT_MATCH, {
                   tableId,
-                  delay: 4000,
+                  delay: 5000,
                 })
               }
             }
