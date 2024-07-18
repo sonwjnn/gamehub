@@ -1,6 +1,6 @@
 import { Server as NetServer, Socket } from 'net'
 import { NextApiResponse } from 'next'
-import { Server as SocketIOServer } from 'socket.io'
+// import { Server as SocketIOServer } from 'socket.io'
 
 export enum UserRole {
   ADMIN = 'ADMIN',
@@ -214,14 +214,6 @@ export type TableWithPlayers = Table & {
 
 export type TableWithPlayersWithUser = Table & {
   players: PlayerWithUser[]
-}
-
-export type NextApiResponseServerIo = NextApiResponse & {
-  socket: Socket & {
-    server: NetServer & {
-      io: SocketIOServer
-    }
-  }
 }
 
 export type CustomCard = {

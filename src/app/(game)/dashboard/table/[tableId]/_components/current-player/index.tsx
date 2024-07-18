@@ -145,7 +145,7 @@ export const CurrentPlayer = ({
     (isLeaveNext && isHaveWinner) ||
     (isHaveWinner && (isStackEmpty || isNotEnoughStack || foldCount >= 2))
 
-  const canShowHand = match && isWinner && !match.isShowdown
+  const canShowHand = match && !match.isShowdown && isWinner
 
   const isWaiting = match && !match?.table.handOver && !currentParticipant
   const currentStack = player?.stack || 0
@@ -405,22 +405,22 @@ export const CurrentPlayer = ({
 
   const fold = () => {
     if (socket) {
-      foldControls.play()
       socket.emit(PokerActions.FOLD, {
         tableId,
         participantId: currentParticipant?.id,
       })
+      foldControls.play()
     }
   }
 
-  const showHand = () => {
+  const showHand = useCallback(() => {
     if (socket && canShowHand) {
       socket.emit(PokerActions.SHOW_HAND, {
         tableId,
         playerId: player?.id,
       })
     }
-  }
+  }, [match?.winners])
 
   const showModalByHandName = () => {
     const winMessages = match?.winMessages || []

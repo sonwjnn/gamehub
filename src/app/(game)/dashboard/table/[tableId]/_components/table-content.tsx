@@ -418,16 +418,6 @@ export const TableContent = ({ tableId }: TableContentProps) => {
           const isHaveWinner = (matchData?.winners?.length ?? 0) > 0
 
           if (matchData) {
-            // end without showdown, all players fold
-            if (!matchData.isShowdown && isHaveWinner) {
-              if (currentPlayerData?.id === playersData[1]?.id) {
-                socket.emit(PokerActions.START_INIT_MATCH, {
-                  tableId,
-                  delay: 5000,
-                })
-              }
-            }
-
             if (matchData.isShowdown && !matchData.isAllAllIn) {
               setMatch({
                 ...matchData,
@@ -655,6 +645,16 @@ export const TableContent = ({ tableId }: TableContentProps) => {
                     return { ...item, isTurn: false }
                   })
                 )
+              }
+            }
+
+            // end without showdown, all players fold
+            if (!matchData.isShowdown && isHaveWinner) {
+              if (currentPlayerData?.id === playersData[1]?.id) {
+                socket.emit(PokerActions.START_INIT_MATCH, {
+                  tableId,
+                  delay: 5000,
+                })
               }
             }
           }
@@ -909,6 +909,15 @@ export const TableContent = ({ tableId }: TableContentProps) => {
       }
     }
   }, [playersHighlightSet])
+
+  useEffect(() => {
+    if (players.length <= 1) {
+      setTimeout(() => {
+        setParticipants([])
+        setHandVisible(false)
+      }, 2000)
+    }
+  }, [players])
 
   const removePlayer = async () => {
     const currentPlayer = players.find(p => p.userId === user?.id)

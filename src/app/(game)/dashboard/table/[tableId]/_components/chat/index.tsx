@@ -1,7 +1,6 @@
 import { ChatInput } from '@/components/chat/chat-input'
 import { ChatMessages } from '@/components/chat/chat-messages'
 import { currentUser } from '@/lib/auth'
-import playerApi from '@/services/api/modules/player-api'
 import tableApi from '@/services/api/modules/table-api'
 import { redirect } from 'next/navigation'
 import { Wrapper } from './wrapper'
