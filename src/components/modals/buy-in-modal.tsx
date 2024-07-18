@@ -69,8 +69,7 @@ export const BuyInModal = () => {
         buyIn: values.buyIn,
       })
 
-      if (error instanceof Error) {
-        toast.error(error.message)
+      if (error) {
         return
       }
 
