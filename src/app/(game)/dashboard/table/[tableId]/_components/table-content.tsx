@@ -1053,6 +1053,7 @@ export const TableContent = ({ tableId }: TableContentProps) => {
           <CurrentPlayer
             match={match}
             player={currentPlayer}
+            players={players}
             participants={participants}
             isHandVisible={isHandVisible}
             tableId={tableId}

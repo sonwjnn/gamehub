@@ -3,7 +3,7 @@
 import { BetSlider } from '@/components/bet-slider'
 import { useSocket } from '@/providers/socket-provider'
 import { Match, Participant, Player, PokerActions } from '@/types'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { getGenderFromImageUrl } from '@/utils/sound'
 import { ActionItem } from './action-item'
 import { useKey } from 'react-use'
@@ -16,6 +16,7 @@ interface CurrentPlayerActionProps {
   currentParticipant: Participant | undefined
   match: Match | null
   bet: number
+  lastBet: number
   setBet: React.Dispatch<React.SetStateAction<number>>
   player: Player | undefined
   isTurn: boolean | undefined
@@ -28,6 +29,7 @@ export const CurrentPlayerAction = ({
   currentParticipant,
   match,
   bet,
+  lastBet,
   setBet,
   player,
   setIsAction,
@@ -146,7 +148,7 @@ export const CurrentPlayerAction = ({
   const callSize =
     currentBet < currentCallAmount && currentCallAmount <= currentStack
       ? currentCallAmount - currentBet
-      : 0
+      : currentStack
 
   const canQuarter = quarter >= currentCallAmount && currentStack >= quarter
   const canHalf = half >= currentCallAmount && currentStack >= half
@@ -154,11 +156,11 @@ export const CurrentPlayerAction = ({
   const canRaise = currentStack >= currentCallAmount
   const isShowdown = match?.isShowdown || false
 
-  const min = match?.minBet ? Math.max(match?.minBet, currentCallAmount) : 0
-
-  const max = match?.table?.maxBuyIn
-    ? Math.min(match?.table?.maxBuyIn, currentStack)
-    : 0
+  const max = Math.min(match?.table?.maxBuyIn || 0, currentStack)
+  const min = Math.min(
+    Math.max(match?.minBet || 0, currentCallAmount) + lastBet,
+    max
+  )
 
   //prettier-ignore
   useKey('4', () => {

@@ -41,6 +41,7 @@ interface CurrentPlayerProps {
   participants: Participant[]
   isHandVisible: boolean
   player: PlayerWithUser | undefined
+  players: PlayerWithUser[]
   tableId: string
   highlightCards?: HighlightCard
   isLeaveNext: boolean
@@ -54,6 +55,7 @@ export const CurrentPlayer = ({
   participants,
   isHandVisible,
   player,
+  players,
   tableId,
   highlightCards,
   isLeaveNext,
@@ -290,16 +292,6 @@ export const CurrentPlayer = ({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [counter])
-
-  useEffect(() => {
-    if (match) {
-      if (match.callAmount > match.minBet) {
-        setBet(match.callAmount)
-      } else {
-        setBet(match.minBet)
-      }
-    }
-  }, [match])
 
   useEffect(() => {
     if (isWinner) {
@@ -544,6 +536,27 @@ export const CurrentPlayer = ({
     return winRate.toFixed(2)
   }
 
+  const getLastBet = () => {
+    if (!match || !players.length) return 0
+
+    let currentPlayerIndex = 0
+
+    currentPlayerIndex = players.findIndex(item => item.id === player?.id)
+
+    if (currentPlayerIndex === -1) {
+      return 0
+    }
+
+    const lastPlayerIndex =
+      currentPlayerIndex - 1 < 0 ? players.length - 1 : currentPlayerIndex - 1
+
+    const lastBet = match.participants.find(
+      item => item.playerId === players[lastPlayerIndex].id
+    )
+
+    return lastBet?.bet || 0
+  }
+
   const WinRateList = () => {
     return (
       <div
@@ -758,6 +771,7 @@ export const CurrentPlayer = ({
         isTurn={isTurn}
         player={player}
         bet={bet}
+        lastBet={getLastBet()}
         setIsAction={setIsAction}
         setBet={setBet}
         match={match}
