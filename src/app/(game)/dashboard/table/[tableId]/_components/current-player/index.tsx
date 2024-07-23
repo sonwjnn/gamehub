@@ -108,7 +108,8 @@ export const CurrentPlayer = ({
 
   const { socket } = useSocket()
   const { onOpen } = useModal()
-  const { isAutoRebuy, autoRebuyAmount, setAutoRebuy } = useAutoRebuy()
+  const { isAutoRebuy, autoRebuyAmount, setAutoRebuy, canAutoRebuy } =
+    useAutoRebuy()
 
   const router = useRouter()
   const [imageUrlFirst, setImageUrlFirst] = useState('')
@@ -145,7 +146,9 @@ export const CurrentPlayer = ({
 
   const canKick =
     (isLeaveNext && isHaveWinner) ||
-    (isHaveWinner && (isStackEmpty || isNotEnoughStack || foldCount >= 2))
+    (isHaveWinner &&
+      canAutoRebuy &&
+      (isStackEmpty || isNotEnoughStack || foldCount >= 2))
 
   const canShowHand = match && !match.isShowdown && isWinner
 
@@ -317,12 +320,22 @@ export const CurrentPlayer = ({
   }, [isHaveWinner])
 
   useEffect(() => {
+    let timer: NodeJS.Timeout | null = null
+
     if (canKick) {
-      const timer = setTimeout(() => {
+      timer = setTimeout(() => {
         removePlayer()
       }, 3000)
+    } else {
+      if (timer) {
+        clearTimeout(timer)
+      }
+    }
 
-      return () => clearTimeout(timer)
+    return () => {
+      if (timer) {
+        clearTimeout(timer)
+      }
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -388,7 +401,6 @@ export const CurrentPlayer = ({
       if (error) {
         console.log(error)
       }
-      setAutoRebuy({ isAutoRebuy: false, autoRebuyAmount: 0 })
       router.push('/dashboard/table')
     } catch (error) {
       console.log(error)

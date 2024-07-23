@@ -3,7 +3,7 @@
 import { OtherPlayer } from './other-player'
 import { CurrentPlayer } from './current-player'
 import { Board } from './board'
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useMemo } from 'react'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 
@@ -331,6 +331,7 @@ export const TableContent = ({ tableId }: TableContentProps) => {
           setParticipants([])
           setHighlightCards({ name: '', cards: [] })
           setHandVisible(false)
+          setAutoRebuy({ canAutoRebuy: false })
           setAutoAction({ isChecked: '', callAmount: 0 })
           onClose()
 
@@ -682,6 +683,7 @@ export const TableContent = ({ tableId }: TableContentProps) => {
           if (matchData?.isShowdown && !matchData?.isAllAllIn) {
             setTimeout(() => {
               setPlayers(players)
+              setAutoRebuy({ canAutoRebuy: true })
             }, 4000)
           }
 
@@ -693,23 +695,27 @@ export const TableContent = ({ tableId }: TableContentProps) => {
             if (!isFlop && !isTurn && !isRiver) {
               setTimeout(() => {
                 setPlayers(players)
+                setAutoRebuy({ canAutoRebuy: true })
               }, 9000)
             }
 
             if (isFlop && !isTurn && !isRiver) {
               setTimeout(() => {
                 setPlayers(players)
+                setAutoRebuy({ canAutoRebuy: true })
               }, 6000)
             }
 
             if (isFlop && isTurn && !isRiver) {
               setTimeout(() => {
                 setPlayers(players)
+                setAutoRebuy({ canAutoRebuy: true })
               }, 5000)
             }
 
             if (isFlop && isTurn && isRiver) {
               setPlayers(players)
+              setAutoRebuy({ canAutoRebuy: true })
             }
           }
 
@@ -881,6 +887,11 @@ export const TableContent = ({ tableId }: TableContentProps) => {
     }
 
     getPlayers()
+    setAutoRebuy({
+      canAutoRebuy: false,
+      isAutoRebuy: false,
+      autoRebuyAmount: 0,
+    })
 
     return () => {
       if (timerId) {
@@ -930,8 +941,6 @@ export const TableContent = ({ tableId }: TableContentProps) => {
     if (error) {
       return
     }
-
-    setAutoRebuy({ isAutoRebuy: false, autoRebuyAmount: 0 })
   }
 
   const currentPlayerIndex = players.findIndex(p => p.userId === user?.id)
@@ -944,12 +953,13 @@ export const TableContent = ({ tableId }: TableContentProps) => {
     setSortedPlayers(newSortedPlayers)
   }, [players, currentPlayerIndex])
 
-  const currentPlayer = players.find(
-    ({ userId: pUserId }) => pUserId === user?.id
-  )
-  const currentParticipant = participants.find(
-    ({ playerId }) => playerId === currentPlayer?.id
-  )
+  const currentPlayer = useMemo(() => {
+    return players.find(({ userId }) => userId === user?.id)
+  }, [players])
+
+  const currentParticipant = useMemo(() => {
+    return participants.find(({ playerId }) => playerId === currentPlayer?.id)
+  }, [participants])
 
   const { isFolded } = currentParticipant || {}
   const { isShowdown, winners } = match || {}

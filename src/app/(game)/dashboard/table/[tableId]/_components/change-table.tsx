@@ -62,8 +62,6 @@ const ChangeTable = ({ tableId, playerId, className }: ChangeTableProps) => {
           toast.error('Something went wrong!')
         }
 
-        setAutoRebuy({ isAutoRebuy: false, autoRebuyAmount: 0 })
-
         router.push(`/dashboard/table/${nextTable.id}`)
         update()
       }

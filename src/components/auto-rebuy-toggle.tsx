@@ -22,19 +22,20 @@ export const AutoRebuyToggle = ({
   match,
 }: AutoRebuyToggleProps) => {
   const { onOpen } = useModal()
-  const { isAutoRebuy, setAutoRebuy, autoRebuyAmount } = useAutoRebuy()
+  const { isAutoRebuy, setAutoRebuy, autoRebuyAmount, canAutoRebuy } =
+    useAutoRebuy()
   const user = useCurrentUser()
   const { update } = useSession()
 
   const isHaveWinner = (match?.winners?.length ?? 0) > 0
-  const canAutoRebuy = player?.stack === 0 && isHaveWinner
+
+  const canRebuy = isHaveWinner && player?.stack === 0 && canAutoRebuy
 
   useEffect(() => {
-    if (isAutoRebuy && canAutoRebuy) {
+    if (isAutoRebuy && canRebuy) {
       rebuy()
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [canAutoRebuy])
+  }, [canRebuy, isAutoRebuy])
 
   const rebuy = async () => {
     if (!player || !match || !user) return

@@ -3,13 +3,16 @@ import { createJSONStorage, persist } from 'zustand/middleware'
 
 interface AutoRebuyProps {
   isAutoRebuy: boolean
+  canAutoRebuy: boolean
   autoRebuyAmount: number
   setAutoRebuy: ({
     isAutoRebuy,
     autoRebuyAmount,
+    canAutoRebuy,
   }: {
     isAutoRebuy?: boolean
     autoRebuyAmount?: number
+    canAutoRebuy?: boolean
   }) => void
 }
 
@@ -18,9 +21,11 @@ export const useAutoRebuy = create<AutoRebuyProps>()(
     set => ({
       isAutoRebuy: false,
       autoRebuyAmount: 0,
-      setAutoRebuy: ({ isAutoRebuy, autoRebuyAmount }) => {
+      canAutoRebuy: false,
+      setAutoRebuy: ({ isAutoRebuy, autoRebuyAmount, canAutoRebuy }) => {
         set(state => ({
           ...state,
+          canAutoRebuy: canAutoRebuy ?? state.canAutoRebuy,
           isAutoRebuy: isAutoRebuy ?? state.isAutoRebuy,
           autoRebuyAmount: autoRebuyAmount ?? state.autoRebuyAmount,
         }))
