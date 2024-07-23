@@ -28,43 +28,20 @@ const ChangeTable = ({ tableId, playerId, className }: ChangeTableProps) => {
     if (!user || !playerId || !tableId) return
 
     startTransition(async () => {
-      const { response: nextTable, error } = await tableApi.switchTable({
+      const { response, error } = await tableApi.switchTable({
         tableId,
         playerId,
       })
 
       if (error) {
-        toast.error('Not found table same value!')
-        router.push(`/dashboard/table`)
+        toast.error(
+          'No available tables! You can play continously or quit the game'
+        )
         return
       }
 
-      if (nextTable) {
-        if (nextTable.id === tableId) {
-          toast.error('Only one table!')
-          router.push(`/dashboard/table`)
-          return
-        }
-
-        await playerApi.removePlayer({
-          tableId,
-          playerId,
-        })
-
-        const { response, error } = await playerApi.createPlayer({
-          tableId: nextTable.id,
-          userId: user.id,
-          socketId: socket.id,
-          buyIn: nextTable.minBuyIn,
-        })
-
-        if (error) {
-          toast.error('Something went wrong!')
-        }
-
-        router.push(`/dashboard/table/${nextTable.id}`)
-        update()
-      }
+      const { movedTableId } = response
+      router.push(`/dashboard/table/${movedTableId}`)
     })
   }
 

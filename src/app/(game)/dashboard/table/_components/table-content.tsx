@@ -85,7 +85,7 @@ export const TableContent = ({}: TableContentProps) => {
       }
     }
     fetchTables()
-  }, [])
+  }, [searchParams])
 
   if (!isMounted) return <TableContentLoading />
 
