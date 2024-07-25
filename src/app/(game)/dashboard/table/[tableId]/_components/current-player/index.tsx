@@ -205,6 +205,28 @@ export const CurrentPlayer = ({
   }, [playersHighlightSet, match, participants, player?.id, isFolded])
 
   useEffect(() => {
+    if (!player) return
+    if (!player.stack || !match) return
+    if (player.stack && player.stack >= match.table.minBuyIn) return
+    if (!match?.winMessages?.length) return
+
+    const lastWinMessage = match.winMessages[match.winMessages.length - 1]
+    const handName = lastWinMessage.handName
+    switch (handName) {
+      case WinnerHandType.Straight:
+      case WinnerHandType.Flush:
+      case WinnerHandType.FullHouse:
+      case WinnerHandType.FourOfAKind:
+      case WinnerHandType.StraightFlush:
+      case WinnerHandType.RoyalFlush:
+        return
+      default:
+        removePlayer()
+        return
+    }
+  }, [player])
+
+  useEffect(() => {
     setWinRate(calculateWinRateForPlayer())
   }, [calculateWinRateForPlayer, match?.isFlop, match?.isTurn, match?.isRiver])
 
