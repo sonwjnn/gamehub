@@ -137,12 +137,11 @@ export const CurrentPlayer = ({
   const isTurn = !isFolded && player?.isTurn
   const isShowdown = match?.isShowdown
   const isUnfoldedParticipant = currentParticipant?.isFolded ? false : true
-  const rebuyAmount = isAutoRebuy ? autoRebuyAmount : 0
   const isNotEnoughStack =
     player &&
     match?.minBet &&
-    player?.stack + rebuyAmount - match?.minBet * 2 - match.table.ante < 0
-  const isStackEmpty = player && player?.stack + rebuyAmount <= 0
+    player?.stack - match?.minBet * 2 - match.table.ante < 0
+  const isStackEmpty = player && player?.stack <= 0
 
   const canKick =
     (isLeaveNext && isHaveWinner) ||
@@ -204,27 +203,27 @@ export const CurrentPlayer = ({
       : (winRate / combinedWinRate) * 100
   }, [playersHighlightSet, match, participants, player?.id, isFolded])
 
-  useEffect(() => {
-    if (!player) return
-    if (!player.stack || !match) return
-    if (player.stack && player.stack >= match.table.minBuyIn) return
-    if (!match?.winMessages?.length) return
+  // useEffect(() => {
+  //   if (!player) return
+  //   if (!player.stack || !match) return
+  //   if (player.stack && player.stack >= match.table.minBuyIn) return
+  //   if (!match?.winMessages?.length) return
 
-    const lastWinMessage = match.winMessages[match.winMessages.length - 1]
-    const handName = lastWinMessage.handName
-    switch (handName) {
-      case WinnerHandType.Straight:
-      case WinnerHandType.Flush:
-      case WinnerHandType.FullHouse:
-      case WinnerHandType.FourOfAKind:
-      case WinnerHandType.StraightFlush:
-      case WinnerHandType.RoyalFlush:
-        return
-      default:
-        removePlayer()
-        return
-    }
-  }, [player])
+  //   const lastWinMessage = match.winMessages[match.winMessages.length - 1]
+  //   const handName = lastWinMessage.handName
+  //   switch (handName) {
+  //     case WinnerHandType.Straight:
+  //     case WinnerHandType.Flush:
+  //     case WinnerHandType.FullHouse:
+  //     case WinnerHandType.FourOfAKind:
+  //     case WinnerHandType.StraightFlush:
+  //     case WinnerHandType.RoyalFlush:
+  //       return
+  //     default:
+  //       removePlayer()
+  //       return
+  //   }
+  // }, [player])
 
   useEffect(() => {
     setWinRate(calculateWinRateForPlayer())

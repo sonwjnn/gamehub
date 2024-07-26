@@ -680,47 +680,56 @@ export const TableContent = ({ tableId }: TableContentProps) => {
             return updatedPlayers
           })
 
-          if (matchData?.isShowdown && !matchData?.isAllAllIn) {
-            setTimeout(() => {
+          if (matchData) {
+            const isHaveWinner = (matchData.winners?.length ?? 0) > 0
+
+            if (matchData.isShowdown && !matchData.isAllAllIn) {
+              setTimeout(() => {
+                setPlayers(players)
+                setAutoRebuy({ canAutoRebuy: true })
+              }, 4000)
+            }
+
+            if (matchData.isShowdown && matchData.isAllAllIn) {
+              const isFlop = matchRef.current?.isFlop
+              const isTurn = matchRef.current?.isTurn
+              const isRiver = matchRef.current?.isRiver
+
+              if (!isFlop && !isTurn && !isRiver) {
+                setTimeout(() => {
+                  setPlayers(players)
+                  setAutoRebuy({ canAutoRebuy: true })
+                }, 9000)
+              }
+
+              if (isFlop && !isTurn && !isRiver) {
+                setTimeout(() => {
+                  setPlayers(players)
+                  setAutoRebuy({ canAutoRebuy: true })
+                }, 6000)
+              }
+
+              if (isFlop && isTurn && !isRiver) {
+                setTimeout(() => {
+                  setPlayers(players)
+                  setAutoRebuy({ canAutoRebuy: true })
+                }, 5000)
+              }
+
+              if (isFlop && isTurn && isRiver) {
+                setPlayers(players)
+                setAutoRebuy({ canAutoRebuy: true })
+              }
+            }
+
+            if (!matchData.isShowdown && !matchData.isAllAllIn) {
               setPlayers(players)
-              setAutoRebuy({ canAutoRebuy: true })
-            }, 4000)
-          }
-
-          if (matchData?.isShowdown && matchData?.isAllAllIn) {
-            const isFlop = matchRef.current?.isFlop
-            const isTurn = matchRef.current?.isTurn
-            const isRiver = matchRef.current?.isRiver
-
-            if (!isFlop && !isTurn && !isRiver) {
-              setTimeout(() => {
-                setPlayers(players)
-                setAutoRebuy({ canAutoRebuy: true })
-              }, 9000)
             }
 
-            if (isFlop && !isTurn && !isRiver) {
-              setTimeout(() => {
-                setPlayers(players)
-                setAutoRebuy({ canAutoRebuy: true })
-              }, 6000)
-            }
-
-            if (isFlop && isTurn && !isRiver) {
-              setTimeout(() => {
-                setPlayers(players)
-                setAutoRebuy({ canAutoRebuy: true })
-              }, 5000)
-            }
-
-            if (isFlop && isTurn && isRiver) {
-              setPlayers(players)
+            // end without showdown, all players fold
+            if (!matchData.isShowdown && isHaveWinner) {
               setAutoRebuy({ canAutoRebuy: true })
             }
-          }
-
-          if (!matchData?.isShowdown && !matchData?.isAllAllIn) {
-            setPlayers(players)
           }
         }
       )
