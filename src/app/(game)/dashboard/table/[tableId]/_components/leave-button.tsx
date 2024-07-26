@@ -42,6 +42,7 @@ export const LeaveButton = ({
 
       if (!tableData) {
         toast.error('Error when leaving table')
+        router.push('/dashboard/table')
         return
       }
 
