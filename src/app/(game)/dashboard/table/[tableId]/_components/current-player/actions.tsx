@@ -150,17 +150,22 @@ export const CurrentPlayerAction = ({
       ? currentCallAmount - currentBet
       : currentStack
 
-  const canQuarter = quarter >= currentCallAmount && currentStack >= quarter
-  const canHalf = half >= currentCallAmount && currentStack >= half
-  const canFull = currentPot >= currentCallAmount && currentStack >= currentPot
-  const canRaise = currentStack >= currentCallAmount
-  const isShowdown = match?.isShowdown || false
-
   const max = Math.min(match?.table?.maxBuyIn || 0, currentStack)
   const min = Math.min(
     Math.max(match?.minBet || 0, currentCallAmount) + lastBet,
     max
   )
+
+  const canQuarter =
+    quarter >= min && quarter >= currentCallAmount && currentStack >= quarter
+  const canHalf =
+    half >= min && half >= currentCallAmount && currentStack >= half
+  const canFull =
+    currentPot >= min &&
+    currentPot >= currentCallAmount &&
+    currentStack >= currentPot
+  const canRaise = currentStack >= currentCallAmount
+  const isShowdown = match?.isShowdown || false
 
   useEffect(() => {
     setBet(min)
