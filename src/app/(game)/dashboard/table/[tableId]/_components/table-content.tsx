@@ -910,9 +910,10 @@ export const TableContent = ({ tableId }: TableContentProps) => {
   }, [])
 
   useEffect(() => {
-    if (currentParticipant && !isHandVisible && !isShuffle) {
-      setHandVisible(true)
-    }
+    if (!match) return
+    if (match.table?.handOver) return
+
+    setHandVisible(true)
   }, [match])
 
   useEffect(() => {

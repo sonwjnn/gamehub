@@ -40,7 +40,7 @@ export const CurrentPlayerAction = ({
 
   const gender = getGenderFromImageUrl(player?.user?.image || '')
 
-  const fold = async () => {
+  const fold = () => {
     setIsAction(true)
     if (socket && !isProcessing) {
       setIsProcessing(true)
@@ -161,6 +161,10 @@ export const CurrentPlayerAction = ({
     Math.max(match?.minBet || 0, currentCallAmount) + lastBet,
     max
   )
+
+  useEffect(() => {
+    setBet(min)
+  }, [isTurn])
 
   //prettier-ignore
   useKey('4', () => {
