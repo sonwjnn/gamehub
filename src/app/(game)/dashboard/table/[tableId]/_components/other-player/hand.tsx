@@ -97,7 +97,8 @@ export const Hand = ({
           'item flipped opacity-0  pointer-events-none',
           isWinner && 'status_active',
           !showdownDelay && 'hide',
-          !isHidden && 'opacity-100 pointer-events-auto'
+          !isHidden && 'opacity-100 pointer-events-auto',
+          !imageUrl.first && 'opacity-0  pointer-events-none'
         )}
       >
         <div className="pocker">
@@ -113,7 +114,8 @@ export const Hand = ({
           'item flipped opacity-0  pointer-events-none',
           isWinner && 'status_active',
           !showdownDelay && 'hide',
-          !isHidden && 'opacity-100 pointer-events-auto'
+          !isHidden && 'opacity-100 pointer-events-auto',
+          !imageUrl.second && 'opacity-0  pointer-events-none'
         )}
       >
         <div className="pocker">
