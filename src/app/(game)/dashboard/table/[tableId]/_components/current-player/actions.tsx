@@ -14,9 +14,9 @@ import sound from '@/utils/contants/sound'
 interface CurrentPlayerActionProps {
   tableId: string
   currentParticipant: Participant | undefined
+  lastBetParticipant: Participant | null
   match: Match | null
   bet: number
-  lastBet: number
   setBet: React.Dispatch<React.SetStateAction<number>>
   player: Player | undefined
   isTurn: boolean | undefined
@@ -27,9 +27,9 @@ export const CurrentPlayerAction = ({
   isTurn,
   tableId,
   currentParticipant,
+  lastBetParticipant,
   match,
   bet,
-  lastBet,
   setBet,
   player,
   setIsAction,
@@ -149,6 +149,10 @@ export const CurrentPlayerAction = ({
     currentBet < currentCallAmount && currentCallAmount <= currentStack
       ? currentCallAmount - currentBet
       : currentStack
+  const lastBet = lastBetParticipant?.bet || 0
+
+  const isLastHalfType = lastBetParticipant?.lastAction === PokerActions.HALF
+  const isLastFullType = lastBetParticipant?.lastAction === PokerActions.FULL
 
   const max = Math.min(match?.table?.maxBuyIn || 0, currentStack)
   const min = Math.min(
@@ -157,13 +161,13 @@ export const CurrentPlayerAction = ({
   )
 
   const canQuarter =
-    quarter >= min && quarter >= currentCallAmount && currentStack >= quarter
+    !isLastFullType &&
+    !isLastHalfType &&
+    quarter >= currentCallAmount &&
+    currentStack >= quarter
   const canHalf =
-    half >= min && half >= currentCallAmount && currentStack >= half
-  const canFull =
-    currentPot >= min &&
-    currentPot >= currentCallAmount &&
-    currentStack >= currentPot
+    !isLastFullType && half >= currentCallAmount && currentStack >= half
+  const canFull = currentPot >= currentCallAmount && currentStack >= currentPot
   const canRaise = currentStack >= currentCallAmount
   const isShowdown = match?.isShowdown || false
 

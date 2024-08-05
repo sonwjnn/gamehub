@@ -547,25 +547,27 @@ export const CurrentPlayer = ({
     return winRate.toFixed(2)
   }
 
-  const getLastBet = () => {
-    if (!match || !players.length) return 0
+  const getLastBetParticipant = () => {
+    if (!match || !players.length) return null
 
     let currentPlayerIndex = 0
 
     currentPlayerIndex = players.findIndex(item => item.id === player?.id)
 
     if (currentPlayerIndex === -1) {
-      return 0
+      return null
     }
 
     const lastPlayerIndex =
       currentPlayerIndex - 1 < 0 ? players.length - 1 : currentPlayerIndex - 1
 
-    const lastBet = match.participants.find(
+    const lastBetParticipant = match.participants.find(
       item => item.playerId === players[lastPlayerIndex].id
     )
 
-    return lastBet?.bet || 0
+    if (!lastBetParticipant) return null
+
+    return lastBetParticipant
   }
 
   const WinRateList = () => {
@@ -782,11 +784,11 @@ export const CurrentPlayer = ({
         isTurn={isTurn}
         player={player}
         bet={bet}
-        lastBet={getLastBet()}
         setIsAction={setIsAction}
         setBet={setBet}
         match={match}
         tableId={tableId}
+        lastBetParticipant={getLastBetParticipant()}
         currentParticipant={currentParticipant}
       />
     </div>
